@@ -258,11 +258,6 @@
 
       <a href="https://tx3cursos.pay.yampi.com.br/r/M6ND58XH4Q" class="pricing-button pulse" id="premium-plan-button">QUERO GARANTIR AGORA!</a>
 
-      <p class="guarantee-text">30 DIAS DE GARANTIA</p>
-    </div>
-  </div>
-</section>
-
           
           <div class="guarantee-badge"></div>
           <p class="guarantee-text">30 DIAS DE GARANTIA</p>
@@ -334,59 +329,119 @@
       </div>
     </section>
     
-    <section class="testimonials-section">
-      <h2 class="section-title">HISTÓRIAS DE SUCESSO REAIS</h2>
-      
-      <div class="testimonials-container">
-        <div class="testimonial">
-          <div class="testimonial-header">
-            <div class="testimonial-avatar">
-              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos" />
-            </div>
-            <div class="testimonial-info">
-              <h4>Carlos Oliveira</h4>
-              <p>São Paulo, SP</p>
-            </div>
-          </div>
-          <div class="testimonial-rating">★★★★★</div>
-          <div class="testimonial-content">
-            <p>"Depois de 3 tentativas frustradas, finalmente consegui aprovação para financiar meu apartamento. A estratégia de organização financeira do módulo 1 foi decisiva para mudar a percepção do banco sobre minha capacidade de pagamento."</p>
-          </div>
+    <style>
+  .testimonials-section {
+    padding: 20px;
+  }
+
+  .testimonials-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Quebra para o mobile */
+  }
+
+  .testimonial {
+    width: 100%;
+    max-width: 300px; /* Reduzindo a largura máxima */
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em; /* Texto um pouco menor */
+  }
+
+  @media (min-width: 768px) {
+    .testimonial {
+      width: 45%; /* Dois cards por linha no desktop */
+    }
+  }
+
+  .testimonial-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .testimonial-avatar img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+
+  .testimonial-info h4 {
+    margin: 0;
+    font-size: 1.1em;
+  }
+
+  .testimonial-rating {
+    color: #FFD700;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  .testimonial-content p {
+    font-size: 0.95em;
+    line-height: 1.4;
+    color: #333;
+  }
+</style>
+
+<section class="testimonials-section">
+  <h2 class="section-title">HISTÓRIAS DE SUCESSO REAIS</h2>
+
+  <div class="testimonials-container">
+    <div class="testimonial">
+      <div class="testimonial-header">
+        <div class="testimonial-avatar">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos" />
         </div>
-        
-        <div class="testimonial">
-          <div class="testimonial-header">
-            <div class="testimonial-avatar">
-              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana" />
-            </div>
-            <div class="testimonial-info">
-              <h4>Mariana Silva</h4>
-              <p>Rio de Janeiro, RJ</p>
-            </div>
-          </div>
-          <div class="testimonial-rating">★★★★★</div>
-          <div class="testimonial-content">
-            <p>"Meu score era apenas 450 e todos diziam que era impossível conseguir um financiamento. Em apenas 60 dias, seguindo o módulo 2, meu score subiu para 820 e fui aprovada com uma taxa de juros incrível!"</p>
-          </div>
-        </div>
-        
-        <div class="testimonial">
-          <div class="testimonial-header">
-            <div class="testimonial-avatar">
-              <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Rafael" />
-            </div>
-            <div class="testimonial-info">
-              <h4>Rafael Mendes</h4>
-              <p>Belo Horizonte, MG</p>
-            </div>
-          </div>
-          <div class="testimonial-rating">★★★★★</div>
-          <div class="testimonial-content">
-            <p>"As técnicas de negociação do módulo 4 me ajudaram a reduzir a taxa de juros em 0,5%, o que significa uma economia de R$76.000 ao longo do financiamento! Melhor investimento que já fiz."</p>
-          </div>
+        <div class="testimonial-info">
+          <h4>Carlos Oliveira</h4>
+          <p>São Paulo, SP</p>
         </div>
       </div>
-    </section>
+      <div class="testimonial-rating">★★★★★</div>
+      <div class="testimonial-content">
+        <p>"Consegui aprovação para financiar meu apartamento depois de aplicar as estratégias do curso!"</p>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <div class="testimonial-header">
+        <div class="testimonial-avatar">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Mariana" />
+        </div>
+        <div class="testimonial-info">
+          <h4>Mariana Silva</h4>
+          <p>Rio de Janeiro, RJ</p>
+        </div>
+      </div>
+      <div class="testimonial-rating">★★★★★</div>
+      <div class="testimonial-content">
+        <p>"Meu score subiu de 450 para 820 em 60 dias, e fui aprovada com uma taxa incrível!"</p>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <div class="testimonial-header">
+        <div class="testimonial-avatar">
+          <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Rafael" />
+        </div>
+        <div class="testimonial-info">
+          <h4>Rafael Mendes</h4>
+          <p>Belo Horizonte, MG</p>
+        </div>
+      </div>
+      <div class="testimonial-rating">★★★★★</div>
+      <div class="testimonial-content">
+        <p>"Reduzi minha taxa de juros em 0,5%, economizando R$76.000 no financiamento!"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
     
     <section class="author-section">
       <h2 class="section-title">CONHEÇA O AUTOR</h2>
