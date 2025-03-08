@@ -189,25 +189,80 @@
       </div>
     </section>
     
-    <section id="offers" class="pricing-section">
-      <h2 class="section-title">ESCOLHA O PLANO IDEAL PARA VOCÊ</h2>
-      
-      <div class="pricing-container">
-        <div class="pricing-plan">
-          <div class="plan-name">PLANO BÁSICO</div>
-          <div class="plan-price"><span class="currency">R$</span>10</div>
-          <p>Acesso imediato às estratégias essenciais + 1 BÔNUS</p>
-          
-          <ul class="plan-features">
-            <li>25 Estratégias para Aprovação</li>
-            <li>Módulo de Preparação Financeira</li>
-            <li>Módulo de Score de Crédito</li>
-            <li>Acesso por 3 meses</li>
-            <li>Suporte por email</li>
-            <li>Bônus 1: Calculadora de Financiamento</li>
-          </ul>
-          
-          <a href="https://tx3cursos.pay.yampi.com.br/r/M6ND58XH4Q" class="pricing-button" id="basic-plan-button">QUERO ESTE PLANO</a>
+ <style>
+  .pricing-section {
+    padding: 20px;
+  }
+
+  .pricing-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Garante que os planos se ajustem em telas menores */
+  }
+
+  .pricing-plan {
+    width: 100%;
+    max-width: 400px; /* Mantém o tamanho bonito no desktop */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (min-width: 768px) {
+    .pricing-plan {
+      width: 45%; /* Dois planos lado a lado no desktop */
+    }
+  }
+</style>
+
+<section id="offers" class="pricing-section">
+  <h2 class="section-title">ESCOLHA O PLANO IDEAL PARA VOCÊ</h2>
+
+  <div class="pricing-container">
+    <div class="pricing-plan">
+      <div class="plan-name">PLANO BÁSICO</div>
+      <div class="plan-price"><span class="currency">R$</span>10</div>
+      <p>Acesso imediato às estratégias essenciais + 1 BÔNUS</p>
+
+      <ul class="plan-features">
+        <li>25 Estratégias para Aprovação</li>
+        <li>Módulo de Preparação Financeira</li>
+        <li>Módulo de Score de Crédito</li>
+        <li>Acesso por 3 meses</li>
+        <li>Suporte por email</li>
+        <li>Bônus 1: Calculadora de Financiamento</li>
+      </ul>
+
+      <a href="https://tx3cursos.pay.yampi.com.br/r/M6ND58XH4Q" class="pricing-button" id="basic-plan-button">QUERO ESTE PLANO</a>
+
+      <p class="guarantee-text">30 DIAS DE GARANTIA</p>
+    </div>
+
+    <div class="pricing-plan featured">
+      <div class="plan-name">PLANO COMPLETO</div>
+      <div class="plan-price"><span class="currency">R$</span>27</div>
+      <p>Acesso vitalício a TUDO que você precisa + TODOS OS 3 BÔNUS!</p>
+
+      <ul class="plan-features">
+        <li>TUDO do Plano Básico +</li>
+        <li>5 Módulos Completos</li>
+        <li>Documentação Estratégica</li>
+        <li>Negociação com Bancos</li>
+        <li>Suporte Premium por WhatsApp</li>
+        <li>Atualizações Gratuitas Vitalícias</li>
+        <li>Consultas Personalizadas</li>
+        <li>TODOS OS 3 BÔNUS EXCLUSIVOS!</li>
+      </ul>
+
+      <a href="https://tx3cursos.pay.yampi.com.br/r/M6ND58XH4Q" class="pricing-button pulse" id="premium-plan-button">QUERO GARANTIR AGORA!</a>
+
+      <p class="guarantee-text">30 DIAS DE GARANTIA</p>
+    </div>
+  </div>
+</section>
+
           
           <div class="guarantee-badge"></div>
           <p class="guarantee-text">30 DIAS DE GARANTIA</p>
