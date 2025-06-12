@@ -2,214 +2,833 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DETETIVE IA: Descubra a Verdade Sobre Seu Relacionamento</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantas que Curam - Guia Prático de Remédios Caseiros Naturais | eBook</title>
+    <meta name="description" content="Descubra 30 plantas medicinais e receitas naturais para curar ansiedade, gripe, insônia e dores. Guia prático de remédios caseiros sem efeitos colaterais.">
+    <meta name="keywords" content="plantas medicinais, remédios caseiros, medicina natural, eBook saúde, fitoterapia">
+    <meta name="author" content="Plantas que Curam">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2d3e2d;
+            background-color: #f8f6f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #4a6741 0%, #6b8e5a 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .ebook-mockup {
+            width: 300px;
+            height: 400px;
+            background: white;
+            margin: 40px auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #4a6741;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            background: #d2691e;
+            color: white;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(210, 105, 30, 0.4);
+        }
+
+        .cta-button:hover {
+            background: #b8581a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(210, 105, 30, 0.6);
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section:nth-child(even) {
+            background-color: white;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            color: #4a6741;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Problem Section */
+        .problem {
+            background-color: #fff5f5;
+            border-left: 5px solid #d2691e;
+        }
+
+        .problem h2 {
+            color: #8b4513;
+        }
+
+        /* Solution Section */
+        .solution {
+            background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
+        }
+
+        /* Learning List */
+        .learning-list {
+            background-color: white;
+        }
+
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .learning-item {
+            background: #f8f6f0;
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 4px solid #6b8e5a;
+        }
+
+        .learning-item h3 {
+            color: #4a6741;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* Differentials */
+        .differentials {
+            background: linear-gradient(135deg, #6b8e5a 0%, #4a6741 100%);
+            color: white;
+        }
+
+        .differentials h2 {
+            color: white;
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .diff-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .diff-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* Author Section */
+        .author {
+            background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
+        }
+
+        .author-card {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 40px;
+            align-items: start;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .author-photo {
+            text-align: center;
+        }
+
+        .author-content h3 {
+            font-size: 2.2rem;
+            color: #4a6741;
+            margin-bottom: 10px;
+        }
+
+        .author-title {
+            font-size: 1.3rem;
+            color: #d2691e;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .author-credentials {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e8f5e8;
+        }
+
+        .author-story h4 {
+            color: #4a6741;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .author-story p {
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .author-mission {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #6b8e5a;
+            font-style: italic;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            background-color: #f8f6f0;
+            text-align: center;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .testimonial-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #4a6741;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #8b4513;
+        }
+
+        /* Offers */
+        .offer {
+            background: linear-gradient(135deg, #d2691e 0%, #b8581a 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .offer h2 {
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .offer-card {
+            background: white;
+            color: #2d3e2d;
+            border-radius: 20px;
+            padding: 40px 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .offer-card.premium {
+            border: 3px solid #FFD700;
+            transform: scale(1.05);
+        }
+
+        .offer-badge {
+            background: #FFD700;
+            color: #2d3e2d;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+        }
+
+        .offer-header h3 {
+            font-size: 1.8rem;
+            color: #4a6741;
+            margin-bottom: 20px;
+        }
+
+        .offer-price {
+            margin-bottom: 30px;
+        }
+
+        .original-price-small {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .price-currency {
+            font-size: 1.5rem;
+            vertical-align: top;
+        }
+
+        .price-value {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #d2691e;
+        }
+
+        .price-period {
+            font-size: 2rem;
+            color: #d2691e;
+        }
+
+        .offer-benefits {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .offer-benefits h4 {
+            color: #4a6741;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .offer-benefits ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .offer-benefits li {
+            padding: 8px 0;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .savings {
+            background: #e8f5e8;
+            color: #4a6741;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .basic-btn {
+            background: #6b8e5a;
+        }
+
+        .basic-btn:hover {
+            background: #5a7549;
+        }
+
+        .premium-btn {
+            background: #d2691e;
+            font-size: 1.2rem;
+            padding: 20px 30px;
+        }
+
+        .premium-btn:hover {
+            background: #b8581a;
+        }
+
+        /* Guarantee */
+        .guarantee {
+            background-color: #e8f5e8;
+            text-align: center;
+        }
+
+        .guarantee-badge {
+            background: #4a6741;
+            color: white;
+            padding: 30px;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* FAQ */
+        .faq {
+            background-color: white;
+        }
+
+        .faq-item {
+            margin-bottom: 30px;
+            background: #f8f6f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: #6b8e5a;
+            color: white;
+            padding: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .faq-answer {
+            padding: 20px;
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            background: linear-gradient(135deg, #4a6741 0%, #6b8e5a 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .final-cta h2 {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .ebook-mockup {
+                width: 250px;
+                height: 330px;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .section p {
+                font-size: 1.1rem;
+            }
+
+            .cta-button {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+
+            .offers-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .offer-card.premium {
+                transform: scale(1);
+            }
+
+            .price-value {
+                font-size: 3rem;
+            }
+
+            .offer-benefits li {
+                font-size: 0.95rem;
+            }
+
+            .author-card {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px 20px;
+                text-align: center;
+            }
+
+            .author-content h3 {
+                font-size: 1.8rem;
+            }
+
+            .author-story p {
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header class="hero">
-        <h1>DETETIVE IA</h1>
-        <h2>“Copie a conversa, cole na IA, e saiba na hora se existe mentira ou traição. Simples assim.”</h2>
-        
-        <div class="video-container">
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/pL9JjwS7OTY?" frameborder="0" allowfullscreen></iframe>
+    <!-- Header -->
+    <section class="header">
+        <div class="container">
+            <h1>Plantas que Curam</h1>
+            <p class="subtitle">Guia Prático de Remédios Caseiros Naturais</p>
+            <div class="ebook-mockup">
+                <div>
+                    <div style="font-size: 1.5rem; margin-bottom: 10px;">🌿</div>
+                    <div>PLANTAS QUE</div>
+                    <div>CURAM</div>
+                    <div style="font-size: 0.9rem; margin-top: 10px;">Guia Prático</div>
+                </div>
             </div>
-            <a href="#pricing" class="cta-button pulse">QUERO DESCOBRIR A VERDADE</a>
+            <a href="#ofertas" class="cta-button">QUERO MEU ACESSO AGORA!</a>
         </div>
-    </header>
+    </section>
 
-    <main>
-        <section class="benefits">
-            <h3>O Que Você Vai Descobrir:</h3>
-            <ul>
-                <li>✓ Padrões suspeitos de comportamento nas conversas</li>
-                <li>✓ Sinais claros de infidelidade no WhatsApp</li>
-                <li>✓ Como identificar mentiras através das mensagens</li>
-                <li>✓ Técnicas avançadas de análise comportamental</li>
-            </ul>
-        </section>
+    <!-- Problem Section -->
+    <section class="section problem">
+        <div class="container">
+            <h2>Cansado de Remédios Caros e Cheios de Efeitos Colaterais?</h2>
+            <p>Você já se sentiu refém das farmácias? Gastando uma fortuna em medicamentos que prometem curar, mas trazem uma lista interminável de efeitos colaterais?</p>
+            <p>Imagine ter que escolher entre pagar a conta de luz ou comprar o remédio para sua dor de cabeça constante. Ou então tomar um medicamento para ansiedade que te deixa sonolento o dia todo...</p>
+            <p><strong>A natureza sempre teve as respostas que precisamos.</strong> Nossos avós sabiam disso. Eles curavam gripes com chás, aliviavam dores com plantas e viviam vidas mais saudáveis, sem depender de laboratórios.</p>
+        </div>
+    </section>
 
-        <section class="pain-points">
-            <h3>Você Já Se Perguntou...</h3>
-            <div class="questions">
-                <p>❓ Por que seu parceiro(a) anda tão distante?</p>
-                <p>❓ Se as explicações dele(a) fazem sentido?</p>
-                <p>❓ Por que algumas conversas são apagadas?</p>
-            </div>
-        </section>
+    <!-- Solution Section -->
+    <section class="section solution">
+        <div class="container">
+            <h2>A Solução Natural Que Você Estava Procurando</h2>
+            <p>O eBook "Plantas que Curam" reúne todo o conhecimento ancestral sobre medicina natural em um guia prático e moderno.</p>
+            <p>Desenvolvido com base em estudos científicos e tradições milenares, este guia te ensina a usar o poder das plantas para cuidar da sua saúde de forma natural, segura e econômica.</p>
+            <p><strong>Sem efeitos colaterais. Sem dependência química. Apenas a sabedoria pura da natureza.</strong></p>
+        </div>
+    </section>
 
-        <section class="testimonials">
-            <h3>DEPOIMENTOS REAIS</h3>
-            <div class="testimonial-grid">
-                <div class="testimonial">
-                    <div class="quote">"Graças ao Detetive IA, descobri que meu parceiro estava mantendo um relacionamento paralelo há meses. As técnicas de análise foram precisas e me ajudaram a confrontar a situação com evidências concretas."</div>
-                    <div class="author">- Maria S., 34 anos</div>
+    <!-- Learning List -->
+    <section class="section learning-list">
+        <div class="container">
+            <h2>O Que Você Vai Aprender</h2>
+            <div class="learning-grid">
+                <div class="learning-item">
+                    <h3>🌿 30 Plantas Medicinais Poderosas</h3>
+                    <p>Conheça as propriedades e formas de uso das plantas mais eficazes para diversos problemas de saúde.</p>
                 </div>
-                <div class="testimonial">
-                    <div class="quote">"Eu tinha suspeitas, mas não conseguia provas. Com as 30 perguntas do Detetive IA, identifiquei padrões de comportamento que confirmaram minhas suspeitas. Hoje estou em um relacionamento muito mais saudável."</div>
-                    <div class="author">- Carlos R., 29 anos</div>
+                <div class="learning-item">
+                    <h3>😰 Receitas para Ansiedade e Estresse</h3>
+                    <p>Chás e preparados naturais que acalmam a mente e relaxam o corpo sem causar dependência.</p>
                 </div>
-                <div class="testimonial">
-                    <div class="quote">"Este guia é revolucionário! As técnicas de análise de conversas do WhatsApp me mostraram sinais que eu estava ignorando. Consegui descobrir a verdade em apenas 2 semanas."</div>
-                    <div class="author">- Ana P., 27 anos</div>
+                <div class="learning-item">
+                    <h3>🤧 Tratamentos para Gripe e Resfriado</h3>
+                    <p>Xaropes, chás e inalações naturais que fortalecem a imunidade e aceleram a recuperação.</p>
                 </div>
-                <div class="testimonial">
-                    <div class="quote">"O método do Detetive IA é incrível. As perguntas são estratégicas e os padrões comportamentais são muito precisos. Descobri que estava sendo enganado e pude tomar uma decisão informada sobre meu relacionamento."</div>
-                    <div class="author">- Roberto M., 31 anos</div>
+                <div class="learning-item">
+                    <h3>😴 Soluções para Insônia</h3>
+                    <p>Plantas e preparados que induzem o sono naturalmente, garantindo noites reparadoras.</p>
                 </div>
-            </div>
-        </section>
-
-        <section id="pricing" class="offer">
-            <h3>ESCOLHA SEU PLANO</h3>
-            <div class="pricing-container">
-                <div class="pricing-card basic">
-                    <h4>PLANO BÁSICO</h4>
-                    <div class="price">
-                        <p class="old-price">Poderia custar +de R$47,00</p>
-                        <p class="new-price">Por R$10,00</p>
-                    </div>
-                    <ul class="features">
-                        <li>✓ 30 Perguntas Estratégicas</li>
-                        <li>✓ Análise de Padrões</li>
-                        <li>✓ Guia de Confrontação</li>
-                        <li>✓ Acesso Imediato</li>
-                    </ul>
-                    <a href="https://paypagamentostx3.shop/checkout-dark-6934/?add-to-cart=6934" class="cta-button">QUERO ESTE PLANO</a>
+                <div class="learning-item">
+                    <h3>🦴 Alívio Natural para Dores</h3>
+                    <p>Anti-inflamatórios naturais para dores articulares, musculares e de cabeça.</p>
                 </div>
-
-                <div class="pricing-card premium">
-                    <div class="best-value">MAIS VENDIDO</div>
-                    <h4>PLANO PREMIUM</h4>
-                    <div class="price">
-                        <p class="old-price">De R$97,00</p>
-                        <p class="new-price">Por R$27,90</p>
-                    </div>
-                    <ul class="features">
-                        <li>✓ Tudo do Plano Básico</li>
-                        <li>✓ Suporte 24/7 via WhatsApp</li>
-                        <li>✓ 10 Técnicas Avançadas de Investigação</li>
-                        <li>✓ Guia de Recuperação Emocional</li>
-                        <li>✓ Consultoria Individual Detetive Real</li>
-                        <li>✓ Atualizações Vitalícias</li>
-                    </ul>
-                    <a href="https://paypagamentostx3.shop/checkout-dark-6934/?add-to-cart=6934" class="cta-button premium-button">QUERO O PREMIUM</a>
+                <div class="learning-item">
+                    <h3>🌱 Cultivo em Casa</h3>
+                    <p>Como plantar e cuidar das suas próprias plantas medicinais, mesmo em espaços pequenos.</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="emotional-reasons">
-                <h4>O QUE VOCÊ ESTÁ PERDENDO AGORA:</h4>
-                
-                <div class="reason">
-                    <h5>1. Paz Mental e Tranquilidade</h5>
-                    <p>Cada dia que passa sem saber a verdade é mais um dia vivendo com ansiedade e dúvidas que consomem sua energia mental.</p>
+    <!-- Differentials -->
+    <section class="section differentials">
+        <div class="container">
+            <h2>Por Que Este eBook é Diferente</h2>
+            <div class="diff-grid">
+                <div class="diff-item">
+                    <div class="diff-icon">👶</div>
+                    <h3>Fácil para Iniciantes</h3>
+                    <p>Linguagem simples e instruções passo a passo. Qualquer pessoa pode seguir.</p>
                 </div>
-
-                <div class="reason">
-                    <h5>2. Anos Preciosos da Sua Vida</h5>
-                    <p>Quanto mais tempo você espera para descobrir a verdade, mais anos você desperdiça em um relacionamento que pode não ser verdadeiro.</p>
+                <div class="diff-item">
+                    <div class="diff-icon">✅</div>
+                    <h3>Receitas Testadas</h3>
+                    <p>Todas as receitas foram testadas e aprovadas por especialistas em fitoterapia.</p>
                 </div>
-
-                <div class="reason">
-                    <h5>3. Sua Autoestima e Valor Próprio</h5>
-                    <p>Viver na dúvida corrói sua autoconfiança dia após dia, impedindo você de ser sua melhor versão.</p>
+                <div class="diff-item">
+                    <div class="diff-icon">🏪</div>
+                    <h3>Plantas Fáceis de Encontrar</h3>
+                    <p>Usamos apenas plantas que você encontra facilmente em mercados ou pode cultivar em casa.</p>
                 </div>
-
-                <div class="reason">
-                    <h5>4. Oportunidades de Felicidade Real</h5>
-                    <p>Enquanto você permanece preso(a) na incerteza, pode estar perdendo a chance de encontrar um amor verdadeiro e leal.</p>
-                </div>
-
-                <div class="reason">
-                    <h5>5. Seu Tempo e Energia Emocional</h5>
-                    <p>A cada momento que você gasta pensando em suspeitas, é energia que poderia estar sendo investida em seu crescimento pessoal.</p>
-                </div>
-
-                <div class="reason">
-                    <h5>6. Sua Saúde Emocional</h5>
-                    <p>O estresse constante da desconfiança pode causar problemas sérios de saúde mental e física a longo prazo.</p>
-                </div>
-
-                <div class="reason">
-                    <h5>7. Controle da Sua Própria Vida</h5>
-                    <p>Sem conhecer a verdade, você não tem o poder de tomar decisões informadas sobre seu futuro e seu destino.</p>
+                <div class="diff-item">
+                    <div class="diff-icon">💰</div>
+                    <h3>Economia Garantida</h3>
+                    <p>Pare de gastar fortunas em remédios. Uma única receita já paga o investimento no Material.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="guarantee">
-            <h3>Garantia de 30 Dias</h3>
-            <p>Se você não ficar satisfeito(a), devolvemos 100% do seu dinheiro</p>
-        </section>
-
-        <section class="faq">
-            <h3>Perguntas Frequentes</h3>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span class="icon">+</span>
-                        É possível descobrir traição apenas por mensagens?
-                    </div>
-                    <div class="faq-answer">
-                        Sim! Nosso sistema de Detetive IA foi desenvolvido após anos de pesquisa em padrões comportamentais. As mensagens revelam muito mais do que você imagina, especialmente quando você sabe exatamente o que procurar.
-                    </div>
+    <!-- Author Section -->
+    <section class="section author">
+        <div class="container">
+            <h2>Sobre o Autor</h2>
+            <div class="author-card">
+                <div class="author-photo">
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face" alt="Dr. Roberto Mendes - Nutricionista" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;">
                 </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span class="icon">+</span>
-                        O método funciona mesmo se a pessoa for muito discreta?
-                    </div>
-                    <div class="faq-answer">
-                        Absolutamente! Na verdade, quanto mais discreta a pessoa tenta ser, mais sinais ela deixa. Nosso método foi desenvolvido para identificar até mesmo os padrões mais sutis de comportamento suspeito.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span class="icon">+</span>
-                        Quanto tempo leva para ter resultados?
-                    </div>
-                    <div class="faq-answer">
-                        Com nosso método, você pode começar a identificar sinais já nas primeiras 24 horas. A maioria dos usuários consegue descobrir a verdade em 1-2 semanas de análise.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span class="icon">+</span>
-                        O material tem atualizações?
-                    </div>
-                    <div class="faq-answer">
-                        Sim! O método é constantemente atualizado com novos padrões e técnicas de análise. Você terá acesso vitalício a todas as atualizações futuras sem custo adicional.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span class="icon">+</span>
-                        Como recebo o material após a compra?
-                    </div>
-                    <div class="faq-answer">
-                        Imediatamente após a confirmação do pagamento, você receberá acesso ao material completo através de um link exclusivo em seu e-mail. O acesso é instantâneo, 24 horas por dia.
+                <div class="author-content">
+                    <h3>Dr. Roberto Mendes</h3>
+                    <p class="author-title">Nutricionista Clínico e Especialista em Fitoterapia</p>
+                    <p class="author-credentials">CRN 12345 • Pós-graduado em Medicina Integrativa • 15 anos de experiência</p>
+                    
+                    <div class="author-story">
+                        <h4>Por que comecei esta jornada?</h4>
+                        <p>"Minha paixão pela medicina natural começou quando vi minha avó, aos 85 anos, mais saudável que pessoas de 50. Ela nunca pisou em uma farmácia, mas conhecia cada planta do quintal e seus poderes curativos."</p>
+                        
+                        <p>"Após me formar em Nutrição, percebi que estava apenas tratando sintomas com dietas restritivas. Foi quando comecei a estudar fitoterapia e medicina integrativa. Descobri que a natureza já nos deu tudo o que precisamos para viver com saúde plena."</p>
+                        
+                        <p>"Hoje, após ajudar mais de 3.000 pacientes a transformarem suas vidas através das plantas medicinais, decidi compartilhar este conhecimento com o mundo. Cada receita deste eBook foi testada pessoalmente comigo e com meus pacientes."</p>
+                        
+                        <p class="author-mission"><strong>"Minha missão é devolver às pessoas o poder de cuidar da própria saúde, usando a sabedoria ancestral que funciona há milhares de anos."</strong></p>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer>
-        <p>© 2025 Detetive IA - Todos os direitos reservados</p>
-    </footer>
-    
-    <script src="script.js"></script>
+    <!-- Testimonial -->
+    <section class="section testimonial">
+        <div class="container">
+            <h2>O Que Nossos Leitores Dizem</h2>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Eu sofria com insônia há mais de 5 anos e já havia tentado de tudo. Depois que comecei a usar as receitas do 'Plantas que Curam', volto a ter noites de sono tranquilas. O chá de camomila com melissa virou meu ritual noturno. Não troco por nenhum remédio de farmácia!"</p>
+                <p class="testimonial-author">- Maria Helena Silva, 52 anos, Professora</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers -->
+    <section id="ofertas" class="section offer">
+        <div class="container">
+            <h2>Escolha Sua Oferta Especial</h2>
+            <div class="offers-grid">
+                <!-- Oferta Básica -->
+                <div class="offer-card basic">
+                    <div class="offer-header">
+                        <h3>ACESSO BÁSICO</h3>
+                        <div class="offer-price">
+                            <span class="price-currency">R$</span>
+                            <span class="price-value">10</span>
+                            <span class="price-period">,00</span>
+                        </div>
+                    </div>
+                    <div class="offer-benefits">
+                        <h4>✅ O que você recebe:</h4>
+                        <ul>
+                            <li>📖 eBook "Plantas que Curam" completo</li>
+                            <li>🌿 30 plantas medicinais detalhadas</li>
+                            <li>💊 Receitas para ansiedade, gripe e insônia</li>
+                            <li>🏠 Guia de cultivo em casa</li>
+                            <li>💰 Garantia de 7 dias</li>
+                        </ul>
+                    </div>
+                    <a href="https://paypagamentostx3.shop/checkout-dark-6947/?add-to-cart=6947" class="cta-button basic-btn">QUERO O ACESSO BÁSICO</a>
+                </div>
+
+                <!-- Oferta Premium -->
+                <div class="offer-card premium">
+                    <div class="offer-badge">MAIS POPULAR</div>
+                    <div class="offer-header">
+                        <h3>ACESSO COMPLETO</h3>
+                        <div class="offer-price">
+                            <span class="original-price-small">De R$ 97,00</span>
+                            <div>
+                                <span class="price-currency">R$</span>
+                                <span class="price-value">27</span>
+                                <span class="price-period">,90</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offer-benefits">
+                        <h4>✅ Tudo do Básico +</h4>
+                        <ul>
+                            <li>🎁 <strong>BÔNUS:</strong> Guia de Óleos Essenciais</li>
+                            <li>🌱 <strong>BÔNUS:</strong> Receitas de Pomadas Naturais</li>
+                            <li>📱 <strong>BÔNUS:</strong> App com Identificador de Plantas</li>
+                            <li>🎥 <strong>BÔNUS:</strong> 5 Vídeo-aulas Exclusivas</li>
+                            <li>📞 <strong>BÔNUS:</strong> Suporte por WhatsApp</li>
+                            <li>🔄 Atualizações gratuitas e acesso vitalício</li>
+                        </ul>
+                        <div class="savings">
+                            <strong>💰 Economia de R$ 69,10</strong>
+                        </div>
+                    </div>
+                    <a href="https://paypagamentostx3.shop/checkout-dark-6952/?add-to-cart=6952" class="cta-button premium-btn">QUERO O ACESSO COMPLETO</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee -->
+    <section class="section guarantee">
+        <div class="container">
+            <h2>Garantia de Satisfação Total</h2>
+            <div class="guarantee-badge">
+                7 DIAS<br>
+                GARANTIA<br>
+                100%
+            </div>
+            <p>Experimente o eBook por 7 dias. Se não ficar completamente satisfeito, devolvemos 100% do seu dinheiro. Sem perguntas, sem complicações.</p>
+            <p><strong>O risco é todo nosso. Você só tem a ganhar.</strong></p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq">
+        <div class="container">
+            <h2>Perguntas Frequentes</h2>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    As plantas são seguras para qualquer pessoa?
+                </div>
+                <div class="faq-answer">
+                    O eBook inclui todas as contraindicações e cuidados necessários. Sempre recomendamos consultar um profissional de saúde, especialmente se você toma medicamentos ou tem condições médicas específicas.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Onde posso encontrar essas plantas?
+                </div>
+                <div class="faq-answer">
+                    Todas as plantas mencionadas são comuns e podem ser encontradas em mercados, feiras livres, lojas de produtos naturais ou cultivadas em casa. Incluímos um guia de onde encontrar cada uma.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Como recebo o eBook após a compra?
+                </div>
+                <div class="faq-answer">
+                    Após a confirmação do pagamento, você recebe o link para download diretamente no seu email. O acesso é imediato e você pode ler em qualquer dispositivo.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Quanto tempo leva para ver resultados?
+                </div>
+                <div class="faq-answer">
+                    Isso varia de pessoa para pessoa e do problema tratado. Alguns resultados, como alívio de dores ou melhora do sono, podem ser sentidos nas primeiras aplicações. Outros benefícios se acumulam com o uso contínuo.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Não Perca Esta Oportunidade!</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 30px;">Milhares de pessoas já transformaram suas vidas com o conhecimento deste eBook.</p>
+            <p style="font-size: 1.2rem; margin-bottom: 40px;">Você merece uma vida mais saudável, natural e livre de dependência química.</p>
+            <a href="#" class="cta-button" style="font-size: 1.4rem; padding: 20px 50px;">TRANSFORMAR MINHA SAÚDE AGORA!</a>
+            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.8;">⚡ Download imediato • 💰 Garantia de 7 dias • 🔒 Compra 100% segura</p>
+        </div>
+    </section>
+
+    <script>
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Close all FAQ answers
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked answer if it wasn't active
+            if (!isActive) {
+                answer.classList.add('active');
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 
 <script>
-  window.pixelId = "684370d4b8e29ffdb55f05ad";
+  window.pixelId = "684b4f8fbc9d3ae5d6f0f24c";
   var a = document.createElement("script");
   a.setAttribute("async", "");
   a.setAttribute("defer", "");
