@@ -1,0 +1,49 @@
+"Crie uma página em HTML, CSS e JavaScript com um quiz interativo para motoristas de aplicativo. O quiz deve conter 10 perguntas de múltipla escolha, uma pergunta por vez, com botões de 'Próxima' para avançar. Ao finalizar o quiz, deve aparecer uma mensagem personalizada incentivando o motorista a comprar uma planilha financeira que ajuda a controlar ganhos, despesas, manutenções e lucros. Inclua um botão de 'Quero minha planilha' que leve para o link: https://seulinkdecheckout.com (substituir pelo link real). O design deve ser simples, leve, responsivo e com tons de azul e branco. O funcionamento deve ser todo em JavaScript, sem backend.
+
+As perguntas são:
+Qual aplicativo você trabalha?
+Opções: Uber, 99, InDrive, Todos
+
+Quantas horas você trabalha por dia?
+Opções: Menos de 6 horas, De 6 a 8 horas, Mais de 8 horas
+
+Quantos dias você trabalha por semana?
+Opções: De 1 a 3 dias, De 4 a 5 dias, De 6 a 7 dias
+
+Você anota seus ganhos e despesas atualmente?
+Opções: Sim, tudo na ponta da caneta; Só alguns; Não, nunca anotei
+
+Com que frequência faz manutenção no seu carro?
+Opções: Sempre em dia; Só quando quebra; Nem lembro a última vez
+
+Quanto você gasta, em média, com combustível por semana?
+Opções: Menos de R$ 250; Entre R$ 250 e R$ 500; Mais de R$ 500
+
+Você separa dinheiro para manutenção e emergências?
+Opções: Sim, sempre; Tento, mas nem sempre consigo; Não, nunca sobra
+
+Você sabe exatamente quanto lucra líquido por mês?
+Opções: Sim; Mais ou menos; Não faço ideia
+
+Se você precisasse trocar um pneu hoje, teria dinheiro reservado?
+Opções: Sim, sem problemas; Talvez, depende do valor; Não, teria que parcelar ou pedir emprestado
+
+Qual desses é seu maior desafio hoje como motorista de app?
+Opções: Saber se estou lucrando ou tomando prejuízo; Controlar gastos como combustível e manutenção; Guardar dinheiro todo mês; Organizar minhas finanças de forma simples
+
+✅ Ao final do quiz, mostrar a seguinte mensagem:
+"Analisando suas respostas, percebo que você precisa urgente de uma ferramenta que organize seus ganhos, despesas, manutenções e te ajude a entender se realmente está tendo lucro. Por isso, apresento a Planilha Inteligente para Motoristas de App, que já ajudou centenas de motoristas a terem controle total da sua vida financeira."
+
+➡️ Mostrar o botão: 'Quero minha planilha agora' que leva para: https://seulinkdecheckout.com
+
+Observações:
+
+Usar HTML, CSS e JavaScript puro.
+
+Página responsiva, funcionando bem no celular.
+
+Visual limpo, com fundo branco e detalhes em azul.
+
+Perguntas aparecem uma por vez.
+
+Exibir barra de progresso (opcional) para indicar o andamento do quiz."
