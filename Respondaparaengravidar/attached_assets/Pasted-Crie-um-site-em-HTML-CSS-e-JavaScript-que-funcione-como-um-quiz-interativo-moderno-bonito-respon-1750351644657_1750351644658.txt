@@ -1,0 +1,56 @@
+Crie um site em HTML, CSS e JavaScript que funcione como um quiz interativo, moderno, bonito, responsivo, com perguntas e respostas. 
+
+Tema: Quiz para mulheres que estão tentando engravidar.
+
+O objetivo é gerar um resultado no final que aquece a pessoa para comprar um eBook chamado **“Guia da Tentante: Como se Preparar Para Engravidar de Forma Saudável”**, com um botão que leva para a página de vendas no final.
+
+A estética do site deve ser:
+- Feminina, acolhedora e profissional
+- Cores suaves: branco, rosa claro, lilás e azul bebê
+- Botões em rosa ou lilás
+- Fontes elegantes, arredondadas e bem legíveis
+- Design clean, espaçamento confortável, bem organizado
+- 100% responsivo para mobile e desktop
+
+Funcionalidades do quiz:
+- Apresentar as perguntas uma de cada vez
+- Barra de progresso no topo mostrando avanço (ex.: "Pergunta 3 de 20")
+- Botões para selecionar as respostas
+- Permitir avançar após responder
+- No final, pedir nome e e-mail para captar o lead
+- Após preencher nome e e-mail, mostrar uma mensagem personalizada com o nome da pessoa, reforçando que ela precisa se preparar, e oferecer um botão que leva para a página de vendas: [https://seulinkdevendas.com] (substituir depois pelo link real)
+
+Conteúdo das perguntas (usar exatamente essas perguntas e alternativas):
+
+1. Você está tentando engravidar há quanto tempo?
+2. Você já usou ou está usando algum método contraceptivo?
+3. Já fez algum exame para investigar sua fertilidade?
+4. Seu médico te orientou sobre preparação antes de engravidar?
+5. Você sente que tem apoio do seu parceiro nessa jornada?
+6. Já passou pela experiência de perda gestacional?
+7. Como está sua ansiedade nesse processo?
+8. Você pratica atividade física regularmente?
+9. Sua alimentação atualmente é:
+10. Seu peso atual está:
+11. Você já faz uso de alguma suplementação?
+12. Tem alguma condição de saúde diagnosticada? (SOP, tireoide, endometriose, nenhuma)
+13. Seu ciclo menstrual é:
+14. Você sente sintomas como cólicas intensas, ciclos longos, ausência de ovulação ou muito muco cervical?
+15. Nos últimos meses, você sente:
+16. Seu parceiro já fez algum exame de fertilidade?
+17. Você acredita que pode existir algo te impedindo de engravidar?
+18. Se você pudesse resolver um problema agora, qual seria?
+19. Se eu te entregasse agora um passo a passo comprovado, fácil de seguir, para aumentar sua fertilidade e se preparar para gerar uma vida saudável, você gostaria?
+20. Por fim, qual seu nome e e-mail para te enviar o resultado personalizado?
+
+No final do quiz:
+- Exibir mensagem de agradecimento com o nome da pessoa (ex.: "Parabéns, Ana!")
+- Texto: **“Pelas suas respostas, ficou claro que existe um caminho para você se preparar de forma saudável e aumentar muito suas chances de gerar uma vida. Clique no botão abaixo e descubra como o Guia da Tentante vai te ajudar nessa jornada!”**
+- Botão chamativo com texto: **“Quero me preparar para o positivo agora!”** 
+- O botão deve direcionar para [https://seulinkdevendas.com] (colocar como link provisório para ser trocado depois)
+
+Observações:
+- Todo o código deve ser organizado, com comentários explicando as seções
+- O site deve ser leve e carregar rápido
+- Compatível com todos os navegadores modernos e dispositivos móveis
+
