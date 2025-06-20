@@ -164,7 +164,198 @@ body {
     margin: 40px 0;
 }
 
+/* Offers Section */
+.offers-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+}
 
+.offers-section h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.offer-card {
+    background: white;
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.offer-card:hover {
+    transform: translateY(-10px);
+}
+
+.offer-card.premium {
+    border: 3px solid #ff6b9d;
+    transform: scale(1.05);
+}
+
+.offer-header {
+    background: linear-gradient(135deg, #ff9eb5, #c89dff);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.offer-card.premium .offer-header {
+    background: linear-gradient(135deg, #ff6b9d, #ff4757);
+}
+
+.offer-header h3 {
+    font-size: 2em;
+    margin: 0;
+    font-weight: 700;
+}
+
+.offer-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #ff4757;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+    transform: rotate(15deg);
+}
+
+.premium-badge {
+    background: #ffd700 !important;
+    color: #333 !important;
+}
+
+.offer-price {
+    padding: 30px;
+    text-align: center;
+    background: #f8f9fa;
+    border-bottom: 2px dashed #ddd;
+}
+
+.offer-price .price-old {
+    display: block;
+    color: #999;
+    text-decoration: line-through;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.offer-price .price-main {
+    display: block;
+    color: #ff4757;
+    font-size: 3em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.offer-price .discount {
+    background: #4CAF50;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-weight: 600;
+}
+
+.offer-content {
+    padding: 30px;
+    color: #333;
+}
+
+.offer-content h4 {
+    color: #ff6b9d;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+}
+
+.offer-content ul {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.offer-content li {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.offer-content li:last-child {
+    border-bottom: none;
+}
+
+.offer-content li i {
+    color: #4CAF50;
+    margin-right: 15px;
+    font-size: 1.2em;
+}
+
+.offer-button {
+    display: block;
+    background: linear-gradient(45deg, #ff6b9d, #ff8fab);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2em;
+    margin: 0 30px 20px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+}
+
+.premium-button {
+    background: linear-gradient(45deg, #ff4757, #ff6b9d) !important;
+    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3) !important;
+}
+
+.offer-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 107, 157, 0.5);
+}
+
+.guarantee {
+    text-align: center;
+    padding: 20px;
+    background: #f0f8ff;
+    color: #4CAF50;
+    font-weight: 600;
+    border-radius: 0 0 20px 20px;
+}
+
+.guarantee i {
+    margin-right: 10px;
+}
+
+.comparison-note {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.comparison-note p {
+    font-size: 1.2em;
+    margin: 0;
+}
 
 /* Benefits Section */
 .benefits-section {
@@ -688,6 +879,15 @@ body {
     .cta-button, .cta-button-final {
         width: 100%;
         text-align: center;
+    }
+    
+    .offers-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .offer-card.premium {
+        transform: none;
     }
     
     .container {

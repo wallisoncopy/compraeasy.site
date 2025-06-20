@@ -74,6 +74,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Scroll específico para botão de ofertas
+    document.querySelectorAll('.scroll-to-offers').forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const offersSection = document.getElementById('ofertas');
+            if (offersSection) {
+                offersSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
     
     // Animação de entrada dos elementos
     const observerOptions = {
