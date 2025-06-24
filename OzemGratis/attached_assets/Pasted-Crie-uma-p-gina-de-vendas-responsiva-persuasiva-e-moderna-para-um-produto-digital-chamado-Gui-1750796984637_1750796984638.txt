@@ -1,0 +1,89 @@
+Crie uma página de vendas responsiva, persuasiva e moderna para um produto digital chamado:
+
+🎯 “Guia Secreto: Como Conseguir Ozempic de Graça”
+
+Use tons de azul, branco e verde para transmitir confiança e saúde. O layout deve ter uma boa hierarquia, com espaçamento e botões bem destacados. Siga esta estrutura:
+
+---
+
+🔹 HEADLINE (impactante no topo):
+🚨 ATENÇÃO: Você não precisa mais gastar fortunas para conseguir Ozempic!
+
+🔹 SUBHEADLINE:
+Descubra como brasileiros estão conseguindo Ozempic de graça ou com até 90% de desconto — de forma 100% legal, segura e sem plano de saúde!
+
+---
+
+🔹 APRESENTAÇÃO DO CRIADOR DO MÉTODO:
+Foto circular à esquerda (imagem de um homem branco de jaleco sorrindo), e à direita:
+
+👨‍⚕️ Desenvolvido por: Dr. Leandro Silveira, farmacêutico clínico com 17 anos de experiência.  
+🧬 Após atender centenas de pacientes que não conseguiam acesso ao tratamento, Dr. Leandro criou esse guia para mostrar os caminhos legais, pouco divulgados, para conseguir Ozempic sem pagar caro.
+
+---
+
+🔹 BENEFÍCIOS (com ícones ou emojis de ✅):
+✅ Passo a passo para conseguir Ozempic pelo SUS ou farmácias com apoio.  
+✅ Como conseguir prescrição com consultas populares.  
+✅ Onde encontrar cupons, cadastros e programas de apoio de laboratórios.  
+✅ Dicas para evitar os efeitos colaterais mais comuns.  
+✅ Checklists, tutoriais e vídeo bônus explicando tudo de forma simples.
+
+---
+
+🔹 OFERTAS:
+Divida em dois blocos com bordas arredondadas e fundo levemente destacado:
+
+🟢 **Plano Essencial – R$ 10**  
+Inclui:  
+📘 Guia completo em PDF  
+✅ Checklist para consulta e cadastro  
+📽️ Vídeo de passo a passo  
+[ BOTÃO: QUERO GARANTIR POR R$ 10 ]
+
+🔵 **Plano Premium – R$ 19,90**  
+Inclui tudo do Essencial +  
+📋 Lista de 10 clínicas populares que prescrevem Ozempic  
+🎁 Bônus: Mini cardápio anti-enjoo (para evitar efeitos colaterais)  
+🎥 Bônus 2: Acesso a uma aula rápida “como não engordar depois do tratamento”  
+[ BOTÃO: QUERO A VERSÃO COMPLETA R$ 19,90 ]
+
+---
+
+🔹 O QUE VOCÊ VAI PERDER SE NÃO ADQUIRIR:
+❌ Continuar pagando caro por um tratamento que pode sair de graça.  
+❌ Se arriscar em automedicação sem orientação.  
+❌ Cair em golpes ou comprar produtos falsificados.  
+❌ Desistir por não saber onde buscar ajuda.
+
+---
+
+🔹 FAQ – PERGUNTAS FREQUENTES:
+**1. Preciso de receita?**  
+R: Sim, mas no guia mostramos como conseguir uma legalmente e de forma acessível.
+
+**2. Funciona mesmo?**  
+R: O guia mostra caminhos reais e atualizados que já ajudaram centenas de pessoas.
+
+**3. É seguro?**  
+R: Sim. O conteúdo foi desenvolvido por um farmacêutico com anos de experiência.
+
+**4. Vou receber acesso na hora?**  
+R: Sim. Após a compra, você recebe tudo por e-mail de forma automática.
+
+**5. E se eu não gostar?**  
+R: Você tem 7 dias de garantia. Basta pedir e devolvemos 100% do seu dinheiro.
+
+---
+
+🔹 GARANTIA:
+🛡️ Satisfação garantida ou seu dinheiro de volta em 7 dias. Zero risco para você.
+
+---
+
+🔹 RODAPÉ LEGAL:
+Este site não é afiliado à Novo Nordisk, Ozempic ou qualquer laboratório. O conteúdo é informativo e baseado em orientações reais de acesso à saúde.
+
+---
+
+Crie o site em HTML e CSS puros, responsivo, com foco em conversão, sem frameworks externos. Os botões devem ter destaque, cantos arredondados e animação suave ao passar o mouse.
