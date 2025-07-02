@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Detox 3D - Transforme seu corpo em 3 dias</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- INÍCIO -->
+    <div id="start" class="section">
+      <div class="header-icon">
+        <i class="fas fa-sparkles"></i>
+      </div>
+      <h1>✨ Descubra se o Detox 3D é para você</h1>
+      <div class="tagline">
+        <p><strong><i class="fas fa-leaf"></i> Desincha. Destrava. Derrete Gordura.</strong></p>
+      </div>
+      <p class="description">Veja como mulheres comuns estão eliminando até <strong>2,8kg em 3 dias</strong> sem passar fome.</p>
+      
+    
+      
+      <div class="benefits">
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>100% Natural</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-clock"></i>
+          <span>Apenas 3 dias</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-heart"></i>
+          <span>Sem sofrimento</span>
+        </div>
+      </div>
+
+      <button onclick="startQuiz()" class="start-btn">
+        <i class="fas fa-gift"></i>
+        Iniciar Teste Gratuito
+      </button>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quiz" class="section hidden">
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span class="progress-text" id="progressText">1 de 14</span>
+      </div>
+      
+      <div id="quizContent"></div>
+      
+      <div class="quiz-navigation">
+        <button type="button" onclick="prevQuestion()" id="prevBtn" class="nav-btn prev-btn hidden">
+          <i class="fas fa-arrow-left"></i>
+          Anterior
+        </button>
+        <button type="button" onclick="nextQuestion()" id="nextBtn" class="nav-btn next-btn">
+          Próxima
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- FINAL -->
+    <div id="result" class="section hidden">
+      <div class="result-icon">
+        <i class="fas fa-trophy"></i>
+      </div>
+      <h2>🎉 Você está pronta para sua transformação!</h2>
+      <p>Baseado nas suas respostas, seu corpo está pedindo por uma mudança positiva.</p>
+      
+     
+
+      <div class="result-highlights">
+        <div class="highlight">
+          <i class="fas fa-leaf"></i>
+          <h3>Método 100% Natural</h3>
+          <p>Sem químicos ou artifícios</p>
+        </div>
+        <div class="highlight">
+          <i class="fas fa-fire"></i>
+          <h3>Queima Gordura</h3>
+          <p>Derrete até 2,8kg em 3 dias</p>
+        </div>
+        <div class="highlight">
+          <i class="fas fa-smile"></i>
+          <h3>Sem Sofrimento</h3>
+          <p>Saudável e prazeroso</p>
+        </div>
+      </div>
+
+      <p class="final-message">
+        <strong>O Detox 3D</strong> é um método revolucionário que vai te ajudar a 
+        <span class="highlight-text">desinchar, destravar e derreter gordura</span> em apenas 3 dias.
+      </p>
+      
+      <button onclick="showTransformation()" class="cta-btn pulse">
+        <i class="fas fa-rocket"></i>
+        Quero Começar Minha Transformação Agora
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
