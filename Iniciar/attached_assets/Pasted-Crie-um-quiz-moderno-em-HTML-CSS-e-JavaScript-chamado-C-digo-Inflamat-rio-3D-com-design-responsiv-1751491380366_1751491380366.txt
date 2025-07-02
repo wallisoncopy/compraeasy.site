@@ -1,0 +1,52 @@
+Crie um quiz moderno em HTML, CSS e JavaScript chamado “Código Inflamatório 3D” com design responsivo para celular, cores suaves (verde claro e branco), animações leves e barra de progresso.
+
+O objetivo do quiz é identificar se a mulher está com retenção, inflamação ou metabolismo lento.
+
+Divida o quiz em 3 fases com pontuação secreta. No final, o quiz deve mostrar um diagnóstico baseado no total de pontos:
+
+Até 10 pontos: Fase 1 – Retenção leve
+
+11 a 20 pontos: Fase 2 – Inflamação oculta
+
+Acima de 20 pontos: Fase 3 – Travamento metabólico
+
+Use perguntas com linguagem emocional, modeladas no estilo da página https://inlead.digital/mounja-ro/. Aqui estão as perguntas para usar no quiz:
+
+✅ Fase 1 – Retenção Invisível (ponto: 1 cada)
+Você se sente inchada logo ao acordar, mesmo sem comer nada pesado?
+
+Já percebeu o rosto ou o corpo mais “cheios” ao longo do dia, sem explicação?
+
+Você bebe água, mas parece que tudo fica “preso” no seu corpo?
+
+Sua barriga parece sempre dura ou com sensação de estufamento?
+
+✅ Fase 2 – Inflamação Oculta (ponto: 2 cada)
+Você sente que seu intestino não funciona como deveria?
+
+Já sentiu desconforto ou até dor abdominal depois de comer?
+
+Mesmo fazendo “tudo certo”, seu corpo não responde mais como antes?
+
+Você sente que algo está travando seu emagrecimento e não sabe o que é?
+
+✅ Fase 3 – Metabolismo Lento (ponto: 3 cada)
+Você se sente cansada ou sem energia grande parte do dia?
+
+Já tentou emagrecer, teve resultado, mas engordou tudo de novo (ou mais)?
+
+Você sente que está vivendo no piloto automático, sem ânimo?
+
+Já pensou: “Meu corpo não é mais o mesmo de antes”?
+
+Ao final do quiz, mostre o diagnóstico emocional com o nome da fase e uma explicação curta do que isso significa. Em seguida, apresente o método:
+
+🟢 Detox 3D – Desincha. Destrava. Derrete Gordura.
+
+Adicione um botão verde com o texto:
+“Quero Começar Agora com o Detox 3D 💚” (link personalizado).
+
+Use barra de progresso no topo, botões grandes e visual limpo.
+Use apenas HTML, CSS e JavaScript puro (sem frameworks).
+Gere o código completo e pronto para rodar no navegador.
+
