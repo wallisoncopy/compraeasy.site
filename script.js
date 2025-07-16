@@ -1,3 +1,4 @@
+
 // Smooth scrolling for navigation
 document.addEventListener('DOMContentLoaded', function() {
     // Add smooth scrolling to all links
@@ -231,4 +232,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
