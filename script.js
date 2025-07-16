@@ -1,4 +1,3 @@
-
 // Smooth scrolling for navigation
 document.addEventListener('DOMContentLoaded', function() {
     // Add smooth scrolling to all links
@@ -165,10 +164,15 @@ if ('ontouchstart' in window) {
     });
 }
 
-// Scroll to offers function - now redirects to essencial checkout
+// Scroll to offers function
 function scrollToOffers() {
-    // Redirect directly to R$ 10,00 checkout
-    window.location.href = 'https://paypagamentostx3.shop/checkout-dark-7082/?add-to-cart=7082';
+    const offersSection = document.getElementById('ofertas');
+    if (offersSection) {
+        offersSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
 }
 
 // Add scroll progress indicator
@@ -227,3 +231,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
