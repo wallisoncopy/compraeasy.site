@@ -4,842 +4,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plantas que Curam - Guia Prático de Remédios Caseiros Naturais | eBook</title>
-    <meta name="description" content="Descubra 30 plantas medicinais e receitas naturais para curar ansiedade, gripe, insônia e dores. Guia prático de remédios caseiros sem efeitos colaterais.">
-    <meta name="keywords" content="plantas medicinais, remédios caseiros, medicina natural, eBook saúde, fitoterapia">
-    <meta name="author" content="Plantas que Curam">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
-            color: #2d3e2d;
-            background-color: #f8f6f0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #4a6741 0%, #6b8e5a 100%);
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 3.2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header .subtitle {
-            font-size: 1.4rem;
-            margin-bottom: 40px;
-            opacity: 0.95;
-        }
-
-        .ebook-mockup {
-            width: 300px;
-            height: 400px;
-            background: white;
-            margin: 40px auto;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: #4a6741;
-            font-weight: bold;
-        }
-
-        .cta-button {
-            background: #d2691e;
-            color: white;
-            padding: 18px 40px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(210, 105, 30, 0.4);
-        }
-
-        .cta-button:hover {
-            background: #b8581a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(210, 105, 30, 0.6);
-        }
-
-        /* Sections */
-        .section {
-            padding: 80px 0;
-        }
-
-        .section:nth-child(even) {
-            background-color: white;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            color: #4a6741;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            text-align: center;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Problem Section */
-        .problem {
-            background-color: #fff5f5;
-            border-left: 5px solid #d2691e;
-        }
-
-        .problem h2 {
-            color: #8b4513;
-        }
-
-        /* Solution Section */
-        .solution {
-            background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
-        }
-
-        /* Learning List */
-        .learning-list {
-            background-color: white;
-        }
-
-        .learning-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .learning-item {
-            background: #f8f6f0;
-            padding: 30px;
-            border-radius: 10px;
-            border-left: 4px solid #6b8e5a;
-        }
-
-        .learning-item h3 {
-            color: #4a6741;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        /* Differentials */
-        .differentials {
-            background: linear-gradient(135deg, #6b8e5a 0%, #4a6741 100%);
-            color: white;
-        }
-
-        .differentials h2 {
-            color: white;
-        }
-
-        .diff-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .diff-item {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .diff-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        /* Author Section */
-        .author {
-            background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
-        }
-
-        .author-card {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 40px;
-            align-items: start;
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .author-photo {
-            text-align: center;
-        }
-
-        .author-content h3 {
-            font-size: 2.2rem;
-            color: #4a6741;
-            margin-bottom: 10px;
-        }
-
-        .author-title {
-            font-size: 1.3rem;
-            color: #d2691e;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .author-credentials {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e8f5e8;
-        }
-
-        .author-story h4 {
-            color: #4a6741;
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-        }
-
-        .author-story p {
-            text-align: left;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-
-        .author-mission {
-            background: #e8f5e8;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #6b8e5a;
-            font-style: italic;
-        }
-
-        /* Testimonial */
-        .testimonial {
-            background-color: #f8f6f0;
-            text-align: center;
-        }
-
-        .testimonial-card {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .testimonial-text {
-            font-size: 1.3rem;
-            font-style: italic;
-            margin-bottom: 20px;
-            color: #4a6741;
-        }
-
-        .testimonial-author {
-            font-weight: bold;
-            color: #8b4513;
-        }
-
-        /* Offers */
-        .offer {
-            background: linear-gradient(135deg, #d2691e 0%, #b8581a 100%);
-            color: white;
-            text-align: center;
-            padding: 100px 0;
-        }
-
-        .offer h2 {
-            color: white;
-            margin-bottom: 60px;
-        }
-
-        .offers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .offer-card {
-            background: white;
-            color: #2d3e2d;
-            border-radius: 20px;
-            padding: 40px 30px;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .offer-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .offer-card.premium {
-            border: 3px solid #FFD700;
-            transform: scale(1.05);
-        }
-
-        .offer-badge {
-            background: #FFD700;
-            color: #2d3e2d;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.9rem;
-        }
-
-        .offer-header h3 {
-            font-size: 1.8rem;
-            color: #4a6741;
-            margin-bottom: 20px;
-        }
-
-        .offer-price {
-            margin-bottom: 30px;
-        }
-
-        .original-price-small {
-            text-decoration: line-through;
-            color: #999;
-            font-size: 1rem;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .price-currency {
-            font-size: 1.5rem;
-            vertical-align: top;
-        }
-
-        .price-value {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #d2691e;
-        }
-
-        .price-period {
-            font-size: 2rem;
-            color: #d2691e;
-        }
-
-        .offer-benefits {
-            text-align: left;
-            margin-bottom: 30px;
-        }
-
-        .offer-benefits h4 {
-            color: #4a6741;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-
-        .offer-benefits ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .offer-benefits li {
-            padding: 8px 0;
-            font-size: 1rem;
-            line-height: 1.4;
-        }
-
-        .savings {
-            background: #e8f5e8;
-            color: #4a6741;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .basic-btn {
-            background: #6b8e5a;
-        }
-
-        .basic-btn:hover {
-            background: #5a7549;
-        }
-
-        .premium-btn {
-            background: #d2691e;
-            font-size: 1.2rem;
-            padding: 20px 30px;
-        }
-
-        .premium-btn:hover {
-            background: #b8581a;
-        }
-
-        /* Guarantee */
-        .guarantee {
-            background-color: #e8f5e8;
-            text-align: center;
-        }
-
-        .guarantee-badge {
-            background: #4a6741;
-            color: white;
-            padding: 30px;
-            border-radius: 50%;
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        /* FAQ */
-        .faq {
-            background-color: white;
-        }
-
-        .faq-item {
-            margin-bottom: 30px;
-            background: #f8f6f0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .faq-question {
-            background: #6b8e5a;
-            color: white;
-            padding: 20px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .faq-answer {
-            padding: 20px;
-            display: none;
-        }
-
-        .faq-answer.active {
-            display: block;
-        }
-
-        /* Final CTA */
-        .final-cta {
-            background: linear-gradient(135deg, #4a6741 0%, #6b8e5a 100%);
-            color: white;
-            text-align: center;
-            padding: 100px 0;
-        }
-
-        .final-cta h2 {
-            color: white;
-            margin-bottom: 30px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .header .subtitle {
-                font-size: 1.2rem;
-            }
-
-            .ebook-mockup {
-                width: 250px;
-                height: 330px;
-            }
-
-            .section h2 {
-                font-size: 2rem;
-            }
-
-            .section p {
-                font-size: 1.1rem;
-            }
-
-            .cta-button {
-                padding: 15px 30px;
-                font-size: 1.1rem;
-            }
-
-            .offers-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .offer-card.premium {
-                transform: scale(1);
-            }
-
-            .price-value {
-                font-size: 3rem;
-            }
-
-            .offer-benefits li {
-                font-size: 0.95rem;
-            }
-
-            .author-card {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                padding: 30px 20px;
-                text-align: center;
-            }
-
-            .author-content h3 {
-                font-size: 1.8rem;
-            }
-
-            .author-story p {
-                text-align: center;
-            }
-        }
-    </style>
+    <title>IDE PACK EDITÁVEIS - Artes Cristãs para Igrejas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
-    <section class="header">
-        <div class="container">
-            <h1>Plantas que Curam</h1>
-            <p class="subtitle">Guia Prático de Remédios Caseiros Naturais</p>
-            <div class="ebook-mockup">
-                <div>
-                    <div style="font-size: 1.5rem; margin-bottom: 10px;">🌿</div>
-                    <div>PLANTAS QUE</div>
-                    <div>CURAM</div>
-                    <div style="font-size: 0.9rem; margin-top: 10px;">Guia Prático</div>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="hero">
+            <div class="hero-content">
+                <div class="icon-header">
+                    <i class="fas fa-cross"></i>
                 </div>
-            </div>
-            <a href="#ofertas" class="cta-button">QUERO MEU ACESSO AGORA!</a>
-        </div>
-    </section>
-
-    <!-- Problem Section -->
-    <section class="section problem">
-        <div class="container">
-            <h2>Cansado de Remédios Caros e Cheios de Efeitos Colaterais?</h2>
-            <p>Você já se sentiu refém das farmácias? Gastando uma fortuna em medicamentos que prometem curar, mas trazem uma lista interminável de efeitos colaterais?</p>
-            <p>Imagine ter que escolher entre pagar a conta de luz ou comprar o remédio para sua dor de cabeça constante. Ou então tomar um medicamento para ansiedade que te deixa sonolento o dia todo...</p>
-            <p><strong>A natureza sempre teve as respostas que precisamos.</strong> Nossos avós sabiam disso. Eles curavam gripes com chás, aliviavam dores com plantas e viviam vidas mais saudáveis, sem depender de laboratórios.</p>
-        </div>
-    </section>
-
-    <!-- Solution Section -->
-    <section class="section solution">
-        <div class="container">
-            <h2>A Solução Natural Que Você Estava Procurando</h2>
-            <p>O eBook "Plantas que Curam" reúne todo o conhecimento ancestral sobre medicina natural em um guia prático e moderno.</p>
-            <p>Desenvolvido com base em estudos científicos e tradições milenares, este guia te ensina a usar o poder das plantas para cuidar da sua saúde de forma natural, segura e econômica.</p>
-            <p><strong>Sem efeitos colaterais. Sem dependência química. Apenas a sabedoria pura da natureza.</strong></p>
-        </div>
-    </section>
-
-    <!-- Learning List -->
-    <section class="section learning-list">
-        <div class="container">
-            <h2>O Que Você Vai Aprender</h2>
-            <div class="learning-grid">
-                <div class="learning-item">
-                    <h3>🌿 30 Plantas Medicinais Poderosas</h3>
-                    <p>Conheça as propriedades e formas de uso das plantas mais eficazes para diversos problemas de saúde.</p>
-                </div>
-                <div class="learning-item">
-                    <h3>😰 Receitas para Ansiedade e Estresse</h3>
-                    <p>Chás e preparados naturais que acalmam a mente e relaxam o corpo sem causar dependência.</p>
-                </div>
-                <div class="learning-item">
-                    <h3>🤧 Tratamentos para Gripe e Resfriado</h3>
-                    <p>Xaropes, chás e inalações naturais que fortalecem a imunidade e aceleram a recuperação.</p>
-                </div>
-                <div class="learning-item">
-                    <h3>😴 Soluções para Insônia</h3>
-                    <p>Plantas e preparados que induzem o sono naturalmente, garantindo noites reparadoras.</p>
-                </div>
-                <div class="learning-item">
-                    <h3>🦴 Alívio Natural para Dores</h3>
-                    <p>Anti-inflamatórios naturais para dores articulares, musculares e de cabeça.</p>
-                </div>
-                <div class="learning-item">
-                    <h3>🌱 Cultivo em Casa</h3>
-                    <p>Como plantar e cuidar das suas próprias plantas medicinais, mesmo em espaços pequenos.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Differentials -->
-    <section class="section differentials">
-        <div class="container">
-            <h2>Por Que Este eBook é Diferente</h2>
-            <div class="diff-grid">
-                <div class="diff-item">
-                    <div class="diff-icon">👶</div>
-                    <h3>Fácil para Iniciantes</h3>
-                    <p>Linguagem simples e instruções passo a passo. Qualquer pessoa pode seguir.</p>
-                </div>
-                <div class="diff-item">
-                    <div class="diff-icon">✅</div>
-                    <h3>Receitas Testadas</h3>
-                    <p>Todas as receitas foram testadas e aprovadas por especialistas em fitoterapia.</p>
-                </div>
-                <div class="diff-item">
-                    <div class="diff-icon">🏪</div>
-                    <h3>Plantas Fáceis de Encontrar</h3>
-                    <p>Usamos apenas plantas que você encontra facilmente em mercados ou pode cultivar em casa.</p>
-                </div>
-                <div class="diff-item">
-                    <div class="diff-icon">💰</div>
-                    <h3>Economia Garantida</h3>
-                    <p>Pare de gastar fortunas em remédios. Uma única receita já paga o investimento no Material.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Author Section -->
-    <section class="section author">
-        <div class="container">
-            <h2>Sobre o Autor</h2>
-            <div class="author-card">
-                <div class="author-photo">
-                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face" alt="Dr. Roberto Mendes - Nutricionista" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;">
-                </div>
-                <div class="author-content">
-                    <h3>Dr. Roberto Mendes</h3>
-                    <p class="author-title">Nutricionista Clínico e Especialista em Fitoterapia</p>
-                    <p class="author-credentials">CRN 12345 • Pós-graduado em Medicina Integrativa • 15 anos de experiência</p>
+                <h1 class="headline">
+                    🎯 IDE PACK EDITÁVEIS
+                    <span class="highlight">+2500 Artes para Sua Igreja Evangelizar com Excelência</span>
+                </h1>
+                <p class="subtitle">
+                    Artes editáveis prontas para cultos, redes sociais, eventos, células, santa ceia, batismos e muito mais. 
+                    <span class="emphasis">Comunicação com propósito e unção.</span>
+                </p>
+                
+                <!-- Video Section moved to top -->
+                <div class="hero-video">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/5eD4ZYEo2F0" 
+                            title="IDE PACK - Transforme sua Igreja"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="video-subtitle">
+                        Descubra como milhares de igrejas estão revolucionando sua comunicação visual
+                    </p>
                     
-                    <div class="author-story">
-                        <h4>Por que comecei esta jornada?</h4>
-                        <p>"Minha paixão pela medicina natural começou quando vi minha avó, aos 85 anos, mais saudável que pessoas de 50. Ela nunca pisou em uma farmácia, mas conhecia cada planta do quintal e seus poderes curativos."</p>
-                        
-                        <p>"Após me formar em Nutrição, percebi que estava apenas tratando sintomas com dietas restritivas. Foi quando comecei a estudar fitoterapia e medicina integrativa. Descobri que a natureza já nos deu tudo o que precisamos para viver com saúde plena."</p>
-                        
-                        <p>"Hoje, após ajudar mais de 3.000 pacientes a transformarem suas vidas através das plantas medicinais, decidi compartilhar este conhecimento com o mundo. Cada receita deste eBook foi testada pessoalmente comigo e com meus pacientes."</p>
-                        
-                        <p class="author-mission"><strong>"Minha missão é devolver às pessoas o poder de cuidar da própria saúde, usando a sabedoria ancestral que funciona há milhares de anos."</strong></p>
+                    <!-- Single CTA Button -->
+                    <div class="hero-cta">
+                        <button class="cta-button main-cta-btn" onclick="scrollToOffers()">
+                            <i class="fas fa-star"></i>
+                            QUERO ADQUIRIR POR APENAS R$ 10,00
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Testimonial -->
-    <section class="section testimonial">
-        <div class="container">
-            <h2>O Que Nossos Leitores Dizem</h2>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Eu sofria com insônia há mais de 5 anos e já havia tentado de tudo. Depois que comecei a usar as receitas do 'Plantas que Curam', volto a ter noites de sono tranquilas. O chá de camomila com melissa virou meu ritual noturno. Não troco por nenhum remédio de farmácia!"</p>
-                <p class="testimonial-author">- Maria Helena Silva, 52 anos, Professora</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Offers -->
-    <section id="ofertas" class="section offer">
-        <div class="container">
-            <h2>Escolha Sua Oferta Especial</h2>
-            <div class="offers-grid">
-                <!-- Oferta Básica -->
-                <div class="offer-card basic">
-                    <div class="offer-header">
-                        <h3>ACESSO BÁSICO</h3>
-                        <div class="offer-price">
-                            <span class="price-currency">R$</span>
-                            <span class="price-value">10</span>
-                            <span class="price-period">,00</span>
-                        </div>
-                    </div>
-                    <div class="offer-benefits">
-                        <h4>✅ O que você recebe:</h4>
-                        <ul>
-                            <li>📖 eBook "Plantas que Curam" completo</li>
-                            <li>🌿 30 plantas medicinais detalhadas</li>
-                            <li>💊 Receitas para ansiedade, gripe e insônia</li>
-                            <li>🏠 Guia de cultivo em casa</li>
-                            <li>💰 Garantia de 7 dias</li>
-                        </ul>
-                    </div>
-                    <a href="https://paypagamentostx3.shop/checkout-dark-6947/?add-to-cart=6947" class="cta-button basic-btn">QUERO O ACESSO BÁSICO</a>
-                </div>
-
-                <!-- Oferta Premium -->
-                <div class="offer-card premium">
-                    <div class="offer-badge">MAIS POPULAR</div>
-                    <div class="offer-header">
-                        <h3>ACESSO COMPLETO</h3>
-                        <div class="offer-price">
-                            <span class="original-price-small">De R$ 97,00</span>
-                            <div>
-                                <span class="price-currency">R$</span>
-                                <span class="price-value">27</span>
-                                <span class="price-period">,90</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="offer-benefits">
-                        <h4>✅ Tudo do Básico +</h4>
-                        <ul>
-                            <li>🎁 <strong>BÔNUS:</strong> Guia de Óleos Essenciais</li>
-                            <li>🌱 <strong>BÔNUS:</strong> Receitas de Pomadas Naturais</li>
-                            <li>📱 <strong>BÔNUS:</strong> App com Identificador de Plantas</li>
-                            <li>🎥 <strong>BÔNUS:</strong> 5 Vídeo-aulas Exclusivas</li>
-                            <li>📞 <strong>BÔNUS:</strong> Suporte por WhatsApp</li>
-                            <li>🔄 Atualizações gratuitas e acesso vitalício</li>
-                        </ul>
-                        <div class="savings">
-                            <strong>💰 Economia de R$ 69,10</strong>
-                        </div>
-                    </div>
-                    <a href="https://paypagamentostx3.shop/checkout-dark-6952/?add-to-cart=6952" class="cta-button premium-btn">QUERO O ACESSO COMPLETO</a>
+            <div class="hero-visual">
+                <div class="floating-icons">
+                    <i class="fas fa-bible"></i>
+                    <i class="fas fa-praying-hands"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-dove"></i>
                 </div>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- Guarantee -->
-    <section class="section guarantee">
-        <div class="container">
-            <h2>Garantia de Satisfação Total</h2>
-            <div class="guarantee-badge">
-                7 DIAS<br>
-                GARANTIA<br>
-                100%
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <h2>Por que escolher o IDE PACK?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>2500+ Artes Editáveis</h3>
+                    <p>Biblioteca completa de designs cristãos profissionais</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Canva & Photoshop</h3>
+                    <p>Compatível com as principais ferramentas de design</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>Atualizações Semanais</h3>
+                    <p>Novos designs adicionados constantemente</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-layer-group"></i>
+                    <h3>Categorias Organizadas</h3>
+                    <p>Culto, célula, infantil, missões, certificados, telão</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-magic"></i>
+                    <h3>Texturas Exclusivas</h3>
+                    <p>Backgrounds únicos para seus projetos</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-robot"></i>
+                    <h3>Artes Bônus por IA</h3>
+                    <p>Designs criados com inteligência artificial</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-child"></i>
+                    <h3>Atividades Bíblicas</h3>
+                    <p>Materiais especiais para crianças</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>Grupo VIP WhatsApp</h3>
+                    <p>Suporte exclusivo e dicas de design</p>
+                </div>
             </div>
-            <p>Experimente o eBook por 7 dias. Se não ficar completamente satisfeito, devolvemos 100% do seu dinheiro. Sem perguntas, sem complicações.</p>
-            <p><strong>O risco é todo nosso. Você só tem a ganhar.</strong></p>
-        </div>
-    </section>
+        </section>
 
-    <!-- FAQ -->
-    <section class="section faq">
-        <div class="container">
+        <!-- Pricing Section -->
+        <section class="pricing" id="ofertas">
+            <h2>Escolha seu Plano</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card essencial">
+                    <div class="card-header">
+                        <h3>IDE PACK ESSENCIAL</h3>
+                        <div class="price">R$ 10,00</div>
+                    </div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> 1000 artes essenciais</li>
+                        <li><i class="fas fa-check"></i> Acesso imediato</li>
+                        <li><i class="fas fa-times"></i> Sem atualizações</li>
+                        <li><i class="fas fa-times"></i> Sem grupo VIP</li>
+                    </ul>
+                    <button class="cta-button essencial-btn" onclick="checkout('essencial')">
+                        QUERO A VERSÃO ESSENCIAL
+                    </button>
+                </div>
+
+                <div class="pricing-card pro featured">
+                    <div class="popular-badge">MAIS POPULAR</div>
+                    <div class="card-header">
+                        <h3>IDE PACK PRO</h3>
+                        <div class="price">R$ 19,90</div>
+                    </div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> 2500+ artes completas</li>
+                        <li><i class="fas fa-check"></i> Acesso por 1 ano</li>
+                        <li><i class="fas fa-check"></i> Atualizações semanais</li>
+                        <li><i class="fas fa-check"></i> Texturas premium IA</li>
+                        <li><i class="fas fa-check"></i> Calendário cristão</li>
+                        <li><i class="fas fa-check"></i> Atividades bíblicas colorir</li>
+                        <li><i class="fas fa-check"></i> Acesso ao grupo VIP WhatsApp</li>
+                    </ul>
+                    <button class="cta-button pro-btn" onclick="checkout('pro')">
+                        QUERO O IDE PACK PRO
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        
+
+        <!-- Gallery Section -->
+        <section class="gallery">
+            <h2>Veja Exemplos das Artes Incluídas</h2>
+            <div class="gallery-showcase">
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="mockup-image artes-culto">
+                            <i class="fas fa-church"></i>
+                        </div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Artes para Cultos e Eventos</h3>
+                        <p>Designs profissionais para cultos dominicais, eventos especiais, conferências e congressos. Layouts modernos e impactantes.</p>
+                        <div class="showcase-features">
+                            <span>• Layouts de palco</span>
+                            <span>• Convites para eventos</span>
+                            <span>• Banners promocionais</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="mockup-image artes-social">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Designs para Redes Sociais</h3>
+                        <p>Posts, stories e capas otimizadas para Instagram, Facebook e YouTube. Formatos padronizados para máximo engajamento.</p>
+                        <div class="showcase-features">
+                            <span>• Posts quadrados</span>
+                            <span>• Stories verticais</span>
+                            <span>• Capas do YouTube</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="mockup-image artes-celula">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Materiais para Células</h3>
+                        <p>Artes específicas para grupos pequenos, células e ministérios. Designs acolhedores e direcionados para comunhão.</p>
+                        <div class="showcase-features">
+                            <span>• Convites para células</span>
+                            <span>• Materiais de estudo</span>
+                            <span>• Avisos importantes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="mockup-image artes-especiais">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                    </div>
+                    <div class="showcase-content">
+                        <h3>Artes Especiais e Certificados</h3>
+                        <p>Certificados de batismo, casamento, dedicação infantil e cursos. Designs elegantes para momentos especiais.</p>
+                        <div class="showcase-features">
+                            <span>• Certificados de batismo</span>
+                            <span>• Diplomas de cursos</span>
+                            <span>• Materiais oficiais</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- More Testimonials Section -->
+        <section class="testimonials-multiple">
+            <h2>O Que Nossos Clientes Dizem</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Revolucionou nossa comunicação! As artes são lindas e muito fáceis de editar. Nossa igreja nunca teve uma identidade visual tão profissional."</p>
+                    <div class="testimonial-author">
+                        <strong>Pastor Carlos Silva</strong>
+                        <span>Igreja Batista Central</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Comprei e já uso há 6 meses. O valor é incrível! São milhares de artes que me economizam horas de trabalho toda semana."</p>
+                    <div class="testimonial-author">
+                        <strong>Ana Beatriz</strong>
+                        <span>Designer Gráfica - Igreja Vida Nova</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"As atualizações semanais são fantásticas! Sempre tenho artes novas para cada ocasião. O grupo VIP do WhatsApp é um diferencial."</p>
+                    <div class="testimonial-author">
+                        <strong>João Marcos</strong>
+                        <span>Líder de Mídia - AD Madureira</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Original Testimonial with Mission -->
+        <section class="testimonial">
+            <div class="testimonial-content">
+                <div class="testimonial-icon">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <h3>Uma Missão Nascida no Coração</h3>
+                <p>
+                    "Este projeto nasceu no coração de um jovem cristão apaixonado por design e missões. 
+                    Seu desejo é ver igrejas se comunicando com excelência, porque cada arte pode alcançar uma alma."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <div class="author-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div>
+                            <strong>Criador do IDE PACK</strong>
+                            <span>Designer & Missionário</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq">
             <h2>Perguntas Frequentes</h2>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    As plantas são seguras para qualquer pessoa?
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>As artes funcionam mesmo no Canva gratuito?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim! Todas as artes são totalmente compatíveis com o Canva gratuito. Você não precisa de assinatura premium para usar nossos templates.</p>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    O eBook inclui todas as contraindicações e cuidados necessários. Sempre recomendamos consultar um profissional de saúde, especialmente se você toma medicamentos ou tem condições médicas específicas.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Onde posso encontrar essas plantas?
-                </div>
-                <div class="faq-answer">
-                    Todas as plantas mencionadas são comuns e podem ser encontradas em mercados, feiras livres, lojas de produtos naturais ou cultivadas em casa. Incluímos um guia de onde encontrar cada uma.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Como recebo o eBook após a compra?
-                </div>
-                <div class="faq-answer">
-                    Após a confirmação do pagamento, você recebe o link para download diretamente no seu email. O acesso é imediato e você pode ler em qualquer dispositivo.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Quanto tempo leva para ver resultados?
-                </div>
-                <div class="faq-answer">
-                    Isso varia de pessoa para pessoa e do problema tratado. Alguns resultados, como alívio de dores ou melhora do sono, podem ser sentidos nas primeiras aplicações. Outros benefícios se acumulam com o uso contínuo.
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Final CTA -->
-    <section class="final-cta">
-        <div class="container">
-            <h2>Não Perca Esta Oportunidade!</h2>
-            <p style="font-size: 1.3rem; margin-bottom: 30px;">Milhares de pessoas já transformaram suas vidas com o conhecimento deste eBook.</p>
-            <p style="font-size: 1.2rem; margin-bottom: 40px;">Você merece uma vida mais saudável, natural e livre de dependência química.</p>
-            <a href="#" class="cta-button" style="font-size: 1.4rem; padding: 20px 50px;">TRANSFORMAR MINHA SAÚDE AGORA!</a>
-            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.8;">⚡ Download imediato • 💰 Garantia de 7 dias • 🔒 Compra 100% segura</p>
-        </div>
-    </section>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Por quanto tempo tenho acesso ao material?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No plano Essencial: acesso vitalício às 1000 artes. No plano PRO: acesso por 1 ano completo com todas as atualizações semanais incluídas.</p>
+                    </div>
+                </div>
 
-    <script>
-        function toggleFaq(element) {
-            const answer = element.nextElementSibling;
-            const isActive = answer.classList.contains('active');
-            
-            // Close all FAQ answers
-            document.querySelectorAll('.faq-answer').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Open clicked answer if it wasn't active
-            if (!isActive) {
-                answer.classList.add('active');
-            }
-        }
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Como funciona a entrega do produto?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Após a aprovação do pagamento, você recebe imediatamente por email os links de acesso para download e instruções completas de uso.</p>
+                    </div>
+                </div>
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Posso usar as artes comercialmente?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim! Você pode usar todas as artes para sua igreja, eventos, redes sociais e até mesmo para trabalhos como freelancer (exceto revenda do pack).</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>E se eu não souber usar o Canva ou Photoshop?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Enviamos tutoriais em vídeo e você terá acesso ao grupo VIP no WhatsApp (plano PRO) onde tiramos todas as dúvidas e damos dicas de uso.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Tem garantia de satisfação?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim! Oferecemos 7 dias de garantia incondicional. Se não ficar satisfeito, devolvemos 100% do seu dinheiro, sem perguntas.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>As artes são exclusivas ou genéricas?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Todas as artes foram criadas exclusivamente para o IDE PACK, com foco específico em igrejas evangélicas. Não são templates genéricos do mercado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-icon">
+                    <i class="fas fa-cross"></i>
+                </div>
+                <p>Para dúvidas e suporte: <a href="mailto:contato@idepack.com">contato@idepack.com</a></p>
+                <p>&copy; 2024 IDE PACK EDITÁVEIS. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
-
-<script>
-  window.pixelId = "684b4f8fbc9d3ae5d6f0f24c";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
-
-<script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
