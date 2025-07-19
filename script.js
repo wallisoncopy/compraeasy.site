@@ -81,10 +81,10 @@ function checkout(plan) {
     setTimeout(() => {
         if (plan === 'essencial') {
             // Redirect to checkout for essential plan - R$ 10,00
-            window.location.href = 'https://paypagamentostx3.shop/checkout-dark-7082/?add-to-cart=7082';
+            window.location.href = 'https://tx3cursos.pay.yampi.com.br/r/9VNG84H3H7';
         } else if (plan === 'pro') {
             // Redirect to checkout for pro plan - R$ 19,90
-            window.location.href = 'https://paypagamentostx3.shop/checkout-dark-7087/?add-to-cart=7087';
+            window.location.href = 'https://tx3cursos.pay.yampi.com.br/r/8WV4SADCJK';
         }
     }, 1500);
 }
