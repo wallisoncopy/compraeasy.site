@@ -1,234 +1,218 @@
 
-// Smooth scrolling for navigation
 document.addEventListener('DOMContentLoaded', function() {
-    // Add smooth scrolling to all links
-    const links = document.querySelectorAll('a[href^="#"]');
-    
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
+  // Animação para elementos iniciais
+  const headline = document.querySelector('.headline');
+  const subheadline = document.querySelector('.subheadline');
+  const videoContainer = document.querySelector('.video-container');
+  
+  headline.style.opacity = '0';
+  headline.style.transform = 'translateY(-20px)';
+  subheadline.style.opacity = '0';
+  subheadline.style.transform = 'translateY(-20px)';
+  videoContainer.style.opacity = '0';
+  
+  // Rastreamento de eventos do Facebook Pixel
+  // Rastrear clique nos botões de compra
+  document.querySelectorAll('.pricing-button').forEach(button => {
+    button.addEventListener('click', function() {
+      if(typeof fbq === 'function') {
+        fbq('track', 'InitiateCheckout');
+      }
     });
+  });
+  
+  // Rastrear visualização da seção de preços
+  const pricingSection = document.querySelector('.pricing');
+  if (pricingSection) {
+    const pricingObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && typeof fbq === 'function') {
+          fbq('track', 'ViewContent', {content_name: 'pricing_section'});
+          pricingObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
     
-    // Add scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
+    pricingObserver.observe(pricingSection);
+  }
+  
+  // Função de scroll suave
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+      
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 100,
+          behavior: 'smooth'
         });
-    }, observerOptions);
-    
-    // Observe all sections
-    const sections = document.querySelectorAll('.benefits, .pricing, .testimonial');
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
+      }
     });
-    
-    // Add floating animation to benefit cards
-    const benefitCards = document.querySelectorAll('.benefit-card');
-    benefitCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
+  });
+  
+  // Funcionalidade do FAQ
+  document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', function() {
+      const faqItem = this.parentElement;
+      const answer = this.nextElementSibling;
+      const toggle = this.querySelector('.faq-toggle i');
+      
+      // Fecha todos os outros itens
+      document.querySelectorAll('.faq-item').forEach(item => {
+        if (item !== faqItem && item.classList.contains('active')) {
+          item.classList.remove('active');
+          item.querySelector('.faq-toggle i').className = 'fas fa-plus';
+        }
+      });
+      
+      // Abre ou fecha o item atual
+      if (faqItem.classList.contains('active')) {
+        faqItem.classList.remove('active');
+        toggle.className = 'fas fa-plus';
+      } else {
+        faqItem.classList.add('active');
+        toggle.className = 'fas fa-minus';
+      }
     });
-    
-    // Add glow effect on hover for pricing cards
-    const pricingCards = document.querySelectorAll('.pricing-card');
-    pricingCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.boxShadow = '0 30px 60px rgba(0, 255, 255, 0.4)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            if (this.classList.contains('featured')) {
-                this.style.boxShadow = '0 0 30px rgba(0, 255, 136, 0.3)';
-            } else {
-                this.style.boxShadow = 'none';
-            }
-        });
+  });
+  
+  // Função para animar entrada de elementos quando visíveis
+  const animateOnScroll = (entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
     });
-});
-
-// Checkout function
-function checkout(plan) {
-    // Add loading state to button
-    const button = event.target;
-    const originalText = button.textContent;
-    button.textContent = 'PROCESSANDO...';
-    button.disabled = true;
+  };
+  
+  // Observador de interseção para animações de scroll
+  const observer = new IntersectionObserver(animateOnScroll, {
+    threshold: 0.1
+  });
+  
+  // Elementos a serem animados no scroll
+  const sections = [
+    '.examples',
+    '.pack-info', 
+    '.benefits', 
+    '.for-who', 
+    '.content-list',
+    '.pricing', 
+    '.guarantee', 
+    '.faq',
+    '.final-cta'
+  ];
+  
+  sections.forEach(section => {
+    const element = document.querySelector(section);
+    if (element) {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(30px)';
+      observer.observe(element);
+    }
+  });
+  
+  // Animação para os cards de benefícios
+  const benefitCards = document.querySelectorAll('.benefit-card');
+  benefitCards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
     
-    // Add pulsing effect
-    button.style.animation = 'pulse 1s infinite';
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, index * 100);
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
     
-    // Redirect to checkout
+    cardObserver.observe(card);
+  });
+  
+  // Animação para itens da lista de exemplos
+  const exampleItems = document.querySelectorAll('.example-item');
+  exampleItems.forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'scale(0.8)';
+    
+    const itemObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'scale(1)';
+          }, index * 100);
+          itemObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    itemObserver.observe(item);
+  });
+  
+  // Animação inicial
+  setTimeout(() => {
+    headline.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+    headline.style.opacity = '1';
+    headline.style.transform = 'translateY(0)';
+    
     setTimeout(() => {
-        if (plan === 'essencial') {
-            // Redirect to checkout for essential plan - R$ 10,00
-            window.location.href = 'https://tx3cursos.pay.yampi.com.br/r/9VNG84H3H7';
-        } else if (plan === 'pro') {
-            // Redirect to checkout for pro plan - R$ 19,90
-            window.location.href = 'https://tx3cursos.pay.yampi.com.br/r/8WV4SADCJK';
-        }
-    }, 1500);
-}
-
-// Add particle effect
-function createParticle() {
-    const particle = document.createElement('div');
-    particle.style.position = 'fixed';
-    particle.style.width = '2px';
-    particle.style.height = '2px';
-    particle.style.backgroundColor = Math.random() > 0.5 ? '#00ffff' : '#00ff88';
-    particle.style.borderRadius = '50%';
-    particle.style.pointerEvents = 'none';
-    particle.style.zIndex = '1000';
-    particle.style.boxShadow = `0 0 10px ${particle.style.backgroundColor}`;
-    
-    // Random position
-    particle.style.left = Math.random() * window.innerWidth + 'px';
-    particle.style.top = '-10px';
-    
-    document.body.appendChild(particle);
-    
-    // Animate particle
-    const duration = Math.random() * 3000 + 2000;
-    const animation = particle.animate([
-        { transform: 'translateY(0px)', opacity: 1 },
-        { transform: `translateY(${window.innerHeight + 20}px)`, opacity: 0 }
-    ], {
-        duration: duration,
-        easing: 'linear'
+      subheadline.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+      subheadline.style.opacity = '1';
+      subheadline.style.transform = 'translateY(0)';
+      
+      setTimeout(() => {
+        videoContainer.style.transition = 'opacity 1.2s ease-out';
+        videoContainer.style.opacity = '1';
+      }, 400);
+    }, 300);
+  }, 300);
+  
+  // Rastrear cliques em exemplos de artes
+  document.querySelectorAll('.example-item').forEach(item => {
+    item.addEventListener('click', function() {
+      if(typeof fbq === 'function') {
+        fbq('track', 'ViewContent', {content_name: 'art_example'});
+      }
     });
-    
-    animation.onfinish = () => {
-        particle.remove();
-    };
-}
-
-// Create particles periodically
-setInterval(createParticle, 2000);
-
-// Add typing effect to headline
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
+  });
+  
+  // Rastrear quando o usuário passa mais de 30 segundos na página
+  setTimeout(() => {
+    if(typeof fbq === 'function') {
+      fbq('trackCustom', 'TimeOnPage30Seconds');
     }
+  }, 30000);
+  
+  // Rastrear quando o usuário rola até o final da página
+  window.addEventListener('scroll', function() {
+    const scrollPosition = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
     
-    type();
-}
-
-// Initialize typing effect when page loads
-window.addEventListener('load', function() {
-    const headline = document.querySelector('.headline');
-    if (headline) {
-        const originalText = headline.textContent;
-        typeWriter(headline, originalText, 50);
+    if (scrollPosition + windowHeight >= documentHeight - 200) {
+      if(typeof fbq === 'function' && !window.scrolledToBottom) {
+        window.scrolledToBottom = true;
+        fbq('trackCustom', 'ReachedPageBottom');
+      }
     }
-});
-
-// Add mobile touch effects
-if ('ontouchstart' in window) {
-    const cards = document.querySelectorAll('.benefit-card, .pricing-card');
-    
-    cards.forEach(card => {
-        card.addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.98)';
-        });
-        
-        card.addEventListener('touchend', function() {
-            this.style.transform = 'scale(1)';
-        });
-    });
-}
-
-// Scroll to offers function
-function scrollToOffers() {
-    const offersSection = document.getElementById('ofertas');
-    if (offersSection) {
-        offersSection.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+  });
+  
+  // Rastrear quando o usuário sai da página
+  window.addEventListener('beforeunload', function() {
+    if(typeof fbq === 'function') {
+      fbq('trackCustom', 'LeavePage');
     }
-}
-
-// Add scroll progress indicator
-function addScrollProgress() {
-    const progressBar = document.createElement('div');
-    progressBar.style.position = 'fixed';
-    progressBar.style.top = '0';
-    progressBar.style.left = '0';
-    progressBar.style.width = '0%';
-    progressBar.style.height = '3px';
-    progressBar.style.background = 'linear-gradient(90deg, #00ffff, #00ff88)';
-    progressBar.style.zIndex = '9999';
-    progressBar.style.transition = 'width 0.1s ease';
-    
-    document.body.appendChild(progressBar);
-    
-    window.addEventListener('scroll', function() {
-        const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        progressBar.style.width = scrolled + '%';
-    });
-}
-
-// Initialize scroll progress
-addScrollProgress();
-
-// FAQ Toggle Function
-function toggleFaq(element) {
-    const faqItem = element.parentElement;
-    const answer = faqItem.querySelector('.faq-answer');
-    const isActive = element.classList.contains('active');
-    
-    // Close all other FAQ items
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.classList.remove('active');
-        question.parentElement.querySelector('.faq-answer').classList.remove('active');
-    });
-    
-    // Toggle current item
-    if (!isActive) {
-        element.classList.add('active');
-        answer.classList.add('active');
-    }
-}
-
-// Add click tracking for gallery images
-document.addEventListener('DOMContentLoaded', function() {
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    
-    galleryItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // Add click effect
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = 'translateY(-10px)';
-            }, 150);
-        });
-    });
+  });
 });
