@@ -153,6 +153,78 @@
                 <span class="btn-title">Grande ou Pequeno?</span>
                 <span class="btn-desc">Compare os tamanhos!</span>
             </button>
+            
+            <button class="menu-btn" onclick="showGame('puzzle-pieces')">
+                <i class="fas fa-puzzle-piece"></i>
+                <span class="btn-title">Monte o Quebra-Cabeça</span>
+                <span class="btn-desc">Junte as peças!</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('typing-practice')">
+                <i class="fas fa-keyboard"></i>
+                <span class="btn-title">Aprenda a Digitar</span>
+                <span class="btn-desc">Digite as palavras!</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('body-parts')">
+                <i class="fas fa-child"></i>
+                <span class="btn-title">Partes do Corpo</span>
+                <span class="btn-desc">Conheça seu corpo!</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('food-categories')">
+                <i class="fas fa-apple-alt"></i>
+                <span class="btn-title">Tipos de Comida</span>
+                <span class="btn-desc">Frutas, verduras e mais!</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('weather-game')">
+                <i class="fas fa-cloud-sun"></i>
+                <span class="btn-title">Como Está o Tempo?</span>
+                <span class="btn-desc">Sol, chuva ou nuvem?</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('emotions-game')">
+                <i class="fas fa-smile"></i>
+                <span class="btn-title">Sentimentos</span>
+                <span class="btn-desc">Feliz, triste ou bravo?</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('transportation')">
+                <i class="fas fa-car"></i>
+                <span class="btn-title">Meios de Transporte</span>
+                <span class="btn-desc">Carro, avião, barco!</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('days-weeks')">
+                <i class="fas fa-calendar-day"></i>
+                <span class="btn-title">Dias da Semana</span>
+                <span class="btn-desc">Segunda, terça, quarta...</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('profession-game')">
+                <i class="fas fa-user-tie"></i>
+                <span class="btn-title">Profissões</span>
+                <span class="btn-desc">Médico, professor, bombeiro!</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('seasons-game')">
+                <i class="fas fa-leaf"></i>
+                <span class="btn-title">Estações do Ano</span>
+                <span class="btn-desc">Primavera, verão, outono...</span>
+            </button>
+            
+            <button class="menu-btn" onclick="showGame('opposite-words')">
+                <i class="fas fa-exchange-alt"></i>
+                <span class="btn-title">Palavras Opostas</span>
+                <span class="btn-desc">Grande/pequeno, quente/frio!</span>
+            </button>
+            
+            <button class="menu-btn special-btn" onclick="showGame('more-content')">
+                <i class="fas fa-plus-circle"></i>
+                <span class="btn-title">Mais Conteúdos</span>
+                <span class="btn-desc">Ofertas, suporte e extras!</span>
+            </button>
         </div>
         
         <div class="menu-bottom-buttons">
@@ -500,6 +572,486 @@
             <button id="size-next" class="next-btn" onclick="nextSizeQuestion()" style="display:none;">
                 <i class="fas fa-forward"></i> Próxima
             </button>
+        </div>
+    </div>
+
+    <!-- Jogo 18: Monte o Quebra-Cabeça -->
+    <div id="puzzle-pieces" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-puzzle-piece"></i> Monte o Quebra-Cabeça</h2>
+            <div class="score">Acertos: <span id="puzzle-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="puzzle-image" class="puzzle-image"></div>
+            <div id="puzzle-pieces-container" class="puzzle-pieces-container"></div>
+            <div id="puzzle-feedback" class="feedback"></div>
+            <button id="puzzle-reset" class="next-btn" onclick="nextPuzzle()">
+                <i class="fas fa-redo"></i> Novo Quebra-Cabeças
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 19: Aprenda a Digitar -->
+    <div id="typing-practice" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-keyboard"></i> Aprenda a Digitar</h2>
+            <div class="score">Palavras: <span id="typing-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="typing-word" class="typing-word"></div>
+            <input type="text" id="typing-input" class="typing-input" placeholder="Digite a palavra aqui..." onkeyup="checkTyping()">
+            <div id="typing-feedback" class="feedback"></div>
+            <button id="typing-next" class="next-btn" onclick="nextTypingWord()">
+                <i class="fas fa-forward"></i> Próxima Palavra
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 20: Partes do Corpo -->
+    <div id="body-parts" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-child"></i> Partes do Corpo</h2>
+            <div class="score">Acertos: <span id="body-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="body-question" class="question"></div>
+            <div id="body-options" class="options"></div>
+            <div id="body-feedback" class="feedback"></div>
+            <button id="body-next" class="next-btn" onclick="nextBodyQuestion()" style="display:none;">
+                <i class="fas fa-forward"></i> Próxima
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 21: Tipos de Comida -->
+    <div id="food-categories" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-apple-alt"></i> Tipos de Comida</h2>
+            <div class="score">Acertos: <span id="food-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="food-question" class="question"></div>
+            <div id="food-options" class="options"></div>
+            <div id="food-feedback" class="feedback"></div>
+            <button id="food-next" class="next-btn" onclick="nextFoodQuestion()" style="display:none;">
+                <i class="fas fa-forward"></i> Próxima
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 22: Como Está o Tempo? -->
+    <div id="weather-game" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-cloud-sun"></i> Como Está o Tempo?</h2>
+            <div class="score">Acertos: <span id="weather-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="weather-question" class="question"></div>
+            <div id="weather-options" class="options"></div>
+            <div id="weather-feedback" class="feedback"></div>
+            <button id="weather-next" class="next-btn" onclick="nextWeatherQuestion()" style="display:none;">
+                <i class="fas fa-forward"></i> Próxima
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 23: Sentimentos -->
+    <div id="emotions-game" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-smile"></i> Sentimentos</h2>
+            <div class="score">Acertos: <span id="emotions-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="emotions-question" class="question"></div>
+            <div id="emotions-options" class="options"></div>
+            <div id="emotions-feedback" class="feedback"></div>
+            <button id="emotions-next" class="next-btn" onclick="nextEmotionsQuestion()" style="display:none;">
+                <i class="fas fa-forward"></i> Próxima
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 24: Meios de Transporte -->
+    <div id="transportation" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-car"></i> Meios de Transporte</h2>
+            <div class="score">Acertos: <span id="transport-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="transport-question" class="question"></div>
+            <div id="transport-options" class="options"></div>
+            <div id="transport-feedback" class="feedback"></div>
+            <button id="transport-next" class="next-btn" onclick="nextTransportQuestion()" style="display:none;">
+                <i class="fas fa-forward"></i> Próxima
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 25: Dias da Semana -->
+    <div id="days-weeks" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-calendar-day"></i> Dias da Semana</h2>
+            <div class="score">Acertos: <span id="days-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="days-question" class="question"></div>
+            <div id="days-options" class="options"></div>
+            <div id="days-feedback" class="feedback"></div>
+            <button id="days-next" class="next-btn" onclick="nextDaysQuestion()" style="display:none;">
+                <i class="fas fa-forward"></i> Próxima
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 26: Profissões -->
+    <div id="profession-game" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-user-tie"></i> Profissões</h2>
+            <div class="score">Acertos: <span id="profession-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="profession-question" class="question"></div>
+            <div id="profession-options" class="options"></div>
+            <div id="profession-feedback" class="feedback"></div>
+            <button id="profession-next" class="next-btn" onclick="nextProfessionQuestion()" style="display:none;">
+                <i class="fas fa-forward"></i> Próxima
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 27: Estações do Ano -->
+    <div id="seasons-game" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-leaf"></i> Estações do Ano</h2>
+            <div class="score">Acertos: <span id="seasons-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="seasons-question" class="question"></div>
+            <div id="seasons-options" class="options"></div>
+            <div id="seasons-feedback" class="feedback"></div>
+            <button id="seasons-next" class="next-btn" onclick="nextSeasonsQuestion()" style="display:none;">
+                <i class="fas fa-forward"></i> Próxima
+            </button>
+        </div>
+    </div>
+
+    <!-- Jogo 28: Palavras Opostas -->
+    <div id="opposite-words" class="screen">
+        <div class="game-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-exchange-alt"></i> Palavras Opostas</h2>
+            <div class="score">Acertos: <span id="opposite-score">0</span></div>
+        </div>
+        <div class="game-content">
+            <div id="opposite-question" class="question"></div>
+            <div id="opposite-options" class="options"></div>
+            <div id="opposite-feedback" class="feedback"></div>
+            <button id="opposite-next" class="next-btn" onclick="nextOppositeQuestion()" style="display:none;">
+                <i class="fas fa-forward"></i> Próxima
+            </button>
+        </div>
+    </div>
+
+    <!-- Nova Seção de Abas -->
+    <div id="more-content" class="screen">
+        <div class="content-header">
+            <button class="back-btn" onclick="showMenu()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h2><i class="fas fa-plus-circle"></i> Mais Conteúdos</h2>
+        </div>
+        
+        <div class="tabs-container">
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="showTab('offers')">
+                    <i class="fas fa-gift"></i> Ofertas Especiais
+                </button>
+                <button class="tab-btn" onclick="showTab('support')">
+                    <i class="fas fa-envelope"></i> Suporte
+                </button>
+                <button class="tab-btn" onclick="showTab('stats')">
+                    <i class="fas fa-chart-line"></i> Estatísticas
+                </button>
+                <button class="tab-btn" onclick="showTab('extras')">
+                    <i class="fas fa-star"></i> Extras
+                </button>
+            </div>
+            
+            <div class="tabs-content">
+                <!-- Aba Ofertas -->
+                <div id="offers-tab" class="tab-content active">
+                    <h3><i class="fas fa-fire"></i> Ofertas Imperdíveis!</h3>
+                    <div class="offers-grid">
+                        <div class="offer-card premium">
+                            <div class="offer-badge">🔥 MAIS POPULAR</div>
+                            <div class="offer-icon">👑</div>
+                            <h4>Plano Premium Kids</h4>
+                            <p class="offer-description">Acesso a mais de 100 jogos educativos exclusivos, relatórios detalhados de progresso e conteúdo sem anúncios!</p>
+                            <div class="offer-price">
+                                <span class="old-price">R$ 49,90</span>
+                                <span class="new-price">R$ 29,90/mês</span>
+                            </div>
+                            <div class="offer-features">
+                                ✅ +100 jogos exclusivos<br>
+                                ✅ Relatórios de progresso<br>
+                                ✅ Sem anúncios<br>
+                                ✅ Suporte prioritário
+                            </div>
+                            <button class="offer-btn" onclick="window.open('https://seu-link-premium.com', '_blank')">
+                                <i class="fas fa-crown"></i> QUERO O PREMIUM!
+                            </button>
+                        </div>
+                        
+                        <div class="offer-card">
+                            <div class="offer-badge">📚 EDUCACIONAL</div>
+                            <div class="offer-icon">🎓</div>
+                            <h4>Kit Aprendizado Completo</h4>
+                            <p class="offer-description">E-books interativos, atividades para imprimir e jogos offline para continuar aprendendo em qualquer lugar!</p>
+                            <div class="offer-price">
+                                <span class="old-price">R$ 79,90</span>
+                                <span class="new-price">R$ 39,90</span>
+                            </div>
+                            <div class="offer-features">
+                                ✅ 50+ E-books interativos<br>
+                                ✅ 200+ atividades para imprimir<br>
+                                ✅ Jogos offline<br>
+                                ✅ Atualizações gratuitas
+                            </div>
+                            <button class="offer-btn" onclick="window.open('https://seu-link-kit.com', '_blank')">
+                                <i class="fas fa-download"></i> BAIXAR AGORA!
+                            </button>
+                        </div>
+                        
+                        <div class="offer-card">
+                            <div class="offer-badge">👨‍👩‍👧‍👦 FAMÍLIA</div>
+                            <div class="offer-icon">💝</div>
+                            <h4>Curso para Pais</h4>
+                            <p class="offer-description">Aprenda as melhores técnicas para ensinar seus filhos em casa com métodos comprovados cientificamente!</p>
+                            <div class="offer-price">
+                                <span class="old-price">R$ 197,00</span>
+                                <span class="new-price">R$ 97,00</span>
+                            </div>
+                            <div class="offer-features">
+                                ✅ 20 módulos em vídeo<br>
+                                ✅ Certificado de conclusão<br>
+                                ✅ Grupo exclusivo de pais<br>
+                                ✅ Garantia de 30 dias
+                            </div>
+                            <button class="offer-btn" onclick="window.open('https://seu-link-curso.com', '_blank')">
+                                <i class="fas fa-play-circle"></i> COMEÇAR CURSO!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Aba Suporte -->
+                <div id="support-tab" class="tab-content">
+                    <h3><i class="fas fa-headset"></i> Central de Suporte</h3>
+                    <div class="support-content">
+                        <div class="support-card">
+                            <div class="support-icon">📧</div>
+                            <h4>Suporte por Email</h4>
+                            <p>Entre em contato conosco através do email para dúvidas, sugestões ou problemas técnicos.</p>
+                            <div class="contact-info">
+                                <strong>📩 suporte@jogoseducativos.com</strong><br>
+                                <small>⏰ Respondemos em até 24h</small>
+                            </div>
+                            <button class="support-btn" onclick="window.open('mailto:suporte@jogoseducativos.com?subject=Dúvida sobre os Jogos Educativos', '_blank')">
+                                <i class="fas fa-envelope"></i> Enviar Email
+                            </button>
+                        </div>
+                        
+                        <div class="support-card">
+                            <div class="support-icon">❓</div>
+                            <h4>Perguntas Frequentes</h4>
+                            <div class="faq-list">
+                                <div class="faq-item">
+                                    <strong>Q: Como resetar o progresso?</strong><br>
+                                    <span>R: Use o botão "Reiniciar Estrelas" no menu principal.</span>
+                                </div>
+                                <div class="faq-item">
+                                    <strong>Q: Os jogos funcionam offline?</strong><br>
+                                    <span>R: Não, é necessária conexão com internet.</span>
+                                </div>
+                                <div class="faq-item">
+                                    <strong>Q: Qual idade recomendada?</strong><br>
+                                    <span>R: De 3 a 10 anos, com supervisão dos pais.</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="support-card">
+                            <div class="support-icon">💡</div>
+                            <h4>Dicas e Sugestões</h4>
+                            <div class="tips-list">
+                                <div class="tip-item">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>Jogue 15-20 minutos por dia para melhor aprendizado</span>
+                                </div>
+                                <div class="tip-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Jogue junto com seu filho para maior engajamento</span>
+                                </div>
+                                <div class="tip-item">
+                                    <i class="fas fa-trophy"></i>
+                                    <span>Celebre cada conquista para motivar o aprendizado</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Aba Estatísticas -->
+                <div id="stats-tab" class="tab-content">
+                    <h3><i class="fas fa-chart-bar"></i> Suas Estatísticas</h3>
+                    <div class="stats-content">
+                        <div class="stats-overview">
+                            <div class="stat-card">
+                                <div class="stat-icon">⭐</div>
+                                <div class="stat-info">
+                                    <span class="stat-number" id="total-stars">0</span>
+                                    <span class="stat-label">Estrelas Coletadas</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">🎮</div>
+                                <div class="stat-info">
+                                    <span class="stat-number" id="games-played">0</span>
+                                    <span class="stat-label">Jogos Jogados</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">🎯</div>
+                                <div class="stat-info">
+                                    <span class="stat-number" id="accuracy-rate">0%</span>
+                                    <span class="stat-label">Taxa de Acerto</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">⏱️</div>
+                                <div class="stat-info">
+                                    <span class="stat-number" id="time-played">0</span>
+                                    <span class="stat-label">Minutos Jogados</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="achievements">
+                            <h4><i class="fas fa-medal"></i> Conquistas</h4>
+                            <div class="achievements-grid">
+                                <div class="achievement" id="first-star">
+                                    <div class="achievement-icon">🌟</div>
+                                    <div class="achievement-info">
+                                        <strong>Primeira Estrela</strong>
+                                        <small>Colete sua primeira estrela</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="achievement" id="five-stars">
+                                    <div class="achievement-icon">⭐</div>
+                                    <div class="achievement-info">
+                                        <strong>Colecionador</strong>
+                                        <small>Colete 5 estrelas</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="achievement" id="all-stars">
+                                    <div class="achievement-icon">🏆</div>
+                                    <div class="achievement-info">
+                                        <strong>Mestre dos Jogos</strong>
+                                        <small>Colete todas as estrelas</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="achievement" id="math-expert">
+                                    <div class="achievement-icon">🔢</div>
+                                    <div class="achievement-info">
+                                        <strong>Expert em Matemática</strong>
+                                        <small>Acerte 10 contas seguidas</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Aba Extras -->
+                <div id="extras-tab" class="tab-content">
+                    <h3><i class="fas fa-magic"></i> Conteúdo Extra</h3>
+                    <div class="extras-content">
+                        <div class="extra-card">
+                            <div class="extra-icon">🎨</div>
+                            <h4>Colorir Online</h4>
+                            <p>Desenhos educativos para colorir diretamente no navegador!</p>
+                            <button class="extra-btn" onclick="alert('Em breve! 🎨')">
+                                <i class="fas fa-palette"></i> Colorir Agora
+                            </button>
+                        </div>
+                        
+                        <div class="extra-card">
+                            <div class="extra-icon">🎵</div>
+                            <h4>Músicas Educativas</h4>
+                            <p>Aprenda cantando com nossas músicas educativas!</p>
+                            <button class="extra-btn" onclick="alert('Em breve! 🎵')">
+                                <i class="fas fa-music"></i> Ouvir Músicas
+                            </button>
+                        </div>
+                        
+                        <div class="extra-card">
+                            <div class="extra-icon">📖</div>
+                            <h4>Histórias Interativas</h4>
+                            <p>Histórias onde você participa das aventuras!</p>
+                            <button class="extra-btn" onclick="alert('Em breve! 📖')">
+                                <i class="fas fa-book"></i> Ler Histórias
+                            </button>
+                        </div>
+                        
+                        <div class="extra-card">
+                            <div class="extra-icon">🎥</div>
+                            <h4>Vídeos Educativos</h4>
+                            <p>Aprenda assistindo vídeos divertidos e educativos!</p>
+                            <button class="extra-btn" onclick="alert('Em breve! 🎥')">
+                                <i class="fas fa-play"></i> Assistir Vídeos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

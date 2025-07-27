@@ -1,15 +1,36 @@
 
 // Variáveis globais
-let currentScreen = 'login-screen';
-let gameState = {};
-let scores = {
+let currentUser = null;
+let stars = 0;
+const maxStars = 10;
+
+// Dados dos jogos
+const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+const colors = [
+    { name: 'Vermelho', hex: '#FF0000' },
+    { name: 'Azul', hex: '#0000FF' },
+    { name: 'Verde', hex: '#00FF00' },
+    { name: 'Amarelo', hex: '#FFFF00' },
+    { name: 'Rosa', hex: '#FF69B4' },
+    { name: 'Roxo', hex: '#800080' }
+];
+
+const shapes = [
+    { name: 'Círculo', emoji: '⭕' },
+    { name: 'Quadrado', emoji: '⬜' },
+    { name: 'Triângulo', emoji: '🔺' },
+    { name: 'Estrela', emoji: '⭐' }
+];
+
+// Scores dos jogos
+let gameScores = {
     letter: 0,
     color: 0,
     sequence: 0,
+    memory: 0,
     math: 0,
     shapes: 0,
     animal: 0,
-    memory: 0,
     english: 0,
     colorsEnglish: 0,
     clock: 0,
@@ -18,314 +39,128 @@ let scores = {
     count: 0,
     rhyme: 0,
     englishAnimals: 0,
-    size: 0
+    size: 0,
+    puzzle: 0,
+    typing: 0,
+    body: 0,
+    food: 0,
+    weather: 0,
+    emotions: 0,
+    transport: 0,
+    days: 0,
+    profession: 0,
+    seasons: 0,
+    opposite: 0
 };
 
-// Sistema de Pontos/Estrelas
-let totalStars = 0;
-
-// Carregar estrelas do localStorage
-function loadStars() {
-    const savedStars = localStorage.getItem('educationalAppStars');
-    totalStars = savedStars ? parseInt(savedStars) : 0;
-    updateStarsDisplay();
-}
-
-// Salvar estrelas no localStorage
-function saveStars() {
-    localStorage.setItem('educationalAppStars', totalStars.toString());
-}
-
-// Adicionar uma estrela
-function addStar() {
-    totalStars++;
-    saveStars();
-    updateStarsDisplay();
-    
-    // Verificar se atingiu 10 estrelas
-    if (totalStars % 10 === 0) {
-        showRewardModal();
-    }
-}
-
-// Atualizar display das estrelas
-function updateStarsDisplay() {
-    const starsDisplay = document.getElementById('stars-counter');
-    if (starsDisplay) {
-        const starsToNext = 10 - (totalStars % 10);
-        const nextReward = Math.ceil(totalStars / 10) * 10;
-        starsDisplay.textContent = `⭐ Estrelas: ${totalStars} / ${nextReward}`;
-    }
-}
-
-// Mostrar modal de recompensa
-function showRewardModal() {
-    const modal = document.getElementById('reward-modal');
-    const rewardNumber = Math.floor(totalStars / 10);
-    
-    document.getElementById('reward-message').innerHTML = `
-        🎉 <strong>Parabéns!</strong> 🎉<br>
-        Você conquistou ${totalStars} estrelas!<br><br>
-        🎁 <strong>Sua recompensa:</strong><br>
-        • 1 vídeo no YouTube 📺<br>
-        • OU 30 minutos de videogame 🎮<br><br>
-        <em>Mostre essa tela para um adulto!</em>
-    `;
-    
-    modal.style.display = 'flex';
-    createConfetti();
-    playSuccessSound();
-}
-
-// Fechar modal de recompensa
-function closeRewardModal() {
-    document.getElementById('reward-modal').style.display = 'none';
-}
-
-// Reiniciar estrelas (para pais)
-function resetStars() {
-    if (confirm('⚠️ Tem certeza que deseja reiniciar as estrelas?\n\nEsta ação não pode ser desfeita.')) {
-        totalStars = 0;
-        saveStars();
-        updateStarsDisplay();
-        alert('✨ Estrelas reiniciadas com sucesso!');
-    }
-}
-
-// Dados dos jogos expandidos
-const letterQuestions = [
-    { question: "Qual é a letra A?", options: ["A", "B", "C"], correct: 0 },
-    { question: "Qual é a letra B?", options: ["C", "B", "A"], correct: 1 },
-    { question: "Qual é a letra C?", options: ["A", "C", "B"], correct: 1 },
-    { question: "Qual é a letra D?", options: ["D", "E", "F"], correct: 0 },
-    { question: "Qual é a letra E?", options: ["F", "E", "D"], correct: 1 },
-    { question: "Qual é a letra F?", options: ["F", "G", "H"], correct: 0 },
-    { question: "Qual é a letra G?", options: ["H", "G", "I"], correct: 1 },
-    { question: "Qual é a letra H?", options: ["G", "I", "H"], correct: 2 }
+// Dados dos novos jogos
+const bodyParts = [
+    { name: 'Cabeça', emoji: '👤' },
+    { name: 'Olhos', emoji: '👀' },
+    { name: 'Nariz', emoji: '👃' },
+    { name: 'Boca', emoji: '👄' },
+    { name: 'Mãos', emoji: '👋' },
+    { name: 'Pés', emoji: '🦶' }
 ];
 
-const colorQuestions = [
-    { question: "Clique na cor vermelha", colors: ["red", "blue", "green"], correct: 0 },
-    { question: "Clique na cor azul", colors: ["yellow", "blue", "red"], correct: 1 },
-    { question: "Clique na cor verde", colors: ["red", "yellow", "green"], correct: 2 },
-    { question: "Clique na cor amarela", colors: ["yellow", "blue", "red"], correct: 0 },
-    { question: "Clique na cor rosa", colors: ["blue", "pink", "green"], correct: 1 },
-    { question: "Clique na cor laranja", colors: ["orange", "purple", "brown"], correct: 0 },
-    { question: "Clique na cor roxo", colors: ["gray", "purple", "black"], correct: 1 }
+const foodCategories = [
+    { name: 'Maçã', category: 'Fruta', emoji: '🍎' },
+    { name: 'Banana', category: 'Fruta', emoji: '🍌' },
+    { name: 'Cenoura', category: 'Verdura', emoji: '🥕' },
+    { name: 'Brócolis', category: 'Verdura', emoji: '🥦' },
+    { name: 'Pão', category: 'Carboidrato', emoji: '🍞' },
+    { name: 'Arroz', category: 'Carboidrato', emoji: '🍚' }
 ];
 
-const sequenceQuestions = [
-    { sequence: ["1", "2", "?", "4"], options: ["3", "5", "6"], correct: 0 },
-    { sequence: ["2", "4", "?", "8"], options: ["6", "5", "7"], correct: 0 },
-    { sequence: ["5", "?", "7", "8"], options: ["6", "9", "4"], correct: 0 },
-    { sequence: ["10", "20", "?", "40"], options: ["30", "25", "35"], correct: 0 },
-    { sequence: ["A", "B", "?", "D"], options: ["C", "E", "F"], correct: 0 },
-    { sequence: ["3", "6", "9", "?"], options: ["12", "10", "15"], correct: 0 },
-    { sequence: ["1", "3", "5", "?"], options: ["7", "6", "8"], correct: 0 }
+const weatherTypes = [
+    { name: 'Sol', emoji: '☀️', description: 'Dia ensolarado' },
+    { name: 'Chuva', emoji: '🌧️', description: 'Está chovendo' },
+    { name: 'Nuvem', emoji: '☁️', description: 'Dia nublado' },
+    { name: 'Neve', emoji: '❄️', description: 'Está nevando' }
 ];
 
-const mathQuestions = [
-    { question: "Quanto é 1 + 1?", options: ["2", "3", "1"], correct: 0 },
-    { question: "Quanto é 2 + 2?", options: ["3", "4", "5"], correct: 1 },
-    { question: "Quanto é 3 + 1?", options: ["4", "2", "5"], correct: 0 },
-    { question: "Quanto é 5 - 2?", options: ["3", "4", "2"], correct: 0 },
-    { question: "Quanto é 4 - 1?", options: ["2", "3", "4"], correct: 1 },
-    { question: "Quanto é 2 + 3?", options: ["5", "6", "4"], correct: 0 },
-    { question: "Quanto é 6 - 3?", options: ["3", "2", "4"], correct: 0 }
+const emotions = [
+    { name: 'Feliz', emoji: '😊' },
+    { name: 'Triste', emoji: '😢' },
+    { name: 'Bravo', emoji: '😠' },
+    { name: 'Surpreso', emoji: '😲' }
 ];
 
-const shapesQuestions = [
-    { question: "Clique no círculo", shapes: ["circle", "square", "triangle"], correct: 0 },
-    { question: "Clique no quadrado", shapes: ["triangle", "square", "circle"], correct: 1 },
-    { question: "Clique no triângulo", shapes: ["square", "circle", "triangle"], correct: 2 },
-    { question: "Clique no retângulo", shapes: ["rectangle", "star", "circle"], correct: 0 },
-    { question: "Clique na estrela", shapes: ["triangle", "star", "square"], correct: 1 }
+const transportation = [
+    { name: 'Carro', emoji: '🚗' },
+    { name: 'Avião', emoji: '✈️' },
+    { name: 'Barco', emoji: '🚢' },
+    { name: 'Trem', emoji: '🚂' },
+    { name: 'Bicicleta', emoji: '🚲' },
+    { name: 'Ônibus', emoji: '🚌' }
 ];
 
-const animalQuestions = [
-    { question: "Que animal faz 'Miau'?", animals: ["🐱", "🐶", "🐮"], sound: "miau", correct: 0 },
-    { question: "Que animal faz 'Au au'?", animals: ["🐴", "🐶", "🐸"], sound: "auau", correct: 1 },
-    { question: "Que animal faz 'Muuu'?", animals: ["🐮", "🐷", "🐔"], sound: "muuu", correct: 0 },
-    { question: "Que animal faz 'Cocoricó'?", animals: ["🐸", "🐔", "🐱"], sound: "cocorico", correct: 1 },
-    { question: "Que animal faz 'Oinc oinc'?", animals: ["🐷", "🐴", "🐮"], sound: "oinc", correct: 0 }
+const daysOfWeek = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'];
+
+const professions = [
+    { name: 'Médico', emoji: '👨‍⚕️' },
+    { name: 'Professor', emoji: '👨‍🏫' },
+    { name: 'Bombeiro', emoji: '👨‍🚒' },
+    { name: 'Polícia', emoji: '👮' },
+    { name: 'Cozinheiro', emoji: '👨‍🍳' },
+    { name: 'Piloto', emoji: '👨‍✈️' }
 ];
 
-const dragItems = [
-    { name: "🐱 Gato", match: "gato" },
-    { name: "🐭 Rato", match: "rato" },
-    { name: "🦆 Pato", match: "pato" },
-    { name: "🐸 Sapo", match: "sapo" },
-    { name: "🐻 Urso", match: "urso" }
+const seasons = [
+    { name: 'Primavera', emoji: '🌸', description: 'Flores e plantas crescem' },
+    { name: 'Verão', emoji: '☀️', description: 'Época mais quente do ano' },
+    { name: 'Outono', emoji: '🍂', description: 'Folhas ficam amarelas' },
+    { name: 'Inverno', emoji: '❄️', description: 'Época mais fria do ano' }
 ];
 
-const memoryCards = ["🍎", "🍌", "🍓", "🍊", "🍎", "🍌", "🍓", "🍊"];
-
-// Novos jogos
-const englishQuestions = [
-    { question: "Como se diz 'Casa' em inglês?", options: ["House", "Car", "Tree"], correct: 0 },
-    { question: "Como se diz 'Gato' em inglês?", options: ["Dog", "Cat", "Bird"], correct: 1 },
-    { question: "Como se diz 'Água' em inglês?", options: ["Fire", "Water", "Air"], correct: 1 },
-    { question: "Como se diz 'Sol' em inglês?", options: ["Moon", "Star", "Sun"], correct: 2 },
-    { question: "Como se diz 'Livro' em inglês?", options: ["Book", "Pen", "Paper"], correct: 0 },
-    { question: "Como se diz 'Escola' em inglês?", options: ["Home", "School", "Park"], correct: 1 },
-    { question: "Como se diz 'Amigo' em inglês?", options: ["Friend", "Enemy", "Teacher"], correct: 0 }
+const oppositeWords = [
+    { word: 'Grande', opposite: 'Pequeno', emoji1: '🐘', emoji2: '🐭' },
+    { word: 'Quente', opposite: 'Frio', emoji1: '🔥', emoji2: '❄️' },
+    { word: 'Alto', opposite: 'Baixo', emoji1: '🏢', emoji2: '🏠' },
+    { word: 'Rápido', opposite: 'Devagar', emoji1: '🚗', emoji2: '🐌' }
 ];
 
-const colorsEnglishQuestions = [
-    { question: "Click on RED", colors: ["red", "blue", "green"], correct: 0 },
-    { question: "Click on BLUE", colors: ["yellow", "blue", "red"], correct: 1 },
-    { question: "Click on GREEN", colors: ["red", "yellow", "green"], correct: 2 },
-    { question: "Click on YELLOW", colors: ["yellow", "purple", "brown"], correct: 0 },
-    { question: "Click on PURPLE", colors: ["orange", "purple", "pink"], correct: 1 },
-    { question: "Click on ORANGE", colors: ["orange", "gray", "black"], correct: 0 }
-];
+const typingWords = ['GATO', 'CASA', 'SOL', 'LUA', 'AMOR', 'FLOR', 'MAR', 'CÉU'];
 
-const clockQuestions = [
-    { time: "3:00", options: ["3:00", "4:00", "5:00"], correct: 0 },
-    { time: "6:30", options: ["6:00", "6:30", "7:00"], correct: 1 },
-    { time: "9:00", options: ["8:00", "10:00", "9:00"], correct: 2 },
-    { time: "12:00", options: ["12:00", "11:00", "1:00"], correct: 0 },
-    { time: "2:30", options: ["3:30", "2:30", "1:30"], correct: 1 }
-];
-
-const patternsQuestions = [
-    { pattern: ["🔴", "🔵", "🔴", "🔵", "?"], options: ["🔴", "🔵", "🟡"], correct: 0 },
-    { pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"], options: ["🌙", "⭐", "☀️"], correct: 0 },
-    { pattern: ["🍎", "🍌", "🍎", "🍌", "?"], options: ["🍎", "🍓", "🍌"], correct: 0 },
-    { pattern: ["🔺", "🔺", "🔻", "🔺", "🔺", "?"], options: ["🔻", "🔺", "🔶"], correct: 0 },
-    { pattern: ["🎵", "🎶", "🎵", "🎶", "?"], options: ["🎵", "🎤", "🎸"], correct: 0 }
-];
-
-const wordPuzzles = [
-    { word: "GATO", image: "🐱", letters: ["G", "A", "T", "O"] },
-    { word: "CASA", image: "🏠", letters: ["C", "A", "S", "A"] },
-    { word: "SOL", image: "☀️", letters: ["S", "O", "L"] },
-    { word: "FLOR", image: "🌸", letters: ["F", "L", "O", "R"] },
-    { word: "BOLA", image: "⚽", letters: ["B", "O", "L", "A"] },
-    { word: "PEIXE", image: "🐟", letters: ["P", "E", "I", "X", "E"] }
-];
-
-const countQuestions = [
-    { objects: ["🍎", "🍎", "🍎"], count: 3, options: ["2", "3", "4"], correct: 1 },
-    { objects: ["⭐", "⭐", "⭐", "⭐", "⭐"], count: 5, options: ["4", "5", "6"], correct: 1 },
-    { objects: ["🔴", "🔴"], count: 2, options: ["1", "2", "3"], correct: 1 },
-    { objects: ["🎈", "🎈", "🎈", "🎈"], count: 4, options: ["3", "4", "5"], correct: 1 },
-    { objects: ["🌟"], count: 1, options: ["1", "2", "0"], correct: 0 }
-];
-
-const rhymeQuestions = [
-    { question: "Qual palavra rima com 'GATO'?", options: ["RATO", "CASA", "BOLA"], correct: 0 },
-    { question: "Qual palavra rima com 'FLOR'?", options: ["SOL", "AMOR", "GATO"], correct: 1 },
-    { question: "Qual palavra rima com 'CASA'?", options: ["MASSA", "GATO", "BOLA"], correct: 0 },
-    { question: "Qual palavra rima com 'PÃO'?", options: ["CASA", "MÃO", "FLOR"], correct: 1 },
-    { question: "Qual palavra rima com 'BOLA'?", options: ["COLA", "GATO", "SOL"], correct: 0 }
-];
-
-const englishAnimalsQuestions = [
-    { question: "What animal is this? 🐱", options: ["Dog", "Cat", "Bird"], correct: 1 },
-    { question: "What animal is this? 🐶", options: ["Dog", "Cat", "Fish"], correct: 0 },
-    { question: "What animal is this? 🐸", options: ["Frog", "Duck", "Fish"], correct: 0 },
-    { question: "What animal is this? 🐦", options: ["Cat", "Dog", "Bird"], correct: 2 },
-    { question: "What animal is this? 🐟", options: ["Fish", "Bird", "Frog"], correct: 0 },
-    { question: "What animal is this? 🦆", options: ["Frog", "Duck", "Fish"], correct: 1 }
-];
-
-const sizeQuestions = [
-    { question: "Qual é MAIOR?", objects: [{ emoji: "🐘", size: "big" }, { emoji: "🐭", size: "small" }], correct: 0 },
-    { question: "Qual é MENOR?", objects: [{ emoji: "🏠", size: "big" }, { emoji: "🐛", size: "small" }], correct: 1 },
-    { question: "Qual é MAIOR?", objects: [{ emoji: "☀️", size: "big" }, { emoji: "⭐", size: "small" }], correct: 0 },
-    { question: "Qual é MENOR?", objects: [{ emoji: "🌳", size: "big" }, { emoji: "🌱", size: "small" }], correct: 1 },
-    { question: "Qual é MAIOR?", objects: [{ emoji: "🐋", size: "big" }, { emoji: "🐟", size: "small" }], correct: 0 }
-];
-
-// Sons de sucesso e erro
-function playSuccessSound() {
-    const audio = document.getElementById('success-sound');
-    if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(e => console.log('Não foi possível tocar o som'));
-    }
-}
-
-function playErrorSound() {
-    const audio = document.getElementById('error-sound');
-    if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(e => console.log('Não foi possível tocar o som'));
-    }
-}
-
-// Efeito de confete
-function createConfetti() {
-    const colors = ['#ff6b6b', '#48dbfb', '#2ed573', '#feca57', '#ff9ff3'];
-    const celebrationDiv = document.createElement('div');
-    celebrationDiv.className = 'celebration-effect';
-    document.body.appendChild(celebrationDiv);
-    
-    for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti-piece';
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.animationDelay = Math.random() * 3 + 's';
-        celebrationDiv.appendChild(confetti);
-    }
-    
-    setTimeout(() => {
-        document.body.removeChild(celebrationDiv);
-    }, 3000);
-}
-
-// Inicialização
-document.addEventListener('DOMContentLoaded', function() {
-    showScreen('login-screen');
-});
-
-// Sistema de Login
+// Função de login
 function login() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     
-    if (email.trim() === '' || password.trim() === '') {
-        alert('Por favor, preencha todos os campos! 😊');
-        return;
+    if (email && password) {
+        currentUser = email;
+        showMenu();
+        playSuccessSound();
+    } else {
+        alert('Por favor, preencha todos os campos!');
+        playErrorSound();
     }
-    
-    if (!email.includes('@')) {
-        alert('Por favor, digite um email válido! 📧');
-        return;
-    }
-    
-    // Simular login (aceita qualquer email/senha)
-    localStorage.setItem('userEmail', email);
-    showMenu();
 }
 
+// Função de logout
 function logout() {
-    localStorage.removeItem('userEmail');
-    resetAllScores();
-    showScreen('login-screen');
+    currentUser = null;
+    document.getElementById('login-screen').classList.add('active');
+    document.getElementById('main-menu').classList.remove('active');
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
 }
 
-function resetAllScores() {
-    Object.keys(scores).forEach(key => scores[key] = 0);
-    updateAllScoreDisplays();
-}
-
-// Navegação
-function showScreen(screenId) {
-    hideAllScreens();
-    document.getElementById(screenId).classList.add('active');
-    currentScreen = screenId;
-}
-
+// Mostrar menu principal
 function showMenu() {
-    showScreen('main-menu');
-    updateAllScoreDisplays();
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+    });
+    document.getElementById('main-menu').classList.add('active');
+    updateStarsDisplay();
 }
 
+// Mostrar jogo específico
 function showGame(gameId) {
-    showScreen(gameId);
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+    });
+    document.getElementById(gameId).classList.add('active');
     
     // Inicializar o jogo específico
     switch(gameId) {
@@ -380,1151 +215,1219 @@ function showGame(gameId) {
         case 'size-comparison':
             initSizeGame();
             break;
+        case 'puzzle-pieces':
+            initPuzzleGame();
+            break;
+        case 'typing-practice':
+            initTypingGame();
+            break;
+        case 'body-parts':
+            initBodyGame();
+            break;
+        case 'food-categories':
+            initFoodGame();
+            break;
+        case 'weather-game':
+            initWeatherGame();
+            break;
+        case 'emotions-game':
+            initEmotionsGame();
+            break;
+        case 'transportation':
+            initTransportGame();
+            break;
+        case 'days-weeks':
+            initDaysGame();
+            break;
+        case 'profession-game':
+            initProfessionGame();
+            break;
+        case 'seasons-game':
+            initSeasonsGame();
+            break;
+        case 'opposite-words':
+            initOppositeGame();
+            break;
+        case 'more-content':
+            // Não precisa de inicialização especial
+            break;
     }
 }
 
-function hideAllScreens() {
-    const screens = document.querySelectorAll('.screen');
-    screens.forEach(screen => screen.classList.remove('active'));
+// Sons
+function playSuccessSound() {
+    document.getElementById('success-sound').play().catch(() => {});
 }
 
-function updateAllScoreDisplays() {
-    Object.keys(scores).forEach(game => {
-        const scoreElement = document.getElementById(`${game}-score`);
-        if (scoreElement) {
-            scoreElement.textContent = scores[game];
+function playErrorSound() {
+    document.getElementById('error-sound').play().catch(() => {});
+}
+
+// Sistema de estrelas
+function addStar() {
+    if (stars < maxStars) {
+        stars++;
+        updateStarsDisplay();
+        
+        if (stars >= maxStars) {
+            showRewardModal();
         }
-    });
+    }
 }
 
-// Jogo 1: Letras
+function updateStarsDisplay() {
+    document.getElementById('stars-counter').textContent = `⭐ Estrelas: ${stars} / ${maxStars}`;
+}
+
+function resetStars() {
+    if (confirm('Tem certeza que deseja resetar todas as estrelas?')) {
+        stars = 0;
+        Object.keys(gameScores).forEach(key => gameScores[key] = 0);
+        updateStarsDisplay();
+        // Reset all score displays
+        document.querySelectorAll('[id$="-score"]').forEach(el => el.textContent = '0');
+    }
+}
+
+function showRewardModal() {
+    document.getElementById('reward-message').textContent = 'Parabéns! Você coletou todas as estrelas! 🎉';
+    document.getElementById('reward-modal').style.display = 'flex';
+}
+
+function closeRewardModal() {
+    document.getElementById('reward-modal').style.display = 'none';
+}
+
+// Jogo 1: ABC das Letras
+let currentLetter = 0;
+
 function initLetterGame() {
-    gameState.letterIndex = 0;
-    showLetterQuestion();
+    gameScores.letter = 0;
+    document.getElementById('letter-score').textContent = gameScores.letter;
+    currentLetter = 0;
+    nextLetterQuestion();
 }
 
-function showLetterQuestion() {
-    const question = letterQuestions[gameState.letterIndex];
-    document.getElementById('letter-question').textContent = question.question;
+function nextLetterQuestion() {
+    if (currentLetter >= letters.length) {
+        currentLetter = 0;
+    }
     
-    const optionsDiv = document.getElementById('letter-options');
-    optionsDiv.innerHTML = '';
+    const letter = letters[currentLetter];
+    document.getElementById('letter-question').textContent = `Clique na letra: ${letter}`;
     
-    question.options.forEach((option, index) => {
+    const options = document.getElementById('letter-options');
+    options.innerHTML = '';
+    
+    // Criar opções (3 incorretas + 1 correta)
+    const wrongLetters = letters.filter(l => l !== letter).slice(0, 3);
+    const allOptions = [...wrongLetters, letter].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(opt => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.textContent = option;
-        btn.onclick = () => checkLetterAnswer(index);
-        optionsDiv.appendChild(btn);
+        btn.textContent = opt;
+        btn.onclick = () => checkLetterAnswer(opt, letter);
+        options.appendChild(btn);
     });
     
     document.getElementById('letter-feedback').textContent = '';
     document.getElementById('letter-next').style.display = 'none';
 }
 
-function checkLetterAnswer(selectedIndex) {
-    const question = letterQuestions[gameState.letterIndex];
+function checkLetterAnswer(selected, correct) {
     const feedback = document.getElementById('letter-feedback');
-    const buttons = document.querySelectorAll('#letter-options .option-btn');
     
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (selectedIndex === question.correct) {
-        buttons[selectedIndex].classList.add('correct');
-        feedback.textContent = '🎉 Fantástico! Você acertou! 🌟';
-        feedback.className = 'feedback success';
-        scores.letter++;
-        document.getElementById('letter-score').textContent = scores.letter;
-        addStar(); // Adicionar estrela
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto! Muito bem!';
+        feedback.className = 'feedback correct';
+        gameScores.letter++;
+        document.getElementById('letter-score').textContent = gameScores.letter;
+        addStar();
         playSuccessSound();
-        createConfetti();
+        currentLetter++;
+        setTimeout(() => {
+            nextLetterQuestion();
+        }, 1500);
     } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        feedback.textContent = '😊 Quase lá! Vamos tentar outra! 💪';
-        feedback.className = 'feedback error';
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
         playErrorSound();
     }
-    
-    document.getElementById('letter-next').style.display = 'block';
 }
 
-function nextLetterQuestion() {
-    gameState.letterIndex = (gameState.letterIndex + 1) % letterQuestions.length;
-    showLetterQuestion();
-}
+// Jogo 2: Mundo das Cores
+let currentColor = 0;
 
-// Jogo 2: Cores
 function initColorGame() {
-    gameState.colorIndex = 0;
-    showColorQuestion();
+    gameScores.color = 0;
+    document.getElementById('color-score').textContent = gameScores.color;
+    currentColor = 0;
+    nextColorQuestion();
 }
 
-function showColorQuestion() {
-    const question = colorQuestions[gameState.colorIndex];
-    document.getElementById('color-question').textContent = question.question;
+function nextColorQuestion() {
+    if (currentColor >= colors.length) {
+        currentColor = 0;
+    }
     
-    const circlesDiv = document.getElementById('color-circles');
-    circlesDiv.innerHTML = '';
+    const color = colors[currentColor];
+    document.getElementById('color-question').textContent = `Clique na cor: ${color.name}`;
     
-    question.colors.forEach((color, index) => {
+    const circles = document.getElementById('color-circles');
+    circles.innerHTML = '';
+    
+    // Criar círculos coloridos
+    const wrongColors = colors.filter(c => c.name !== color.name).slice(0, 3);
+    const allColors = [...wrongColors, color].sort(() => Math.random() - 0.5);
+    
+    allColors.forEach(c => {
         const circle = document.createElement('div');
         circle.className = 'color-circle';
-        circle.style.backgroundColor = color;
-        circle.onclick = () => checkColorAnswer(index);
-        circlesDiv.appendChild(circle);
+        circle.style.backgroundColor = c.hex;
+        circle.onclick = () => checkColorAnswer(c.name, color.name);
+        circles.appendChild(circle);
     });
     
     document.getElementById('color-feedback').textContent = '';
     document.getElementById('color-next').style.display = 'none';
 }
 
-function checkColorAnswer(selectedIndex) {
-    const question = colorQuestions[gameState.colorIndex];
+function checkColorAnswer(selected, correct) {
     const feedback = document.getElementById('color-feedback');
-    const circles = document.querySelectorAll('.color-circle');
     
-    circles.forEach(circle => circle.onclick = null);
-    
-    if (selectedIndex === question.correct) {
-        feedback.textContent = '🌈 Perfeito! Cor certinha! ✨';
-        feedback.className = 'feedback success';
-        scores.color++;
-        document.getElementById('color-score').textContent = scores.color;
-        addStar(); // Adicionar estrela
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto! Muito bem!';
+        feedback.className = 'feedback correct';
+        gameScores.color++;
+        document.getElementById('color-score').textContent = gameScores.color;
+        addStar();
         playSuccessSound();
-        createConfetti();
+        currentColor++;
+        setTimeout(() => {
+            nextColorQuestion();
+        }, 1500);
     } else {
-        feedback.textContent = '🎨 Boa tentativa! Vamos tentar de novo! 🌟';
-        feedback.className = 'feedback error';
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
         playErrorSound();
     }
-    
-    document.getElementById('color-next').style.display = 'block';
 }
 
-function nextColorQuestion() {
-    gameState.colorIndex = (gameState.colorIndex + 1) % colorQuestions.length;
-    showColorQuestion();
-}
+// Jogo 3: Sequência Mágica
+let currentSequence = 0;
 
-// Jogo 3: Sequências
 function initSequenceGame() {
-    gameState.sequenceIndex = 0;
-    showSequenceQuestion();
+    gameScores.sequence = 0;
+    document.getElementById('sequence-score').textContent = gameScores.sequence;
+    currentSequence = 0;
+    nextSequenceQuestion();
 }
 
-function showSequenceQuestion() {
-    const question = sequenceQuestions[gameState.sequenceIndex];
-    document.getElementById('sequence-question').textContent = question.sequence.join(' ');
+function nextSequenceQuestion() {
+    const start = currentSequence * 3 + 1;
+    const sequence = [start, start + 1, '?', start + 3];
+    const missing = start + 2;
     
-    const optionsDiv = document.getElementById('sequence-options');
-    optionsDiv.innerHTML = '';
+    document.getElementById('sequence-question').textContent = `Complete a sequência: ${sequence.join(' - ')}`;
     
-    question.options.forEach((option, index) => {
+    const options = document.getElementById('sequence-options');
+    options.innerHTML = '';
+    
+    const wrongNumbers = [missing - 1, missing + 1, missing + 2].filter(n => n > 0);
+    const allOptions = [...wrongNumbers, missing].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(num => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.textContent = option;
-        btn.onclick = () => checkSequenceAnswer(index);
-        optionsDiv.appendChild(btn);
+        btn.textContent = num;
+        btn.onclick = () => checkSequenceAnswer(num, missing);
+        options.appendChild(btn);
     });
     
     document.getElementById('sequence-feedback').textContent = '';
     document.getElementById('sequence-next').style.display = 'none';
 }
 
-function checkSequenceAnswer(selectedIndex) {
-    const question = sequenceQuestions[gameState.sequenceIndex];
+function checkSequenceAnswer(selected, correct) {
     const feedback = document.getElementById('sequence-feedback');
-    const buttons = document.querySelectorAll('#sequence-options .option-btn');
     
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (selectedIndex === question.correct) {
-        buttons[selectedIndex].classList.add('correct');
-        feedback.textContent = '🎯 Incrível! Sequência completada! 🚀';
-        feedback.className = 'feedback success';
-        scores.sequence++;
-        document.getElementById('sequence-score').textContent = scores.sequence;
-        addStar(); // Adicionar estrela
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto! Muito bem!';
+        feedback.className = 'feedback correct';
+        gameScores.sequence++;
+        document.getElementById('sequence-score').textContent = gameScores.sequence;
+        addStar();
         playSuccessSound();
-        createConfetti();
+        currentSequence++;
+        setTimeout(() => {
+            nextSequenceQuestion();
+        }, 1500);
     } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        feedback.textContent = '🤔 Quase! Vamos descobrir juntos! 💡';
-        feedback.className = 'feedback error';
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+// Jogo 4: Arraste e Solte (versão simplificada com cliques)
+function initDragGame() {
+    const items = document.getElementById('drag-items');
+    const zones = document.getElementById('drop-zones');
+    
+    items.innerHTML = '<div class="drag-item" onclick="selectDragItem(this, \'🐱\')">🐱</div><div class="drag-item" onclick="selectDragItem(this, \'🐶\')">🐶</div>';
+    zones.innerHTML = '<div class="drop-zone" data-target="🐱">Casa do Gato</div><div class="drop-zone" data-target="🐶">Casa do Cachorro</div>';
+    
+    document.getElementById('drag-feedback').textContent = 'Clique no animal e depois na sua casa!';
+}
+
+let selectedDragItem = null;
+
+function selectDragItem(element, animal) {
+    document.querySelectorAll('.drag-item').forEach(item => item.classList.remove('selected'));
+    element.classList.add('selected');
+    selectedDragItem = animal;
+}
+
+// Adicionar evento de clique nas zonas
+document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('drop-zone') && selectedDragItem) {
+            const target = e.target.dataset.target;
+            const feedback = document.getElementById('drag-feedback');
+            
+            if (selectedDragItem === target) {
+                feedback.textContent = '🎉 Correto! Animal na casa certa!';
+                feedback.className = 'feedback correct';
+                addStar();
+                playSuccessSound();
+                setTimeout(() => {
+                    resetDragGame();
+                }, 2000);
+            } else {
+                feedback.textContent = '❌ Tente novamente!';
+                feedback.className = 'feedback incorrect';
+                playErrorSound();
+            }
+            selectedDragItem = null;
+            document.querySelectorAll('.drag-item').forEach(item => item.classList.remove('selected'));
+        }
+    });
+});
+
+function resetDragGame() {
+    initDragGame();
+}
+
+// Jogo 5: Jogo da Memória
+let memoryCards = [];
+let flippedCards = [];
+let memoryScore = 0;
+
+function initMemoryGame() {
+    memoryScore = 0;
+    document.getElementById('memory-score').textContent = `${memoryScore}/3`;
+    
+    const emojis = ['🐱', '🐶', '🐰'];
+    memoryCards = [...emojis, ...emojis].sort(() => Math.random() - 0.5);
+    flippedCards = [];
+    
+    const board = document.getElementById('memory-board');
+    board.innerHTML = '';
+    
+    memoryCards.forEach((emoji, index) => {
+        const card = document.createElement('div');
+        card.className = 'memory-card';
+        card.dataset.index = index;
+        card.textContent = '❓';
+        card.onclick = () => flipCard(card, index);
+        board.appendChild(card);
+    });
+    
+    document.getElementById('memory-feedback').textContent = 'Encontre os pares!';
+}
+
+function flipCard(card, index) {
+    if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
+        card.textContent = memoryCards[index];
+        card.classList.add('flipped');
+        flippedCards.push({ card, index });
+        
+        if (flippedCards.length === 2) {
+            setTimeout(checkMemoryMatch, 1000);
+        }
+    }
+}
+
+function checkMemoryMatch() {
+    const [first, second] = flippedCards;
+    const feedback = document.getElementById('memory-feedback');
+    
+    if (memoryCards[first.index] === memoryCards[second.index]) {
+        feedback.textContent = '🎉 Par encontrado!';
+        feedback.className = 'feedback correct';
+        first.card.classList.add('matched');
+        second.card.classList.add('matched');
+        memoryScore++;
+        document.getElementById('memory-score').textContent = `${memoryScore}/3`;
+        addStar();
+        playSuccessSound();
+        
+        if (memoryScore === 3) {
+            setTimeout(() => {
+                feedback.textContent = '🏆 Parabéns! Você encontrou todos os pares!';
+            }, 500);
+        }
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        first.card.textContent = '❓';
+        second.card.textContent = '❓';
+        first.card.classList.remove('flipped');
+        second.card.classList.remove('flipped');
         playErrorSound();
     }
     
-    document.getElementById('sequence-next').style.display = 'block';
+    flippedCards = [];
 }
 
-function nextSequenceQuestion() {
-    gameState.sequenceIndex = (gameState.sequenceIndex + 1) % sequenceQuestions.length;
-    showSequenceQuestion();
-}
+// Jogo 6: Matemática
+let currentMath = 0;
 
-// Jogo 4: Matemática
 function initMathGame() {
-    gameState.mathIndex = 0;
-    showMathQuestion();
+    gameScores.math = 0;
+    document.getElementById('math-score').textContent = gameScores.math;
+    nextMathQuestion();
 }
 
-function showMathQuestion() {
-    const question = mathQuestions[gameState.mathIndex];
-    document.getElementById('math-question').textContent = question.question;
+function nextMathQuestion() {
+    const a = Math.floor(Math.random() * 10) + 1;
+    const b = Math.floor(Math.random() * 5) + 1;
+    const operation = Math.random() > 0.5 ? '+' : '-';
     
-    const optionsDiv = document.getElementById('math-options');
-    optionsDiv.innerHTML = '';
+    let question, answer;
+    if (operation === '+') {
+        question = `${a} + ${b} = ?`;
+        answer = a + b;
+    } else {
+        if (a > b) {
+            question = `${a} - ${b} = ?`;
+            answer = a - b;
+        } else {
+            question = `${b} - ${a} = ?`;
+            answer = b - a;
+        }
+    }
     
-    question.options.forEach((option, index) => {
+    document.getElementById('math-question').textContent = question;
+    
+    const options = document.getElementById('math-options');
+    options.innerHTML = '';
+    
+    const wrongAnswers = [answer + 1, answer - 1, answer + 2].filter(n => n >= 0);
+    const allOptions = [...wrongAnswers.slice(0, 3), answer].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(opt => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.textContent = option;
-        btn.onclick = () => checkMathAnswer(index);
-        optionsDiv.appendChild(btn);
+        btn.textContent = opt;
+        btn.onclick = () => checkMathAnswer(opt, answer);
+        options.appendChild(btn);
     });
     
     document.getElementById('math-feedback').textContent = '';
     document.getElementById('math-next').style.display = 'none';
 }
 
-function checkMathAnswer(selectedIndex) {
-    const question = mathQuestions[gameState.mathIndex];
+function checkMathAnswer(selected, correct) {
     const feedback = document.getElementById('math-feedback');
-    const buttons = document.querySelectorAll('#math-options .option-btn');
     
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (selectedIndex === question.correct) {
-        buttons[selectedIndex].classList.add('correct');
-        feedback.textContent = '🧮 Genial! Você é um matemático! 🌟';
-        feedback.className = 'feedback success';
-        scores.math++;
-        document.getElementById('math-score').textContent = scores.math;
-        addStar(); // Adicionar estrela
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto! Muito bem!';
+        feedback.className = 'feedback correct';
+        gameScores.math++;
+        document.getElementById('math-score').textContent = gameScores.math;
+        addStar();
         playSuccessSound();
-        createConfetti();
+        setTimeout(() => {
+            nextMathQuestion();
+        }, 1500);
     } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        feedback.textContent = '📊 Boa tentativa! Vamos praticar mais! 💪';
-        feedback.className = 'feedback error';
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
         playErrorSound();
     }
-    
-    document.getElementById('math-next').style.display = 'block';
 }
 
-function nextMathQuestion() {
-    gameState.mathIndex = (gameState.mathIndex + 1) % mathQuestions.length;
-    showMathQuestion();
-}
-
-// Jogo 5: Formas
+// Implementações básicas para os outros jogos
 function initShapesGame() {
-    gameState.shapesIndex = 0;
-    showShapesQuestion();
-}
-
-function showShapesQuestion() {
-    const question = shapesQuestions[gameState.shapesIndex];
-    document.getElementById('shapes-question').textContent = question.question;
-    
-    const optionsDiv = document.getElementById('shapes-options');
-    optionsDiv.innerHTML = '';
-    
-    question.shapes.forEach((shape, index) => {
-        const btn = document.createElement('div');
-        btn.className = 'shape-btn';
-        btn.onclick = () => checkShapesAnswer(index);
-        
-        const shapeDiv = document.createElement('div');
-        shapeDiv.className = `shape ${shape}`;
-        btn.appendChild(shapeDiv);
-        
-        optionsDiv.appendChild(btn);
-    });
-    
-    document.getElementById('shapes-feedback').textContent = '';
-    document.getElementById('shapes-next').style.display = 'none';
-}
-
-function checkShapesAnswer(selectedIndex) {
-    const question = shapesQuestions[gameState.shapesIndex];
-    const feedback = document.getElementById('shapes-feedback');
-    const buttons = document.querySelectorAll('.shape-btn');
-    
-    buttons.forEach(btn => btn.onclick = null);
-    
-    if (selectedIndex === question.correct) {
-        feedback.textContent = '🔷 Perfeito! Forma correta! 🎉';
-        feedback.className = 'feedback success';
-        scores.shapes++;
-        document.getElementById('shapes-score').textContent = scores.shapes;
-        addStar(); // Adicionar estrela
-        playSuccessSound();
-        createConfetti();
-    } else {
-        feedback.textContent = '🔶 Quase! Vamos tentar outra forma! 😊';
-        feedback.className = 'feedback error';
-        playErrorSound();
-    }
-    
-    document.getElementById('shapes-next').style.display = 'block';
+    gameScores.shapes = 0;
+    document.getElementById('shapes-score').textContent = gameScores.shapes;
+    nextShapesQuestion();
 }
 
 function nextShapesQuestion() {
-    gameState.shapesIndex = (gameState.shapesIndex + 1) % shapesQuestions.length;
-    showShapesQuestion();
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+    document.getElementById('shapes-question').textContent = `Qual é esta forma? ${shape.emoji}`;
+    
+    const options = document.getElementById('shapes-options');
+    options.innerHTML = '';
+    
+    const wrongShapes = shapes.filter(s => s.name !== shape.name).slice(0, 2);
+    const allOptions = [...wrongShapes, shape].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `${s.emoji}<br>${s.name}`;
+        btn.onclick = () => checkShapesAnswer(s.name, shape.name);
+        options.appendChild(btn);
+    });
 }
 
-// Jogo 6: Sons dos Animais
+function checkShapesAnswer(selected, correct) {
+    const feedback = document.getElementById('shapes-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto!';
+        feedback.className = 'feedback correct';
+        gameScores.shapes++;
+        document.getElementById('shapes-score').textContent = gameScores.shapes;
+        addStar();
+        playSuccessSound();
+        setTimeout(nextShapesQuestion, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+// Implementações básicas para os demais jogos
 function initAnimalGame() {
-    gameState.animalIndex = 0;
-    showAnimalQuestion();
+    document.getElementById('animal-question').textContent = 'Que animal faz este som? 🐄';
+    document.getElementById('animal-options').innerHTML = '<button class="option-btn" onclick="checkAnimal(\'Vaca\')">🐄 Vaca</button><button class="option-btn" onclick="checkAnimal(\'Gato\')">🐱 Gato</button>';
 }
 
-function showAnimalQuestion() {
-    const question = animalQuestions[gameState.animalIndex];
-    document.getElementById('animal-question').textContent = question.question;
-    
-    const optionsDiv = document.getElementById('animal-options');
-    optionsDiv.innerHTML = '';
-    
-    question.animals.forEach((animal, index) => {
-        const btn = document.createElement('div');
-        btn.className = 'animal-btn';
-        btn.textContent = animal;
-        btn.onclick = () => checkAnimalAnswer(index);
-        optionsDiv.appendChild(btn);
-    });
-    
-    document.getElementById('animal-feedback').textContent = '';
-    document.getElementById('animal-next').style.display = 'none';
-}
-
-function checkAnimalAnswer(selectedIndex) {
-    const question = animalQuestions[gameState.animalIndex];
-    const feedback = document.getElementById('animal-feedback');
-    const buttons = document.querySelectorAll('.animal-btn');
-    
-    buttons.forEach(btn => btn.onclick = null);
-    
-    if (selectedIndex === question.correct) {
-        feedback.textContent = '🐾 Excelente! Som correto! 🎵';
-        feedback.className = 'feedback success';
-        scores.animal++;
-        document.getElementById('animal-score').textContent = scores.animal;
-        addStar(); // Adicionar estrela
+function checkAnimal(animal) {
+    if (animal === 'Vaca') {
+        addStar();
         playSuccessSound();
-        createConfetti();
-    } else {
-        feedback.textContent = '🎼 Boa tentativa! Vamos escutar de novo! 👂';
-        feedback.className = 'feedback error';
-        playErrorSound();
-    }
-    
-    document.getElementById('animal-next').style.display = 'block';
-}
-
-function nextAnimalQuestion() {
-    gameState.animalIndex = (gameState.animalIndex + 1) % animalQuestions.length;
-    showAnimalQuestion();
-}
-
-// Jogo 7: Arrastar e Soltar (melhorado)
-function initDragGame() {
-    const itemsDiv = document.getElementById('drag-items');
-    const zonesDiv = document.getElementById('drop-zones');
-    
-    itemsDiv.innerHTML = '';
-    zonesDiv.innerHTML = '';
-    
-    // Selecionar 3 itens aleatórios
-    const selectedItems = [...dragItems].sort(() => Math.random() - 0.5).slice(0, 3);
-    
-    // Criar itens arrastáveis
-    selectedItems.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'drag-item';
-        div.textContent = item.name;
-        div.draggable = true;
-        div.dataset.match = item.match;
-        div.addEventListener('dragstart', handleDragStart);
-        itemsDiv.appendChild(div);
-    });
-    
-    // Criar zonas de soltar (embaralhadas)
-    const shuffledMatches = [...selectedItems].sort(() => Math.random() - 0.5);
-    shuffledMatches.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'drop-zone';
-        div.textContent = item.match;
-        div.dataset.match = item.match;
-        div.addEventListener('dragover', handleDragOver);
-        div.addEventListener('drop', handleDrop);
-        zonesDiv.appendChild(div);
-    });
-    
-    document.getElementById('drag-feedback').textContent = '';
-}
-
-function handleDragStart(e) {
-    e.dataTransfer.setData('text/plain', e.target.dataset.match);
-}
-
-function handleDragOver(e) {
-    e.preventDefault();
-    e.target.classList.add('drag-over');
-}
-
-function handleDrop(e) {
-    e.preventDefault();
-    e.target.classList.remove('drag-over');
-    
-    const draggedMatch = e.dataTransfer.getData('text/plain');
-    const dropZoneMatch = e.target.dataset.match;
-    
-    if (draggedMatch === dropZoneMatch) {
-        e.target.classList.add('correct');
-        e.target.textContent = '✅ ' + dropZoneMatch;
-        
-        // Remover item arrastado
-        const draggedItem = document.querySelector(`[data-match="${draggedMatch}"]`);
-        if (draggedItem && draggedItem.classList.contains('drag-item')) {
-            draggedItem.remove();
-        }
-        
-        addStar(); // Adicionar estrela
-        playSuccessSound();
-        
-        // Verificar se todos foram completados
-        const remainingItems = document.querySelectorAll('.drag-item');
-        if (remainingItems.length === 0) {
-            document.getElementById('drag-feedback').textContent = '🏆 Fantástico! Você completou tudo! 🎉';
-            document.getElementById('drag-feedback').className = 'feedback success';
-            createConfetti();
-        }
-    } else {
-        document.getElementById('drag-feedback').textContent = '🤗 Tente novamente! Você consegue! 💪';
-        document.getElementById('drag-feedback').className = 'feedback error';
-        playErrorSound();
+        document.getElementById('animal-feedback').textContent = '🎉 Correto! A vaca faz Muuu!';
     }
 }
 
-function resetDragGame() {
-    initDragGame();
-}
-
-// Jogo 8: Memória (melhorado)
-function initMemoryGame() {
-    gameState.memoryCards = [...memoryCards].sort(() => Math.random() - 0.5);
-    gameState.flippedCards = [];
-    gameState.matchedPairs = 0;
-    scores.memory = 0;
-    document.getElementById('memory-score').textContent = '0/4';
-    
-    const board = document.getElementById('memory-board');
-    board.innerHTML = '';
-    
-    gameState.memoryCards.forEach((card, index) => {
-        const button = document.createElement('button');
-        button.className = 'memory-card';
-        button.dataset.card = card;
-        button.dataset.index = index;
-        button.textContent = '?';
-        button.onclick = () => flipCard(button);
-        board.appendChild(button);
-    });
-    
-    document.getElementById('memory-feedback').textContent = '';
-}
-
-function flipCard(cardElement) {
-    if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) {
-        return;
-    }
-    
-    cardElement.classList.add('flipped');
-    cardElement.textContent = cardElement.dataset.card;
-    gameState.flippedCards.push(cardElement);
-    
-    if (gameState.flippedCards.length === 2) {
-        setTimeout(checkMemoryMatch, 1000);
-    }
-}
-
-function checkMemoryMatch() {
-    const [card1, card2] = gameState.flippedCards;
-    
-    if (card1.dataset.card === card2.dataset.card) {
-        card1.classList.add('matched');
-        card2.classList.add('matched');
-        gameState.matchedPairs++;
-        scores.memory = gameState.matchedPairs;
-        document.getElementById('memory-score').textContent = `${gameState.matchedPairs}/4`;
-        
-        addStar(); // Adicionar estrela
-        playSuccessSound();
-        
-        if (gameState.matchedPairs === 4) {
-            document.getElementById('memory-feedback').textContent = '🎊 Incrível! Memória perfeita! 🧠✨';
-            document.getElementById('memory-feedback').className = 'feedback success';
-            createConfetti();
-        }
-    } else {
-        card1.classList.remove('flipped');
-        card2.classList.remove('flipped');
-        card1.textContent = '?';
-        card2.textContent = '?';
-        playErrorSound();
-    }
-    
-    gameState.flippedCards = [];
-}
-
-// Event listeners para touch em dispositivos móveis
-document.addEventListener('touchstart', handleTouchStart, {passive: false});
-document.addEventListener('touchmove', handleTouchMove, {passive: false});
-document.addEventListener('touchend', handleTouchEnd, {passive: false});
-
-let draggedElement = null;
-
-function handleTouchStart(e) {
-    if (e.target.classList.contains('drag-item')) {
-        draggedElement = e.target;
-        e.target.style.opacity = '0.5';
-    }
-}
-
-function handleTouchMove(e) {
-    e.preventDefault();
-}
-
-function handleTouchEnd(e) {
-    if (draggedElement) {
-        draggedElement.style.opacity = '1';
-        
-        const touch = e.changedTouches[0];
-        const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-        
-        if (elementBelow && elementBelow.classList.contains('drop-zone')) {
-            const draggedMatch = draggedElement.dataset.match;
-            const dropZoneMatch = elementBelow.dataset.match;
-            
-            if (draggedMatch === dropZoneMatch) {
-                elementBelow.classList.add('correct');
-                elementBelow.textContent = '✅ ' + dropZoneMatch;
-                draggedElement.remove();
-                
-                addStar(); // Adicionar estrela
-                playSuccessSound();
-                
-                const remainingItems = document.querySelectorAll('.drag-item');
-                if (remainingItems.length === 0) {
-                    document.getElementById('drag-feedback').textContent = '🏆 Fantástico! Você completou tudo! 🎉';
-                    document.getElementById('drag-feedback').className = 'feedback success';
-                    createConfetti();
-                }
-            } else {
-                document.getElementById('drag-feedback').textContent = '🤗 Tente novamente! Você consegue! 💪';
-                document.getElementById('drag-feedback').className = 'feedback error';
-                playErrorSound();
-            }
-        }
-        
-        draggedElement = null;
-    }
-}
-
-// Novos Jogos
-
-// Jogo 9: Inglês Básico
 function initEnglishGame() {
-    gameState.englishIndex = 0;
-    showEnglishQuestion();
+    document.getElementById('english-question').textContent = 'How do you say "Gato" in English?';
+    document.getElementById('english-options').innerHTML = '<button class="option-btn" onclick="checkEnglish(\'Cat\')">Cat</button><button class="option-btn" onclick="checkEnglish(\'Dog\')">Dog</button>';
 }
 
-function showEnglishQuestion() {
-    const question = englishQuestions[gameState.englishIndex];
-    document.getElementById('english-question').textContent = question.question;
-    
-    const optionsDiv = document.getElementById('english-options');
-    optionsDiv.innerHTML = '';
-    
-    question.options.forEach((option, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.textContent = option;
-        btn.onclick = () => checkEnglishAnswer(index);
-        optionsDiv.appendChild(btn);
-    });
-    
-    document.getElementById('english-feedback').textContent = '';
-    document.getElementById('english-next').style.display = 'none';
-}
-
-function checkEnglishAnswer(selectedIndex) {
-    const question = englishQuestions[gameState.englishIndex];
-    const feedback = document.getElementById('english-feedback');
-    const buttons = document.querySelectorAll('#english-options .option-btn');
-    
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (selectedIndex === question.correct) {
-        buttons[selectedIndex].classList.add('correct');
-        feedback.textContent = '🇺🇸 Great! Perfect English! 🌟';
-        feedback.className = 'feedback success';
-        scores.english++;
-        document.getElementById('english-score').textContent = scores.english;
+function checkEnglish(word) {
+    if (word === 'Cat') {
         addStar();
         playSuccessSound();
-        createConfetti();
-    } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        feedback.textContent = '📚 Good try! Keep learning! 💪';
-        feedback.className = 'feedback error';
-        playErrorSound();
+        document.getElementById('english-feedback').textContent = '🎉 Correct! Cat is gato!';
     }
-    
-    document.getElementById('english-next').style.display = 'block';
 }
 
-function nextEnglishQuestion() {
-    gameState.englishIndex = (gameState.englishIndex + 1) % englishQuestions.length;
-    showEnglishQuestion();
-}
-
-// Jogo 10: Cores em Inglês
 function initColorsEnglishGame() {
-    gameState.colorsEnglishIndex = 0;
-    showColorsEnglishQuestion();
+    document.getElementById('colors-english-question').textContent = 'Click on RED:';
+    document.getElementById('colors-english-circles').innerHTML = '<div class="color-circle" style="background: red;" onclick="checkEnglishColor(\'red\')"></div><div class="color-circle" style="background: blue;" onclick="checkEnglishColor(\'blue\')"></div>';
 }
 
-function showColorsEnglishQuestion() {
-    const question = colorsEnglishQuestions[gameState.colorsEnglishIndex];
-    document.getElementById('colors-english-question').textContent = question.question;
-    
-    const circlesDiv = document.getElementById('colors-english-circles');
-    circlesDiv.innerHTML = '';
-    
-    question.colors.forEach((color, index) => {
-        const circle = document.createElement('div');
-        circle.className = 'color-circle';
-        circle.style.backgroundColor = color;
-        circle.onclick = () => checkColorsEnglishAnswer(index);
-        circlesDiv.appendChild(circle);
-    });
-    
-    document.getElementById('colors-english-feedback').textContent = '';
-    document.getElementById('colors-english-next').style.display = 'none';
-}
-
-function checkColorsEnglishAnswer(selectedIndex) {
-    const question = colorsEnglishQuestions[gameState.colorsEnglishIndex];
-    const feedback = document.getElementById('colors-english-feedback');
-    const circles = document.querySelectorAll('#colors-english-circles .color-circle');
-    
-    circles.forEach(circle => circle.onclick = null);
-    
-    if (selectedIndex === question.correct) {
-        feedback.textContent = '🇺🇸 Excellent! Right color! 🌈';
-        feedback.className = 'feedback success';
-        scores.colorsEnglish++;
-        document.getElementById('colors-english-score').textContent = scores.colorsEnglish;
+function checkEnglishColor(color) {
+    if (color === 'red') {
         addStar();
         playSuccessSound();
-        createConfetti();
-    } else {
-        feedback.textContent = '🎨 Try again! You can do it! 💪';
-        feedback.className = 'feedback error';
-        playErrorSound();
+        document.getElementById('colors-english-feedback').textContent = '🎉 Correct!';
     }
-    
-    document.getElementById('colors-english-next').style.display = 'block';
 }
 
-function nextColorsEnglishQuestion() {
-    gameState.colorsEnglishIndex = (gameState.colorsEnglishIndex + 1) % colorsEnglishQuestions.length;
-    showColorsEnglishQuestion();
-}
-
-// Jogo 11: Relógio
 function initClockGame() {
-    gameState.clockIndex = 0;
-    showClockQuestion();
+    document.getElementById('clock-question').textContent = 'Que horas são? 🕐';
+    document.getElementById('clock-options').innerHTML = '<button class="option-btn" onclick="checkClock(\'1:00\')">1:00</button><button class="option-btn" onclick="checkClock(\'2:00\')">2:00</button>';
 }
 
-function showClockQuestion() {
-    const question = clockQuestions[gameState.clockIndex];
-    const clockDisplay = document.getElementById('clock-display');
-    const time = question.time.split(':');
-    const hours = parseInt(time[0]);
-    const minutes = parseInt(time[1]);
-    
-    clockDisplay.innerHTML = `
-        <div class="clock">
-            <div class="clock-face">
-                <div class="hour-hand" style="transform: rotate(${(hours % 12) * 30 + minutes * 0.5}deg)"></div>
-                <div class="minute-hand" style="transform: rotate(${minutes * 6}deg)"></div>
-                <div class="center-dot"></div>
-            </div>
-        </div>
-    `;
-    
-    document.getElementById('clock-question').textContent = 'Que horas são?';
-    
-    const optionsDiv = document.getElementById('clock-options');
-    optionsDiv.innerHTML = '';
-    
-    question.options.forEach((option, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.textContent = option;
-        btn.onclick = () => checkClockAnswer(index);
-        optionsDiv.appendChild(btn);
-    });
-    
-    document.getElementById('clock-feedback').textContent = '';
-    document.getElementById('clock-next').style.display = 'none';
-}
-
-function checkClockAnswer(selectedIndex) {
-    const question = clockQuestions[gameState.clockIndex];
-    const feedback = document.getElementById('clock-feedback');
-    const buttons = document.querySelectorAll('#clock-options .option-btn');
-    
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (selectedIndex === question.correct) {
-        buttons[selectedIndex].classList.add('correct');
-        feedback.textContent = '⏰ Perfeito! Você sabe as horas! 🎉';
-        feedback.className = 'feedback success';
-        scores.clock++;
-        document.getElementById('clock-score').textContent = scores.clock;
+function checkClock(time) {
+    if (time === '1:00') {
         addStar();
         playSuccessSound();
-        createConfetti();
-    } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        feedback.textContent = '🕐 Quase! Vamos praticar mais! ⏰';
-        feedback.className = 'feedback error';
-        playErrorSound();
+        document.getElementById('clock-feedback').textContent = '🎉 Correto!';
     }
-    
-    document.getElementById('clock-next').style.display = 'block';
 }
 
-function nextClockQuestion() {
-    gameState.clockIndex = (gameState.clockIndex + 1) % clockQuestions.length;
-    showClockQuestion();
-}
-
-// Jogo 12: Padrões
 function initPatternsGame() {
-    gameState.patternsIndex = 0;
-    showPatternsQuestion();
+    document.getElementById('patterns-question').textContent = 'Complete o padrão: 🔴🔵🔴?';
+    document.getElementById('patterns-options').innerHTML = '<button class="option-btn" onclick="checkPattern(\'🔵\')">🔵</button><button class="option-btn" onclick="checkPattern(\'🔴\')">🔴</button>';
 }
 
-function showPatternsQuestion() {
-    const question = patternsQuestions[gameState.patternsIndex];
-    const display = document.getElementById('patterns-display');
-    
-    display.innerHTML = question.pattern.map(item => 
-        `<div class="pattern-item">${item}</div>`
-    ).join('');
-    
-    document.getElementById('patterns-question').textContent = 'Complete o padrão:';
-    
-    const optionsDiv = document.getElementById('patterns-options');
-    optionsDiv.innerHTML = '';
-    
-    question.options.forEach((option, index) => {
-        const btn = document.createElement('div');
-        btn.className = 'pattern-option';
-        btn.textContent = option;
-        btn.onclick = () => checkPatternsAnswer(index);
-        optionsDiv.appendChild(btn);
-    });
-    
-    document.getElementById('patterns-feedback').textContent = '';
-    document.getElementById('patterns-next').style.display = 'none';
-}
-
-function checkPatternsAnswer(selectedIndex) {
-    const question = patternsQuestions[gameState.patternsIndex];
-    const feedback = document.getElementById('patterns-feedback');
-    const buttons = document.querySelectorAll('.pattern-option');
-    
-    buttons.forEach(btn => btn.onclick = null);
-    
-    if (selectedIndex === question.correct) {
-        feedback.textContent = '🎯 Incrível! Padrão completado! ✨';
-        feedback.className = 'feedback success';
-        scores.patterns++;
-        document.getElementById('patterns-score').textContent = scores.patterns;
+function checkPattern(pattern) {
+    if (pattern === '🔵') {
         addStar();
         playSuccessSound();
-        createConfetti();
-    } else {
-        feedback.textContent = '🧩 Quase! Observe o padrão! 🔍';
-        feedback.className = 'feedback error';
-        playErrorSound();
+        document.getElementById('patterns-feedback').textContent = '🎉 Correto!';
     }
-    
-    document.getElementById('patterns-next').style.display = 'block';
 }
 
-function nextPatternsQuestion() {
-    gameState.patternsIndex = (gameState.patternsIndex + 1) % patternsQuestions.length;
-    showPatternsQuestion();
-}
-
-// Jogo 13: Quebra-Palavras
 function initWordPuzzleGame() {
-    gameState.wordPuzzleIndex = 0;
-    gameState.currentPuzzle = null;
-    showWordPuzzle();
-}
-
-function showWordPuzzle() {
-    const puzzle = wordPuzzles[gameState.wordPuzzleIndex];
-    gameState.currentPuzzle = puzzle;
-    
-    document.getElementById('word-image').textContent = puzzle.image;
-    
-    const lettersDiv = document.getElementById('word-letters');
-    lettersDiv.innerHTML = '';
-    
-    const shuffledLetters = [...puzzle.letters].sort(() => Math.random() - 0.5);
-    shuffledLetters.forEach(letter => {
-        const btn = document.createElement('button');
-        btn.className = 'letter-btn';
-        btn.textContent = letter;
-        btn.onclick = () => addLetterToWord(letter, btn);
-        lettersDiv.appendChild(btn);
-    });
-    
-    const slotsDiv = document.getElementById('word-slots');
-    slotsDiv.innerHTML = '';
-    
-    puzzle.letters.forEach(() => {
-        const slot = document.createElement('div');
-        slot.className = 'letter-slot';
-        slot.textContent = '_';
-        slotsDiv.appendChild(slot);
-    });
-    
-    gameState.wordProgress = [];
-    document.getElementById('word-feedback').textContent = '';
-}
-
-function addLetterToWord(letter, button) {
-    if (gameState.wordProgress.length < gameState.currentPuzzle.letters.length) {
-        gameState.wordProgress.push(letter);
-        button.disabled = true;
-        button.style.opacity = '0.5';
-        
-        const slots = document.querySelectorAll('.letter-slot');
-        slots[gameState.wordProgress.length - 1].textContent = letter;
-        
-        if (gameState.wordProgress.length === gameState.currentPuzzle.letters.length) {
-            checkWordComplete();
-        }
-    }
-}
-
-function checkWordComplete() {
-    const feedback = document.getElementById('word-feedback');
-    const correctWord = gameState.currentPuzzle.word;
-    const playerWord = gameState.wordProgress.join('');
-    
-    if (playerWord === correctWord) {
-        feedback.textContent = '🎊 Fantástico! Palavra correta! 📝';
-        feedback.className = 'feedback success';
-        scores.wordPuzzle++;
-        document.getElementById('word-puzzle-score').textContent = scores.wordPuzzle;
-        addStar();
-        playSuccessSound();
-        createConfetti();
-    } else {
-        feedback.textContent = '🔤 Quase! Tente novamente! 💪';
-        feedback.className = 'feedback error';
-        playErrorSound();
-        setTimeout(resetWordPuzzle, 2000);
-    }
-}
-
-function resetWordPuzzle() {
-    const buttons = document.querySelectorAll('.letter-btn');
-    buttons.forEach(btn => {
-        btn.disabled = false;
-        btn.style.opacity = '1';
-    });
-    
-    const slots = document.querySelectorAll('.letter-slot');
-    slots.forEach(slot => slot.textContent = '_');
-    
-    gameState.wordProgress = [];
-    document.getElementById('word-feedback').textContent = '';
+    document.getElementById('word-image').textContent = '🐱';
+    document.getElementById('word-letters').innerHTML = '<button onclick="addLetter(\'G\')">G</button><button onclick="addLetter(\'A\')">A</button><button onclick="addLetter(\'T\')">T</button><button onclick="addLetter(\'O\')">O</button>';
+    document.getElementById('word-slots').innerHTML = '<span>G</span><span>A</span><span>T</span><span>O</span>';
 }
 
 function nextWordPuzzle() {
-    gameState.wordPuzzleIndex = (gameState.wordPuzzleIndex + 1) % wordPuzzles.length;
-    showWordPuzzle();
+    initWordPuzzleGame();
 }
 
-// Jogo 14: Conte os Objetos
 function initCountGame() {
-    gameState.countIndex = 0;
-    showCountQuestion();
+    document.getElementById('count-objects-display').textContent = '🍎🍎🍎';
+    document.getElementById('count-question').textContent = 'Quantas maçãs você vê?';
+    document.getElementById('count-options').innerHTML = '<button class="option-btn" onclick="checkCount(3)">3</button><button class="option-btn" onclick="checkCount(2)">2</button>';
 }
 
-function showCountQuestion() {
-    const question = countQuestions[gameState.countIndex];
-    const display = document.getElementById('count-objects-display');
-    
-    display.innerHTML = question.objects.map(obj => 
-        `<div class="count-object">${obj}</div>`
-    ).join('');
-    
-    document.getElementById('count-question').textContent = 'Quantos objetos você vê?';
-    
-    const optionsDiv = document.getElementById('count-options');
-    optionsDiv.innerHTML = '';
-    
-    question.options.forEach((option, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.textContent = option;
-        btn.onclick = () => checkCountAnswer(index);
-        optionsDiv.appendChild(btn);
-    });
-    
-    document.getElementById('count-feedback').textContent = '';
-    document.getElementById('count-next').style.display = 'none';
-}
-
-function checkCountAnswer(selectedIndex) {
-    const question = countQuestions[gameState.countIndex];
-    const feedback = document.getElementById('count-feedback');
-    const buttons = document.querySelectorAll('#count-options .option-btn');
-    
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (selectedIndex === question.correct) {
-        buttons[selectedIndex].classList.add('correct');
-        feedback.textContent = '🔢 Perfeito! Você sabe contar! 🎉';
-        feedback.className = 'feedback success';
-        scores.count++;
-        document.getElementById('count-score').textContent = scores.count;
+function checkCount(num) {
+    if (num === 3) {
         addStar();
         playSuccessSound();
-        createConfetti();
-    } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        feedback.textContent = '📊 Conte novamente! Você consegue! 💪';
-        feedback.className = 'feedback error';
-        playErrorSound();
+        document.getElementById('count-feedback').textContent = '🎉 Correto!';
     }
-    
-    document.getElementById('count-next').style.display = 'block';
 }
 
-function nextCountQuestion() {
-    gameState.countIndex = (gameState.countIndex + 1) % countQuestions.length;
-    showCountQuestion();
-}
-
-// Jogo 15: Rimas
 function initRhymeGame() {
-    gameState.rhymeIndex = 0;
-    showRhymeQuestion();
+    document.getElementById('rhyme-question').textContent = 'Qual palavra rima com "GATO"?';
+    document.getElementById('rhyme-options').innerHTML = '<button class="option-btn" onclick="checkRhyme(\'PATO\')">PATO</button><button class="option-btn" onclick="checkRhyme(\'CASA\')">CASA</button>';
 }
 
-function showRhymeQuestion() {
-    const question = rhymeQuestions[gameState.rhymeIndex];
-    document.getElementById('rhyme-question').textContent = question.question;
-    
-    const optionsDiv = document.getElementById('rhyme-options');
-    optionsDiv.innerHTML = '';
-    
-    question.options.forEach((option, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.textContent = option;
-        btn.onclick = () => checkRhymeAnswer(index);
-        optionsDiv.appendChild(btn);
-    });
-    
-    document.getElementById('rhyme-feedback').textContent = '';
-    document.getElementById('rhyme-next').style.display = 'none';
-}
-
-function checkRhymeAnswer(selectedIndex) {
-    const question = rhymeQuestions[gameState.rhymeIndex];
-    const feedback = document.getElementById('rhyme-feedback');
-    const buttons = document.querySelectorAll('#rhyme-options .option-btn');
-    
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (selectedIndex === question.correct) {
-        buttons[selectedIndex].classList.add('correct');
-        feedback.textContent = '🎵 Maravilhoso! Rima perfeita! 🎶';
-        feedback.className = 'feedback success';
-        scores.rhyme++;
-        document.getElementById('rhyme-score').textContent = scores.rhyme;
+function checkRhyme(word) {
+    if (word === 'PATO') {
         addStar();
         playSuccessSound();
-        createConfetti();
-    } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        feedback.textContent = '🎼 Quase! Escute o som das palavras! 👂';
-        feedback.className = 'feedback error';
-        playErrorSound();
+        document.getElementById('rhyme-feedback').textContent = '🎉 Correto!';
     }
-    
-    document.getElementById('rhyme-next').style.display = 'block';
 }
 
-function nextRhymeQuestion() {
-    gameState.rhymeIndex = (gameState.rhymeIndex + 1) % rhymeQuestions.length;
-    showRhymeQuestion();
-}
-
-// Jogo 16: Animais em Inglês
 function initEnglishAnimalsGame() {
-    gameState.englishAnimalsIndex = 0;
-    showEnglishAnimalsQuestion();
+    document.getElementById('english-animals-question').textContent = 'What animal is this? 🐶';
+    document.getElementById('english-animals-options').innerHTML = '<button class="option-btn" onclick="checkEnglishAnimal(\'Dog\')">🐶 Dog</button><button class="option-btn" onclick="checkEnglishAnimal(\'Cat\')">🐱 Cat</button>';
 }
 
-function showEnglishAnimalsQuestion() {
-    const question = englishAnimalsQuestions[gameState.englishAnimalsIndex];
-    document.getElementById('english-animals-question').textContent = question.question;
-    
-    const optionsDiv = document.getElementById('english-animals-options');
-    optionsDiv.innerHTML = '';
-    
-    question.options.forEach((option, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.textContent = option;
-        btn.onclick = () => checkEnglishAnimalsAnswer(index);
-        optionsDiv.appendChild(btn);
-    });
-    
-    document.getElementById('english-animals-feedback').textContent = '';
-    document.getElementById('english-animals-next').style.display = 'none';
-}
-
-function checkEnglishAnimalsAnswer(selectedIndex) {
-    const question = englishAnimalsQuestions[gameState.englishAnimalsIndex];
-    const feedback = document.getElementById('english-animals-feedback');
-    const buttons = document.querySelectorAll('#english-animals-options .option-btn');
-    
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (selectedIndex === question.correct) {
-        buttons[selectedIndex].classList.add('correct');
-        feedback.textContent = '🇺🇸 Amazing! Correct animal! 🐾';
-        feedback.className = 'feedback success';
-        scores.englishAnimals++;
-        document.getElementById('english-animals-score').textContent = scores.englishAnimals;
+function checkEnglishAnimal(animal) {
+    if (animal === 'Dog') {
         addStar();
         playSuccessSound();
-        createConfetti();
-    } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        feedback.textContent = '🐱 Good try! Keep learning! 📚';
-        feedback.className = 'feedback error';
-        playErrorSound();
+        document.getElementById('english-animals-feedback').textContent = '🎉 Correct!';
     }
-    
-    document.getElementById('english-animals-next').style.display = 'block';
 }
 
-function nextEnglishAnimalsQuestion() {
-    gameState.englishAnimalsIndex = (gameState.englishAnimalsIndex + 1) % englishAnimalsQuestions.length;
-    showEnglishAnimalsQuestion();
-}
-
-// Jogo 17: Comparação de Tamanhos
 function initSizeGame() {
-    gameState.sizeIndex = 0;
-    showSizeQuestion();
+    document.getElementById('size-comparison-display').textContent = '🐘 🐭';
+    document.getElementById('size-question').textContent = 'Qual é maior?';
+    document.getElementById('size-options').innerHTML = '<button class="option-btn" onclick="checkSize(\'Elefante\')">🐘 Elefante</button><button class="option-btn" onclick="checkSize(\'Rato\')">🐭 Rato</button>';
 }
 
-function showSizeQuestion() {
-    const question = sizeQuestions[gameState.sizeIndex];
-    const display = document.getElementById('size-comparison-display');
-    
-    display.innerHTML = question.objects.map((obj, index) => 
-        `<div class="size-object ${obj.size}" data-index="${index}">${obj.emoji}</div>`
-    ).join('');
-    
-    document.getElementById('size-question').textContent = question.question;
-    
-    const optionsDiv = document.getElementById('size-options');
-    optionsDiv.innerHTML = '';
-    
-    question.objects.forEach((obj, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.textContent = obj.emoji;
-        btn.onclick = () => checkSizeAnswer(index);
-        optionsDiv.appendChild(btn);
-    });
-    
-    document.getElementById('size-feedback').textContent = '';
-    document.getElementById('size-next').style.display = 'none';
-}
-
-function checkSizeAnswer(selectedIndex) {
-    const question = sizeQuestions[gameState.sizeIndex];
-    const feedback = document.getElementById('size-feedback');
-    const buttons = document.querySelectorAll('#size-options .option-btn');
-    
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (selectedIndex === question.correct) {
-        buttons[selectedIndex].classList.add('correct');
-        feedback.textContent = '📏 Perfeito! Você sabe comparar! 🎯';
-        feedback.className = 'feedback success';
-        scores.size++;
-        document.getElementById('size-score').textContent = scores.size;
+function checkSize(animal) {
+    if (animal === 'Elefante') {
         addStar();
         playSuccessSound();
-        createConfetti();
+        document.getElementById('size-feedback').textContent = '🎉 Correto!';
+    }
+}
+
+// Jogo 18: Monte o Quebra-Cabeça
+let currentPuzzle = 0;
+const puzzles = [
+    { image: '🐱', pieces: ['🐱', '🐶', '🐰'], correct: '🐱', name: 'Gato' },
+    { image: '🌸', pieces: ['🌸', '🌻', '🌹'], correct: '🌸', name: 'Flor' },
+    { image: '🚗', pieces: ['🚗', '🚲', '✈️'], correct: '🚗', name: 'Carro' }
+];
+
+function initPuzzleGame() {
+    gameScores.puzzle = 0;
+    document.getElementById('puzzle-score').textContent = gameScores.puzzle;
+    currentPuzzle = 0;
+    nextPuzzle();
+}
+
+function nextPuzzle() {
+    if (currentPuzzle >= puzzles.length) currentPuzzle = 0;
+    
+    const puzzle = puzzles[currentPuzzle];
+    document.getElementById('puzzle-image').innerHTML = `<div class="puzzle-target">${puzzle.image}</div><p>Monte: ${puzzle.name}</p>`;
+    
+    const container = document.getElementById('puzzle-pieces-container');
+    container.innerHTML = '';
+    
+    puzzle.pieces.forEach(piece => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = piece;
+        btn.onclick = () => checkPuzzlePiece(piece, puzzle.correct);
+        container.appendChild(btn);
+    });
+    
+    document.getElementById('puzzle-feedback').textContent = '';
+}
+
+function checkPuzzlePiece(selected, correct) {
+    const feedback = document.getElementById('puzzle-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Peça certa! Quebra-cabeça montado!';
+        feedback.className = 'feedback correct';
+        gameScores.puzzle++;
+        document.getElementById('puzzle-score').textContent = gameScores.puzzle;
+        addStar();
+        playSuccessSound();
+        currentPuzzle++;
+        setTimeout(() => {
+            nextPuzzle();
+        }, 2000);
     } else {
-        buttons[selectedIndex].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        feedback.textContent = '🔍 Observe bem os tamanhos! 👀';
-        feedback.className = 'feedback error';
+        feedback.textContent = '❌ Peça errada! Tente outra!';
+        feedback.className = 'feedback incorrect';
         playErrorSound();
     }
+}
+
+// Jogo 19: Aprenda a Digitar
+let currentTypingWord = 0;
+
+function initTypingGame() {
+    gameScores.typing = 0;
+    document.getElementById('typing-score').textContent = gameScores.typing;
+    currentTypingWord = 0;
+    nextTypingWord();
+}
+
+function nextTypingWord() {
+    if (currentTypingWord >= typingWords.length) currentTypingWord = 0;
     
-    document.getElementById('size-next').style.display = 'block';
+    const word = typingWords[currentTypingWord];
+    document.getElementById('typing-word').textContent = word;
+    document.getElementById('typing-input').value = '';
+    document.getElementById('typing-feedback').textContent = 'Digite a palavra acima!';
+    document.getElementById('typing-input').focus();
 }
 
-function nextSizeQuestion() {
-    gameState.sizeIndex = (gameState.sizeIndex + 1) % sizeQuestions.length;
-    showSizeQuestion();
-}
-
-// Verificar se já está logado ao carregar
-document.addEventListener('DOMContentLoaded', function() {
-    loadStars(); // Carregar estrelas salvas
-    const userEmail = localStorage.getItem('userEmail');
-    if (userEmail) {
-        showMenu();
-    } else {
-        showScreen('login-screen');
+function checkTyping() {
+    const input = document.getElementById('typing-input').value.toUpperCase();
+    const word = typingWords[currentTypingWord];
+    const feedback = document.getElementById('typing-feedback');
+    
+    if (input === word) {
+        feedback.textContent = '🎉 Perfeito! Palavra digitada corretamente!';
+        feedback.className = 'feedback correct';
+        gameScores.typing++;
+        document.getElementById('typing-score').textContent = gameScores.typing;
+        addStar();
+        playSuccessSound();
+        currentTypingWord++;
+        setTimeout(() => {
+            nextTypingWord();
+        }, 2000);
+    } else if (word.startsWith(input) && input.length > 0) {
+        feedback.textContent = '✍️ Continue digitando...';
+        feedback.className = 'feedback';
     }
+}
+
+// Jogo 20: Partes do Corpo
+let currentBodyPart = 0;
+
+function initBodyGame() {
+    gameScores.body = 0;
+    document.getElementById('body-score').textContent = gameScores.body;
+    currentBodyPart = 0;
+    nextBodyQuestion();
+}
+
+function nextBodyQuestion() {
+    if (currentBodyPart >= bodyParts.length) currentBodyPart = 0;
+    
+    const bodyPart = bodyParts[currentBodyPart];
+    document.getElementById('body-question').textContent = `Qual parte do corpo é esta? ${bodyPart.emoji}`;
+    
+    const options = document.getElementById('body-options');
+    options.innerHTML = '';
+    
+    const wrongParts = bodyParts.filter(p => p.name !== bodyPart.name).slice(0, 2);
+    const allOptions = [...wrongParts, bodyPart].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(part => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = part.name;
+        btn.onclick = () => checkBodyAnswer(part.name, bodyPart.name);
+        options.appendChild(btn);
+    });
+    
+    document.getElementById('body-feedback').textContent = '';
+}
+
+function checkBodyAnswer(selected, correct) {
+    const feedback = document.getElementById('body-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto! Você conhece bem o corpo humano!';
+        feedback.className = 'feedback correct';
+        gameScores.body++;
+        document.getElementById('body-score').textContent = gameScores.body;
+        addStar();
+        playSuccessSound();
+        currentBodyPart++;
+        setTimeout(() => {
+            nextBodyQuestion();
+        }, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+// Jogo 21: Tipos de Comida
+let currentFood = 0;
+
+function initFoodGame() {
+    gameScores.food = 0;
+    document.getElementById('food-score').textContent = gameScores.food;
+    currentFood = 0;
+    nextFoodQuestion();
+}
+
+function nextFoodQuestion() {
+    if (currentFood >= foodCategories.length) currentFood = 0;
+    
+    const food = foodCategories[currentFood];
+    document.getElementById('food-question').textContent = `${food.emoji} ${food.name} é que tipo de comida?`;
+    
+    const options = document.getElementById('food-options');
+    options.innerHTML = '';
+    
+    const categories = ['Fruta', 'Verdura', 'Carboidrato'];
+    categories.forEach(category => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = category;
+        btn.onclick = () => checkFoodAnswer(category, food.category);
+        options.appendChild(btn);
+    });
+    
+    document.getElementById('food-feedback').textContent = '';
+}
+
+function checkFoodAnswer(selected, correct) {
+    const feedback = document.getElementById('food-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto! Você sabe sobre alimentação!';
+        feedback.className = 'feedback correct';
+        gameScores.food++;
+        document.getElementById('food-score').textContent = gameScores.food;
+        addStar();
+        playSuccessSound();
+        currentFood++;
+        setTimeout(() => {
+            nextFoodQuestion();
+        }, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+// Jogo 22: Como Está o Tempo?
+let currentWeather = 0;
+
+function initWeatherGame() {
+    gameScores.weather = 0;
+    document.getElementById('weather-score').textContent = gameScores.weather;
+    currentWeather = 0;
+    nextWeatherQuestion();
+}
+
+function nextWeatherQuestion() {
+    if (currentWeather >= weatherTypes.length) currentWeather = 0;
+    
+    const weather = weatherTypes[currentWeather];
+    document.getElementById('weather-question').textContent = `Como está o tempo? ${weather.emoji}`;
+    
+    const options = document.getElementById('weather-options');
+    options.innerHTML = '';
+    
+    const wrongWeathers = weatherTypes.filter(w => w.name !== weather.name).slice(0, 2);
+    const allOptions = [...wrongWeathers, weather].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(w => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `${w.emoji}<br>${w.name}`;
+        btn.onclick = () => checkWeatherAnswer(w.name, weather.name);
+        options.appendChild(btn);
+    });
+    
+    document.getElementById('weather-feedback').textContent = '';
+}
+
+function checkWeatherAnswer(selected, correct) {
+    const feedback = document.getElementById('weather-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto! Você entende o clima!';
+        feedback.className = 'feedback correct';
+        gameScores.weather++;
+        document.getElementById('weather-score').textContent = gameScores.weather;
+        addStar();
+        playSuccessSound();
+        currentWeather++;
+        setTimeout(() => {
+            nextWeatherQuestion();
+        }, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+// Jogo 23: Sentimentos
+let currentEmotion = 0;
+
+function initEmotionsGame() {
+    gameScores.emotions = 0;
+    document.getElementById('emotions-score').textContent = gameScores.emotions;
+    currentEmotion = 0;
+    nextEmotionsQuestion();
+}
+
+function nextEmotionsQuestion() {
+    if (currentEmotion >= emotions.length) currentEmotion = 0;
+    
+    const emotion = emotions[currentEmotion];
+    document.getElementById('emotions-question').textContent = `Que sentimento é este? ${emotion.emoji}`;
+    
+    const options = document.getElementById('emotions-options');
+    options.innerHTML = '';
+    
+    const wrongEmotions = emotions.filter(e => e.name !== emotion.name).slice(0, 2);
+    const allOptions = [...wrongEmotions, emotion].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(e => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = e.name;
+        btn.onclick = () => checkEmotionsAnswer(e.name, emotion.name);
+        options.appendChild(btn);
+    });
+    
+    document.getElementById('emotions-feedback').textContent = '';
+}
+
+function checkEmotionsAnswer(selected, correct) {
+    const feedback = document.getElementById('emotions-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto! Você entende os sentimentos!';
+        feedback.className = 'feedback correct';
+        gameScores.emotions++;
+        document.getElementById('emotions-score').textContent = gameScores.emotions;
+        addStar();
+        playSuccessSound();
+        currentEmotion++;
+        setTimeout(() => {
+            nextEmotionsQuestion();
+        }, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+// Implementações simplificadas dos demais jogos
+function initTransportGame() {
+    gameScores.transport = 0;
+    document.getElementById('transport-score').textContent = gameScores.transport;
+    nextTransportQuestion();
+}
+
+function nextTransportQuestion() {
+    const transport = transportation[Math.floor(Math.random() * transportation.length)];
+    document.getElementById('transport-question').textContent = `Que meio de transporte é este? ${transport.emoji}`;
+    
+    const options = document.getElementById('transport-options');
+    options.innerHTML = '';
+    
+    const wrongTransports = transportation.filter(t => t.name !== transport.name).slice(0, 2);
+    const allOptions = [...wrongTransports, transport].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = t.name;
+        btn.onclick = () => checkTransportAnswer(t.name, transport.name);
+        options.appendChild(btn);
+    });
+}
+
+function checkTransportAnswer(selected, correct) {
+    const feedback = document.getElementById('transport-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto!';
+        feedback.className = 'feedback correct';
+        gameScores.transport++;
+        document.getElementById('transport-score').textContent = gameScores.transport;
+        addStar();
+        playSuccessSound();
+        setTimeout(nextTransportQuestion, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+function initDaysGame() {
+    gameScores.days = 0;
+    document.getElementById('days-score').textContent = gameScores.days;
+    nextDaysQuestion();
+}
+
+function nextDaysQuestion() {
+    const dayIndex = Math.floor(Math.random() * daysOfWeek.length);
+    const nextDayIndex = (dayIndex + 1) % daysOfWeek.length;
+    
+    document.getElementById('days-question').textContent = `Que dia vem depois de ${daysOfWeek[dayIndex]}?`;
+    
+    const options = document.getElementById('days-options');
+    options.innerHTML = '';
+    
+    const wrongDays = daysOfWeek.filter((d, i) => i !== nextDayIndex).slice(0, 2);
+    const allOptions = [...wrongDays, daysOfWeek[nextDayIndex]].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(day => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = day;
+        btn.onclick = () => checkDaysAnswer(day, daysOfWeek[nextDayIndex]);
+        options.appendChild(btn);
+    });
+}
+
+function checkDaysAnswer(selected, correct) {
+    const feedback = document.getElementById('days-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto!';
+        feedback.className = 'feedback correct';
+        gameScores.days++;
+        document.getElementById('days-score').textContent = gameScores.days;
+        addStar();
+        playSuccessSound();
+        setTimeout(nextDaysQuestion, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+function initProfessionGame() {
+    gameScores.profession = 0;
+    document.getElementById('profession-score').textContent = gameScores.profession;
+    nextProfessionQuestion();
+}
+
+function nextProfessionQuestion() {
+    const profession = professions[Math.floor(Math.random() * professions.length)];
+    document.getElementById('profession-question').textContent = `Que profissão é esta? ${profession.emoji}`;
+    
+    const options = document.getElementById('profession-options');
+    options.innerHTML = '';
+    
+    const wrongProfessions = professions.filter(p => p.name !== profession.name).slice(0, 2);
+    const allOptions = [...wrongProfessions, profession].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = p.name;
+        btn.onclick = () => checkProfessionAnswer(p.name, profession.name);
+        options.appendChild(btn);
+    });
+}
+
+function checkProfessionAnswer(selected, correct) {
+    const feedback = document.getElementById('profession-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto!';
+        feedback.className = 'feedback correct';
+        gameScores.profession++;
+        document.getElementById('profession-score').textContent = gameScores.profession;
+        addStar();
+        playSuccessSound();
+        setTimeout(nextProfessionQuestion, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+function initSeasonsGame() {
+    gameScores.seasons = 0;
+    document.getElementById('seasons-score').textContent = gameScores.seasons;
+    nextSeasonsQuestion();
+}
+
+function nextSeasonsQuestion() {
+    const season = seasons[Math.floor(Math.random() * seasons.length)];
+    document.getElementById('seasons-question').textContent = `${season.emoji} ${season.description}. Que estação é?`;
+    
+    const options = document.getElementById('seasons-options');
+    options.innerHTML = '';
+    
+    const wrongSeasons = seasons.filter(s => s.name !== season.name).slice(0, 2);
+    const allOptions = [...wrongSeasons, season].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = s.name;
+        btn.onclick = () => checkSeasonsAnswer(s.name, season.name);
+        options.appendChild(btn);
+    });
+}
+
+function checkSeasonsAnswer(selected, correct) {
+    const feedback = document.getElementById('seasons-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto!';
+        feedback.className = 'feedback correct';
+        gameScores.seasons++;
+        document.getElementById('seasons-score').textContent = gameScores.seasons;
+        addStar();
+        playSuccessSound();
+        setTimeout(nextSeasonsQuestion, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+function initOppositeGame() {
+    gameScores.opposite = 0;
+    document.getElementById('opposite-score').textContent = gameScores.opposite;
+    nextOppositeQuestion();
+}
+
+function nextOppositeQuestion() {
+    const oppositePair = oppositeWords[Math.floor(Math.random() * oppositeWords.length)];
+    document.getElementById('opposite-question').textContent = `${oppositePair.emoji1} Qual é o oposto de "${oppositePair.word}"?`;
+    
+    const options = document.getElementById('opposite-options');
+    options.innerHTML = '';
+    
+    const wrongWords = oppositeWords.filter(o => o.opposite !== oppositePair.opposite).map(o => o.opposite).slice(0, 2);
+    const allOptions = [...wrongWords, oppositePair.opposite].sort(() => Math.random() - 0.5);
+    
+    allOptions.forEach(word => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = word;
+        btn.onclick = () => checkOppositeAnswer(word, oppositePair.opposite);
+        options.appendChild(btn);
+    });
+}
+
+function checkOppositeAnswer(selected, correct) {
+    const feedback = document.getElementById('opposite-feedback');
+    
+    if (selected === correct) {
+        feedback.textContent = '🎉 Correto! Você entende os opostos!';
+        feedback.className = 'feedback correct';
+        gameScores.opposite++;
+        document.getElementById('opposite-score').textContent = gameScores.opposite;
+        addStar();
+        playSuccessSound();
+        setTimeout(nextOppositeQuestion, 1500);
+    } else {
+        feedback.textContent = '❌ Tente novamente!';
+        feedback.className = 'feedback incorrect';
+        playErrorSound();
+    }
+}
+
+// Sistema de abas
+function showTab(tabName) {
+    // Remove active de todos os botões e conteúdos
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    
+    // Adiciona active ao botão e conteúdo selecionado
+    document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');
+    document.getElementById(`${tabName}-tab`).classList.add('active');
+    
+    // Atualiza estatísticas se for a aba de stats
+    if (tabName === 'stats') {
+        updateStatistics();
+    }
+}
+
+// Atualizar estatísticas
+function updateStatistics() {
+    // Total de estrelas
+    document.getElementById('total-stars').textContent = stars;
+    
+    // Total de jogos jogados (soma de todos os scores)
+    const totalGames = Object.values(gameScores).reduce((sum, score) => sum + score, 0);
+    document.getElementById('games-played').textContent = totalGames;
+    
+    // Taxa de acerto estimada (baseada em tentativas)
+    const accuracyRate = totalGames > 0 ? Math.min(95, Math.round((stars / totalGames) * 100)) : 0;
+    document.getElementById('accuracy-rate').textContent = accuracyRate + '%';
+    
+    // Tempo jogado estimado (2 minutos por jogo)
+    const timePlayedMinutes = totalGames * 2;
+    document.getElementById('time-played').textContent = timePlayedMinutes;
+    
+    // Atualizar conquistas
+    updateAchievements();
+}
+
+// Atualizar conquistas
+function updateAchievements() {
+    const achievements = {
+        'first-star': stars >= 1,
+        'five-stars': stars >= 5,
+        'all-stars': stars >= maxStars,
+        'math-expert': gameScores.math >= 10
+    };
+    
+    Object.keys(achievements).forEach(achievementId => {
+        const element = document.getElementById(achievementId);
+        if (achievements[achievementId]) {
+            element.classList.add('unlocked');
+        } else {
+            element.classList.remove('unlocked');
+        }
+    });
+}
+
+// Sobrescrever função addStar para atualizar estatísticas
+const originalAddStar = addStar;
+addStar = function() {
+    originalAddStar();
+    updateAchievements();
+};
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+    updateStarsDisplay();
+    updateStatistics();
 });
