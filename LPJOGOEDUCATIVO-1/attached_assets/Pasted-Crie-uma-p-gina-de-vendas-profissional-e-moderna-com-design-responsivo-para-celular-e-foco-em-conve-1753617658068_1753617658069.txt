@@ -1,0 +1,83 @@
+Crie uma página de vendas profissional e moderna, com design responsivo para celular e foco em conversão.
+
+Objetivo: vender acesso a um app infantil educativo com joguinhos interativos.
+
+A estrutura da página deve conter:
+
+🔹 TÍTULO (headline forte):
+Transforme o tempo de tela em aprendizado de verdade com nosso App Educativo Infantil!
+
+🔹 SUBTÍTULO:
+Chega de imprimir PDFs que só dão trabalho. Agora seu filho pode aprender brincando direto no celular.
+
+🔹 VÍDEO EXPLICATIVO:
+Insira abaixo do subtítulo um vídeo (use um placeholder ou link fictício). O vídeo deve estar centralizado e responsivo.
+
+🔹 BOTÃO “QUERO EXPERIMENTAR” (com scroll automático):
+Botão fixo ou destacado que ao clicar desce suavemente até a seção de ofertas.
+
+---
+
+🎯 SEÇÃO: POR QUE ESCOLHER O APP?
+
+• Imprimir PDFs dá trabalho, consome tinta, tempo e nem sempre motiva a criança.
+• No celular, as crianças já estão. Agora é possível transformar esse tempo em aprendizado real com jogos que ensinam letras, números, cores, lógica e memória.
+• Criado por educadores, com design colorido e linguagem apropriada para crianças de 3 a 7 anos.
+• Resultados reais: crianças passam mais tempo aprendendo e se divertem sem perceber.
+
+---
+
+👨‍🏫 SEÇÃO: QUEM DESENVOLVEU
+
+Foto fictícia de especialista e um texto com autoridade:
+
+**Desenvolvido por: Prof. Leonardo Costa**  
+Especialista em Educação Infantil, com mais de 12 anos de experiência em alfabetização lúdica.  
+"Unimos a tecnologia com o que há de mais eficaz na educação: o brincar. Esse app foi pensado para ajudar pais e professores a motivarem o aprendizado de forma natural e divertida."
+
+---
+
+📱 SEÇÃO: ESCOLHA SUA OFERTA
+
+Duas opções com botões grandes:
+
+🟢 **Plano Básico – R$10 (acesso vitalício com 3 jogos liberados)**  
+Botão: Quero esse
+
+🟡 **Plano Completo – R$19,90 (todos os jogos + novas fases mensais)**  
+Botão: Quero o completo
+
+Cada botão deve rolar a tela até o checkout (ou link externo simulado).
+
+---
+
+💬 SEÇÃO: DEPOIMENTOS (em formato de mensagem ou citação)
+
+Exemplos:
+- “Meu filho de 4 anos adora! Agora pede pra jogar o jogo das letrinhas em vez de ficar só no YouTube.” – Camila M.
+- “Economizei tempo e papel. Ele aprende enquanto acha que está brincando.” – Pedro, pai do Matheus (5 anos)
+
+---
+
+🛡️ SEÇÃO: GARANTIA
+
+**Garantia incondicional de 30 dias.**  
+Se seu filho não se adaptar ou você não gostar do app, devolvemos 100% do valor. Simples assim.
+
+---
+
+📢 SEÇÃO FINAL: CHAMADA PARA AÇÃO
+
+Título: Comece agora mesmo a transformar o tempo de tela em aprendizado!
+
+Botão final grande com destaque: **Quero liberar o acesso agora**
+
+---
+
+🧩 Extras:
+- Rolagem suave ao clicar nos botões
+- Visual lúdico com cores suaves (azul, verde, amarelo)
+- Tipografia amigável e espaçosa
+- Design otimizado para mobile
+
+O app é leve, funciona direto no navegador e está pronto para seu filho começar a aprender agora mesmo.
