@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App da Aprovação - Educação Física</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>App da Aprovação</h1>
+                <p>Educação Física</p>
+            </div>
+            <form class="login-form">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Usuário" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Senha" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Entrar
+                </button>
+                <div class="login-info">
+                    <p>Use qualquer usuário e senha para acessar</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- App Container (hidden initially) -->
+    <div id="appContainer" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>App da Aprovação</h1>
+            <p>Educação Física</p>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Início Tab -->
+            <div id="inicio" class="tab-content active">
+                <div class="welcome-section">
+                    <h2>Bem-vindo(a), Concurseiro!</h2>
+                    <p>Continue sua jornada rumo à aprovação</p>
+                </div>
+                
+                <div class="progress-section">
+                    <h3>Seu Progresso</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%"></div>
+                    </div>
+                    <p>45% concluído - Continue assim!</p>
+                </div>
+
+                <div class="modules-carousel">
+                    <h3>Módulos de Estudo</h3>
+                    <div class="module-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Módulo 1</h4>
+                        <p>Fundamentos & BNCC</p>
+                        <span class="status">5/5 aulas</span>
+                    </div>
+                    <div class="module-card">
+                        <i class="fas fa-trophy"></i>
+                        <h4>Módulo 2</h4>
+                        <p>Esportes & Práticas Corporais</p>
+                        <span class="status">5/5 aulas</span>
+                    </div>
+                    <div class="module-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Módulo 3</h4>
+                        <p>Preparação & Revisão Final</p>
+                        <span class="status">5/5 aulas</span>
+                    </div>
+                </div>
+
+                <button class="continue-btn">
+                    <i class="fas fa-play"></i>
+                    Continuar de onde parei
+                </button>
+            </div>
+
+            <!-- Minhas Aulas Tab -->
+            <div id="aulas" class="tab-content">
+                <h2>Minhas Aulas</h2>
+                
+                <div class="module-section">
+                    <h3>Módulo 1: Fundamentos & BNCC</h3>
+                    <div class="lesson-list">
+                        <div class="lesson-item">
+                            <h4>Aula 1: Introdução - A Educação Física na BNCC</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/7JJcTJqn8TM?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 2: Unidades Temáticas da Educação Física na BNCC</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/Pv6vg8LR47c?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 3: Histórico da Educação Física e Tendências Pedagógicas</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/-5fK5Z4-pjc?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 4: Abordagens Pedagógicas da Educação Física</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/ehtaH8YE9w0?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 5: A Relação entre Cidadania e Educação Física</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/LJq3weCZc7c?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-section">
+                    <h3>Módulo 2: Esportes & Práticas Corporais</h3>
+                    <div class="lesson-list">
+                        <div class="lesson-item">
+                            <h4>Aula 1: Gabaritando Esporte nos Concursos Públicos</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/xxPRABSXAyA?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 2: A Diferença entre Lutas e Esportes de Combate</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/7JJcTJqn8TM?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 3: Atividade Física em Concursos - O que Você Precisa Saber</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/Pv6vg8LR47c?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 4: Conhecimentos Específicos - Educação Física SEE-SP</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/-5fK5Z4-pjc?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 5: 10 Questões Difíceis de Educação Física para Concurso</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/ehtaH8YE9w0?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-section">
+                    <h3>Módulo 3: Preparação & Revisão Final</h3>
+                    <div class="lesson-list">
+                        <div class="lesson-item">
+                            <h4>Aula 1: Revisão 2025 - Concursos Educação Física</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/LJq3weCZc7c?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 2: Revisão Educação Física IBAM</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/xxPRABSXAyA?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 3: O Passo a Passo para Ser Aprovado no seu Próximo Concurso</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/7JJcTJqn8TM?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 4: Estratégias de Estudo e Preparação</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/Pv6vg8LR47c?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="lesson-item">
+                            <h4>Aula 5: Simulado Final - Questões de Concursos Anteriores</h4>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/-5fK5Z4-pjc?modestbranding=1&rel=0&showinfo=0&controls=1&autoplay=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conteúdo Extra Tab -->
+            <div id="conteudo" class="tab-content">
+                <h2>Conteúdo Extra</h2>
+                
+                <div class="content-section">
+                    <h3>Apostilas e PDFs</h3>
+                    <div class="pdf-item">
+                        <i class="fas fa-file-pdf"></i>
+                        <div class="pdf-info">
+                            <h4>Apostila 1: Fundamentos da Educação Física</h4>
+                            <p>120 páginas - Teoria e Prática</p>
+                        </div>
+                        <button class="download-btn">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="pdf-item">
+                        <i class="fas fa-file-pdf"></i>
+                        <div class="pdf-info">
+                            <h4>Apostila 2: Legislação e BNCC</h4>
+                            <p>85 páginas - Diretrizes Curriculares</p>
+                        </div>
+                        <button class="download-btn">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="pdf-item">
+                        <i class="fas fa-file-pdf"></i>
+                        <div class="pdf-info">
+                            <h4>Apostila 3: Metodologias de Ensino</h4>
+                            <p>95 páginas - Abordagens Pedagógicas</p>
+                        </div>
+                        <button class="download-btn">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>Mapas Visuais</h3>
+                    <div class="map-item">
+                        <i class="fas fa-sitemap"></i>
+                        <div class="map-info">
+                            <h4>Mapa Mental: Tendências Pedagógicas</h4>
+                            <p>Esquema visual completo</p>
+                        </div>
+                        <button class="view-btn">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="map-item">
+                        <i class="fas fa-sitemap"></i>
+                        <div class="map-info">
+                            <h4>Mapa Mental: BNCC Educação Física</h4>
+                            <p>Competências e habilidades</p>
+                        </div>
+                        <button class="view-btn">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3>Produtos Exclusivos</h3>
+                    <div class="products-grid">
+                        <div class="product-card" onclick="window.open('https://appdaaprovacao.yampi.com.br/r/QUESTOES500EF', '_blank')">
+                            <div class="product-image">
+                                <div class="product-image-placeholder">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h4>Caderno Digital com 500 Questões de Educação Física Escolar por Temas</h4>
+                                <div class="product-cta">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Adquirir Agora</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" onclick="window.open('https://appdaaprovacao.yampi.com.br/r/MEMORIZACAO10X', '_blank')">
+                            <div class="product-image">
+                                <div class="product-image-placeholder">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h4>Curso Acelerador de Memorização para Concursos de Educação</h4>
+                                <div class="product-cta">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Adquirir Agora</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" onclick="window.open('https://appdaaprovacao.yampi.com.br/r/APOSTILASPLUS12', '_blank')">
+                            <div class="product-image">
+                                <div class="product-image-placeholder">
+                                    <i class="fas fa-folder-open"></i>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h4>Pack Avançado com 12 Apostilas de Temas Transversais da Educação Física</h4>
+                                <div class="product-cta">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Adquirir Agora</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" onclick="window.open('https://appdaaprovacao.yampi.com.br/r/ENTREVISTAPLANAULA', '_blank')">
+                            <div class="product-image">
+                                <div class="product-image-placeholder">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h4>Kit para Entrevistas + Modelos de Plano de Aula Pronto</h4>
+                                <div class="product-cta">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Adquirir Agora</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configurações Tab -->
+            <div id="config" class="tab-content">
+                <h2>Configurações</h2>
+                
+                <div class="config-section">
+                    <div class="config-item">
+                        <i class="fas fa-user"></i>
+                        <div class="config-info">
+                            <h4>Nome do Aluno</h4>
+                            <p>Concurseiro</p>
+                        </div>
+                        <button class="config-btn">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="config-item">
+                        <i class="fas fa-redo"></i>
+                        <div class="config-info">
+                            <h4>Resetar Progresso</h4>
+                            <p>Limpar todo o progresso de estudos</p>
+                        </div>
+                        <button class="config-btn danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="config-item">
+                        <i class="fas fa-moon"></i>
+                        <div class="config-info">
+                            <h4>Modo Escuro</h4>
+                            <p>Ativar tema escuro</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="darkMode">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="config-item">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <div class="config-info">
+                            <h4>Sair do App</h4>
+                            <p>Encerrar sessão</p>
+                        </div>
+                        <button class="config-btn danger" onclick="logout()">
+                            <i class="fas fa-power-off"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-tab="inicio">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </button>
+            <button class="nav-btn" data-tab="aulas">
+                <i class="fas fa-tv"></i>
+                <span>Minhas Aulas</span>
+            </button>
+            <button class="nav-btn" data-tab="conteudo">
+                <i class="fas fa-book"></i>
+                <span>Conteúdo Extra</span>
+            </button>
+            <button class="nav-btn" data-tab="config">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
