@@ -10,6 +10,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Contador de Urgência -->
+    <div class="urgency-bar">
+        <div class="container">
+            <div class="urgency-content">
+                <i class="fas fa-clock"></i>
+                <span class="urgency-text">
+                    ⚡ SEU CUPOM DE DESCONTO EXPIRA EM: 
+                    <span id="countdown-timer">15:00</span>
+                </span>
+                <span class="urgency-date">
+                    Válida apenas até <span id="offer-date"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -36,7 +52,7 @@
                 <!-- Área do Vídeo -->
                 <div class="video-container">
                     <div class="video-wrapper">
-                        <iframe id="youtube-video" src="https://www.youtube.com/embed/CPBcNYC3J6g" 
+                        <iframe id="youtube-video" src="https://www.youtube.com/embed/SEU_VIDEO_ID" 
                                 frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
@@ -76,6 +92,104 @@
                     <div class="benefit-icon">🏠</div>
                     <h3>Ideal para Autodidata</h3>
                     <p>Perfeito para quem estuda sozinho e precisa de material organizado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gatilhos Emocionais -->
+    <section class="emotional-triggers">
+        <div class="container">
+            <div class="trigger-content">
+                <h2>Imagine Como Será Sua Vida Quando Passar no Concurso...</h2>
+                <div class="emotion-grid">
+                    <div class="emotion-card">
+                        <div class="emotion-icon">😌</div>
+                        <h3>TRANQUILIDADE</h3>
+                        <p>Dormir em paz sabendo que tem estabilidade financeira garantida até se aposentar</p>
+                    </div>
+                    <div class="emotion-card">
+                        <div class="emotion-icon">🏡</div>
+                        <h3>ORGULHO</h3>
+                        <p>Ver o brilho nos olhos da sua família quando você contar que passou no concurso</p>
+                    </div>
+                    <div class="emotion-card">
+                        <div class="emotion-icon">💰</div>
+                        <h3>LIBERDADE</h3>
+                        <p>Ter salário garantido todo mês, 13º, férias remuneradas e ainda poder fazer planos</p>
+                    </div>
+                    <div class="emotion-card">
+                        <div class="emotion-icon">🎯</div>
+                        <h3>REALIZAÇÃO</h3>
+                        <p>Sentir que finalmente conquistou seu sonho e pode focar no que realmente importa</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O que você vai perder -->
+    <section class="loss-aversion">
+        <div class="container">
+            <div class="loss-content">
+                <h2>⚠️ O Que Você VAI PERDER Se Não Agir HOJE:</h2>
+                <div class="loss-grid">
+                    <div class="loss-item">
+                        <div class="loss-number">1</div>
+                        <div class="loss-text">
+                            <h4>Mais Um Ano Perdido</h4>
+                            <p>Enquanto você hesita, outros candidatos estão estudando e ocupando SUA vaga</p>
+                        </div>
+                    </div>
+                    <div class="loss-item">
+                        <div class="loss-number">2</div>
+                        <div class="loss-text">
+                            <h4>R$ 50.000+ Por Ano</h4>
+                            <p>O salário de professor efetivo que você deixa de ganhar a cada ano que não passa</p>
+                        </div>
+                    </div>
+                    <div class="loss-item">
+                        <div class="loss-number">3</div>
+                        <div class="loss-text">
+                            <h4>Estabilidade Que Nunca Vem</h4>
+                            <p>Continuará na incerteza, dependendo de contratos temporários e substituições</p>
+                        </div>
+                    </div>
+                    <div class="loss-item">
+                        <div class="loss-number">4</div>
+                        <div class="loss-text">
+                            <h4>Stress e Ansiedade</h4>
+                            <p>Mais noites mal dormidas pensando no futuro e na instabilidade financeira</p>
+                        </div>
+                    </div>
+                    <div class="loss-item">
+                        <div class="loss-number">5</div>
+                        <div class="loss-text">
+                            <h4>Sonhos Adiados</h4>
+                            <p>Casa própria, viagem dos sonhos, curso dos filhos... tudo fica "para depois"</p>
+                        </div>
+                    </div>
+                    <div class="loss-item">
+                        <div class="loss-number">6</div>
+                        <div class="loss-text">
+                            <h4>Tempo Desperdiçado</h4>
+                            <p>Estudar com material desorganizado e perder meses tentando "se virar sozinho"</p>
+                        </div>
+                    </div>
+                    <div class="loss-item">
+                        <div class="loss-number">7</div>
+                        <div class="loss-text">
+                            <h4>Arrependimento Eterno</h4>
+                            <p>Daqui 5 anos, lembrar deste momento e pensar: "E se eu tivesse tentado?"</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="loss-cta">
+                    <p class="loss-warning"><strong>⏰ Esta oferta expira HOJE às 23:59h</strong></p>
+                    <p>Não deixe que a indecisão roube mais um ano da sua vida...</p>
+                    <button class="btn-urgency" onclick="scrollToOffers()">
+                        EU NÃO QUERO PERDER ESTA OPORTUNIDADE
+                    </button>
                 </div>
             </div>
         </div>
@@ -225,11 +339,11 @@
             <div class="faq-list">
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        <h4>O app é preciso baixar?</h4>
+                        <h4>O app funciona offline?</h4>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Não! funciona direto no seu navegador e salva todos seus dados e o progresso é simples fácil e rápido.</p>
+                        <p>Sim! Após baixar o conteúdo, você pode estudar mesmo sem conexão com a internet. Perfeito para quem usa transporte público.</p>
                     </div>
                 </div>
                 

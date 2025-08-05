@@ -108,6 +108,9 @@ function animateOnScroll() {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar contador de urgência
+    initCountdown();
+    
     // Inicializar animações
     const elements = document.querySelectorAll('.benefit-card, .testimonial, .plan');
     elements.forEach(element => {
@@ -201,5 +204,64 @@ function typewriterEffect() {
 
 // Descomente para ativar o efeito typewriter
 // document.addEventListener('DOMContentLoaded', typewriterEffect);
+
+// Função para inicializar o contador de urgência
+function initCountdown() {
+    let minutes = 15;
+    let seconds = 0;
+    
+    const countdownElement = document.getElementById('countdown-timer');
+    const offerDateElement = document.getElementById('offer-date');
+    
+    // Definir data de hoje + algumas horas para parecer real
+    const today = new Date();
+    today.setHours(23, 59, 59);
+    const options = { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+    offerDateElement.textContent = today.toLocaleDateString('pt-BR', options);
+    
+    const countdown = setInterval(() => {
+        if (seconds === 0) {
+            if (minutes === 0) {
+                // Reiniciar contador quando chegar a zero
+                minutes = 15;
+                seconds = 0;
+            } else {
+                minutes--;
+                seconds = 59;
+            }
+        } else {
+            seconds--;
+        }
+        
+        const displayMinutes = minutes.toString().padStart(2, '0');
+        const displaySeconds = seconds.toString().padStart(2, '0');
+        countdownElement.textContent = `${displayMinutes}:${displaySeconds}`;
+        
+        // Adicionar efeito visual quando restam poucos minutos
+        if (minutes < 5) {
+            countdownElement.style.background = 'rgba(220, 38, 38, 0.3)';
+            countdownElement.style.color = '#fbbf24';
+            countdownElement.style.animation = 'pulse 1s infinite';
+        }
+        
+    }, 1000);
+}
+
+// Adicionar CSS para o efeito de pulse
+const pulseStyle = document.createElement('style');
+pulseStyle.textContent = `
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+`;
+document.head.appendChild(pulseStyle);
 
 console.log('🚀 App da Aprovação - Página de vendas carregada com sucesso!');
