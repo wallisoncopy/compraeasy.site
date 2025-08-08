@@ -1,0 +1,63 @@
+Crie um webapp responsivo com aparência de aplicativo (webapp) no tema azul marinho + dourado, moderno, elegante e com tipografia forte e limpa. O app se chama "App Trabalhista".
+
+CORES PRINCIPAIS:
+- Fundo geral: #0B1F33 (azul marinho)
+- Destaques e botões: #C9A23F (dourado)
+- Áreas internas: #F4F4F4 (cinza claro)
+- Texto principal: #FFFFFF (branco)
+- Botões secundários: #A8841E
+
+ESTRUTURA / NAVEGAÇÃO:
+- Quatro abas fixas no rodapé (ícones + texto): 🏠 Principal | ▶️ Continuar assistindo | 📚 Mais conteúdos | ⚙️ Configurações
+- Cabeçalho fixo com o título "App Trabalhista" e um botão de compra (visível em mobile e desktop).
+
+ABA PRINCIPAL:
+- Um carrossel (slide) com 3 módulos (Módulo 1 / Módulo 2 / Módulo 3).
+- Cada módulo exibe 5 aulas (vídeos) em forma de grid 2x2 (no mobile 1x1) com o player embutido.
+
+REGRAS DE INCORPORAÇÃO DOS VÍDEOS:
+- Use embeds no domínio `https://www.youtube-nocookie.com/embed/VIDEOID?rel=0&controls=0&modestbranding=1&iv_load_policy=3`
+- Para manter interface limpa e acessível, carregue inicialmente uma **poster image** e só crie o `<iframe>` depois do clique no play (lazy load). Ao clicar, inserir o `iframe` com os parâmetros acima.
+- Não usar autoplay; esconder sugestões externas e UI do YouTube (controlos do player ficam ocultos e o app deve fornecer um play overlay).
+
+MÓDULOS E VÍDEOS (embed final usando youtube-nocookie):
+
+Módulo 1 — Noções Básicas de Direito do Trabalho
+- https://www.youtube-nocookie.com/embed/FXBIHwb_mSo?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/APFl6yC9Ya0?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/oktqPKDFnEY?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/aFQlHEBfOuA?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/jNiGwGvUSGk?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+
+Módulo 2 — Contratos, Jornada e Férias
+- https://www.youtube-nocookie.com/embed/ar-n9TU5Qzc?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/5IpvwaCeb_A?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/cNwIPM0dDQM?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/JjvBnN9RvOc?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/IlG3CF_YPXQ?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+
+Módulo 3 — Rescisão, Direitos e Processos
+- https://www.youtube-nocookie.com/embed/fXev1QahSYY?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/FxfaBy7Dj2s?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/ksZTOwQj8HI?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/EQ-n0GZcMJQ?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+- https://www.youtube-nocookie.com/embed/cfHn3ccYlhM?rel=0&controls=0&modestbranding=1&iv_load_policy=3
+
+ABA "Continuar assistindo"
+- Mostrar últimos vídeos assistidos (persistir em localStorage). Incluir botão para limpar histórico.
+
+ABA "Mais conteúdos"
+- Lista paginada com outros vídeos e links para os eBooks/Tabelas (placeholders para sua entrega digital).
+
+ABA "Configurações"
+- Tema (azul marinho / modo claro)
+- Tamanho da fonte
+- Sair / contato / sobre os autores
+
+AÇÕES DE UX:
+- Cada vídeo tem botão "Salvar para depois" que adiciona à aba Continuar assistindo.
+- Build responsivo (mobile-first).
+- Animações suaves na troca de módulos e abas.
+- Accessibility: todos os botões com labels, contraste alto nas cores.
+
+OBS: mantenha no código a função de troca simples do VIDEOID caso queira trocar vídeos futuramente.
