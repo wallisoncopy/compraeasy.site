@@ -1,0 +1,34 @@
+Crie uma página de vendas responsiva e moderna para o produto digital "App Trabalhista", usando a paleta de cores institucional do app:
+
+- Azul marinho: #0B1F33 (fundo principal e áreas de destaque)
+- Dourado: #C9A23F (botões principais, ícones e títulos de destaque)
+- Cinza claro: #F4F4F4 (fundos secundários e boxes de conteúdo)
+- Branco: #FFFFFF (texto em áreas escuras e fundos contrastantes)
+- Dourado escuro: #A8841E (hover e destaques secundários)
+
+ESTRUTURA DA PÁGINA:
+1. **Cabeçalho fixo** com logo do "App Trabalhista" (ícone minimalista de balança da justiça estilizada) e botão de compra "Acessar Agora" (botão dourado com texto branco e hover em dourado escuro).
+2. **Seção Hero (Topo)**: imagem mockup do app em celular, título impactante “Tenha todas as leis trabalhistas na palma da sua mão”, subtítulo “Consultas rápidas, vídeos aulas e materiais práticos por apenas R$27”. Botão CTA grande “Quero meu acesso agora”.
+3. **Seção Benefícios** (3 a 4 colunas com ícones em dourado e texto branco sobre fundo azul marinho):
+   - 📚 Aulas em vídeo selecionadas
+   - 📑 Tabelas e eBooks organizados
+   - ⚖️ Conteúdo sempre atualizado
+   - 💼 Ideal para trabalhadores e empregadores
+4. **Seção Conteúdo do App** (cards sobre fundo cinza claro, cada card com ícone e descrição curta).
+5. **Depoimentos** (carrossel com fundo azul marinho, textos brancos e estrelas douradas).
+6. **Garantia** (box com selo dourado “7 dias de garantia incondicional” sobre fundo branco e borda dourada).
+7. **Preço e Chamada Final**: destaque “Apenas R$27” com botão dourado grande e link de compra.
+
+ESTILO E TIPOGRAFIA:
+- Fonte moderna, limpa e forte (ex: Poppins, sem serifa).
+- Títulos e botões com peso bold.
+- Espaçamento confortável e visual limpo.
+- Ícones minimalistas na cor dourada para criar identidade premium.
+
+ELEMENTOS ADICIONAIS:
+- Botão fixo no canto inferior direito para WhatsApp de suporte.
+- Seção FAQ com fundo cinza claro e perguntas em azul marinho.
+- Rodapé com links de Termos, Política de Privacidade e Contato, usando fundo azul marinho e texto branco.
+
+OBJETIVO:
+Transmitir profissionalismo, autoridade jurídica e simplicidade de uso, fazendo o visitante perceber o “App Trabalhista” como uma solução prática e de alto valor pelo preço oferecido.
