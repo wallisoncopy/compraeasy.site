@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolos Sem Glúten App</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <!-- Página de Entrada -->
+    <div class="entry-page" id="entryPage">
+        <div class="entry-container">
+            <div class="entry-header">
+                <h1>🍰 Bem-vindo(a)!</h1>
+                <p>Antes de começar sua jornada culinária sem glúten, nos diga seu nome:</p>
+            </div>
+            <form class="entry-form" id="entryForm">
+                <input type="text" id="userName" placeholder="Digite seu nome completo" required>
+                <button type="submit" class="entry-btn">Começar agora!</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- App Principal (inicialmente oculto) -->
+    <div class="app-container" id="appContainer" style="display: none;">
+        <!-- Header Fixo -->
+        <header class="header">
+            <h1>🍰 Transforme Bolos Sem Glúten em até R$3.735 por mês</h1>
+        </header>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <!-- Aba Principal -->
+            <div class="tab-content active" id="principal">
+                <div class="welcome-section">
+                    <h2>Olá, <span id="userNameDisplay">Querido(a)</span>! 🍰</h2>
+                    <p>Bem-vindo(a) ao seu app de receitas de Bolos Sem Glúten! Descubra receitas incríveis e transforme sua paixão por bolos em uma fonte de renda!</p>
+                </div>
+            </div>
+
+            <!-- Aba Baixar Receitas -->
+            <div class="tab-content" id="receitas">
+                <div class="single-recipe-section">
+                    <h2>📥 Sua Receita Exclusiva</h2>
+                    <div class="recipe-card-single">
+                        <div class="recipe-icon">🍰</div>
+                        <h3>Coleção Completa - Bolos Sem Glúten</h3>
+                        <p>Mais de 20 receitas testadas e aprovadas de bolos sem glúten deliciosos. Inclui dicas profissionais, técnicas especiais e segredos para deixar seus bolos perfeitos!</p>
+                        <button class="download-btn-single" id="downloadPdf">Baixar Receitas PDF</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Mais Conteúdos -->
+            <div class="tab-content" id="conteudos">
+                <div class="content-section">
+                    <h2>🔥 Ofertas Especiais</h2>
+                    <p>Complemente sua coleção com estes produtos exclusivos:</p>
+                    
+                    <div class="upsell-grid">
+                        <div class="upsell-card">
+                            <div class="upsell-image">🥖</div>
+                            <h3>Ebook – 25 Receitas de Pães Sem Glúten Caseiros</h3>
+                            <p>Descubra receitas fáceis e deliciosas para preparar pães sem glúten no dia a dia. Opções fofinhas, crocantes e perfeitas para acompanhar suas refeições.</p>
+                            <div class="price-section">
+                                <span class="old-price">De R$97,00</span>
+                                <span class="new-price">por apenas R$9,90</span>
+                            </div>
+                            <a href="https://checkout.reinicioenelamor.online/" class="upsell-btn" target="_blank">Quero esse agora!</a>
+                        </div>
+                        
+                        <div class="upsell-card">
+                            <div class="upsell-image">🍞</div>
+                            <h3>Kit – Pães Sem Glúten de Padaria</h3>
+                            <p>Aprenda o segredo para fazer pães macios, leves e saborosos, no estilo padaria, totalmente sem glúten. Receita testada e aprovada!</p>
+                            <div class="price-section">
+                                <span class="old-price">De R$97,00</span>
+                                <span class="new-price">por apenas R$9,90</span>
+                            </div>
+                            <a href="https://checkout.reinicioenelamor.online/" class="upsell-btn" target="_blank">Quero esse agora!</a>
+                        </div>
+                        
+                        <div class="upsell-card">
+                            <div class="upsell-image">🥐</div>
+                            <h3>Guia Gourmet – Pães Especiais Sem Glúten</h3>
+                            <p>Pães italianos, franceses, integrais e até pão de alho sem glúten. Um guia gourmet para surpreender sua família e convidados.</p>
+                            <div class="price-section">
+                                <span class="old-price">De R$97,00</span>
+                                <span class="new-price">por apenas R$9,90</span>
+                            </div>
+                            <a href="https://checkout.reinicioenelamor.online/" class="upsell-btn" target="_blank">Quero esse agora!</a>
+                        </div>
+                        
+                        <div class="upsell-card">
+                            <div class="upsell-image">🧁</div>
+                            <h3>Coleção – Pães Doces e Recheados Sem Glúten</h3>
+                            <p>Transforme sua cozinha em uma confeitaria sem glúten: receitas de pães doces, recheados e irresistíveis para todas as ocasiões.</p>
+                            <div class="price-section">
+                                <span class="old-price">De R$97,00</span>
+                                <span class="new-price">por apenas R$9,90</span>
+                            </div>
+                            <a href="https://checkout.reinicioenelamor.online/" class="upsell-btn" target="_blank">Quero esse agora!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Configurações -->
+            <div class="tab-content" id="configuracoes">
+                <div class="settings-section">
+                    <h2>Configurações</h2>
+                    <p>Ajuste suas preferências aqui.</p>
+                    <div class="settings-options">
+                        <div class="setting-item">
+                            <span>🔔</span>
+                            <div>
+                                <h4>Notificações</h4>
+                                <p>Receber alertas de novas receitas</p>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span>🌙</span>
+                            <div>
+                                <h4>Modo Escuro</h4>
+                                <p>Alternar tema do aplicativo</p>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span>📱</span>
+                            <div>
+                                <h4>Sobre o App</h4>
+                                <p>Informações e versão</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Navegação Inferior Fixa -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-tab="principal">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Principal</span>
+            </button>
+            <button class="nav-btn" data-tab="receitas">
+                <span class="nav-icon">⬇️</span>
+                <span class="nav-label">Baixar Receitas</span>
+            </button>
+            <button class="nav-btn" data-tab="conteudos">
+                <span class="nav-icon">📚</span>
+                <span class="nav-label">Mais conteúdos</span>
+            </button>
+            <button class="nav-btn" data-tab="configuracoes">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">Configurações</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
