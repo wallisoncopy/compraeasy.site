@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App do Educador - Atividades em PDF</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; color: #222; }
+    header { background: #005BBB; color: #fff; padding: 20px; text-align: center; }
+    h1 { margin: 0; font-size: 28px; }
+    h2 { color: #005BBB; }
+    .timer { background: #ff4444; color: #fff; padding: 10px; text-align: center; font-size: 20px; font-weight: bold; }
+    .container { max-width: 900px; margin: auto; padding: 20px; background: #fff; }
+    .btn { display: inline-block; background: #ff8800; color: #fff; padding: 15px 25px; text-decoration: none; font-weight: bold; border-radius: 8px; margin: 10px 0; }
+    .btn:hover { background: #ff6600; }
+    .plan { border: 2px solid #005BBB; padding: 20px; border-radius: 10px; margin: 20px 0; }
+    .highlight { border: 2px solid #ff8800; background: #fff7e6; }
+    .testimonial { background: #f0f8ff; padding: 15px; margin: 10px 0; border-left: 5px solid #005BBB; }
+    footer { background: #222; color: #ccc; padding: 20px; text-align: center; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📚 App do Educador</h1>
+  <p>Atividades prontas em PDF para professores que querem praticidade e mais tempo livre!</p>
+</header>
+
+<div class="timer">
+  🔥 DESCONTO EXCLUSIVO TERMINA EM: <br>
+  <span id="countdown">14 min : 42 seg</span>
+</div>
+
+<div class="container">
+  <h2>Mais de 300 atividades prontas para professores!</h2>
+  <p>Tudo dentro de um aplicativo leve, organizado e sempre atualizado, para facilitar sua vida e encantar seus alunos.</p>
+
+  <a href="#" class="btn">📥 BAIXAR AGORA POR APENAS R$ 10,00</a>
+
+  <h2>Áreas contempladas:</h2>
+  <ul>
+    <li>Educação Infantil</li>
+    <li>Ensino Fundamental</li>
+    <li>Alfabetização</li>
+    <li>Matemática</li>
+    <li>Português</li>
+    <li>Ciências</li>
+    <li>Atividades Interdisciplinares</li>
+  </ul>
+
+  <h2>🎁 10 Bônus Exclusivos</h2>
+  <p>O professor não precisa mais perder horas criando atividades do zero! Com o App do Educador você tem acesso imediato a um acervo incrível e sempre atualizado.</p>
+
+  <h2>✨ Benefícios</h2>
+  <ul>
+    <li>Otimize seu tempo – atividades prontas para impressão</li>
+    <li>Encante seus alunos com materiais criativos</li>
+    <li>Aumente o valor percebido das suas aulas</li>
+    <li>Tenha mais confiança com atividades de qualidade</li>
+    <li>Acesso imediato e atualizações mensais</li>
+  </ul>
+
+  <h2>📢 O que os professores estão falando</h2>
+  <div class="testimonial">"O App do Educador salvou meu tempo! Antes gastava horas preparando aulas, agora resolvo em minutos!" – Profª Ana Lima</div>
+  <div class="testimonial">"Meus alunos estão amando as atividades. Ficou muito mais fácil engajar a turma!" – Prof. Carlos Mendes</div>
+  <div class="testimonial">"Vale cada centavo! Ganhei tempo, qualidade e confiança nas minhas aulas." – Profª Juliana Souza</div>
+
+  <h2>💳 Planos</h2>
+  <div class="plan">
+    <h3>Plano Básico</h3>
+    <p>Acesso a 3 áreas de ensino<br>+85 atividades completas<br>6 meses de acesso<br>3 bônus exclusivos</p>
+    <p><strong>R$ 10,00</strong> – Pagamento único</p>
+    <a href="#" class="btn">GARANTIR ACESSO BÁSICO</a>
+  </div>
+
+  <div class="plan highlight">
+    <h3>🔥 Plano Gold Completo (Mais Vendido)</h3>
+    <p>Acesso total vitalício<br>7 áreas completas<br>+300 atividades<br>Atualizações mensais<br>10 bônus exclusivos</p>
+    <p><del>R$ 97,90</del> → <strong>R$ 27,00</strong> (Pagamento único)</p>
+    <a href="#" class="btn">QUERO ACESSO COMPLETO AGORA</a>
+  </div>
+
+  <h2>✅ Garantia de 30 Dias</h2>
+  <p>Não gostou? Devolvemos 100% do seu dinheiro. Você tem um mês inteiro para testar sem risco!</p>
+
+  <h2>Perguntas Frequentes</h2>
+  <p><strong>Funciona no celular e tablet?</strong> Sim, totalmente compatível.</p>
+  <p><strong>Posso imprimir as atividades?</strong> Sim, todas em PDF prontas para impressão.</p>
+  <p><strong>Recebo atualizações?</strong> Sim, mensalmente.</p>
+  <p><strong>É baseado em práticas reais?</strong> Sim, todas as atividades foram pensadas por professores para professores.</p>
+
+  <a href="#" class="btn">🚀 QUERO MEU ACESSO AGORA! Oferta limitada!</a>
+</div>
+
+<footer>
+  <p>© 2025 App do Educador - Todos os direitos reservados</p>
+</footer>
+
+<script>
+  // Timer simples (fake para simular urgência)
+  let minutes = 14;
+  let seconds = 42;
+  const countdownEl = document.getElementById("countdown");
+
+  function updateCountdown() {
+    seconds--;
+    if (seconds < 0) {
+      seconds = 59;
+      minutes--;
+    }
+    if (minutes < 0) {
+      minutes = 14;
+      seconds = 42;
+    }
+    countdownEl.textContent = minutes + " min : " + (seconds < 10 ? "0" : "") + seconds + " seg";
+  }
+
+  setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
