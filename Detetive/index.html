@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Descubra se está sendo traído(a)</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra de Progresso -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Página Inicial -->
+    <div class="page active" id="page-start">
+        <div class="container">
+            <div class="hero-section">
+                <div class="hero-image">
+                    <svg class="main-icon" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Homem -->
+                        <g class="man">
+                            <circle cx="120" cy="80" r="30" fill="#4A90E2" stroke="#2E5A8A" stroke-width="2"/>
+                            <rect x="90" y="110" width="60" height="80" rx="10" fill="#2E5A8A"/>
+                            <rect x="85" y="115" width="15" height="50" rx="7" fill="#2E5A8A"/>
+                            <rect x="140" y="115" width="15" height="50" rx="7" fill="#2E5A8A"/>
+                            <rect x="95" y="185" width="15" height="40" rx="7" fill="#2E5A8A"/>
+                            <rect x="130" y="185" width="15" height="40" rx="7" fill="#2E5A8A"/>
+                            <!-- Rosto -->
+                            <circle cx="110" cy="75" r="3" fill="#FFFFFF"/>
+                            <circle cx="130" cy="75" r="3" fill="#FFFFFF"/>
+                            <path d="M 115 85 Q 120 90 125 85" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+                        </g>
+                        
+                        <!-- Mulher -->
+                        <g class="woman">
+                            <circle cx="280" cy="80" r="30" fill="#E91E63" stroke="#AD1457" stroke-width="2"/>
+                            <rect x="250" y="110" width="60" height="80" rx="10" fill="#AD1457"/>
+                            <rect x="245" y="115" width="15" height="50" rx="7" fill="#AD1457"/>
+                            <rect x="300" y="115" width="15" height="50" rx="7" fill="#AD1457"/>
+                            <rect x="255" y="185" width="15" height="40" rx="7" fill="#AD1457"/>
+                            <rect x="290" y="185" width="15" height="40" rx="7" fill="#AD1457"/>
+                            <!-- Cabelo -->
+                            <path d="M 255 55 Q 280 45 305 55 Q 300 65 280 70 Q 260 65 255 55" fill="#8E24AA"/>
+                            <!-- Rosto -->
+                            <circle cx="270" cy="75" r="3" fill="#FFFFFF"/>
+                            <circle cx="290" cy="75" r="3" fill="#FFFFFF"/>
+                            <path d="M 275 85 Q 280 90 285 85" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+                        </g>
+                        
+                        <!-- Coração Partido -->
+                        <g class="broken-heart">
+                            <path d="M 200 120 C 190 110, 170 110, 170 130 C 170 150, 200 170, 200 170 C 200 170, 230 150, 230 130 C 230 110, 210 110, 200 120 Z" fill="#FF6B6B"/>
+                            <!-- Rachadura -->
+                            <path d="M 200 120 L 195 140 L 205 150 L 195 160 L 200 170" stroke="#8B0000" stroke-width="3" fill="none"/>
+                            <path d="M 200 120 L 205 140 L 195 150 L 205 160 L 200 170" stroke="#8B0000" stroke-width="3" fill="none"/>
+                            <!-- Fragmentos -->
+                            <circle cx="185" cy="125" r="2" fill="#8B0000"/>
+                            <circle cx="215" cy="135" r="2" fill="#8B0000"/>
+                            <circle cx="190" cy="155" r="1.5" fill="#8B0000"/>
+                            <circle cx="210" cy="145" r="1.5" fill="#8B0000"/>
+                        </g>
+                        
+                        <!-- Texto -->
+                        <text x="200" y="250" text-anchor="middle" fill="#FFD93D" font-size="24" font-weight="bold">E DESCUBRA SE ESTÁ</text>
+                        <text x="200" y="280" text-anchor="middle" fill="#FF6B6B" font-size="24" font-weight="bold">SENDO TRAÍDO(A)</text>
+                    </svg>
+                </div>
+                <h1 class="title">🚨 Responda 15 perguntas e descubra se está sendo traído(a) em silêncio…</h1>
+                <p class="subtitle">Este quiz usa inteligência comportamental avançada para revelar a verdade por trás de atitudes suspeitas do seu cônjuge.</p>
+                <div class="benefits">
+                    <div class="benefit">✓ Análise comportamental profissional</div>
+                    <div class="benefit">✓ Resultado em menos de 3 minutos</div>
+                    <div class="benefit">✓ 94% de precisão comprovada</div>
+                </div>
+                <button class="btn-primary" onclick="nextPage()">
+                    <i class="fas fa-play"></i> INICIAR TESTE GRATUITO
+                </button>
+                <div class="social-proof">
+                    <p>+ de 50.000 pessoas já descobriram a verdade</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página Nome -->
+    <div class="page" id="page-name">
+        <div class="container">
+            <div class="question-section">
+                <h2>👤 Qual o seu nome?</h2>
+                <p class="question-subtitle">(Não será revelado a ninguém)</p>
+                <input type="text" id="userName" class="name-input" placeholder="Digite seu nome aqui...">
+                <button class="btn-primary" onclick="saveName()">
+                    <i class="fas fa-arrow-right"></i> Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Páginas das Perguntas -->
+    <div class="page" id="page-q1">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">📱</div>
+                <h2>A pessoa começou a esconder o celular ou colocou senha recentemente?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q1', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q1', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q1', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q2">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">🥶</div>
+                <h2>O comportamento do seu cônjuge mudou de repente (mais frio(a), distante ou irritado(a))?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q2', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q2', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q2', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q3">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">🚫</div>
+                <h2>Seu cônjuge evita contato físico ou dá desculpas para o sexo?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q3', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q3', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q3', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q4">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">🚪</div>
+                <h2>Seu cônjuge está saindo com mais frequência e sem explicar direito?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q4', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q4', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q4', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q5">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">🤥</div>
+                <h2>Já pegou alguma mentira sobre onde estava ou com quem estava?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q5', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q5', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q5', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q6">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">💄</div>
+                <h2>Seu cônjuge começou a se cuidar mais do que o normal sem motivo claro?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q6', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q6', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q6', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q7">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">🛡️</div>
+                <h2>Seu cônjuge fica na defensiva quando você faz perguntas simples?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q7', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q7', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q7', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q8">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">🏃</div>
+                <h2>Seu cônjuge tem passado mais tempo fora de casa ou longe de você?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q8', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q8', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q8', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q9">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">👥</div>
+                <h2>Seu cônjuge evita sair com você em público ou te apresentar para amigos?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q9', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q9', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q9', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q10">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">💬</div>
+                <h2>As conversas ficaram mais curtas, secas ou sem emoção?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q10', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q10', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q10', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q11">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">👁️</div>
+                <h2>Você sente que tem alguém estranho acompanhando suas redes sociais?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q11', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q11', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q11', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q12">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">😔</div>
+                <h2>Seu(sua) parceiro(a) parece mais feliz longe de você do que ao seu lado?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q12', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q12', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q12', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q13">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">🌙</div>
+                <h2>Seu cônjuge tem chegado tarde em casa com frequência ou inventado compromissos noturnos?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q13', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q13', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q13', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q14">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">💸</div>
+                <h2>Notou gastos estranhos ou dinheiro sendo usado sem explicação clara?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q14', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q14', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q14', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page-q15">
+        <div class="container">
+            <div class="question-section">
+                <div class="question-icon">💔</div>
+                <h2>Seu instinto grita que algo está errado, mesmo sem provas concretas?</h2>
+                <div class="answer-buttons">
+                    <button class="btn-answer" onclick="answer('q15', 'sim')">Sim</button>
+                    <button class="btn-answer" onclick="answer('q15', 'nao')">Não</button>
+                    <button class="btn-answer" onclick="answer('q15', 'as-vezes')">Às vezes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página da Ferramenta Hacker -->
+    <div class="page" id="page-hacker-tool">
+        <div class="container">
+            <div class="hacker-section">
+                <div class="hacker-icon">🕵️‍♂️</div>
+                <h1 class="hacker-title">NOVA FERRAMENTA REVOLUCIONÁRIA</h1>
+                <h2 class="hacker-subtitle">DETETIVE IA - HACKER ÉTICO DIGITAL</h2>
+                
+                <div class="hacker-description">
+                    <p>Imagine ter um <strong>hacker ético profissional</strong> analisando os dispositivos do seu cônjuge 24h por dia...</p>
+                    <p>Nossa Inteligência Artificial consegue:</p>
+                </div>
+
+                <div class="hacker-features">
+                    <div class="hacker-feature">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-text">
+                            <h3>Análise de Padrões de Mensagens</h3>
+                            <p>Identifica conversas deletadas e comportamentos suspeitos no WhatsApp, Instagram e outras redes</p>
+                        </div>
+                    </div>
+
+                    <div class="hacker-feature">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-text">
+                            <h3>Detecção de Mentiras Digitais</h3>
+                            <p>Analisa horários de atividade, localizações e inconsistências nas histórias contadas</p>
+                        </div>
+                    </div>
+
+                    <div class="hacker-feature">
+                        <div class="feature-icon">💬</div>
+                        <div class="feature-text">
+                            <h3>Rastreamento de Conversas Ocultas</h3>
+                            <p>Identifica aplicativos escondidos, conversas secretas e contatos suspeitos</p>
+                        </div>
+                    </div>
+
+                    <div class="hacker-feature">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">
+                            <h3>Relatório Forense Completo</h3>
+                            <p>Gera evidências digitais organizadas que você pode usar como prova real</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hacker-testimonial">
+                    <div class="testimonial-quote">
+                        <p>"O Detetive IA encontrou 7 conversas que minha esposa deletava todos os dias. Descobri tudo em 15 minutos."</p>
+                        <div class="testimonial-author">- Carlos M., São Paulo ⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+
+                <div class="hacker-urgency">
+                    <h3>⚠️ ATENÇÃO: OFERTA LIMITADA HOJE</h3>
+                    <p>Apenas <span class="highlight">50 acessos</span> liberados por dia por questões de segurança</p>
+                </div>
+
+                <button class="btn-primary" onclick="nextPage()">
+                    <i class="fas fa-shield-alt"></i> QUERO ACESSAR O DETETIVE IA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página Final -->
+    <div class="page" id="page-result">
+        <div class="container">
+            <div class="result-section">
+                <h1 class="result-title">⚠️ <span id="resultName"></span>, ALERTA: Baseado nas suas respostas, os sinais são CLAROS!</h1>
+                
+                <div class="analysis-box">
+                    <h2>📊 ANÁLISE COMPORTAMENTAL: 87% Baseado nas suas respostas está tudo bem seu conjuge é fiel</h2>
+                    <p><span id="resultName2"></span>, os padrões que você identificou são os MESMOS encontrados em 94% dos casos confirmados de Não traição. Você está imaginando coisas!</p>
+                </div>
+
+                
+                        <div class="faq-question" onclick="toggleFaq(6)">
+               
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

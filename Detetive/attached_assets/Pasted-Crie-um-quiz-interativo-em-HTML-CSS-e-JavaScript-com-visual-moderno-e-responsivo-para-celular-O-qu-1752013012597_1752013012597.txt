@@ -1,0 +1,58 @@
+Crie um quiz interativo em HTML, CSS e JavaScript com visual moderno e responsivo para celular. O quiz deve ter o tema "Descubra se você está sendo traído(a)". O layout deve ser envolvente, com:
+
+- Fundo escuro elegante (preto ou roxo escuro)
+- Ícones ilustrativos e emojis em cada pergunta
+- Fontes grandes e legíveis (preferência por sans-serif moderna)
+- Barra de progresso animada no topo
+- Botões grandes e destacados com animação hover
+- Efeitos suaves de transição entre perguntas
+- Final com diagnóstico personalizado (exibe o nome do usuário que ele digitou no início)
+- Seção de depoimentos com imagem de avatar e nome da pessoa
+- Seção de FAQ com dropdown animado
+- Botão de CTA com destaque para o valor de R$19,90
+
+📌 Estrutura do quiz:
+
+1. Página inicial com o título:
+"🚨 Responda 12 perguntas e descubra se está sendo traído(a) em silêncio…"
+Subtítulo:
+"Este quiz usa inteligência comportamental para revelar a verdade por trás de atitudes suspeitas."
+Botão: "Começar agora"
+
+2. Página 2: Pergunte o nome do usuário com campo de input (Ex: "Qual o seu nome? (Não será revelado a ninguém)")
+
+3. Perguntas 3 a 14 (uma por tela com botões Sim / Não / Às vezes):
+- A pessoa começou a esconder o celular ou colocou senha recentemente?
+- O comportamento dela mudou de repente (mais fria, distante ou irritada)?
+- Evita contato físico ou dá desculpas para o sexo?
+- Está saindo com mais frequência e sem explicar direito?
+- Já pegou alguma mentira sobre onde estava ou com quem estava?
+- Começou a se cuidar mais do que o normal sem motivo claro?
+- Fica na defensiva quando você faz perguntas simples?
+- Tem passado mais tempo fora de casa ou longe de você?
+- Evita sair com você em público ou te apresentar para amigos?
+- As conversas ficaram mais curtas, secas ou sem emoção?
+- Você sente que tem alguém estranho acompanhando suas redes sociais?
+- A pessoa parece mais feliz longe de você do que ao seu lado?
+
+4. Página final com diagnóstico:
+Título: "⚠️ [Nome], com base nas suas respostas, existe um risco real de traição acontecendo."
+
+Texto persuasivo:
+"Você não está sozinho(a). O Detetive IA é uma tecnologia que analisa comportamentos suspeitos e revela a verdade com sigilo absoluto."
+
+💬 Depoimentos:
+- Amanda C., SP: “Eu só queria paz… O Detetive IA me mostrou o que ele escondia.”
+- Ricardo M., RJ: “Achei que era coisa da minha cabeça. Descobri que não era.”
+- Júlia F., BH: “Simples, rápido e sigiloso. Vale cada centavo.”
+
+FAQ com animação:
+- É seguro usar o Detetive IA?
+- Funciona mesmo?
+- É aplicativo?
+- É pagamento único?
+
+CTA com botão:
+"🔍 Quero usar o Detetive IA agora por R$19,90"
+
+Inclua animações leves, imagens de apoio (ícones, silhuetas de casal, emojis de celular, coração partido, lupa), e estrutura bem clean, para parecer profissional e confiável.
