@@ -1,0 +1,552 @@
+/* Nutri Planner Pro - Static Version */
+:root {
+    --primary: #4CAF50;
+    --primary-dark: #388E3C;
+    --secondary: #3E5C47;
+    --background: #FDF8E5;
+    --surface: #FFFFFF;
+    --text: #2D3A2F;
+    --text-light: #666;
+    --border: #E0E0E0;
+    --success: #4CAF50;
+    --error: #F44336;
+    --warning: #FF9800;
+}
+
+[data-theme="dark"] {
+    --background: #1A1F1B;
+    --surface: #2D3A2F;
+    --text: #FDF8E5;
+    --text-light: #B0B0B0;
+    --border: #3E5C47;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--secondary);
+    color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    background: var(--primary);
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.logo p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin: 0;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.theme-toggle:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Login Screen */
+.login-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.login-card {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-card h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+/* Main App */
+.main-app {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Cards */
+.card {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--primary);
+}
+
+.card h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card h3::before {
+    content: "👤";
+}
+
+/* Forms */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+input, textarea, button, select {
+    padding: 0.8rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s;
+    background: var(--surface);
+    color: var(--text);
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-buttons button {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Patients List */
+.patients-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.patient-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--background);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.patient-item:hover {
+    border-color: var(--primary);
+    transform: translateX(5px);
+}
+
+.patient-item.selected {
+    border-color: var(--primary);
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.patient-info h4 {
+    color: var(--primary);
+    margin-bottom: 0.2rem;
+}
+
+.patient-info p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.patient-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.patient-actions button {
+    padding: 0.5rem;
+    min-width: auto;
+    font-size: 0.8rem;
+}
+
+/* Chart Area */
+.chart-area {
+    min-height: 200px;
+    background: var(--background);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+}
+
+/* Sections */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.section.active {
+    display: flex;
+}
+
+/* Content Cards */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.content-card {
+    background: var(--background);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.content-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+}
+
+.content-card h4 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.content-card p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.content-card button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.content-card button:hover {
+    background: var(--primary-dark);
+}
+
+/* Config Section */
+.config-options {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.config-group {
+    padding: 1.5rem;
+    background: var(--background);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary);
+}
+
+.config-group.danger {
+    border-left-color: var(--error);
+    background: rgba(244, 67, 54, 0.05);
+}
+
+.config-group h4 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.config-group.danger h4 {
+    color: var(--error);
+}
+
+.settings-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.settings-buttons button {
+    flex: 1;
+    min-width: 150px;
+}
+
+.export-btn {
+    background: var(--success) !important;
+}
+
+.import-btn {
+    background: var(--warning) !important;
+}
+
+.danger-btn {
+    background: var(--error) !important;
+    color: white !important;
+}
+
+.theme-selector {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.theme-selector label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.theme-selector label:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.theme-selector input[type="radio"]:checked + span {
+    font-weight: bold;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.profile-info p {
+    margin: 0;
+}
+
+.profile-info button {
+    margin-top: 1rem;
+    background: var(--secondary);
+    max-width: 200px;
+}
+
+.config-group small {
+    color: var(--text-light);
+    font-style: italic;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--secondary);
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.7);
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s;
+    margin: 0 0.5rem;
+}
+
+.nav-btn:hover, .nav-btn.active {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Notifications */
+.notifications {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+}
+
+.notification {
+    background: var(--success);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    animation: slideIn 0.3s ease;
+    min-width: 300px;
+}
+
+.notification.error {
+    background: var(--error);
+}
+
+.notification.warning {
+    background: var(--warning);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-app {
+        padding: 1rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-buttons {
+        flex-direction: column;
+    }
+    
+    .header {
+        padding: 1rem;
+    }
+    
+    .patient-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .settings-buttons {
+        flex-direction: column;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .theme-selector {
+        flex-direction: column;
+    }
+    
+    .notifications {
+        left: 1rem;
+        right: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding-bottom: 100px;
+    }
+    
+    .bottom-nav {
+        flex-wrap: wrap;
+        padding: 0.5rem;
+    }
+    
+    .nav-btn {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}

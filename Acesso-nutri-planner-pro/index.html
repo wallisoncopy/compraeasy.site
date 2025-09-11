@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutri Planner Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🥗</span>
+                <div>
+                    <h1>Nutri Planner Pro</h1>
+                    <p id="welcome">Bem-vindo!</p>
+                </div>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </header>
+
+        <!-- Login Screen -->
+        <div id="loginScreen" class="login-screen">
+            <div class="login-card">
+                <h2>Entre no Sistema</h2>
+                <form onsubmit="login(event)">
+                    <input type="text" id="username" placeholder="Usuário" required>
+                    <input type="text" id="name" placeholder="Seu Nome" required>
+                    <button type="submit">Entrar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="mainApp" class="main-app" style="display: none;">
+            
+            <!-- Planilha Section -->
+            <div id="planilhaSection" class="section active">
+                <!-- Patient Form -->
+                <div class="card">
+                    <h3>📋 Dados do Paciente</h3>
+                    <form id="patientForm">
+                        <div class="form-grid">
+                            <input type="text" id="patientName" placeholder="Nome do Paciente" required>
+                            <input type="text" id="patientNumber" placeholder="Número (ex: #001)" required>
+                            <input type="tel" id="patientPhone" placeholder="Telefone" required>
+                            <input type="number" id="patientAge" placeholder="Idade" required>
+                            <input type="number" id="patientWeight" placeholder="Peso (kg)" step="0.1" required>
+                            <input type="number" id="patientHeight" placeholder="Altura (m)" step="0.01" required>
+                        </div>
+                        <textarea id="patientGoal" placeholder="Meta nutricional"></textarea>
+                        <textarea id="patientNotes" placeholder="Observações"></textarea>
+                        <div class="form-buttons">
+                            <button type="submit">Salvar Dados</button>
+                            <button type="button" onclick="generatePDF()">Baixar PDF</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Patients List -->
+                <div class="card">
+                    <h3>👥 Lista de Pacientes</h3>
+                    <div id="patientsList" class="patients-list"></div>
+                </div>
+
+                <!-- Evolution Chart -->
+                <div class="card">
+                    <h3>📈 Gráfico de Evolução</h3>
+                    <div id="chartArea" class="chart-area">
+                        <p>Selecione um paciente para ver o gráfico</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conteúdos Section -->
+            <div id="conteudosSection" class="section" style="display: none;">
+                <div class="card">
+                    <h3>📚 Conteúdos Nutricionais</h3>
+                    <div class="content-grid">
+                        <div class="content-card" onclick="window.open('https://compra.site', '_blank')">
+                            <h4>🥗 Guia de Alimentação</h4>
+                            <p>Dicas e orientações para uma alimentação equilibrada e saudável.</p>
+                            <button>Ver Mais Conteúdo</button>
+                        </div>
+                        <div class="content-card" onclick="window.open('https://compra.site', '_blank')">
+                            <h4>💪 Planos de Exercícios</h4>
+                            <p>Exercícios complementares para potencializar os resultados nutricionais.</p>
+                            <button>Ver Mais Conteúdo</button>
+                        </div>
+                        <div class="content-card" onclick="window.open('https://compra.site', '_blank')">
+                            <h4>📖 Receitas Saudáveis</h4>
+                            <p>Receitas balanceadas para uma alimentação variada e nutritiva.</p>
+                            <button>Ver Mais Conteúdo</button>
+                        </div>
+                        <div class="content-card" onclick="window.open('https://compra.site', '_blank')">
+                            <h4>🧮 Calculadoras Nutricionais</h4>
+                            <p>Ferramentas para calcular necessidades calóricas e macronutrientes.</p>
+                            <button>Ver Mais Conteúdo</button>
+                        </div>
+                        <div class="content-card" onclick="window.open('https://compra.site', '_blank')">
+                            <h4>📊 Tabelas Nutricionais</h4>
+                            <p>Informações nutricionais completas dos principais alimentos.</p>
+                            <button>Ver Mais Conteúdo</button>
+                        </div>
+                        <div class="content-card" onclick="window.open('https://compra.site', '_blank')">
+                            <h4>🎓 Cursos de Atualização</h4>
+                            <p>Mantenha-se atualizado com os últimos estudos em nutrição.</p>
+                            <button>Ver Mais Conteúdo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configurações Section -->
+            <div id="configSection" class="section" style="display: none;">
+                <div class="card">
+                    <h3>⚙️ Configurações do Sistema</h3>
+                    <div class="config-options">
+                        <div class="config-group">
+                            <h4>📤 Gerenciar Dados</h4>
+                            <div class="settings-buttons">
+                                <button onclick="exportData()" class="export-btn">📥 Exportar Dados</button>
+                                <button onclick="importData()" class="import-btn">📤 Importar Dados</button>
+                            </div>
+                        </div>
+                        
+                        <div class="config-group">
+                            <h4>🎨 Aparência</h4>
+                            <div class="theme-selector">
+                                <label>
+                                    <input type="radio" name="theme" value="light" onclick="setTheme('light')" checked>
+                                    ☀️ Tema Claro
+                                </label>
+                                <label>
+                                    <input type="radio" name="theme" value="dark" onclick="setTheme('dark')">
+                                    🌙 Tema Escuro
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="config-group">
+                            <h4>👤 Perfil do Usuário</h4>
+                            <div class="profile-info">
+                                <p><strong>Nome:</strong> <span id="profileName">-</span></p>
+                                <p><strong>Usuário:</strong> <span id="profileUsername">-</span></p>
+                                <button onclick="logout()">🚪 Sair do Sistema</button>
+                            </div>
+                        </div>
+                        
+                        <div class="config-group danger">
+                            <h4>⚠️ Zona Perigosa</h4>
+                            <button onclick="clearAll()" class="danger-btn">🗑️ Limpar Todos os Dados</button>
+                            <small>Esta ação não pode ser desfeita!</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="showSection('planilha')">
+                📊 Planilha
+            </button>
+            <button class="nav-btn" onclick="showSection('conteudos')">
+                📚 Conteúdos
+            </button>
+            <button class="nav-btn" onclick="showSection('config')">
+                ⚙️ Config
+            </button>
+        </nav>
+
+        <!-- Notifications -->
+        <div id="notifications" class="notifications"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
