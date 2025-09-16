@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>📱 Controle de Estoque - Bebidas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f0f23 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #e2e8f0;
+    }
+
+    /* LOGIN SCREEN */
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f0f23 100%);
+      position: relative;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      animation: slideUp 0.6s ease-out;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .login-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, #7c3aed, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: bounce 2s infinite, shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2) drop-shadow(0 0 20px rgba(124, 58, 237, 0.5)); }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .login-title {
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .login-subtitle {
+      color: #cbd5e0;
+      margin-bottom: 30px;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7c3aed;
+      font-size: 1.2rem;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 16px 16px 16px 50px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      backdrop-filter: blur(10px);
+    }
+
+    .login-input:focus {
+      outline: none;
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .login-input::placeholder {
+      color: #94a3b8;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(45deg, #7c3aed, #a855f7, #ec4899);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(124, 58, 237, 0.4);
+      background: linear-gradient(45deg, #8b5cf6, #a855f7, #f472b6);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    /* MAIN APP */
+    .app-container {
+      display: none;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f0f23 100%);
+      position: relative;
+    }
+
+    .app-container::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 30% 70%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .header {
+      background: linear-gradient(45deg, #1e1b4b, #312e81, #1e1b4b);
+      border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+      color: white;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .app-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .establishment-name {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .logout-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      font-weight: 600;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .main-content {
+      padding: 25px;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 14px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .btn-add { 
+      background: linear-gradient(45deg, #059669, #10b981);
+      color: white;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+    .btn-save { 
+      background: linear-gradient(45deg, #d97706, #f59e0b);
+      color: white;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+    .btn-load { 
+      background: linear-gradient(45deg, #2563eb, #3b82f6);
+      color: white;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .table-container {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      overflow: hidden;
+      margin-bottom: 25px;
+      backdrop-filter: blur(20px);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th, td {
+      padding: 15px 10px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th {
+      background: linear-gradient(45deg, #1e1b4b, #312e81, #7c3aed);
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      position: sticky;
+      top: 0;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      border-bottom: 2px solid rgba(124, 58, 237, 0.5);
+    }
+
+    td {
+      color: #e2e8f0;
+    }
+
+    td input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    td input:focus {
+      outline: none;
+      border-color: #7c3aed;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+    }
+
+    td input::placeholder {
+      color: #64748b;
+    }
+
+    .sugestao {
+      font-weight: 700;
+      color: #34d399;
+      text-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+    }
+
+    .alerta {
+      color: #f87171;
+      font-weight: 700;
+      animation: pulse 2s infinite;
+      text-shadow: 0 0 10px rgba(248, 113, 113, 0.3);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      margin-top: 25px;
+      backdrop-filter: blur(20px);
+      height: 400px;
+    }
+
+    #graficoBebidas {
+      height: 320px !important;
+    }
+
+    .chart-title {
+      color: #ffffff;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #94a3b8;
+    }
+
+    .empty-state .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      opacity: 0.3;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #7c3aed, #a855f7);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 600;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast.error {
+      background: linear-gradient(45deg, #dc2626, #ef4444);
+    }
+
+    /* MOBILE OPTIMIZATIONS */
+    @media (max-width: 768px) {
+      .main-content { padding: 15px; }
+      
+      .actions {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      
+      th, td { 
+        padding: 8px 4px; 
+        font-size: 0.8rem;
+      }
+      
+      td input { 
+        padding: 6px 4px; 
+        font-size: 0.8rem;
+      }
+      
+      .app-title { font-size: 1rem; }
+      .establishment-name { font-size: 0.8rem; }
+      
+      table { min-width: 600px; }
+    }
+
+    @media (max-width: 480px) {
+      .header { padding: 10px 15px; }
+      .main-content { padding: 10px; }
+      
+      .login-box { 
+        padding: 25px 20px; 
+        margin: 0 10px;
+      }
+      
+      .btn { 
+        padding: 10px 12px; 
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-container">
+    <div class="login-box">
+      <div class="login-icon">
+        <i class="fas fa-wine-bottle"></i>
+      </div>
+      <h1 class="login-title">Controle de Estoque</h1>
+      <p class="login-subtitle">Gerencie suas bebidas de forma inteligente</p>
+      
+      <form id="loginForm">
+        <div class="input-group">
+          <i class="fas fa-store input-icon"></i>
+          <input type="text" id="establishmentName" class="login-input" placeholder="Nome do Estabelecimento" required>
+        </div>
+        
+        <div class="input-group">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" id="password" class="login-input" placeholder="Senha" required>
+        </div>
+        
+        <button type="submit" class="login-btn">
+          <i class="fas fa-sign-in-alt"></i> Entrar
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="appContainer" class="app-container">
+    <header class="header">
+      <div class="header-content">
+        <div>
+          <div class="app-title">
+            <i class="fas fa-wine-bottle"></i> Controle Inteligente de Estoque
+          </div>
+          <div class="establishment-name" id="headerEstablishment"></div>
+        </div>
+        <button class="logout-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="actions">
+        <button class="btn btn-add" onclick="adicionarLinha()">
+          <i class="fas fa-plus"></i> Adicionar Bebida
+        </button>
+        <button class="btn btn-save" onclick="salvarDados()">
+          <i class="fas fa-save"></i> Salvar Lista
+        </button>
+        <button class="btn btn-load" onclick="carregarDados()">
+          <i class="fas fa-download"></i> Carregar Lista
+        </button>
+        <button class="btn btn-example" onclick="carregarExemplos()" style="background: linear-gradient(45deg, #8b5cf6, #a855f7); color: white; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);">
+          <i class="fas fa-magic"></i> Carregar Exemplos
+        </button>
+        <button class="btn btn-pdf" onclick="baixarPDF()" style="background: linear-gradient(45deg, #dc2626, #ef4444); color: white; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);">
+          <i class="fas fa-file-pdf"></i> Baixar PDF
+        </button>
+      </div>
+
+      <div class="table-container">
+        <div class="table-wrapper">
+          <table id="tabela">
+            <thead>
+              <tr>
+                <th><i class="fas fa-wine-bottle"></i> Bebida</th>
+                <th><i class="fas fa-tag"></i> Marca</th>
+                <th><i class="fas fa-boxes"></i> Estoque Atual</th>
+                <th><i class="fas fa-chart-line"></i> Consumo/Semana</th>
+                <th><i class="fas fa-exclamation-triangle"></i> Mínimo</th>
+                <th><i class="fas fa-shopping-cart"></i> Sugestão Compra</th>
+                <th><i class="fas fa-bell"></i> Status</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaBody"></tbody>
+          </table>
+        </div>
+        
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon"><i class="fas fa-wine-bottle"></i></div>
+          <p>Nenhuma bebida cadastrada</p>
+          <small>Clique em "Adicionar Bebida" para começar seu controle</small>
+        </div>
+
+      <div class="chart-container">
+        <h3 class="chart-title"><i class="fas fa-chart-bar"></i> Análise do Estoque</h3>
+        <canvas id="graficoBebidas" width="400" height="200"></canvas>
+      </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Estado da aplicação
+    let currentEstablishment = '';
+    let chart = null;
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const establishment = document.getElementById('establishmentName').value.trim();
+      const password = document.getElementById('password').value.trim();
+      
+      if (establishment && password) {
+        login(establishment);
+      } else {
+        showToast('Preencha todos os campos', 'error');
+      }
+    });
+
+    function login(establishment) {
+      // Sanitizar nome do estabelecimento
+      const sanitizedName = establishment.replace(/[<>"'&]/g, '');
+      currentEstablishment = sanitizedName;
+      localStorage.setItem('currentEstablishment', sanitizedName);
+      
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appContainer').style.display = 'block';
+      document.getElementById('headerEstablishment').textContent = sanitizedName;
+      
+      showToast(`Bem-vindo, ${sanitizedName}!`, 'success');
+      carregarDados();
+      atualizarEmptyState();
+    }
+
+    function logout() {
+      localStorage.removeItem('currentEstablishment');
+      currentEstablishment = '';
+      
+      document.getElementById('appContainer').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('establishmentName').value = '';
+      document.getElementById('password').value = '';
+      
+      showToast('Logout realizado com sucesso', 'success');
+    }
+
+    // Verificar se já está logado
+    window.addEventListener('load', function() {
+      const savedEstablishment = localStorage.getItem('currentEstablishment');
+      if (savedEstablishment) {
+        login(savedEstablishment);
+      }
+    });
+
+    function adicionarLinha(nome = "", marca = "", estoque = 0, consumo = 0, minimo = 0) {
+      const tabela = document.getElementById("tabelaBody");
+      const linha = document.createElement("tr");
+      
+      // Create cells with proper DOM manipulation (secure)
+      const cells = [
+        { type: 'input', inputType: 'text', value: nome, placeholder: 'Ex: Cerveja' },
+        { type: 'input', inputType: 'text', value: marca, placeholder: 'Ex: Skol' },
+        { type: 'input', inputType: 'number', value: estoque, min: 0 },
+        { type: 'input', inputType: 'number', value: consumo, min: 0 },
+        { type: 'input', inputType: 'number', value: minimo, min: 0 },
+        { type: 'text', value: '0', className: 'sugestao' },
+        { type: 'text', value: '', className: 'alerta' }
+      ];
+      
+      cells.forEach(cellData => {
+        const td = document.createElement('td');
+        
+        if (cellData.type === 'input') {
+          const input = document.createElement('input');
+          input.type = cellData.inputType;
+          input.value = cellData.value;
+          if (cellData.placeholder) input.placeholder = cellData.placeholder;
+          if (cellData.min !== undefined) input.min = cellData.min;
+          td.appendChild(input);
+        } else {
+          td.textContent = cellData.value;
+          if (cellData.className) td.className = cellData.className;
+        }
+        
+        linha.appendChild(td);
+      });
+      
+      tabela.appendChild(linha);
+      atualizar();
+      atualizarEmptyState();
+    }
+
+    function atualizar() {
+      const linhas = document.querySelectorAll("#tabelaBody tr");
+      let dados = [];
+      
+      linhas.forEach(linha => {
+        const bebida = linha.cells[0].querySelector("input").value;
+        const marca = linha.cells[1].querySelector("input").value;
+        const estoque = parseInt(linha.cells[2].querySelector("input").value) || 0;
+        const consumo = parseInt(linha.cells[3].querySelector("input").value) || 0;
+        const minimo = parseInt(linha.cells[4].querySelector("input").value) || 0;
+
+        let sugestao = 0;
+        let alerta = "";
+        
+        if (estoque < minimo) {
+          sugestao = (consumo + minimo) - estoque;
+          alerta = "⚠️ Repor!";
+        } else if (estoque <= minimo + consumo) {
+          alerta = "⚡ Atenção";
+        }
+
+        linha.querySelector(".sugestao").textContent = sugestao;
+        linha.querySelector(".alerta").textContent = alerta;
+
+        if (bebida || marca) {
+          dados.push({ bebida, marca, estoque, consumo, minimo, sugestao });
+        }
+      });
+      
+      desenharGrafico(dados);
+    }
+
+    function salvarDados() {
+      const linhas = document.querySelectorAll("#tabelaBody tr");
+      let dados = [];
+      
+      linhas.forEach(linha => {
+        const bebida = linha.cells[0].querySelector("input").value;
+        const marca = linha.cells[1].querySelector("input").value;
+        
+        if (bebida || marca) {
+          dados.push({
+            bebida: bebida,
+            marca: marca,
+            estoque: linha.cells[2].querySelector("input").value,
+            consumo: linha.cells[3].querySelector("input").value,
+            minimo: linha.cells[4].querySelector("input").value
+          });
+        }
+      });
+      
+      const storageKey = `planilha_bebidas_${currentEstablishment}`;
+      localStorage.setItem(storageKey, JSON.stringify(dados));
+      showToast("✅ Lista salva com sucesso!", 'success');
+    }
+
+    function carregarDados() {
+      const storageKey = `planilha_bebidas_${currentEstablishment}`;
+      const dados = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      const tabela = document.getElementById("tabelaBody");
+      
+      tabela.innerHTML = "";
+      
+      if (dados.length === 0) {
+        // Se não há dados salvos, carrega exemplos de bar/distribuidora
+        carregarExemplos();
+      } else {
+        dados.forEach(item => {
+          adicionarLinha(item.bebida, item.marca, item.estoque, item.consumo, item.minimo);
+        });
+      }
+      
+      atualizar();
+      atualizarEmptyState();
+    }
+
+    function carregarExemplos() {
+      // Bebidas essenciais para bar/distribuidora - focadas no fim de semana
+      const exemplos = [
+        { bebida: "Cerveja", marca: "Skol", estoque: 240, consumo: 180, minimo: 100 },
+        { bebida: "Cerveja", marca: "Brahma", estoque: 180, consumo: 150, minimo: 80 },
+        { bebida: "Cerveja", marca: "Heineken", estoque: 60, consumo: 50, minimo: 30 },
+        { bebida: "Cerveja", marca: "Corona", estoque: 40, consumo: 35, minimo: 20 },
+        { bebida: "Refrigerante", marca: "Coca-Cola 2L", estoque: 50, consumo: 40, minimo: 25 },
+        { bebida: "Refrigerante", marca: "Guarana Antarctica 2L", estoque: 30, consumo: 25, minimo: 15 },
+        { bebida: "Água", marca: "Crystal 500ml", estoque: 100, consumo: 80, minimo: 50 },
+        { bebida: "Energético", marca: "Red Bull", estoque: 48, consumo: 40, minimo: 20 },
+        { bebida: "Vodka", marca: "Smirnoff", estoque: 12, consumo: 8, minimo: 5 },
+        { bebida: "Whisky", marca: "Johnnie Walker Red", estoque: 8, consumo: 5, minimo: 3 },
+        { bebida: "Cachaça", marca: "51", estoque: 15, consumo: 12, minimo: 6 },
+        { bebida: "Cerveja", marca: "Stella Artois", estoque: 45, consumo: 35, minimo: 20 },
+        { bebida: "Vinho", marca: "Miolo Merlot", estoque: 20, consumo: 12, minimo: 8 },
+        { bebida: "Gin", marca: "Tanqueray", estoque: 6, consumo: 4, minimo: 2 },
+        { bebida: "Refrigerante", marca: "Pepsi 2L", estoque: 25, consumo: 20, minimo: 12 }
+      ];
+      
+      exemplos.forEach(item => {
+        adicionarLinha(item.bebida, item.marca, item.estoque, item.consumo, item.minimo);
+      });
+      
+      showToast("🎉 Exemplos de estoque carregados! Ideal para bar/distribuidora", 'success');
+    }
+
+    function baixarPDF() {
+      const { jsPDF } = window.jspdf;
+      
+      // Verificar se há dados na tabela
+      const linhas = document.querySelectorAll("#tabelaBody tr");
+      if (linhas.length === 0) {
+        showToast("⚠️ Nenhum dado para exportar! Adicione bebidas primeiro.", 'error');
+        return;
+      }
+
+      const doc = new jsPDF();
+      
+      // Configurar fonte e cores
+      doc.setFont("helvetica");
+      
+      // Cabeçalho do PDF
+      doc.setFontSize(20);
+      doc.setTextColor(124, 58, 237); // Roxo do tema
+      doc.text("🍷 Controle de Estoque - Bebidas", 20, 25);
+      
+      doc.setFontSize(14);
+      doc.setTextColor(51, 51, 51);
+      doc.text(`Estabelecimento: ${currentEstablishment}`, 20, 40);
+      
+      doc.setFontSize(10);
+      doc.setTextColor(102, 102, 102);
+      const dataAtual = new Date().toLocaleDateString('pt-BR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      doc.text(`Relatório gerado em: ${dataAtual}`, 20, 50);
+      
+      // Preparar dados da tabela
+      const dadosTabela = [];
+      const cabecalhos = ['Bebida', 'Marca', 'Estoque', 'Consumo/Sem', 'Mínimo', 'Sugestão', 'Status'];
+      
+      linhas.forEach(linha => {
+        const bebida = linha.cells[0].querySelector("input").value || "-";
+        const marca = linha.cells[1].querySelector("input").value || "-";
+        const estoque = linha.cells[2].querySelector("input").value || "0";
+        const consumo = linha.cells[3].querySelector("input").value || "0";
+        const minimo = linha.cells[4].querySelector("input").value || "0";
+        const sugestao = linha.cells[5].textContent || "0";
+        const status = linha.cells[6].textContent || "-";
+        
+        // Só adicionar se tiver pelo menos bebida ou marca
+        if (bebida !== "-" || marca !== "-") {
+          dadosTabela.push([bebida, marca, estoque, consumo, minimo, sugestao, status]);
+        }
+      });
+      
+      // Gerar tabela
+      doc.autoTable({
+        head: [cabecalhos],
+        body: dadosTabela,
+        startY: 60,
+        theme: 'grid',
+        headStyles: {
+          fillColor: [124, 58, 237], // Roxo do tema
+          textColor: 255,
+          fontStyle: 'bold',
+          fontSize: 10,
+          halign: 'center'
+        },
+        bodyStyles: {
+          fontSize: 9,
+          textColor: [51, 51, 51],
+          halign: 'center'
+        },
+        alternateRowStyles: {
+          fillColor: [248, 250, 252]
+        },
+        columnStyles: {
+          0: { halign: 'left', cellWidth: 25 }, // Bebida
+          1: { halign: 'left', cellWidth: 30 }, // Marca
+          2: { halign: 'center', cellWidth: 20 }, // Estoque
+          3: { halign: 'center', cellWidth: 20 }, // Consumo
+          4: { halign: 'center', cellWidth: 20 }, // Mínimo
+          5: { halign: 'center', cellWidth: 25 }, // Sugestão
+          6: { halign: 'left', cellWidth: 35 } // Status
+        },
+        margin: { top: 60, right: 15, bottom: 20, left: 15 },
+        didDrawPage: function(data) {
+          // Rodapé com numeração
+          doc.setFontSize(8);
+          doc.setTextColor(128, 128, 128);
+          doc.text(`Página ${data.pageNumber}`, data.settings.margin.left, doc.internal.pageSize.height - 10);
+          
+          // Adicionar linha no rodapé
+          doc.setDrawColor(200, 200, 200);
+          doc.line(15, doc.internal.pageSize.height - 15, doc.internal.pageSize.width - 15, doc.internal.pageSize.height - 15);
+        }
+      });
+      
+      // Resumo após a tabela
+      const finalY = doc.lastAutoTable.finalY || 100;
+      
+      doc.setFontSize(12);
+      doc.setTextColor(124, 58, 237);
+      doc.text("📊 Resumo do Estoque", 20, finalY + 20);
+      
+      doc.setFontSize(10);
+      doc.setTextColor(51, 51, 51);
+      
+      const totalItens = dadosTabela.length;
+      const itensComAlerta = dadosTabela.filter(item => 
+        item[6].includes('CRÍTICO') || item[6].includes('Baixo')
+      ).length;
+      const itensOK = dadosTabela.filter(item => item[6].includes('OK')).length;
+      
+      doc.text(`• Total de bebidas cadastradas: ${totalItens}`, 25, finalY + 32);
+      doc.text(`• Itens com alerta: ${itensComAlerta}`, 25, finalY + 42);
+      doc.text(`• Itens em situação normal: ${itensOK}`, 25, finalY + 52);
+      
+      if (itensComAlerta > 0) {
+        doc.setTextColor(220, 38, 38);
+        doc.text(`⚠️ ATENÇÃO: ${itensComAlerta} item(s) precisam de reposição urgente!`, 25, finalY + 65);
+      }
+      
+      // Salvar PDF
+      const nomeArquivo = `estoque-${currentEstablishment.replace(/[^a-zA-Z0-9]/g, '_')}-${new Date().toISOString().split('T')[0]}.pdf`;
+      doc.save(nomeArquivo);
+      
+      showToast(`📄 PDF gerado com sucesso! ${totalItens} itens exportados.`, 'success');
+    }
+
+    function desenharGrafico(dados) {
+      const ctx = document.getElementById("graficoBebidas").getContext("2d");
+      
+      if (chart) {
+        chart.destroy();
+      }
+      
+      if (dados.length === 0) {
+        return;
+      }
+      
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: dados.map(d => d.bebida + " " + d.marca),
+          datasets: [{
+            label: "Estoque Atual",
+            data: dados.map(d => d.estoque),
+            backgroundColor: "#7c3aed",
+            borderColor: "#a855f7",
+            borderWidth: 2
+          }, {
+            label: "Consumo Semanal",
+            data: dados.map(d => d.consumo),
+            backgroundColor: "#10b981",
+            borderColor: "#34d399", 
+            borderWidth: 2
+          }, {
+            label: "Estoque Mínimo",
+            data: dados.map(d => d.minimo),
+            backgroundColor: "#f59e0b",
+            borderColor: "#fbbf24",
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#e2e8f0',
+                font: {
+                  size: 12,
+                  weight: 600
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: '#94a3b8',
+                font: {
+                  size: 10
+                }
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: '#94a3b8',
+                font: {
+                  size: 11
+                }
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function atualizarEmptyState() {
+      const tbody = document.getElementById("tabelaBody");
+      const emptyState = document.getElementById("emptyState");
+      const hasData = tbody.children.length > 0;
+      
+      emptyState.style.display = hasData ? 'none' : 'block';
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      // Criar ícone seguramente
+      const icon = document.createElement('i');
+      icon.className = `fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}`;
+      
+      // Adicionar conteúdo de forma segura
+      toast.appendChild(icon);
+      toast.appendChild(document.createTextNode(' ' + message));
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => document.body.removeChild(toast), 300);
+      }, 4000);
+    }
+
+    // Event listeners
+    document.addEventListener("input", function(e) {
+      if (e.target.type === 'number' || e.target.type === 'text') {
+        atualizar();
+      }
+    });
+
+    // PWA-like behavior
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        // Could register a service worker here for offline functionality
+      });
+    }
+  </script>
+</body>
+</html>
