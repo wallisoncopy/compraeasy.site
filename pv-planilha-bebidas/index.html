@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Planilha Inteligente de Bebidas - Controle, Evite Perdas e Lucre Mais</title>
+<meta name="description" content="Planilha Inteligente de Bebidas para bares e distribuidoras — controle estoque, alertas e sugestão de reposição. Pague no PIX e receba agora.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#000;
+    --bg2:#0f0f12;
+    --accent:#f1c40f;
+    --muted:#bdbdbd;
+    --card:#111217;
+    --green:#22c55e;
+    --red:#ff4757;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:#fff;line-height:1.6}
+  .container{max-width:1200px;margin:0 auto;padding:0 20px}
+  
+  /* Countdown */
+  .countdown-bar{background:var(--red);color:#fff;text-align:center;padding:12px;font-weight:600;font-size:18px}
+  .countdown-timer{display:inline-flex;gap:8px;align-items:center;margin-left:10px}
+  .time-unit{background:rgba(255,255,255,0.1);padding:4px 8px;border-radius:4px}
+  
+  /* Header */
+  .header{text-align:center;padding:40px 0}
+  .header h1{font-size:3.5rem;font-weight:800;margin:0 0 20px;color:#fff;line-height:1.1}
+  .header .subtitle{font-size:1.3rem;color:var(--muted);margin-bottom:30px;max-width:800px;margin-left:auto;margin-right:auto}
+  
+  .main-cta{background:var(--accent);color:#000;padding:20px 40px;font-size:1.2rem;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin:20px 0;text-decoration:none;display:inline-block;transition:transform 0.2s}
+  .main-cta:hover{transform:translateY(-2px)}
+  
+  /* Video Container */
+  .video-container{position:relative;width:300px;height:533px;margin:30px auto;border:3px solid var(--accent);border-radius:15px;overflow:hidden;animation:pulse-border 2s infinite}
+  .video-container iframe{width:100%;height:100%;object-fit:cover}
+  @keyframes pulse-border{0%{border-color:var(--accent);box-shadow:0 0 0 0 rgba(241,196,15,0.7)}50%{border-color:var(--green);box-shadow:0 0 0 10px rgba(241,196,15,0)}100%{border-color:var(--accent);box-shadow:0 0 0 0 rgba(241,196,15,0)}}
+  
+  /* Benefits Grid */
+  .benefits-section{padding:60px 0;text-align:center}
+  .benefits-title{font-size:2.5rem;font-weight:700;margin-bottom:20px;color:#fff}
+  .benefits-subtitle{font-size:1.1rem;color:var(--muted);margin-bottom:40px}
+  .benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-top:40px}
+  .benefit-card{background:var(--card);padding:30px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05)}
+  .benefit-icon{font-size:3rem;margin-bottom:20px}
+  .benefit-card h3{font-size:1.4rem;font-weight:700;margin:0 0 15px;color:#fff}
+  .benefit-card p{color:var(--muted);margin:0}
+  
+  /* Why Section */
+  .why-section{padding:60px 0;background:rgba(255,255,255,0.02)}
+  .why-title{font-size:2.5rem;font-weight:700;text-align:center;margin-bottom:50px;color:#fff}
+  .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+  .why-card{background:var(--card);padding:20px;border-radius:8px;border:1px solid rgba(255,255,255,0.05)}
+  .why-card h4{color:var(--accent);font-weight:600;margin:0 0 10px}
+  .why-card p{color:var(--muted);margin:0;font-size:0.95rem}
+  
+  /* Testimonials */
+  .testimonials-section{padding:60px 0}
+  .testimonials-title{font-size:2.5rem;font-weight:700;text-align:center;margin-bottom:40px;color:#fff}
+  .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+  .testimonial{background:var(--card);padding:20px;border-radius:8px;border:1px solid rgba(255,255,255,0.05)}
+  .testimonial .stars{color:var(--accent);margin-bottom:10px}
+  .testimonial p{color:var(--muted);margin:0 0 15px;font-style:italic}
+  .testimonial .author{color:#fff;font-weight:600;font-size:0.9rem}
+  
+  /* Pricing */
+  .pricing-section{padding:60px 0;text-align:center}
+  .pricing-title{font-size:2.5rem;font-weight:700;margin-bottom:40px;color:#fff}
+  .pricing-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:30px;max-width:800px;margin:0 auto}
+  .price-card{background:var(--card);padding:30px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);position:relative}
+  .price-card.featured{border-color:var(--accent);transform:scale(1.05)}
+  .price-card.featured::before{content:"MAIS VENDIDO";position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;padding:8px 20px;border-radius:20px;font-weight:700;font-size:0.85rem}
+  .price-card h3{font-size:1.5rem;font-weight:700;margin:0 0 10px;color:#fff}
+  .price-old{color:var(--muted);text-decoration:line-through;font-size:1rem}
+  .price-current{font-size:2.5rem;font-weight:800;color:var(--accent);margin:10px 0}
+  .price-card ul{list-style:none;padding:0;margin:20px 0;text-align:left}
+  .price-card li{padding:8px 0;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.05)}
+  .price-card li:before{content:"✔";color:var(--green);margin-right:10px;font-weight:700}
+  .price-btn{background:var(--green);color:#fff;border:none;padding:15px 30px;border-radius:8px;font-weight:700;cursor:pointer;font-size:1rem;width:100%;margin-top:20px;transition:background 0.3s}
+  .price-btn:hover{background:#1ea84a}
+  .guarantee-text{color:var(--muted);font-size:0.9rem;margin-top:10px}
+  
+  /* FAQ */
+  .faq-section{padding:60px 0;background:rgba(255,255,255,0.02)}
+  .faq-title{font-size:2.5rem;font-weight:700;text-align:center;margin-bottom:40px;color:#fff}
+  .faq-item{background:var(--card);margin-bottom:15px;border-radius:8px;border:1px solid rgba(255,255,255,0.05)}
+  .faq-question{padding:20px;cursor:pointer;font-weight:600;color:#fff;border-bottom:1px solid rgba(255,255,255,0.05)}
+  .faq-answer{padding:20px;color:var(--muted);display:none}
+  .faq-answer.active{display:block}
+  
+  /* Guarantee */
+  .guarantee-section{padding:40px 0;text-align:center;background:rgba(34,197,94,0.1)}
+  .guarantee-icon{font-size:4rem;margin-bottom:20px}
+  .guarantee-title{font-size:1.8rem;font-weight:700;margin-bottom:10px;color:#fff}
+  .guarantee-text{color:var(--muted);max-width:600px;margin:0 auto}
+  
+  /* Footer */
+  .footer{padding:40px 0;text-align:center;border-top:1px solid rgba(255,255,255,0.05);margin-top:60px}
+  .footer p{color:var(--muted);margin:0}
+  
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header h1{font-size:2.5rem}
+    .benefits-title,.why-title,.testimonials-title,.pricing-title,.faq-title{font-size:2rem}
+    .pricing-cards{grid-template-columns:1fr}
+    .price-card.featured{transform:none}
+    .benefits-grid{grid-template-columns:1fr}
+    .container{padding:0 15px}
+    .video-container{width:250px;height:444px}
+  }
+</style>
+</head>
+<body>
+  <!-- Countdown Bar -->
+  <div class="countdown-bar">
+    🔥 PROMOÇÃO TERMINA HOJE (<span id="currentDate"></span>) EM:
+    <div class="countdown-timer">
+      <span class="time-unit" id="minutes">14</span>min
+      <span class="time-unit" id="seconds">50</span>seg
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="container">
+    <div class="header">
+      <h1>🍻 Planilha Inteligente de Bebidas</h1>
+      <p class="subtitle">Mais de 50 Funcionalidades Prontas para bares e distribuidoras que buscam controle total do estoque e máximo lucro!</p>
+      <p class="subtitle">Tudo automatizado, em um só lugar para facilitar seu controle e aumentar suas vendas.</p>
+      
+      <!-- YouTube Video -->
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/Azl8X4hPfA8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      
+      <button class="main-cta" onclick="scrollToPricing()">CLIQUE PARA BAIXAR COM DESCONTO<br>DE R$ 97,90 → HOJE POR R$ 17,00</button>
+    </div>
+  </div>
+
+  <!-- Benefits Section -->
+  <div class="benefits-section">
+    <div class="container">
+      <h2 class="benefits-title">7 Áreas do Controle de Estoque Cobertas</h2>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">📊</div>
+          <h3>Controle Visual</h3>
+          <p>Gráficos e alertas que mostram o que está prestes a faltar.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🔔</div>
+          <h3>Alertas Automáticos</h3>
+          <p>Receba sinal quando o estoque atingir o ponto ideal de compra.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">📈</div>
+          <h3>Cálculo de Lucro</h3>
+          <p>Veja o ganho por unidade e lucro potencial mensal.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">📱</div>
+          <h3>Acesso Mobile</h3>
+          <p>Funciona perfeitamente no celular, tablet e desktop.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">📋</div>
+          <h3>Lista de Compras</h3>
+          <p>Gere listas automáticas baseadas no consumo médio.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">💾</div>
+          <h3>Salva Automático</h3>
+          <p>LocalStorage: dados salvos por usuário, sem precisar servidor.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🎯</div>
+          <h3>Sugestão Exata</h3>
+          <p>Com base no consumo semanal e estoque atual.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Section -->
+  <div class="why-section">
+    <div class="container">
+      <h2 class="why-title">Dono de bar, você não precisa mais controlar tudo na cabeça!</h2>
+      <p style="text-align:center;color:var(--muted);font-size:1.1rem;margin-bottom:40px">
+        Com a Planilha Inteligente de Bebidas, você tem acesso imediato a um sistema completo com mais de 50 funcionalidades para transformar seu controle de estoque.
+      </p>
+      
+      <div class="why-grid">
+        <div class="why-card">
+          <h4>✔ Otimize seu tempo</h4>
+          <p>Sistema pronto para usar, sem perder horas calculando na mão.</p>
+        </div>
+        <div class="why-card">
+          <h4>✔ Evite perdas</h4>
+          <p>Saiba exato quando comprar e quanto comprar de cada produto.</p>
+        </div>
+        <div class="why-card">
+          <h4>✔ Aumente o lucro</h4>
+          <p>Veja quais produtos dão mais retorno e foque neles.</p>
+        </div>
+        <div class="why-card">
+          <h4>✔ Tenha mais controle</h4>
+          <p>Base em dados reais de consumo e não no "achismo".</p>
+        </div>
+        <div class="why-card">
+          <h4>✔ Acesso imediato</h4>
+          <p>Funciona direto no navegador, sem instalar nada.</p>
+        </div>
+        <div class="why-card">
+          <h4>✔ Visual profissional</h4>
+          <p>Dashboard limpo e fácil de entender para toda equipe.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="testimonials-section">
+    <div class="container">
+      <h2 class="testimonials-title">O que donos de bares e distribuidoras estão dizendo</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Reduzi falta de estoque nos finais de semana e aumentei vendas. Ferramenta simples e prática que realmente funciona!"</p>
+          <div class="author">— João Silva, Distribuidora Mix</div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Agora sei exatamente quanto comprar antes do evento. Evitei prejuízo em grandes datas comemorativas."</p>
+          <div class="author">— Carla Santos, Bar & Co.</div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Rápido, salvou horas de conferência manual. Salvei minha lista por navegador e acesso de qualquer lugar."</p>
+          <div class="author">— Pedro Costa, Empório Central</div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Não consigo mais trabalhar sem a Planilha Inteligente. É essencial para qualquer dono de bar sério."</p>
+          <div class="author">— Marina Oliveira, Boteco da Vila</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing -->
+  <div class="pricing-section" id="pricing">
+    <div class="container">
+      <h2 class="pricing-title">TRANSFORME SEU CONTROLE DE ESTOQUE AGORA</h2>
+      <p style="color:var(--muted);font-size:1.1rem;margin-bottom:40px;max-width:800px;margin-left:auto;margin-right:auto">
+        Controlar seu estoque com qualidade, agilidade e resultados reais nunca foi tão fácil. Não perca tempo fazendo contas na cabeça. 
+        Invista na Planilha Inteligente e transforme seu negócio!
+      </p>
+      
+      <div class="pricing-cards">
+        <div class="price-card">
+          <h3>Plano Básico</h3>
+          <div class="price-old">R$ 27,90</div>
+          <div class="price-current">R$ 17</div>
+          <ul>
+            <li>Controle de 25 produtos</li>
+            <li>Alertas básicos</li>
+            <li>Lista de compras</li>
+            <li>3 meses de acesso</li>
+            <li>Suporte por email</li>
+          </ul>
+          <a href="https://pay.lowify.com.br/checkout?product_id=N5baiN" class="price-btn" style="text-decoration:none;display:block;text-align:center">GARANTIR ACESSO BÁSICO</a>
+          <div class="guarantee-text">Garantia de 30 dias</div>
+        </div>
+
+        <div class="price-card featured">
+          <h3>Plano Gold Completo</h3>
+          <div class="price-old">R$ 197,90</div>
+          <div class="price-current">R$ 27</div>
+          <ul>
+            <li>Produtos ilimitados</li>
+            <li>Acesso vitalício</li>
+            <li>Dashboard completo</li>
+            <li>Relatórios avançados</li>
+            <li>Alertas personalizados</li>
+            <li>Suporte WhatsApp</li>
+            <li>Updates gratuitos</li>
+          </ul>
+          <a href="https://pay.lowify.com.br/checkout?product_id=lXCq05" class="price-btn" style="text-decoration:none;display:block;text-align:center">BAIXAR Planilha Inteligente AGORA</a>
+          <div class="guarantee-text">Garantia de 30 dias</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guarantee -->
+  <div class="guarantee-section">
+    <div class="container">
+      <div class="guarantee-icon">🛡️</div>
+      <h2 class="guarantee-title">Garantia de 30 Dias</h2>
+      <p class="guarantee-text">Não gostou? Devolvemos 100% do seu dinheiro, sem perguntas! Você tem um mês inteiro para testar tudo e decidir. Sem burocracias.</p>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="container">
+      <h2 class="faq-title">Perguntas Frequentes</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">Como recebo o material após a compra? ▼</div>
+        <div class="faq-answer">O acesso é 100% digital e imediato. Após a confirmação do pagamento, você receberá os dados de acesso por e-mail em até 5 minutos.</div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">Funciona no celular e tablet? ▼</div>
+        <div class="faq-answer">Sim! Todo o sistema está otimizado para celular, tablet e computador. Você pode acessar de qualquer lugar, a qualquer hora.</div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">Como funciona a garantia de 30 dias? ▼</div>
+        <div class="faq-answer">Você tem 30 dias para testar tudo. Se não gostar por qualquer motivo, é só enviar um e-mail que devolvemos 100% do seu dinheiro.</div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">O sistema é baseado em práticas reais? ▼</div>
+        <div class="faq-answer">Absolutamente! Todo o conteúdo foi desenvolvido com base em experiências reais de bares e distribuidoras e melhores práticas do setor.</div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">Precisa instalar algum programa? ▼</div>
+        <div class="faq-answer">Não! Funciona direto no seu navegador. Basta acessar o link e começar a usar imediatamente.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="container">
+      <p>© 2025 Planilha Inteligente de Bebidas • Todos os direitos reservados</p>
+    </div>
+  </div>
+
+
+<script>
+  // ===== CONTAGEM REGRESSIVA COM DATA REAL =====
+  (function countdownInit(){
+    // Mostrar data atual no topo
+    const currentDateEl = document.getElementById('currentDate');
+    const today = new Date();
+    const options = { 
+      day: '2-digit', 
+      month: '2-digit', 
+      year: 'numeric' 
+    };
+    currentDateEl.textContent = today.toLocaleDateString('pt-BR', options);
+    
+    // Contador
+    const now = new Date();
+    const endTime = new Date(now.getTime() + (23 * 60 * 1000)); // 23 minutos a partir de agora
+    
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    
+    function updateCountdown(){
+      const now = new Date();
+      const timeLeft = endTime - now;
+      
+      if(timeLeft <= 0) {
+        // Reinicia o contador para 23 minutos quando chegar a zero
+        endTime.setTime(new Date().getTime() + (23 * 60 * 1000));
+      }
+      
+      const minutes = Math.floor(timeLeft / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      
+      minutesEl.textContent = String(minutes).padStart(2, '0');
+      secondsEl.textContent = String(seconds).padStart(2, '0');
+      
+      setTimeout(updateCountdown, 1000);
+    }
+    
+    updateCountdown();
+  })();
+
+  // ===== SCROLL TO PRICING =====
+  function scrollToPricing() {
+    document.getElementById('pricing').scrollIntoView({ 
+      behavior: 'smooth' 
+    });
+  }
+
+  // ===== FAQ TOGGLE =====
+  function toggleFAQ(element) {
+    const answer = element.nextElementSibling;
+    const isOpen = answer.classList.contains('active');
+    
+    // Fechar todas as outras
+    document.querySelectorAll('.faq-answer').forEach(el => {
+      el.classList.remove('active');
+    });
+    document.querySelectorAll('.faq-question').forEach(el => {
+      el.textContent = el.textContent.replace('▲', '▼');
+    });
+    
+    // Abrir/fechar a atual
+    if (!isOpen) {
+      answer.classList.add('active');
+      element.textContent = element.textContent.replace('▼', '▲');
+    }
+  }
+
+
+  // ===== EVENTOS =====
+  document.addEventListener('DOMContentLoaded', function() {
+    // Adicionar animações nos cards ao fazer hover
+    const cards = document.querySelectorAll('.benefit-card, .why-card, .testimonial, .price-card');
+    cards.forEach(card => {
+      card.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+      
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-5px)';
+        card.style.boxShadow = '0 15px 40px rgba(0,0,0,0.3)';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0)';
+        card.style.boxShadow = 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
+
+<script>
+  window.pixelId = "689bb08874ecfcf36c9733c9";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
