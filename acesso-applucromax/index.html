@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LucroMax - Futuristic Web App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+        <div class="login-form">
+            <h1 class="login-title">LucroMax</h1>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Usuário" class="login-input">
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Senha" class="login-input">
+            </div>
+            <button id="login-btn" class="login-button">Entrar</button>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title">LucroMax</h1>
+        </header>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            <!-- Principal Tab -->
+            <div id="tab-principal" class="tab-content active">
+                <h2 class="section-title">Bem-vindo ao LucroMax!</h2>
+                <div class="welcome-container">
+                    <p class="welcome-description">Assista ao vídeo de boas-vindas e comece sua jornada rumo ao sucesso!</p>
+                    <div class="video-container">
+                        <iframe class="tutorial-video" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Baixar Tab -->
+            <div id="tab-baixar" class="tab-content">
+                <h2 class="section-title">Baixar as 10 Áreas de Membros</h2>
+                <div class="download-section">
+                    <div class="futuristic-image">
+                        <div class="image-placeholder">
+                            <div class="tech-lines"></div>
+                            <div class="central-icon">📁</div>
+                            <div class="data-stream"></div>
+                        </div>
+                    </div>
+                    <button class="download-btn" onclick="window.open('https://drive.google.com/drive/u/0/folders/1bAx1m-7VZBecCi5-_v4bzjXhZpwG0Gv8', '_blank')">
+                        👉 <strong>Baixar Agora</strong>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tutorial Tab -->
+            <div id="tab-tutorial" class="tab-content">
+                <h2 class="section-title">Como instalar e usar</h2>
+                <p class="tutorial-description">Veja como instalar e começar a usar o LucroMax em poucos minutos!</p>
+                <div class="video-container">
+                    <iframe class="tutorial-video" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Mais Produtos Tab -->
+            <div id="tab-produtos" class="tab-content">
+                <h2 class="section-title">Mais Produtos</h2>
+                <div class="upsells-container">
+                    <div class="upsell-card">
+                        <h3>Serviço Premium</h3>
+                        <p>Eu faço por você - e deixo pronto para uso sua área de membros e página de vendas</p>
+                        <div class="price">R$97</div>
+                        <button class="upsell-btn" onclick="window.open('https://compraeasi.site', '_blank')">Comprar Agora</button>
+                    </div>
+                    <div class="upsell-card">
+                        <h3>Páginas Prontas</h3>
+                        <p>10 páginas de vendas prontas e editáveis</p>
+                        <div class="price">R$27</div>
+                        <button class="upsell-btn" onclick="window.open('https://compraeasi.site', '_blank')">Comprar Agora</button>
+                    </div>
+                    <div class="upsell-card">
+                        <h3>Curso Completo</h3>
+                        <p>Como criar do zero essas páginas e área de membros para vender como serviço</p>
+                        <div class="price">R$47</div>
+                        <button class="upsell-btn" onclick="window.open('https://compraeasi.site', '_blank')">Comprar Agora</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configurações Tab -->
+            <div id="tab-config" class="tab-content">
+                <h2 class="section-title">Configurações</h2>
+                <div class="settings-list">
+                    <div class="setting-item" onclick="showChangePassword(event)">
+                        <span>Alterar usuário e senha</span>
+                        <span class="arrow">›</span>
+                    </div>
+                    <div class="setting-item" onclick="showSupport(event)">
+                        <span>Suporte</span>
+                        <span class="arrow">›</span>
+                    </div>
+                    <div class="setting-item" onclick="logout(event)">
+                        <span>Sair</span>
+                        <span class="arrow">›</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="showTab('principal', event)">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Principal</span>
+            </button>
+            <button class="nav-item" onclick="showTab('baixar', event)">
+                <span class="nav-icon">📥</span>
+                <span class="nav-label">Baixar</span>
+            </button>
+            <button class="nav-item" onclick="showTab('tutorial', event)">
+                <span class="nav-icon">🎥</span>
+                <span class="nav-label">Tutorial</span>
+            </button>
+            <button class="nav-item" onclick="showTab('produtos', event)">
+                <span class="nav-icon">💰</span>
+                <span class="nav-label">Produtos</span>
+            </button>
+            <button class="nav-item" onclick="showTab('config', event)">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">Config</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
