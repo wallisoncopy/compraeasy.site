@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detetive do Zap - Descubra a Verdade nas Conversas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0a0f0a 0%, #1a2f1a 50%, #0f1f0f 100%);
+            color: #e0ffe0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 255, 100, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #00ff64;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 255, 100, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #00ff64;
+            text-shadow: 0 0 20px #00ff64;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #e0ffe0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #00ff64;
+            text-shadow: 0 0 10px #00ff64;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 100, 0.1) 0%, transparent 70%);
+            padding: 2rem 0;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23004d1a" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: moveGrid 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-50px, -50px); }
+        }
+
+        .hero-content h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #00ff64;
+            text-shadow: 0 0 30px #00ff64;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 30px #00ff64; }
+            to { text-shadow: 0 0 40px #00ff64, 0 0 60px #00ff64; }
+        }
+
+        .hero-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #a0ffa0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #00ff64, #00cc50);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 255, 100, 0.4);
+            border: 2px solid transparent;
+            margin: 0 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 100, 0.6);
+            background: linear-gradient(45deg, #00cc50, #00ff64);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: #00ff64;
+            border: 2px solid #00ff64;
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(0, 255, 100, 0.1);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: linear-gradient(45deg, rgba(0, 255, 100, 0.05) 0%, transparent 50%);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #00ff64;
+            text-shadow: 0 0 20px #00ff64;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.1) 0%, rgba(0, 255, 100, 0.05) 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 100, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff64, transparent, #00ff64);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 100, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #00ff64;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Orbitron', monospace;
+            color: #00ff64;
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.08) 0%, rgba(0, 255, 100, 0.03) 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #00ff64;
+            position: relative;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #c0ffc0;
+        }
+
+        .testimonial-author {
+            color: #00ff64;
+            font-weight: bold;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 5rem 0;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 100, 0.1) 0%, transparent 70%);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.1) 0%, rgba(0, 255, 100, 0.05) 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid rgba(0, 255, 100, 0.3);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.premium {
+            border-color: #00ff64;
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.3);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.premium::before {
+            content: 'MAIS VENDIDO';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00ff64;
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .plan-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: #00ff64;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            color: #00ff64;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .features-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #c0ffc0;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00ff64;
+            font-weight: bold;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 5rem 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-item {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.08) 0%, rgba(0, 255, 100, 0.03) 100%);
+            margin: 1rem 0;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 100, 0.2);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            border: none;
+            color: #00ff64;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 255, 100, 0.1);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: #c0ffc0;
+        }
+
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-icon.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 2px solid #00ff64;
+        }
+
+        .guarantee {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.15) 0%, rgba(0, 255, 100, 0.05) 100%);
+            padding: 3rem 0;
+            text-align: center;
+            margin: 3rem 0;
+            border-radius: 20px;
+            border: 2px solid rgba(0, 255, 100, 0.3);
+        }
+
+        .guarantee h3 {
+            font-family: 'Orbitron', monospace;
+            color: #00ff64;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 50vh;
+                padding: 1rem 0;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-content h2 {
+                font-size: 1rem;
+            }
+            
+            .hero-content p {
+                font-size: 0.9rem;
+                padding: 0 1rem;
+            }
+            
+            .cta-button {
+                display: block;
+                margin: 10px auto;
+                width: fit-content;
+                font-size: 1rem !important;
+                padding: 1rem 2rem !important;
+            }
+            
+            .video-container {
+                max-width: 300px !important;
+                padding: 1rem !important;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .pricing-card.premium {
+                transform: none;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-content h2 {
+                font-size: 0.9rem;
+            }
+            
+            .video-container {
+                max-width: 280px !important;
+                padding: 0.8rem !important;
+            }
+            
+            .cta-button {
+                font-size: 0.9rem !important;
+                padding: 0.8rem 1.5rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">🕵️ DETETIVE DO ZAP</div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>DETETIVE DO ZAP</h1>
+                <h2>Descubra a Verdade Oculta nas Conversas do WhatsApp</h2>
+                <p>Técnicas avançadas de análise comportamental para detectar mentiras, traições e padrões suspeitos através das mensagens.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section" style="padding: 2rem 0; background: rgba(0, 0, 0, 0.5); text-align: center;">
+        <div class="container">
+            <div class="video-container" style="max-width: 350px; margin: 0 auto; position: relative; background: linear-gradient(135deg, rgba(0, 255, 100, 0.1) 0%, rgba(0, 255, 100, 0.05) 100%); padding: 1.5rem; border-radius: 20px; border: 2px solid rgba(0, 255, 100, 0.3); box-shadow: 0 10px 30px rgba(0, 255, 100, 0.2);">
+                <div style="position: relative; width: 100%; height: 0; padding-bottom: 177.78%; /* 9:16 aspect ratio for vertical video */">
+                    <iframe 
+                        src="https://www.youtube.com/embed/sXEhjXjKggg?autoplay=0&mute=0&controls=1&loop=1&playlist=sXEhjXjKggg&rel=0&modestbranding=1" 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 15px; border: none;"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <div style="margin-top: 2rem;">
+                <a href="#pricing" class="cta-button" style="font-size: 1.2rem; padding: 1.2rem 2.5rem;">🔍 QUERO DESCOBRIR A VERDADE</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">O Que Você Vai Descobrir</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Padrões Suspeitos</h3>
+                    <p>Identifique comportamentos anômalos e padrões suspeitos nas conversas que revelam a verdade por trás das palavras.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💔</div>
+                    <h3>Sinais de Infidelidade</h3>
+                    <p>Reconheça os sinais claros de infidelidade no WhatsApp através de técnicas comprovadas de análise comportamental.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3>Detecção de Mentiras</h3>
+                    <p>Aprenda como identificar mentiras através das mensagens usando padrões linguísticos e comportamentais únicos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Análise Comportamental</h3>
+                    <p>Técnicas avançadas de análise comportamental desenvolvidas por especialistas em investigação digital.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; text-align: center;">
+                <h3 style="color: #00ff64; font-size: 1.8rem; margin-bottom: 2rem;">Você Já Se Perguntou...</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div style="padding: 1rem; background: rgba(0,255,100,0.1); border-radius: 10px; border: 1px solid rgba(0,255,100,0.3);">
+                        <p>❓ Por que seu parceiro(a) anda tão distante?</p>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(0,255,100,0.1); border-radius: 10px; border: 1px solid rgba(0,255,100,0.3);">
+                        <p>❓ Se as explicações dele(a) fazem sentido?</p>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(0,255,100,0.1); border-radius: 10px; border: 1px solid rgba(0,255,100,0.3);">
+                        <p>❓ Por que algumas conversas são apagadas?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Depoimentos Reais</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Graças ao Detetive do Zap, descobri que meu parceiro estava mantendo um relacionamento paralelo há meses. As técnicas de análise foram precisas e me ajudaram a confrontar a situação com evidências concretas."</p>
+                    <p class="testimonial-author">- Maria S., 34 anos</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Eu tinha suspeitas, mas não conseguia provas. Com as 30 perguntas do Detetive do Zap, identifiquei padrões de comportamento que confirmaram minhas suspeitas. Hoje estou em um relacionamento muito mais saudável."</p>
+                    <p class="testimonial-author">- Carlos R., 29 anos</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Este guia é revolucionário! As técnicas de análise de conversas do WhatsApp me mostraram sinais que eu estava ignorando. Consegui descobrir a verdade em apenas 2 semanas."</p>
+                    <p class="testimonial-author">- Ana P., 27 anos</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"O método do Detetive do Zap é incrível. As perguntas são estratégicas e os padrões comportamentais são muito precisos. Descobri que estava sendo enganado e pude tomar uma decisão informada sobre meu relacionamento."</p>
+                    <p class="testimonial-author">- Roberto M., 31 anos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Escolha Seu Plano</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="plan-name">PLANO BÁSICO</h3>
+                    <div class="old-price">de R$47,00</div>
+                    <div class="price">R$10,00</div>
+                    <p style="color: #00ff64; margin-bottom: 1rem;">EM PROMOÇÃO</p>
+                    <ul class="features-list">
+                        <li>30 Perguntas Estratégicas</li>
+                        <li>Análise de Padrões</li>
+                        <li>Guia de Confrontação</li>
+                        <li>Acesso Imediato</li>
+                    </ul>
+                    <a href="https://pay.lowify.com.br/checkout?product_id=nnm2cu" class="cta-button">QUERO ESTE PLANO</a>
+                </div>
+                
+                <div class="pricing-card premium">
+                    <h3 class="plan-name">PLANO PREMIUM</h3>
+                    <div class="old-price">De R$97,00</div>
+                    <div class="price">R$27,00</div>
+                    <ul class="features-list">
+                        <li>Tudo do Plano Básico</li>
+                        <li>INVADE O CELULAR DO CÔNJUGE NA HORA</li>
+                        <li>Suporte 24/7 via WhatsApp</li>
+                        <li>10 Técnicas Avançadas de Investigação</li>
+                        <li>Guia de Recuperação Emocional</li>
+                        <li>Consultoria Individual Detetive Real</li>
+                        <li>Atualizações Vitalícias</li>
+                    </ul>
+                    <a href="https://pay.lowify.com.br/checkout?product_id=FzGKVo" class="cta-button">QUERO O PREMIUM</a>
+                </div>
+            </div>
+
+            <div class="guarantee">
+                <h3>🛡️ Garantia de 30 Dias</h3>
+                <p>Se você não ficar satisfeito(a), devolvemos 100% do seu dinheiro</p>
+            </div>
+
+            <div style="margin-top: 4rem;">
+                <h3 style="color: #ff6b6b; font-size: 2rem; text-align: center; margin-bottom: 2rem;">O QUE VOCÊ ESTÁ PERDENDO AGORA:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div style="background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(255,107,107,0.05) 100%); padding: 2rem; border-radius: 15px; border: 1px solid rgba(255,107,107,0.3);">
+                        <h4 style="color: #ff6b6b; margin-bottom: 1rem;">1. Paz Mental e Tranquilidade</h4>
+                        <p>Cada dia que passa sem saber a verdade é mais um dia vivendo com ansiedade e dúvidas que consomem sua energia mental.</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(255,107,107,0.05) 100%); padding: 2rem; border-radius: 15px; border: 1px solid rgba(255,107,107,0.3);">
+                        <h4 style="color: #ff6b6b; margin-bottom: 1rem;">2. Anos Preciosos da Sua Vida</h4>
+                        <p>Quanto mais tempo você espera para descobrir a verdade, mais anos você desperdiça em um relacionamento que pode não ser verdadeiro.</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(255,107,107,0.05) 100%); padding: 2rem; border-radius: 15px; border: 1px solid rgba(255,107,107,0.3);">
+                        <h4 style="color: #ff6b6b; margin-bottom: 1rem;">3. Sua Autoestima e Valor Próprio</h4>
+                        <p>Viver na dúvida corrói sua autoconfiança dia após dia, impedindo você de ser sua melhor versão.</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(255,107,107,0.05) 100%); padding: 2rem; border-radius: 15px; border: 1px solid rgba(255,107,107,0.3);">
+                        <h4 style="color: #ff6b6b; margin-bottom: 1rem;">4. Oportunidades de Felicidade Real</h4>
+                        <p>Enquanto você permanece preso(a) na incerteza, pode estar perdendo a chance de encontrar um amor verdadeiro e leal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Perguntas Frequentes</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        É possível descobrir traição apenas por mensagens?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sim! Nosso sistema de Detetive do Zap foi desenvolvido após anos de pesquisa em padrões comportamentais. As mensagens revelam muito mais do que você imagina, especialmente quando você sabe exatamente o que procurar.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        O método funciona mesmo se a pessoa for muito discreta?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutamente! Na verdade, quanto mais discreta a pessoa tenta ser, mais sinais ela deixa. Nosso método foi desenvolvido para identificar até mesmo os padrões mais sutis de comportamento suspeito.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Quanto tempo leva para ter resultados?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Com nosso método, você pode começar a identificar sinais já nas primeiras 24 horas. A maioria dos usuários consegue descobrir a verdade em 1-2 semanas de análise.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        O material tem atualizações?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sim! O método é constantemente atualizado com novos padrões e técnicas de análise. Você terá acesso vitalício a todas as atualizações futuras sem custo adicional.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Como recebo o material após a compra?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Imediatamente após a confirmação do pagamento, você receberá acesso ao material completo através de um link exclusivo em seu e-mail. O acesso é instantâneo, 24 horas por dia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Detetive do Zap. Todos os direitos reservados.</p>
+            <p>Descubra a verdade oculta nas conversas do WhatsApp.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Functionality
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('.faq-icon');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+                    if (otherAnswer !== answer) {
+                        otherAnswer.classList.remove('active');
+                        otherAnswer.previousElementSibling.querySelector('.faq-icon').classList.remove('rotate');
+                    }
+                });
+                
+                // Toggle current FAQ
+                answer.classList.toggle('active');
+                icon.classList.toggle('rotate');
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                header.style.background = 'rgba(0, 255, 100, 0.1)';
+            }
+        });
+
+        // Add loading animation to buttons
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    const originalText = this.textContent;
+                    this.textContent = 'CARREGANDO...';
+                    this.style.opacity = '0.7';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.opacity = '1';
+                        alert('Em breve! O sistema de pagamento será integrado.');
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
