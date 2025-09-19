@@ -1,397 +1,707 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz: Descubra se está sendo traído(a)</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>SER ZAP DETETIVE - Descubra a Verdade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a3a1a 50%, #0a4a0a 100%);
+            color: #00ff88;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 15px;
+            border: 2px solid #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #00ff88;
+            margin-bottom: 10px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .question-container {
+            display: none;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid #00ff88;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        .question-number {
+            color: #00cc66;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .question {
+            font-size: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #00ff88;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .option:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .option.selected {
+            background: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading-container {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-container.active {
+            display: block;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(0, 255, 136, 0.3);
+            border-top: 4px solid #00ff88;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .loading-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 255, 136, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00cc66);
+            border-radius: 3px;
+            width: 0%;
+            animation: loadingProgress 30s linear forwards;
+        }
+
+        .results-container {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 15px;
+            border: 2px solid #00ff88;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .result-score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .result-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #00cc66;
+        }
+
+        .result-description {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 255, 136, 0.2);
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00cc66);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 10px #00ff88;
+            }
+            50% {
+                transform: scale(1.05);
+                text-shadow: 0 0 20px #00ff88, 0 0 30px #00ff88;
+            }
+            100% {
+                transform: scale(1);
+                text-shadow: 0 0 10px #00ff88;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro-screen {
+            display: block;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .intro-screen.hidden {
+            display: none;
+        }
+
+        .intro-description {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .features {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 10px;
+            border: 1px solid #00ff88;
+        }
+
+        .feature {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .feature::before {
+            content: "✓ ";
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+            
+            .option {
+                padding: 12px;
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Barra de Progresso -->
-    <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-    </div>
+    <div class="container">
+        <div class="header">
+            <h1>🕵️ ZAP DETETIVE</h1>
+            <p>Descubra se seu cônjuge está traindo com análise comportamental avançada</p>
+        </div>
 
-    <!-- Página Inicial -->
-    <div class="page active" id="page-start">
-        <div class="container">
-            <div class="hero-section">
-                <div class="hero-image">
-                    <svg class="main-icon" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Homem -->
-                        <g class="man">
-                            <circle cx="120" cy="80" r="30" fill="#4A90E2" stroke="#2E5A8A" stroke-width="2"/>
-                            <rect x="90" y="110" width="60" height="80" rx="10" fill="#2E5A8A"/>
-                            <rect x="85" y="115" width="15" height="50" rx="7" fill="#2E5A8A"/>
-                            <rect x="140" y="115" width="15" height="50" rx="7" fill="#2E5A8A"/>
-                            <rect x="95" y="185" width="15" height="40" rx="7" fill="#2E5A8A"/>
-                            <rect x="130" y="185" width="15" height="40" rx="7" fill="#2E5A8A"/>
-                            <!-- Rosto -->
-                            <circle cx="110" cy="75" r="3" fill="#FFFFFF"/>
-                            <circle cx="130" cy="75" r="3" fill="#FFFFFF"/>
-                            <path d="M 115 85 Q 120 90 125 85" stroke="#FFFFFF" stroke-width="2" fill="none"/>
-                        </g>
-                        
-                        <!-- Mulher -->
-                        <g class="woman">
-                            <circle cx="280" cy="80" r="30" fill="#E91E63" stroke="#AD1457" stroke-width="2"/>
-                            <rect x="250" y="110" width="60" height="80" rx="10" fill="#AD1457"/>
-                            <rect x="245" y="115" width="15" height="50" rx="7" fill="#AD1457"/>
-                            <rect x="300" y="115" width="15" height="50" rx="7" fill="#AD1457"/>
-                            <rect x="255" y="185" width="15" height="40" rx="7" fill="#AD1457"/>
-                            <rect x="290" y="185" width="15" height="40" rx="7" fill="#AD1457"/>
-                            <!-- Cabelo -->
-                            <path d="M 255 55 Q 280 45 305 55 Q 300 65 280 70 Q 260 65 255 55" fill="#8E24AA"/>
-                            <!-- Rosto -->
-                            <circle cx="270" cy="75" r="3" fill="#FFFFFF"/>
-                            <circle cx="290" cy="75" r="3" fill="#FFFFFF"/>
-                            <path d="M 275 85 Q 280 90 285 85" stroke="#FFFFFF" stroke-width="2" fill="none"/>
-                        </g>
-                        
-                        <!-- Coração Partido -->
-                        <g class="broken-heart">
-                            <path d="M 200 120 C 190 110, 170 110, 170 130 C 170 150, 200 170, 200 170 C 200 170, 230 150, 230 130 C 230 110, 210 110, 200 120 Z" fill="#FF6B6B"/>
-                            <!-- Rachadura -->
-                            <path d="M 200 120 L 195 140 L 205 150 L 195 160 L 200 170" stroke="#8B0000" stroke-width="3" fill="none"/>
-                            <path d="M 200 120 L 205 140 L 195 150 L 205 160 L 200 170" stroke="#8B0000" stroke-width="3" fill="none"/>
-                            <!-- Fragmentos -->
-                            <circle cx="185" cy="125" r="2" fill="#8B0000"/>
-                            <circle cx="215" cy="135" r="2" fill="#8B0000"/>
-                            <circle cx="190" cy="155" r="1.5" fill="#8B0000"/>
-                            <circle cx="210" cy="145" r="1.5" fill="#8B0000"/>
-                        </g>
-                        
-                        <!-- Texto -->
-                        <text x="200" y="250" text-anchor="middle" fill="#FFD93D" font-size="24" font-weight="bold">E DESCUBRA SE ESTÁ</text>
-                        <text x="200" y="280" text-anchor="middle" fill="#FF6B6B" font-size="24" font-weight="bold">SENDO TRAÍDO(A)</text>
-                    </svg>
-                </div>
-                <h1 class="title">🚨 Responda 15 perguntas e descubra se está sendo traído(a) em silêncio…</h1>
-                <p class="subtitle">Este quiz usa inteligência comportamental avançada para revelar a verdade por trás de atitudes suspeitas do seu cônjuge.</p>
-                <div class="benefits">
-                    <div class="benefit">✓ Análise comportamental profissional</div>
-                    <div class="benefit">✓ Resultado em menos de 3 minutos</div>
-                    <div class="benefit">✓ 94% de precisão comprovada</div>
-                </div>
-                <button class="btn-primary" onclick="nextPage()">
-                    <i class="fas fa-play"></i> INICIAR TESTE 
-                </button>
-                <div class="social-proof">
-                    <p>+ de 50.000 pessoas já descobriram a verdade</p>
-                </div>
+        <!-- Tela de Introdução -->
+        <div class="intro-screen" id="introScreen">
+            <div class="intro-description">
+                <strong>🚨 Responda 30 perguntas e descubra se está sendo traído(a) em silêncio...</strong>
+                <br><br>
+                <strong style="color: #00cc66;">🔒 SIGILO TOTAL GARANTIDO</strong><br>
+                <span style="font-size: 16px;">Sua pesquisa é completamente confidencial. Seu cônjuge nem vai perceber que acessamos o WhatsApp dele(a).</span>
             </div>
+            
+            <div class="features">
+                <div class="feature">Análise comportamental profissional</div>
+                <div class="feature">Resultado em menos de 5 minutos</div>
+                <div class="feature">94% de precisão comprovada</div>
+                <div class="feature">Totalmente confidencial</div>
+            </div>
+            
+            <button class="btn" onclick="startQuiz()">INICIAR TESTE AGORA</button>
+            
+            <p style="margin-top: 20px; font-size: 14px; opacity: 0.7;">+ de 50.000 pessoas já descobriram a verdade</p>
+        </div>
+
+        <!-- Container das Perguntas -->
+        <div class="question-container" id="questionContainer">
+            <div class="question-number" id="questionNumber">Pergunta 1 de 30</div>
+            <div class="question" id="questionText"></div>
+            <div class="input-group" id="inputGroup" style="display: none;">
+                <input type="tel" id="whatsappInput" placeholder="(11) 99999-9999" maxlength="15">
+            </div>
+            <div class="options" id="optionsContainer"></div>
+            <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>CONTINUAR</button>
+        </div>
+
+        <!-- Tela de Carregamento -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Investigando o número: <span id="investigatingNumber"></span></div>
+            <div class="loading-text" style="font-size: 14px; opacity: 0.7;">Analisando conversas e atividades do WhatsApp...</div>
+            <div class="loading-text" style="font-size: 12px; opacity: 0.6; margin-top: 10px;">Acesso sigiloso - sem deixar rastros</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- Tela de Resultados -->
+        <div class="results-container" id="resultsContainer">
+            <div class="result-score" id="resultScore">85%</div>
+            <div class="result-title" id="resultTitle">ATENÇÃO: Sinais de Alerta Detectados!</div>
+            <div class="result-description" id="resultDescription">
+                Baseado nas suas respostas, identificamos padrões comportamentais que merecem atenção. 
+                Recomendamos uma conversa franca com seu cônjuge.
+            </div>
+            <button class="btn" onclick="restartQuiz()">FAZER TESTE NOVAMENTE</button>
+        </div>
+
+        <!-- Barra de Progresso -->
+        <div class="progress-bar" id="progressBar" style="display: none;">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
     </div>
 
-    <!-- Página Nome -->
-    <div class="page" id="page-name">
-        <div class="container">
-            <div class="question-section">
-                <h2>👤 Qual o seu nome?</h2>
-                <p class="question-subtitle">(Não será revelado a ninguém)</p>
-                <input type="text" id="userName" class="name-input" placeholder="Digite seu nome aqui...">
-                <button class="btn-primary" onclick="saveName()">
-                    <i class="fas fa-arrow-right"></i> Continuar
-                </button>
-            </div>
-        </div>
-    </div>
+    <script>
+        let currentQuestion = 0;
+        let answers = [];
+        let whatsappNumber = '';
+        
+        const questions = [
+            {
+                text: "📱 Qual o número do WhatsApp do seu cônjuge?",
+                type: "input",
+                inputType: "whatsapp"
+            },
+            {
+                text: "📱 A pessoa começou a esconder o celular ou colocou senha recentemente?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🥶 O comportamento do seu cônjuge mudou de repente (mais frio(a), distante ou irritado(a))?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🚫 Seu cônjuge evita contato físico ou dá desculpas para o sexo?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🚪 Seu cônjuge está saindo com mais frequência e sem explicar direito?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🤥 Já pegou alguma mentira sobre onde estava ou com quem estava?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "💄 Seu cônjuge começou a se cuidar mais do que o normal sem motivo claro?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🛡️ Seu cônjuge fica na defensiva quando você faz perguntas simples?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🏃 Seu cônjuge tem passado mais tempo fora de casa ou longe de você?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "👥 Seu cônjuge evita sair com você em público ou te apresentar para amigos?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "💬 As conversas ficaram mais curtas, secas ou sem emoção?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "👁️ Você sente que tem alguém estranho acompanhando suas redes sociais?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "😔 Seu(sua) parceiro(a) parece mais feliz longe de você do que ao seu lado?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🌙 Seu cônjuge tem chegado tarde em casa com frequência ou inventado compromissos noturnos?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "💸 Notou gastos estranhos ou dinheiro sendo usado sem explicação clara?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "💔 Seu instinto grita que algo está errado, mesmo sem provas concretas?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "📞 Seu cônjuge atende chamadas em outro cômodo ou sussurrando?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "💻 Ele(a) fecha abas do navegador rapidamente quando você se aproxima?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🎭 Seu cônjuge mudou drasticamente os gostos pessoais (música, roupas, hobbies)?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "⏰ Ele(a) tem horários inexplicáveis ou compromissos que não fazem sentido?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🤳 Seu cônjuge evita tirar fotos com você ou postar sobre o relacionamento?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🚗 O carro dele(a) tem odor diferente ou objetos estranhos?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "💤 Seu cônjuge tem insônia ou mudou os padrões de sono drasticamente?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🎁 Ele(a) recebeu presentes ou tem objetos novos sem explicação?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "📧 Você percebeu que ele(a) criou novas contas de email ou redes sociais?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🍽️ Seu cônjuge perdeu interesse nas atividades que vocês faziam juntos?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🗣️ Ele(a) menciona muito uma pessoa específica ou evita falar de alguém?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🔇 Seu cônjuge coloca o celular no silencioso ou modo avião com frequência?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "💰 Houve mudanças no padrão de gastos com cartão ou saques em dinheiro?",
+                options: ["Sim", "Não", "Às vezes"]
+            },
+            {
+                text: "🎯 Baseado em tudo que você observou, qual seu nível de suspeita?",
+                options: ["Muito alto", "Alto", "Médio", "Baixo", "Muito baixo"]
+            }
+        ];
 
-    <!-- Páginas das Perguntas -->
-    <div class="page" id="page-q1">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">📱</div>
-                <h2>A pessoa começou a esconder o celular ou colocou senha recentemente?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q1', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q1', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q1', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+        function startQuiz() {
+            document.getElementById('introScreen').classList.add('hidden');
+            document.getElementById('questionContainer').classList.add('active');
+            document.getElementById('progressBar').style.display = 'block';
+            showQuestion();
+        }
 
-    <div class="page" id="page-q2">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">🥶</div>
-                <h2>O comportamento do seu cônjuge mudou de repente (mais frio(a), distante ou irritado(a))?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q2', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q2', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q2', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q3">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">🚫</div>
-                <h2>Seu cônjuge evita contato físico ou dá desculpas para o sexo?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q3', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q3', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q3', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q4">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">🚪</div>
-                <h2>Seu cônjuge está saindo com mais frequência e sem explicar direito?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q4', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q4', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q4', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q5">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">🤥</div>
-                <h2>Já pegou alguma mentira sobre onde estava ou com quem estava?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q5', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q5', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q5', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q6">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">💄</div>
-                <h2>Seu cônjuge começou a se cuidar mais do que o normal sem motivo claro?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q6', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q6', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q6', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q7">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">🛡️</div>
-                <h2>Seu cônjuge fica na defensiva quando você faz perguntas simples?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q7', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q7', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q7', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q8">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">🏃</div>
-                <h2>Seu cônjuge tem passado mais tempo fora de casa ou longe de você?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q8', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q8', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q8', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q9">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">👥</div>
-                <h2>Seu cônjuge evita sair com você em público ou te apresentar para amigos?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q9', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q9', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q9', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q10">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">💬</div>
-                <h2>As conversas ficaram mais curtas, secas ou sem emoção?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q10', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q10', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q10', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q11">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">👁️</div>
-                <h2>Você sente que tem alguém estranho acompanhando suas redes sociais?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q11', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q11', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q11', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q12">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">😔</div>
-                <h2>Seu(sua) parceiro(a) parece mais feliz longe de você do que ao seu lado?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q12', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q12', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q12', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q13">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">🌙</div>
-                <h2>Seu cônjuge tem chegado tarde em casa com frequência ou inventado compromissos noturnos?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q13', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q13', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q13', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q14">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">💸</div>
-                <h2>Notou gastos estranhos ou dinheiro sendo usado sem explicação clara?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q14', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q14', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q14', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page" id="page-q15">
-        <div class="container">
-            <div class="question-section">
-                <div class="question-icon">💔</div>
-                <h2>Seu instinto grita que algo está errado, mesmo sem provas concretas?</h2>
-                <div class="answer-buttons">
-                    <button class="btn-answer" onclick="answer('q15', 'sim')">Sim</button>
-                    <button class="btn-answer" onclick="answer('q15', 'nao')">Não</button>
-                    <button class="btn-answer" onclick="answer('q15', 'as-vezes')">Às vezes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Página da Ferramenta Hacker -->
-    <div class="page" id="page-hacker-tool">
-        <div class="container">
-            <div class="hacker-section">
-                <div class="hacker-icon">🕵️‍♂️</div>
-                <h1 class="hacker-title">NOVA FERRAMENTA REVOLUCIONÁRIA</h1>
-                <h2 class="hacker-subtitle">DETETIVE IA - HACKER ÉTICO DIGITAL</h2>
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = `Pergunta ${currentQuestion + 1} de 30`;
+            document.getElementById('questionText').textContent = question.text;
+            
+            // Atualizar barra de progresso
+            const progress = ((currentQuestion) / 30) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Limpar containers
+            document.getElementById('inputGroup').style.display = 'none';
+            document.getElementById('optionsContainer').innerHTML = '';
+            document.getElementById('nextBtn').disabled = true;
+            
+            if (question.type === 'input') {
+                document.getElementById('inputGroup').style.display = 'block';
+                const input = document.getElementById('whatsappInput');
+                input.value = '';
+                input.focus();
                 
-                <div class="hacker-description">
-                    <p>Imagine ter um <strong>hacker ético profissional</strong> analisando os dispositivos do seu cônjuge 24h por dia...</p>
-                    <p>Nossa Inteligência Artificial consegue:</p>
-                </div>
+                // Máscara para WhatsApp
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+                    value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+                    e.target.value = value;
+                    
+                    document.getElementById('nextBtn').disabled = value.length < 15;
+                });
+            } else {
+                const optionsContainer = document.getElementById('optionsContainer');
+                question.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    optionElement.textContent = option;
+                    optionElement.onclick = () => selectOption(index, optionElement);
+                    optionsContainer.appendChild(optionElement);
+                });
+            }
+        }
 
-                <div class="hacker-features">
-                    <div class="hacker-feature">
-                        <div class="feature-icon">📱</div>
-                        <div class="feature-text">
-                            <h3>Análise de Padrões de Mensagens</h3>
-                            <p>Identifica conversas deletadas e comportamentos suspeitos no WhatsApp, Instagram e outras redes</p>
-                        </div>
-                    </div>
+        function selectOption(index, element) {
+            // Remover seleção anterior
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Adicionar seleção atual
+            element.classList.add('selected');
+            
+            // Habilitar botão
+            document.getElementById('nextBtn').disabled = false;
+            
+            // Salvar resposta
+            answers[currentQuestion] = index;
+        }
 
-                    <div class="hacker-feature">
-                        <div class="feature-icon">🔍</div>
-                        <div class="feature-text">
-                            <h3>Detecção de Mentiras Digitais</h3>
-                            <p>Analisa horários de atividade, localizações e inconsistências nas histórias contadas</p>
-                        </div>
-                    </div>
+        function nextQuestion() {
+            if (currentQuestion === 0) {
+                // Primeira pergunta - salvar WhatsApp e mostrar loading
+                whatsappNumber = document.getElementById('whatsappInput').value;
+                answers[currentQuestion] = whatsappNumber;
+                showLoading();
+                return;
+            }
+            
+            currentQuestion++;
+            
+            if (currentQuestion >= questions.length) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
 
-                    <div class="hacker-feature">
-                        <div class="feature-icon">💬</div>
-                        <div class="feature-text">
-                            <h3>Rastreamento de Conversas Ocultas</h3>
-                            <p>Identifica aplicativos escondidos, conversas secretas e contatos suspeitos</p>
-                        </div>
-                    </div>
+        function showLoading() {
+            document.getElementById('questionContainer').classList.remove('active');
+            document.getElementById('loadingContainer').classList.add('active');
+            
+            // Mostrar número sendo investigado
+            document.getElementById('investigatingNumber').textContent = whatsappNumber;
+            
+            // Após 30 segundos, continuar para próxima pergunta
+            setTimeout(() => {
+                document.getElementById('loadingContainer').classList.remove('active');
+                document.getElementById('questionContainer').classList.add('active');
+                currentQuestion++;
+                showQuestion();
+            }, 30000);
+        }
 
-                    <div class="hacker-feature">
-                        <div class="feature-icon">📊</div>
-                        <div class="feature-text">
-                            <h3>Relatório Forense Completo</h3>
-                            <p>Gera evidências digitais organizadas que você pode usar como prova real</p>
-                        </div>
-                    </div>
-                </div>
+        function showResults() {
+            document.getElementById('questionContainer').classList.remove('active');
+            document.getElementById('progressBar').style.display = 'none';
+            
+            // Calcular pontuação
+            let score = 0;
+            let suspiciousAnswers = 0;
+            
+            // Contar respostas suspeitas (Sim = 2 pontos, Às vezes = 1 ponto, Não = 0 pontos)
+            for (let i = 1; i < answers.length - 1; i++) {
+                if (answers[i] === 0) suspiciousAnswers += 2; // Sim
+                else if (answers[i] === 2) suspiciousAnswers += 1; // Às vezes
+            }
+            
+            // Última pergunta (nível de suspeita) tem peso maior
+            const lastAnswer = answers[answers.length - 1];
+            if (lastAnswer === 0) suspiciousAnswers += 4; // Muito alto
+            else if (lastAnswer === 1) suspiciousAnswers += 3; // Alto
+            else if (lastAnswer === 2) suspiciousAnswers += 2; // Médio
+            else if (lastAnswer === 3) suspiciousAnswers += 1; // Baixo
+            
+            // Calcular porcentagem
+            const maxScore = (questions.length - 2) * 2 + 4; // -2 para excluir WhatsApp e incluir peso da última
+            score = Math.min(100, Math.round((suspiciousAnswers / maxScore) * 100));
+            
+            // Determinar resultado
+            let title, description, scoreColor;
+            
+            if (score >= 70) {
+                title = "⚠️ ALERTA MÁXIMO: Sinais Claros de Traição!";
+                description = `Baseado nas suas respostas, identificamos ${score}% de compatibilidade com padrões de traição. Os sinais são muito preocupantes e sugerem fortemente que algo está acontecendo. Recomendamos uma investigação mais profunda ou uma conversa séria.`;
+                scoreColor = "#ff4444";
+            } else if (score >= 50) {
+                title = "🟡 ATENÇÃO: Sinais de Alerta Detectados!";
+                description = `Identificamos ${score}% de sinais suspeitos. Há comportamentos que merecem atenção e podem indicar problemas no relacionamento. Recomendamos diálogo aberto e, se necessário, ajuda profissional.`;
+                scoreColor = "#ffaa00";
+            } else if (score >= 30) {
+                title = "🔍 SUSPEITAS MODERADAS: Fique Atento(a)";
+                description = `Detectamos ${score}% de sinais que podem ser preocupantes. Alguns comportamentos chamam atenção, mas podem ter explicações normais. Continue observando e mantenha o diálogo.`;
+                scoreColor = "#ffcc00";
+            } else {
+                title = "✅ TRANQUILIDADE: Relacionamento Saudável";
+                description = `Apenas ${score}% de sinais suspeitos foram detectados. Seu relacionamento aparenta estar saudável e as mudanças observadas são normais. Continue cultivando a confiança mútua.`;
+                scoreColor = "#00ff88";
+            }
+            
+            document.getElementById('resultScore').textContent = score + "%";
+            document.getElementById('resultScore').style.color = scoreColor;
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultDescription').textContent = description;
+            
+            document.getElementById('resultsContainer').classList.add('active');
+        }
 
-                <div class="hacker-testimonial">
-                    <div class="testimonial-quote">
-                        <p>"O Detetive IA encontrou 7 conversas que minha esposa deletava todos os dias. Descobri tudo em 15 minutos."</p>
-                        <div class="testimonial-author">- Carlos M., São Paulo ⭐⭐⭐⭐⭐</div>
-                    </div>
-                </div>
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = [];
+            whatsappNumber = '';
+            
+            document.getElementById('resultsContainer').classList.remove('active');
+            document.getElementById('introScreen').classList.remove('hidden');
+            document.getElementById('progressBar').style.display = 'none';
+            document.getElementById('progressFill').style.width = '0%';
+        }
 
-                <div class="hacker-urgency">
-                    <h3>⚠️ ATENÇÃO: OFERTA LIMITADA HOJE</h3>
-                    <p>Apenas <span class="highlight">50 acessos</span> liberados por dia por questões de segurança</p>
-                </div>
-
-                <button class="btn-primary" onclick="nextPage()">
-                    <i class="fas fa-shield-alt"></i> QUERO ACESSAR O DETETIVE IA
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Página Final -->
-    <div class="page" id="page-result">
-        <div class="container">
-            <div class="result-section">
-                <h1 class="result-title">⚠️ <span id="resultName"></span>, ALERTA: Baseado nas suas respostas, os sinais são CLAROS!</h1>
-                
-                <div class="analysis-box">
-                    <h2>📊 ANÁLISE COMPORTAMENTAL: 87% Baseado nas suas respostas está tudo bem seu conjuge é fiel</h2>
-                    <p><span id="resultName2"></span>, os padrões que você identificou são os MESMOS encontrados em 94% dos casos confirmados de Não traição. Você está imaginando coisas!</p>
-                </div>
-
-                
-                        <div class="faq-question" onclick="toggleFaq(6)">
-               
-    </div>
-
-    <script src="script.js"></script>
+    </script>
 </body>
 </html>
