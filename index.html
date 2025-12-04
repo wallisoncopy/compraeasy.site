@@ -1,457 +1,673 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Pack Nutri 300 - Site Oficial</title>
-    <meta name="description" content="Mais de 300 ferramentas prontas para nutricionistas que buscam resultados reais! Transforme suas consultas com o App Pack Nutri 300.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App Pack Nutri 300 - Ferramentas para Nutricionistas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              heading: ['Poppins', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                50: '#f0fdf4',
+                100: '#dcfce7',
+                200: '#bbf7d0',
+                300: '#86efac',
+                400: '#4ade80',
+                500: '#22c55e',
+                600: '#16a34a',
+                700: '#15803d',
+                800: '#166534',
+                900: '#14532d',
+              },
+              accent: {
+                DEFAULT: '#F97316', // Orange
+                hover: '#EA580C',
+              }
+            }
+          }
+        }
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
-<body>
-    <!-- Countdown Timer -->
-    <div class="countdown-container">
-        <div class="container">
-            <div class="countdown-wrapper">
-                <div class="countdown-text">
-                    <i class="fas fa-fire"></i>
-                    <span>OFERTA DE HOJE R$ 10 TERMINA EM:</span>
-                </div>
-                <div class="countdown-timer">
-                    <div class="time-unit">
-                        <span id="minutes">00</span>
-                        <small>min</small>
-                    </div>
-                    <div class="time-separator">:</div>
-                    <div class="time-unit">
-                        <span id="seconds">05</span>
-                        <small>seg</small>
-                    </div>
-                </div>
-            </div>
+  <body class="bg-gray-50 text-gray-900 antialiased font-sans">
+    
+    <!-- Top Bar -->
+    <div class="fixed top-0 left-0 w-full bg-[#cc0000] text-white z-50 py-3 shadow-lg border-b border-red-800">
+      <div class="container mx-auto px-4 flex flex-col sm:flex-row justify-center items-center gap-2 text-center">
+        <div class="flex items-center gap-2 text-sm sm:text-base font-bold uppercase tracking-wide">
+          <span>OFERTA DE HOJE R$ 10 TERMINA EM:</span>
         </div>
+        <div class="flex items-center gap-1 font-mono text-xl font-black bg-black/20 px-3 py-1 rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 mr-1">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span id="timer">05 min : 05 seg</span>
+        </div>
+        <a href="#pricing" class="hidden sm:inline-block ml-4 text-xs font-bold bg-white text-red-700 px-3 py-1 rounded uppercase hover:bg-gray-100 transition-colors">
+          VER OFERTAS
+        </a>
+      </div>
     </div>
 
-    <!-- Floating CTA Button -->
-    <button id="floatingCTA" class="floating-cta" style="display: none;">
-        <i class="fas fa-download"></i>
-        VER OFERTAS
-    </button>
-
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="hero-content">
-                <h1>
-                    <i class="fas fa-leaf"></i>
-                    App Pack Nutri 300
-                </h1>
-                <p class="hero-subtitle">Mais de 300 ferramentas prontas para nutricionistas que buscam resultados reais!</p>
-                <p class="hero-description">Tudo pronto, em um só lugar para facilitar seu atendimento e surpreender suas pacientes.</p>
-                
-                <!-- Video Container -->
-                <div class="video-container">
-                    <div class="video-wrapper">
+    <section class="pt-32 pb-12 md:pt-40 md:pb-20 bg-white overflow-hidden relative">
+      <div class="container mx-auto px-4">
+        
+        <div class="flex flex-col items-center text-center max-w-4xl mx-auto mb-10">
+            <!-- Stars -->
+            <div class="flex items-center gap-1 mb-4">
+                <div class="flex text-yellow-400">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <span class="text-gray-500 text-sm font-semibold ml-2">(4.9/5.0 de Avaliação)</span>
+            </div>
+
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-heading font-black text-gray-900 leading-tight mb-6">
+              <span class="text-brand-600 block text-lg md:text-xl font-bold uppercase tracking-widest mb-2">App Pack Nutri 300</span>
+              Mais de 300 ferramentas prontas para nutricionistas que buscam <span class="bg-brand-100 text-brand-700 px-2">resultados reais!</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10">
+              Tudo pronto, em um só lugar para facilitar seu atendimento e surpreender suas pacientes.
+            </p>
+
+            <!-- VSL / Video Section -->
+            <div class="w-full max-w-[280px] sm:max-w-[320px] mx-auto mb-10 relative">
+                 <!-- Blinking Border Effect -->
+                 <div class="absolute -inset-2 bg-red-500 rounded-2xl blur-md animate-pulse opacity-60"></div>
+                 <div class="relative rounded-xl overflow-hidden shadow-2xl border-2 border-red-500 bg-black blink-border">
+                     <div class="relative pt-[177.77%]"> <!-- 9:16 Aspect Ratio -->
                         <iframe 
-                            src="https://youtube.com/embed/zYEwg3NrHLc?feature=share" 
-                            frameborder="0" 
+                            src="https://youtube.com/embed/zYEwg3NrHLc?si=LcO1BSbPk5GbQFiJ" 
+                            title="App Pack Nutri 300 Video"
+                            class="absolute top-0 left-0 w-full h-full"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-                
-                <!-- Main CTA Button -->
-                <button class="main-cta-button" onclick="scrollToOffers()">
-                    <i class="fas fa-download"></i>
-                    CLIQUE PARA BAIXAR COM DESCONTO
-                </button>
-                <div class="price-highlight">
-                    <span class="old-price">DE R$ 97,90</span>
-                    <span class="arrow">→</span>
-                    <span class="new-price">HOJE POR R$ 17,00</span>
-                </div>
+                            allowFullScreen
+                        ></iframe>
+                     </div>
+                 </div>
+            </div>
+
+            <!-- Main CTA -->
+            <div class="w-full max-w-md mx-auto relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+                <a 
+                  href="#pricing"
+                  class="relative w-full block bg-gradient-to-b from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-white border-b-4 border-green-800 rounded-xl p-4 md:p-6 shadow-2xl transform active:scale-95 transition-all text-center"
+                >
+                  <span class="flex items-center justify-center gap-2 text-xl md:text-2xl font-black uppercase tracking-tight">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>
+                    QUERO MEU ACESSO AGORA
+                  </span>
+                  <span class="block text-xs md:text-sm font-medium opacity-90 mt-1 uppercase">
+                     Com desconto especial hoje
+                  </span>
+                </a>
+            </div>
+
+            <div class="mt-6 flex flex-col md:flex-row items-center justify-center gap-2 text-gray-900 font-bold">
+               <span class="text-gray-400 line-through text-lg">DE R$ 97,90</span>
+               <span class="bg-red-100 text-red-600 px-3 py-1 rounded text-lg md:text-xl">→ HOJE POR R$ 17,00</span>
             </div>
         </div>
+
+        <!-- Hero Image -->
+        <div class="relative max-w-5xl mx-auto mt-8">
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 h-32 bottom-0 w-full"></div>
+            <div class="bg-gray-100 rounded-2xl p-2 md:p-4 shadow-2xl border border-gray-200">
+                <img 
+                  src="https://i.ibb.co/FbnHJRm6/Infogra-ficos-sobre-Nutric-a-o-e-Sau-de.png" 
+                  alt="Pack Nutri Preview" 
+                  class="w-full h-auto rounded-xl shadow-inner"
+                />
+            </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Areas Section -->
-    <section class="areas-section">
-        <div class="container">
-            <h2><i class="fas fa-leaf"></i> 7 Áreas da Nutrição Cobertas</h2>
-            <div class="areas-grid">
-                <div class="area-item">
-                    <i class="fas fa-heartbeat"></i>
-                    <h3>Nutrição Clínica</h3>
-                    <p>Atendimento clínico especializado</p>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-brain"></i>
-                    <h3>Nutrição Comportamental</h3>
-                    <p>Mudança de hábitos alimentares</p>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-dumbbell"></i>
-                    <h3>Nutrição Esportiva</h3>
-                    <p>Performance e recuperação</p>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-sparkles"></i>
-                    <h3>Nutrição Estética</h3>
-                    <p>Beleza e bem-estar</p>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-baby"></i>
-                    <h3>Nutrição Materno-Infantil</h3>
-                    <p>Cuidado especializado</p>
-                </div>
-                <div class="area-item">
-                    <i class="fas fa-female"></i>
-                    <h3>Nutrição da Gestante</h3>
-                    <p>Acompanhamento gestacional</p>
-                </div>
-                <div class="area-item bonus">
-                    <i class="fas fa-gift"></i>
-                    <h3>10 Bônus Exclusivos</h3>
-                    <p>Materiais extras inclusos</p>
-                </div>
-            </div>
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-heading font-black text-gray-900 mb-2">
+             7 Áreas da Nutrição Cobertas
+          </h2>
+          <div class="h-1 w-20 bg-brand-500 mx-auto rounded-full"></div>
         </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 max-w-5xl mx-auto">
+          <!-- Item 1 -->
+          <div class="bg-gray-50 rounded-xl p-4 md:p-6 text-center hover:shadow-md transition-shadow border border-gray-100">
+            <div class="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1 text-sm md:text-base">Nutrição Clínica</h3>
+            <p class="text-xs md:text-sm text-gray-500">Atendimento clínico especializado</p>
+          </div>
+          <!-- Item 2 -->
+          <div class="bg-gray-50 rounded-xl p-4 md:p-6 text-center hover:shadow-md transition-shadow border border-gray-100">
+            <div class="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1 text-sm md:text-base">Nutrição Comportamental</h3>
+            <p class="text-xs md:text-sm text-gray-500">Mudança de hábitos alimentares</p>
+          </div>
+          <!-- Item 3 -->
+          <div class="bg-gray-50 rounded-xl p-4 md:p-6 text-center hover:shadow-md transition-shadow border border-gray-100">
+            <div class="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1 text-sm md:text-base">Nutrição Esportiva</h3>
+            <p class="text-xs md:text-sm text-gray-500">Performance e recuperação</p>
+          </div>
+          <!-- Item 4 -->
+          <div class="bg-gray-50 rounded-xl p-4 md:p-6 text-center hover:shadow-md transition-shadow border border-gray-100">
+            <div class="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1 text-sm md:text-base">Nutrição Estética</h3>
+            <p class="text-xs md:text-sm text-gray-500">Beleza e bem-estar</p>
+          </div>
+          <!-- Item 5 -->
+          <div class="bg-gray-50 rounded-xl p-4 md:p-6 text-center hover:shadow-md transition-shadow border border-gray-100">
+            <div class="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" /></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1 text-sm md:text-base">Nutrição Materno-Infantil</h3>
+            <p class="text-xs md:text-sm text-gray-500">Cuidado especializado</p>
+          </div>
+          <!-- Item 6 -->
+          <div class="bg-gray-50 rounded-xl p-4 md:p-6 text-center hover:shadow-md transition-shadow border border-gray-100">
+            <div class="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 mx-auto mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            </div>
+            <h3 class="font-bold text-gray-900 mb-1 text-sm md:text-base">Nutrição da Gestante</h3>
+            <p class="text-xs md:text-sm text-gray-500">Acompanhamento gestacional</p>
+          </div>
+          
+          <!-- Bonus Card -->
+          <div class="col-span-2 md:col-span-3 bg-gradient-to-r from-brand-600 to-brand-500 rounded-xl p-6 text-white text-center shadow-lg transform hover:scale-[1.01] transition-transform">
+             <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                <div class="bg-white/20 p-3 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H4.5a1.5 1.5 0 01-1.5-1.5v-8.25m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v5.25m18 0h-2.25a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 11.25m18 0V11.25m-18 0v5.25" /></svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold uppercase tracking-wider">10 Bônus Exclusivos</h3>
+                    <p class="text-brand-100 text-sm">Materiais extras inclusos para turbinar seu consultório</p>
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Benefits Section -->
-    <section class="benefits-section">
-        <div class="container">
-            <h2><i class="fas fa-apple-whole"></i> Nutri, você não precisa mais fazer tudo sozinha!</h2>
-            <p class="section-description">Com o App Pack Nutri 300, você tem acesso imediato a um acervo com mais de 300 materiais prontos para transformar suas consultas em experiências inesquecíveis.</p>
+    <section class="py-20 bg-gray-900 text-white overflow-hidden">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
+          
+          <div class="flex-1">
+            <h2 class="text-3xl md:text-4xl font-heading font-black mb-6 leading-tight text-center lg:text-left">
+              Nutri, você não precisa mais fazer tudo <span class="text-orange-500">sozinha!</span>
+            </h2>
+            <p class="text-gray-400 text-lg mb-8 text-center lg:text-left">
+              Com o App Pack Nutri 300, você tem acesso imediato a um acervo com mais de 300 materiais prontos.
+            </p>
             
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <i class="fas fa-clock"></i>
-                    <h3>Otimize seu tempo</h3>
-                    <p>Materiais prontos para impressão, sem perder horas criando do zero.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-heart-pulse"></i>
-                    <h3>Fidelize mais pacientes</h3>
-                    <p>Encante com design profissional e conteúdo de qualidade.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Aumente o valor percebido</h3>
-                    <p>Eleve o nível das suas consultas com ferramentas diferenciadas.</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-shield-check"></i>
-                    <h3>Tenha mais confiança</h3>
-                    <p>Baseado em práticas clínicas reais e linguagem clara.</p>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+               <!-- Benefit Items -->
+               <div class="flex gap-4 p-4 bg-gray-800 rounded-xl border border-gray-700">
+                    <div class="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white">Otimize seu tempo</h4>
+                        <p class="text-gray-400 text-sm">Materiais prontos para impressão.</p>
+                    </div>
+               </div>
+               <div class="flex gap-4 p-4 bg-gray-800 rounded-xl border border-gray-700">
+                    <div class="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white">Fidelize mais pacientes</h4>
+                        <p class="text-gray-400 text-sm">Encante com design profissional.</p>
+                    </div>
+               </div>
+               <div class="flex gap-4 p-4 bg-gray-800 rounded-xl border border-gray-700">
+                    <div class="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white">Aumente o valor percebido</h4>
+                        <p class="text-gray-400 text-sm">Ferramentas diferenciadas.</p>
+                    </div>
+               </div>
+               <div class="flex gap-4 p-4 bg-gray-800 rounded-xl border border-gray-700">
+                    <div class="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white">Tenha mais confiança</h4>
+                        <p class="text-gray-400 text-sm">Baseado em práticas clínicas reais.</p>
+                    </div>
+               </div>
             </div>
+            
+            <div class="mt-8 text-center lg:text-left">
+                <a href="#pricing" class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-lg shadow-orange-500/20">
+                    QUERO ESSA PRATICIDADE
+                </a>
+            </div>
+          </div>
 
-            <div class="highlight-box">
-                <i class="fas fa-lightbulb"></i>
-                <p><strong>Nutricionistas que se destacam usam as ferramentas certas.</strong><br>
-                Esse é o seu momento de subir de nível com praticidade, estratégia e resultados.</p>
-            </div>
+          <div class="flex-1 w-full max-w-md">
+             <div class="bg-white text-gray-900 rounded-xl overflow-hidden shadow-2xl">
+                <div class="bg-green-600 p-4 text-center">
+                    <h3 class="text-xl font-bold text-white uppercase tracking-wide">É isso que você leva</h3>
+                </div>
+                <div class="p-6">
+                    <ul class="space-y-4">
+                         <li class="flex items-center gap-3 text-gray-700 font-semibold border-b border-gray-100 pb-2 last:border-0">
+                            <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                            7 áreas da Nutrição
+                         </li>
+                         <li class="flex items-center gap-3 text-gray-700 font-semibold border-b border-gray-100 pb-2 last:border-0">
+                            <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                            Materiais prontos (+300)
+                         </li>
+                         <li class="flex items-center gap-3 text-gray-700 font-semibold border-b border-gray-100 pb-2 last:border-0">
+                            <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                            Encante e fidelize
+                         </li>
+                         <li class="flex items-center gap-3 text-gray-700 font-semibold border-b border-gray-100 pb-2 last:border-0">
+                            <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                            Economize tempo
+                         </li>
+                         <li class="flex items-center gap-3 text-gray-700 font-semibold border-b border-gray-100 pb-2 last:border-0">
+                            <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                            Valorize suas consultas
+                         </li>
+                         <li class="flex items-center gap-3 text-gray-700 font-semibold border-b border-gray-100 pb-2 last:border-0">
+                            <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                            Base prática real
+                         </li>
+                         <li class="flex items-center gap-3 text-gray-700 font-semibold border-b border-gray-100 pb-2 last:border-0">
+                            <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                            Visual profissional
+                         </li>
+                    </ul>
+                </div>
+             </div>
+          </div>
 
-            <div class="features-list">
-                <div class="feature-row"><i class="fas fa-check"></i><span>Acesso imediato</span></div>
-                <div class="feature-row"><i class="fas fa-sync"></i><span>Atualizações todos os meses</span></div>
-                <div class="feature-row"><i class="fas fa-print"></i><span>Material pronto para impressão</span></div>
-                <div class="feature-row"><i class="fas fa-palette"></i><span>Visual profissional</span></div>
-                <div class="feature-row"><i class="fas fa-users"></i><span>Encante e fidelize pacientes</span></div>
-                <div class="feature-row"><i class="fas fa-medal"></i><span>Base prática real</span></div>
-            </div>
         </div>
+      </div>
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials-section">
-        <div class="container">
-            <h2><i class="fas fa-comments"></i> O que as profissionais estão falando</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="avatar">AS</div>
-                        <div>
-                            <h3>Dr. Ana Silva</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p>"Revolucionou minha prática! Os materiais são incríveis e economizei horas de preparação. Minhas pacientes ficaram impressionadas!"</p>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="avatar">CS</div>
-                        <div>
-                            <h3>Dra. Carla Santos</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p>"Transformou completamente meus atendimentos. O design profissional me deu muito mais credibilidade e confiança."</p>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="avatar">MC</div>
-                        <div>
-                            <h3>Nutri. Marina Costa</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p>"Investimento que se pagou no primeiro mês! Consegui aumentar o valor das minhas consultas e ter resultados melhores."</p>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="avatar">JM</div>
-                        <div>
-                            <h3>Dra. Juliana Mendes</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p>"Não consigo mais trabalhar sem o App Pack Nutri 300. É essencial para qualquer nutricionista que quer se destacar!"</p>
-                </div>
-            </div>
+    <section class="py-16 bg-gray-50 border-t border-gray-100">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl font-heading font-bold text-gray-900">
+            O que as <span class="text-brand-600">profissionais</span> estão falando
+          </h2>
         </div>
-    </section>
 
-    <!-- What You Get Section -->
-    <section class="what-you-get-section">
-        <div class="container">
-            <h2><i class="fas fa-gift"></i> É ISSO QUE VOCÊ LEVA AO ADQUIRIR O APP PACK NUTRI 300</h2>
-            <div class="content-grid">
-                <div class="content-item">
-                    <i class="fas fa-seedling"></i>
-                    <h3>7 áreas da Nutrição</h3>
-                    <p>Cobertura completa das principais especialidades</p>
-                </div>
-                <div class="content-item">
-                    <i class="fas fa-utensils"></i>
-                    <h3>Materiais prontos</h3>
-                    <p>Mais de 300 ferramentas prontas para usar</p>
-                </div>
-                <div class="content-item">
-                    <i class="fas fa-heart"></i>
-                    <h3>Encante e fidelize</h3>
-                    <p>Surpreenda suas pacientes a cada consulta</p>
-                </div>
-                <div class="content-item">
-                    <i class="fas fa-clock"></i>
-                    <h3>Economize tempo</h3>
-                    <p>Sem perder horas criando materiais do zero</p>
-                </div>
-                <div class="content-item">
-                    <i class="fas fa-gem"></i>
-                    <h3>Valorize suas consultas</h3>
-                    <p>Aumente o valor percebido dos seus atendimentos</p>
-                </div>
-                <div class="content-item">
-                    <i class="fas fa-certificate"></i>
-                    <h3>Base prática real</h3>
-                    <p>Fundamentado na experiência clínica</p>
-                </div>
-                <div class="content-item">
-                    <i class="fas fa-palette"></i>
-                    <h3>Visual profissional</h3>
-                    <p>Design impecável em todos os materiais</p>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Testimonial 1 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div class="flex text-yellow-400 mb-3">
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
             </div>
+            <p class="text-gray-700 text-sm mb-4 leading-relaxed">"Revolucionou minha prática! Os materiais são incríveis e economizei horas de preparação."</p>
+            <div class="flex items-center gap-3 border-t border-gray-100 pt-3">
+              <div class="w-10 h-10 bg-brand-600 rounded-full flex items-center justify-center text-white font-bold text-sm">AS</div>
+              <div>
+                  <h4 class="font-bold text-gray-900 text-sm">Dr. Ana Silva</h4>
+                  <span class="text-xs text-gray-500 block">Nutricionista Clínica</span>
+              </div>
+            </div>
+          </div>
+          <!-- Testimonial 2 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div class="flex text-yellow-400 mb-3">
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <p class="text-gray-700 text-sm mb-4 leading-relaxed">"Transformou completamente meus atendimentos. O design profissional me deu muito mais credibilidade."</p>
+            <div class="flex items-center gap-3 border-t border-gray-100 pt-3">
+              <div class="w-10 h-10 bg-brand-600 rounded-full flex items-center justify-center text-white font-bold text-sm">CS</div>
+              <div>
+                  <h4 class="font-bold text-gray-900 text-sm">Dra. Carla Santos</h4>
+                  <span class="text-xs text-gray-500 block">Nutricionista Esportiva</span>
+              </div>
+            </div>
+          </div>
+          <!-- Testimonial 3 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div class="flex text-yellow-400 mb-3">
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <p class="text-gray-700 text-sm mb-4 leading-relaxed">"Investimento que se pagou no primeiro mês! Consegui aumentar o valor das minhas consultas."</p>
+            <div class="flex items-center gap-3 border-t border-gray-100 pt-3">
+              <div class="w-10 h-10 bg-brand-600 rounded-full flex items-center justify-center text-white font-bold text-sm">MC</div>
+              <div>
+                  <h4 class="font-bold text-gray-900 text-sm">Nutri. Marina Costa</h4>
+                  <span class="text-xs text-gray-500 block">Emagrecimento</span>
+              </div>
+            </div>
+          </div>
+          <!-- Testimonial 4 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div class="flex text-yellow-400 mb-3">
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <p class="text-gray-700 text-sm mb-4 leading-relaxed">"Não consigo mais trabalhar sem o App Pack Nutri 300. É essencial para qualquer nutricionista!"</p>
+            <div class="flex items-center gap-3 border-t border-gray-100 pt-3">
+              <div class="w-10 h-10 bg-brand-600 rounded-full flex items-center justify-center text-white font-bold text-sm">JM</div>
+              <div>
+                  <h4 class="font-bold text-gray-900 text-sm">Dra. Juliana Mendes</h4>
+                  <span class="text-xs text-gray-500 block">Materno Infantil</span>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Pricing Section -->
-    <section class="pricing-section" id="ofertas">
-        <div class="container">
-            <h2><i class="fas fa-fire"></i> TRANSFORME SUAS CONSULTAS AGORA</h2>
-            <p class="pricing-description">Atender suas pacientes com qualidade, agilidade e resultados reais nunca foi tão fácil. Não perca tempo criando materiais do zero. Invista no App Pack Nutri 300 e transforme suas consultas em experiências incríveis!</p>
+    <section id="pricing" class="py-20 bg-slate-50 scroll-mt-24">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <span class="text-brand-600 font-bold tracking-wider uppercase text-sm">Oferta por tempo limitado</span>
+            <h2 class="text-3xl md:text-4xl font-heading font-black text-gray-900 mt-2">
+                Escolha o plano ideal para você
+            </h2>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-center gap-6 max-w-5xl mx-auto items-stretch">
+          
+          <!-- Basic Plan -->
+          <div class="flex-1 bg-white rounded-2xl border border-gray-200 p-6 flex flex-col relative opacity-80 hover:opacity-100 transition-opacity">
+            <div class="text-center border-b border-gray-100 pb-4 mb-4">
+                <h3 class="text-xl font-bold text-gray-700">Plano Básico</h3>
+                <p class="text-gray-500 text-sm">Para começar</p>
+            </div>
             
-            <div class="pricing-plans">
-                <!-- Basic Plan -->
-                <div class="plan basic-plan">
-                    <div class="plan-header">
-                        <i class="fas fa-rocket"></i>
-                        <h3>Plano Básico</h3>
-                        <p>Para começar</p>
-                    </div>
-                    <div class="plan-features">
-                        <div class="feature"><i class="fas fa-check"></i> Acesso a 3 áreas da nutrição</div>
-                        <div class="feature"><i class="fas fa-utensils"></i> 85 ferramentas completas</div>
-                        <div class="feature"><i class="fas fa-calendar"></i> 6 meses de acesso</div>
-                        <div class="feature"><i class="fas fa-gift"></i> 3 bônus exclusivos</div>
-                        <div class="feature"><i class="fas fa-print"></i> Pronto para impressão</div>
-                    </div>
-                    <div class="plan-pricing">
-                        <div class="price">R$ 17,00</div>
-                        <p class="old-offer">PLANO DE R$10 SE ENCERROU (ESGOTADO)</p>
-                    </div>
-                    <a href="https://pay.lowify.com.br/checkout?product_id=dWg7dc" target="_blank" class="plan-button basic">
-                        <i class="fas fa-shopping-cart"></i>
-                        GARANTIR ACESSO BÁSICO
-                    </a>
-                </div>
-
-                <!-- Gold Plan -->
-                <div class="plan gold-plan">
-                    <div class="popular-badge">
-                        <i class="fas fa-crown"></i>
-                        MAIS VENDIDO
-                    </div>
-                    <div class="plan-header">
-                        <i class="fas fa-crown"></i>
-                        <h3>Plano Gold Completo</h3>
-                        <p>Acesso total vitalício</p>
-                    </div>
-                    <div class="plan-features">
-                        <div class="feature"><i class="fas fa-seedling"></i> 7 áreas completas da nutrição</div>
-                        <div class="feature"><i class="fas fa-infinity"></i> 300+ ferramentas</div>
-                        <div class="feature"><i class="fas fa-gem"></i> Acesso vitalício</div>
-                        <div class="feature"><i class="fas fa-sync"></i> Atualizações mensais</div>
-                        <div class="feature"><i class="fas fa-gifts"></i> 10 bônus exclusivos</div>
-                        <div class="feature"><i class="fas fa-palette"></i> Design profissional</div>
-                        <div class="feature"><i class="fas fa-chart-line"></i> Materiais de alta conversão</div>
-                    </div>
-                    <div class="value-comparison">
-                        <span class="strike">R$ 97,90</span>
-                        <small>Valor normal</small>
-                    </div>
-                    <div class="plan-pricing">
-                        <div class="price">R$ 27,00</div>
-                        <p class="payment-info">Pagamento único</p>
-                        <p class="savings">Economize R$ 70,90</p>
-                    </div>
-                    <a href="https://pay.lowify.com.br/checkout?product_id=iwpYNI" target="_blank" class="plan-button gold">
-                        <i class="fas fa-crown"></i>
-                        BAIXAR PACK COMPLETO AGORA
-                    </a>
-                </div>
+            <div class="text-center mb-6">
+                 <div class="inline-block bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded mb-2">
+                    PLANO DE R$10 SE ENCERROU (ESGOTADO)
+                 </div>
+                 <div class="flex justify-center items-center gap-2">
+                    <span class="text-4xl font-extrabold text-gray-900">R$ 17,00</span>
+                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Guarantee Section -->
-    <section class="guarantee-section">
-        <div class="container">
-            <div class="guarantee-card">
-                <i class="fas fa-shield-check"></i>
-                <h3>Garantia de 30 Dias</h3>
-                <p>Não gostou? Devolvemos 100% do seu dinheiro, sem perguntas! Você tem um mês inteiro para testar tudo e decidir.</p>
-                <div class="guarantee-features">
-                    <div><i class="fas fa-check-circle"></i> 30 dias de garantia total</div>
-                    <div><i class="fas fa-handshake"></i> Sem perguntas ou burocracias</div>
-                    <div><i class="fas fa-money-bill-wave"></i> 100% do seu dinheiro de volta</div>
-                </div>
+            <ul class="space-y-3 mb-8 flex-grow">
+              <li class="flex gap-3 text-sm text-gray-600">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Acesso a 3 áreas da nutrição
+              </li>
+              <li class="flex gap-3 text-sm text-gray-600">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                85 ferramentas completas
+              </li>
+              <li class="flex gap-3 text-sm text-gray-600">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                6 meses de acesso
+              </li>
+              <li class="flex gap-3 text-sm text-gray-600">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                3 bônus exclusivos
+              </li>
+              <li class="flex gap-3 text-sm text-gray-600">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Pronto para impressão
+              </li>
+            </ul>
+
+            <a 
+                href="https://pay.lowify.com.br/checkout?product_id=dWg7dc"
+                class="block w-full text-center py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-lg border border-gray-300 transition-colors uppercase text-sm"
+            >
+                GARANTIR ACESSO BÁSICO
+            </a>
+          </div>
+
+          <!-- Gold Plan -->
+          <div class="flex-1 bg-white rounded-2xl border-2 border-green-500 p-6 flex flex-col relative shadow-xl transform md:-translate-y-4 z-10">
+             <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <span class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-md uppercase whitespace-nowrap">
+                    🔥 Mais Vendido
+                </span>
+             </div>
+
+            <div class="text-center border-b border-gray-100 pb-4 mb-4 mt-2">
+                <h3 class="text-2xl font-bold text-gray-900">Plano Gold Completo</h3>
+                <p class="text-green-600 font-semibold text-sm">Acesso total vitalício</p>
             </div>
+            
+            <div class="text-center mb-6">
+                 <span class="text-gray-400 line-through text-sm">R$ 97,90 Valor normal</span>
+                 <div class="flex justify-center items-center gap-2 text-green-600">
+                    <span class="text-5xl font-black">R$ 27,00</span>
+                 </div>
+                 <p class="text-xs text-gray-500 mt-1">Pagamento único • Economize R$ 70,90</p>
+            </div>
+
+            <ul class="space-y-3 mb-8 flex-grow">
+              <li class="flex gap-3 font-medium text-gray-800">
+                <div class="bg-green-100 p-1 rounded-full"><svg class="w-4 h-4 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></div>
+                7 áreas completas da nutrição
+              </li>
+              <li class="flex gap-3 font-medium text-gray-800">
+                <div class="bg-green-100 p-1 rounded-full"><svg class="w-4 h-4 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></div>
+                300+ ferramentas
+              </li>
+              <li class="flex gap-3 font-medium text-gray-800">
+                <div class="bg-green-100 p-1 rounded-full"><svg class="w-4 h-4 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></div>
+                Acesso vitalício
+              </li>
+              <li class="flex gap-3 font-medium text-gray-800">
+                <div class="bg-green-100 p-1 rounded-full"><svg class="w-4 h-4 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></div>
+                Atualizações mensais
+              </li>
+              <li class="flex gap-3 font-medium text-gray-800">
+                <div class="bg-green-100 p-1 rounded-full"><svg class="w-4 h-4 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></div>
+                10 bônus exclusivos
+              </li>
+              <li class="flex gap-3 font-medium text-gray-800">
+                <div class="bg-green-100 p-1 rounded-full"><svg class="w-4 h-4 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></div>
+                Design profissional
+              </li>
+            </ul>
+
+            <a 
+                href="https://pay.lowify.com.br/checkout?product_id=iwpYNI"
+                class="block w-full text-center py-4 bg-green-600 hover:bg-green-500 text-white font-black rounded-xl shadow-lg shadow-green-200 transition-all transform hover:scale-105 uppercase tracking-wide text-lg flex items-center justify-center gap-2"
+            >
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                BAIXAR PACK COMPLETO
+            </a>
+            
+            <div class="mt-4 flex items-center justify-center gap-2 text-xs text-gray-500">
+                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+                </svg>
+                Ambiente criptografado e seguro
+            </div>
+          </div>
         </div>
+
+        <!-- Guarantee Banner -->
+        <div class="max-w-4xl mx-auto mt-12 bg-white rounded-xl border border-gray-200 p-6 flex flex-col md:flex-row items-center gap-6 shadow-sm">
+             <svg class="w-16 h-16 text-brand-600 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+             </svg>
+             <div class="text-center md:text-left">
+                <h4 class="font-bold text-gray-900 text-lg">Garantia de 30 Dias</h4>
+                <p class="text-gray-600 text-sm mt-1">
+                    Não gostou? Devolvemos 100% do seu dinheiro, sem perguntas! Você tem um mês inteiro para testar tudo e decidir.
+                </p>
+             </div>
+        </div>
+
+      </div>
     </section>
 
     <!-- FAQ Section -->
-    <section class="faq-section">
-        <div class="container">
-            <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Como recebo o material após a compra?</span>
-                        <i class="fas fa-plus"></i>
-                    </div>
-                    <div class="faq-answer">
-                        O acesso é 100% digital e imediato. Após a confirmação do pagamento, você receberá os dados de acesso por e-mail em até 5 minutos.
-                    </div>
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4 max-w-3xl">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl font-heading font-bold text-gray-900">Perguntas Frequentes</h2>
+        </div>
+
+        <div class="space-y-3">
+            <!-- FAQ Item 1 -->
+            <div class="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden faq-item">
+              <button class="w-full px-5 py-4 text-left flex justify-between items-center focus:outline-none hover:bg-gray-100 transition-colors faq-btn">
+                <span class="font-bold text-gray-800 text-sm md:text-base">Como recebo o material após a compra?</span>
+                <svg class="w-5 h-5 text-gray-500 transition-transform duration-200 faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+              </button>
+              <div class="px-5 text-gray-600 text-sm md:text-base transition-all duration-300 ease-in-out max-h-0 hidden faq-content py-0 border-t-0">
+                O acesso é 100% digital e imediato. Após a confirmação do pagamento, você receberá os dados de acesso por e-mail em até 5 minutos.
+              </div>
+            </div>
+            <!-- FAQ Item 2 -->
+            <div class="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden faq-item">
+                <button class="w-full px-5 py-4 text-left flex justify-between items-center focus:outline-none hover:bg-gray-100 transition-colors faq-btn">
+                  <span class="font-bold text-gray-800 text-sm md:text-base">Funciona no celular e tablet?</span>
+                  <svg class="w-5 h-5 text-gray-500 transition-transform duration-200 faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                </button>
+                <div class="px-5 text-gray-600 text-sm md:text-base transition-all duration-300 ease-in-out max-h-0 hidden faq-content py-0 border-t-0">
+                  Sim! Todo o material está otimizado para celular, tablet e computador. Você pode acessar de qualquer lugar, a qualquer hora.
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Funciona no celular e tablet?</span>
-                        <i class="fas fa-plus"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Sim! Todo o material está otimizado para celular, tablet e computador. Você pode acessar de qualquer lugar, a qualquer hora.
-                    </div>
+            </div>
+            <!-- FAQ Item 3 -->
+            <div class="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden faq-item">
+                <button class="w-full px-5 py-4 text-left flex justify-between items-center focus:outline-none hover:bg-gray-100 transition-colors faq-btn">
+                  <span class="font-bold text-gray-800 text-sm md:text-base">Posso imprimir todos os materiais?</span>
+                  <svg class="w-5 h-5 text-gray-500 transition-transform duration-200 faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                </button>
+                <div class="px-5 text-gray-600 text-sm md:text-base transition-all duration-300 ease-in-out max-h-0 hidden faq-content py-0 border-t-0">
+                  Claro! Todos os materiais estão em alta resolução, prontos para impressão profissional. Use quantas vezes quiser.
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Posso imprimir todos os materiais?</span>
-                        <i class="fas fa-plus"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Claro! Todos os materiais estão em alta resolução, prontos para impressão profissional. Use quantas vezes quiser.
-                    </div>
+            </div>
+            <!-- FAQ Item 4 -->
+            <div class="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden faq-item">
+                <button class="w-full px-5 py-4 text-left flex justify-between items-center focus:outline-none hover:bg-gray-100 transition-colors faq-btn">
+                  <span class="font-bold text-gray-800 text-sm md:text-base">Como funciona a garantia de 30 dias?</span>
+                  <svg class="w-5 h-5 text-gray-500 transition-transform duration-200 faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                </button>
+                <div class="px-5 text-gray-600 text-sm md:text-base transition-all duration-300 ease-in-out max-h-0 hidden faq-content py-0 border-t-0">
+                  Você tem 30 dias para testar tudo. Se não gostar por qualquer motivo, é só enviar um e-mail que devolvemos 100% do seu dinheiro.
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Como funciona a garantia de 30 dias?</span>
-                        <i class="fas fa-plus"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Você tem 30 dias para testar tudo. Se não gostar por qualquer motivo, é só enviar um e-mail que devolvemos 100% do seu dinheiro.
-                    </div>
+            </div>
+            <!-- FAQ Item 5 -->
+            <div class="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden faq-item">
+                <button class="w-full px-5 py-4 text-left flex justify-between items-center focus:outline-none hover:bg-gray-100 transition-colors faq-btn">
+                  <span class="font-bold text-gray-800 text-sm md:text-base">Recebo atualizações do material?</span>
+                  <svg class="w-5 h-5 text-gray-500 transition-transform duration-200 faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                </button>
+                <div class="px-5 text-gray-600 text-sm md:text-base transition-all duration-300 ease-in-out max-h-0 hidden faq-content py-0 border-t-0">
+                  Sim! No plano Gold, você recebe atualizações mensais com novos materiais e ferramentas, sempre sem custo adicional.
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Recebo atualizações do material?</span>
-                        <i class="fas fa-plus"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Sim! No plano Gold, você recebe atualizações mensais com novos materiais e ferramentas, sempre sem custo adicional.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>O material é baseado em práticas reais?</span>
-                        <i class="fas fa-plus"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Absolutamente! Todo o conteúdo foi desenvolvido com base em experiências clínicas reais e melhores práticas da nutrição.
-                    </div>
+            </div>
+             <!-- FAQ Item 6 -->
+             <div class="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden faq-item">
+                <button class="w-full px-5 py-4 text-left flex justify-between items-center focus:outline-none hover:bg-gray-100 transition-colors faq-btn">
+                  <span class="font-bold text-gray-800 text-sm md:text-base">O material é baseado em práticas reais?</span>
+                  <svg class="w-5 h-5 text-gray-500 transition-transform duration-200 faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                </button>
+                <div class="px-5 text-gray-600 text-sm md:text-base transition-all duration-300 ease-in-out max-h-0 hidden faq-content py-0 border-t-0">
+                  Absolutamente! Todo o conteúdo foi desenvolvido com base em experiências clínicas reais e melhores práticas da nutrição.
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Final CTA Section -->
-    <section class="final-cta-section">
-        <div class="container">
-            <h2><i class="fas fa-rocket"></i> Não perca esta oportunidade única!</h2>
-            <p>Transforme sua prática profissional hoje mesmo e comece a ter os resultados que você sempre quis.</p>
-            <a href="https://pay.lowify.com.br/checkout?product_id=iwpYNI" target="_blank" class="final-cta-button">
-                <i class="fas fa-download"></i>
-                GARANTIR MEU APP PACK NUTRI 300 AGORA
+        <div class="text-center mt-12">
+            <a href="#pricing" class="inline-block px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg transition-colors uppercase tracking-wide">
+                GARANTIR MEU ACESSO AGORA
             </a>
-            <div class="security-badge">
-                <i class="fas fa-lock"></i>
-                Compra 100% segura e protegida
-            </div>
         </div>
+      </div>
     </section>
 
-    <script src="script.js"></script>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+      <div class="container mx-auto px-4 text-center">
+        <p class="font-heading font-bold text-white text-xl mb-4">App Pack Nutri 300</p>
+        <p class="mb-8 text-sm max-w-md mx-auto">
+            Facilitando a vida de nutricionistas em todo o Brasil com ferramentas práticas e design de alta qualidade.
+        </p>
+        
+        <div class="flex justify-center items-center gap-2 mb-8 text-green-500 font-medium">
+             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+             </svg>
+             <span>Compra 100% segura e protegida</span>
+        </div>
+
+        <div class="text-xs text-gray-600 border-t border-gray-800 pt-8">
+          <p>&copy; 2024 App Pack Nutri 300. Todos os direitos reservados.</p>
+          <div class="flex justify-center gap-4 mt-2">
+            <a href="#" class="hover:text-white transition-colors">Termos de Uso</a>
+            <a href="#" class="hover:text-white transition-colors">Política de Privacidade</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
+
 <script
   src="https://cdn.utmify.com.br/scripts/utms/latest.js"
   data-utmify-prevent-xcod-sck
