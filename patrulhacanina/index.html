@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Megapack Patrulha Canina - Coleção completa de moldes para recortar e montar.">
+    <title>Megapack Patrulha Canina - Diversão Offline</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+
+    <!-- Notificações de Venda (Simuladas) -->
+    <div id="notification-container"></div>
+
+    <!-- Barra de Oferta Sticky -->
+    <div class="sticky-offer-bar">
+        <div class="offer-text">
+            🔥 OFERTA HOJE, <span id="current-date">DATA</span>
+        </div>
+        <div class="offer-timer-container">
+            <div class="timer" id="countdown-timer">10:00</div>
+            <a href="#ofertas" class="btn-timer-cta">VER OFERTAS ➔</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container header-content">
+            <div class="logo">
+                <div class="paw-icon">🐾</div>
+                <h1>Megapack <span>Patrulha Canina</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2 class="fade-in">Megapack <span class="highlight">Patrulha Canina</span> para recortar, colar e brincar longe das telas!</h2>
+            <p class="subtitle fade-in">A coleção completa de moldes de todos os personagens: veículos, cenários e crachás para garantir a diversão total nas férias.</p>
+            
+            <div class="hero-image-wrapper fade-in">
+                <img src="https://i.ibb.co/23V3vYpt/Chat-GPT-Image-18-de-dez-de-2025-17-59-33.png" alt="Megapack Patrulha Canina">
+            </div>
+
+            <a href="#ofertas" class="btn-main-cta fade-in">QUERO O MEGAPACK PATRULHA CANINA</a>
+            <p class="cta-badge fade-in">Acesso Vitalício • Entrega Via E-mail</p>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <span>🐾 PATRULHA CANINA EM AÇÃO</span>
+            <span>🐾 ENTREGA NO E-MAIL</span>
+            <span>🐾 ACESSO VITALÍCIO</span>
+            <span>🐾 BRINQUE SEM TELAS</span>
+            <span>🐾 PATRULHA CANINA EM AÇÃO</span>
+            <span>🐾 ENTREGA NO E-MAIL</span>
+            <span>🐾 ACESSO VITALÍCIO</span>
+            <span>🐾 BRINQUE SEM TELAS</span>
+        </div>
+    </div>
+
+    <!-- Inventory / O que recebe -->
+    <section class="inventory container">
+        <div class="section-title fade-in">
+            <h2>O que você recebe no Megapack</h2>
+            <p>Tudo o que sua criança precisa para criar sua própria Baía da Aventura</p>
+        </div>
+        <div class="grid grid-4 fade-in">
+            <div class="card">
+                <span class="card-icon">🚓</span>
+                <h3>Chase e Viaturas</h3>
+                <p>Moldes detalhados do líder e seu carro de polícia.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🚒</span>
+                <h3>Marshall e Bombeiros</h3>
+                <p>O dálmata favorito e seu caminhão de resgate.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🚁</span>
+                <h3>Skye e Helicópteros</h3>
+                <p>Pronta para voar com moldes da Skye.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🗼</span>
+                <h3>Torre de Vigilância</h3>
+                <p>O QG completo para horas de diversão.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria -->
+    <section class="gallery bg-white">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Exemplos dos Moldes da Patrulha</h2>
+                <p>Confira o que você vai poder imprimir agora mesmo</p>
+            </div>
+            <div class="grid grid-4 fade-in">
+                <div class="gallery-item"><img src="https://i.ibb.co/jCsjHWL/Chat-GPT-Image-18-de-dez-de-2025-17-59-28.png" alt="Exemplo 1"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/Fbb30WkS/Chat-GPT-Image-18-de-dez-de-2025-17-59-43.png" alt="Exemplo 2"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/0jCmFC2c/Chat-GPT-Image-18-de-dez-de-2025-17-59-40.png" alt="Exemplo 3"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/RTmBJrmM/Chat-GPT-Image-18-de-dez-de-2025-17-59-46.png" alt="Exemplo 4"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Passos -->
+    <section class="how-to">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2 class="text-yellow">Como eu recebo meu material?</h2>
+                <p>Simples, rápido e divertido.</p>
+            </div>
+            <div class="steps-grid fade-in">
+                <div class="step-item"><span>1</span><p>Compre</p></div>
+                <div class="step-item"><span>2</span><p>E-mail</p></div>
+                <div class="step-item"><span>3</span><p>Baixe</p></div>
+                <div class="step-item"><span>4</span><p>Imprima</p></div>
+                <div class="step-item"><span>5</span><p>Recorte</p></div>
+                <div class="step-item"><span>6</span><p>Dobre</p></div>
+                <div class="step-item"><span>7</span><p>Cole</p></div>
+                <div class="step-item"><span>8</span><p>Brinque!</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ofertas -->
+    <section id="ofertas" class="pricing container">
+        <div class="section-title fade-in">
+            <h2>Escolha o seu Plano</h2>
+            <p>Acesso vitalício para garantir o entretenimento offline.</p>
+        </div>
+        <div class="pricing-grid fade-in">
+            <!-- Plano 17 -->
+            <div class="pricing-card">
+                <h3>Pacote Básico</h3>
+                <ul>
+                    <li>✓ Todos os Moldes Patrulha</li>
+                    <li>✓ Entrega Imediata</li>
+                    <li>✓ Garantia 30 dias</li>
+                    <li class="disabled">✕ Sem Atualizações</li>
+                </ul>
+                <div class="price-box">
+                    <span class="old-price">R$ 47</span>
+                    <span class="new-price">R$ 17,00</span>
+                </div>
+                <a href="https://pay.lowify.com.br/checkout?product_id=qvCjQ1" class="btn-buy-secondary">Quero o Pacote Básico</a>
+            </div>
+
+            <!-- Plano 27 -->
+            <div class="pricing-card featured">
+                <div class="badge">MAIS COMPLETO</div>
+                <h3>Pacote Premium</h3>
+                <ul>
+                    <li>✓ Todos os Moldes Patrulha</li>
+                    <li>✓ Atualizações Mensais</li>
+                    <li>✓ Suporte WhatsApp</li>
+                    <li>✓ Acesso Vitalício</li>
+                    <li>✓ Garantia 30 dias</li>
+                </ul>
+                <div class="price-box">
+                    <span class="old-price">R$ 97</span>
+                    <span class="new-price premium">R$ 27,00</span>
+                </div>
+                <a href="https://pay.lowify.com.br/checkout?product_id=s7OPrg" class="btn-buy-primary">QUERO O PACOTE COMPLETO</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Garantia -->
+    <section class="guarantee container">
+        <div class="guarantee-box fade-in">
+            <div class="guarantee-badge">
+                <span>30</span>
+                <p>DIAS DE GARANTIA</p>
+            </div>
+            <div class="guarantee-text">
+                <h3>Sua compra 100% Segura!</h3>
+                <p>Se em 30 dias você não ficar satisfeito com a qualidade dos moldes, devolvemos todo o seu dinheiro. Teste sem riscos!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testemunhos -->
+    <section class="testimonials bg-white">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>O que as famílias dizem</h2>
+            </div>
+            <div class="grid grid-4 fade-in">
+                <div class="testimonial-card">
+                    <p>"Meu filho amou montar o Chase! Entrega imediata."</p>
+                    <strong>- Ana Paula</strong>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Material excelente, fácil de imprimir. Recomendo!"</p>
+                    <strong>- Marcos L.</strong>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Ficamos horas brincando longe do tablet."</p>
+                    <strong>- Clara M.</strong>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Perfeito para as férias. Crianças entretidas."</p>
+                    <strong>- Mariana S.</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq container">
+        <div class="section-title fade-in">
+            <h2>Perguntas Frequentes</h2>
+        </div>
+        <div class="faq-list fade-in">
+            <div class="faq-item">
+                <button class="faq-question">Como recebo os moldes? <span>+</span></button>
+                <div class="faq-answer">O acesso é imediato! Você recebe um link no seu e-mail logo após a confirmação do pagamento.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">É um produto físico? <span>+</span></button>
+                <div class="faq-answer">Não, é 100% digital em PDF. Você imprime em casa ou em uma gráfica.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Qual papel usar? <span>+</span></button>
+                <div class="faq-answer">Funciona em papel comum, mas recomendamos gramatura 180g (tipo cartolina) para maior durabilidade.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">O acesso é vitalício? <span>+</span></button>
+                <div class="faq-answer">Sim! Uma vez comprado, o material é seu para sempre.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container text-center">
+            <div class="logo opacity-50">🐾 MegaMoldes Kids</div>
+            <p>&copy; 2025 MegaMoldes Kids. Todos os direitos reservados.</p>
+            <p class="disclaimer">Aviso: Artes inspiradas na Patrulha Canina. Marcas pertencem aos respectivos donos.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
