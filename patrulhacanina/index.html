@@ -1,268 +1,486 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Megapack Patrulha Canina - Coleção completa de moldes para recortar e montar.">
     <title>Megapack Patrulha Canina - Diversão Offline</title>
-    
-    <!-- Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Quicksand', sans-serif; }
+        h1, h2, h3 { font-family: 'Fredoka', sans-serif; }
+        
+        @keyframes flash-border {
+            0%, 100% { border-color: #ef4444; box-shadow: 0 0 20px #ef4444; }
+            50% { border-color: #facc15; box-shadow: 0 0 30px #facc15; }
+        }
+        .animate-flash-border { animation: flash-border 1s infinite; }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee { display: flex; width: max-content; animation: marquee 25s linear infinite; }
+
+        .faq-answer { max-height: 0; overflow: hidden; transition: all 0.3s ease-in-out; }
+        .faq-item.active .faq-answer { max-height: 300px; padding-top: 0.75rem; }
+        .faq-item.active .faq-icon { transform: rotate(180deg); }
+
+        #notification { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-in-out; }
+        .hidden-notif { transform: translateY(120px); opacity: 0; pointer-events: none; }
+        
+        .btn-shadow { box-shadow: 0 8px 0 0 rgba(0,0,0,0.2); }
+        .btn-shadow:active { transform: translateY(4px); box-shadow: 0 4px 0 0 rgba(0,0,0,0.2); }
+    </style>
 <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
   }
 }
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden pt-24 md:pt-16">
 
-    <!-- Notificações de Venda (Simuladas) -->
-    <div id="notification-container"></div>
+    <!-- Notificações de Venda (Somente Nomes Femininos) -->
+    <div id="notification" class="fixed bottom-6 left-4 right-4 md:right-auto z-[70] bg-white border-l-4 border-green-600 shadow-2xl p-4 rounded-lg hidden-notif flex items-center gap-4">
+        <div class="bg-green-100 p-2 rounded-full shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-green-700 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+        </div>
+        <div>
+            <p id="notif-text" class="text-slate-950 font-black text-sm leading-tight"></p>
+            <p class="text-slate-500 text-[10px] font-bold uppercase mt-1">Compra Verificada ✓</p>
+        </div>
+    </div>
 
     <!-- Barra de Oferta Sticky -->
-    <div class="sticky-offer-bar">
-        <div class="offer-text">
-            🔥 OFERTA HOJE, <span id="current-date">DATA</span>
+    <div class="fixed top-0 left-0 w-full z-50 bg-red-600 text-white p-2 shadow-xl flex flex-col md:flex-row justify-center items-center gap-2 md:gap-8 font-bold border-b-2 border-red-700">
+        <div class="text-[10px] md:text-sm uppercase tracking-widest font-black">
+            🔥 OFERTA HOJE, <span id="current-date"></span>
         </div>
-        <div class="offer-timer-container">
-            <div class="timer" id="countdown-timer">10:00</div>
-            <a href="#ofertas" class="btn-timer-cta">VER OFERTAS ➔</a>
+        <div class="flex items-center gap-4">
+            <div class="bg-white text-red-600 px-3 py-1 rounded-md flex items-center gap-2 text-sm border-b-2 border-slate-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span id="countdown-timer" class="tabular-nums font-black">10:00</span>
+            </div>
+            <a href="#ofertas" class="bg-yellow-400 text-red-950 px-5 py-1.5 rounded-full hover:bg-yellow-300 transition-all flex items-center gap-2 text-[10px] md:text-xs font-black uppercase shadow-md active:scale-95">
+                VER OFERTAS ➔
+            </a>
         </div>
     </div>
 
     <!-- Header -->
-    <header class="main-header">
-        <div class="container header-content">
-            <div class="logo">
-                <div class="paw-icon">🐾</div>
-                <h1>Megapack <span>Patrulha Canina</span></h1>
+    <header class="bg-white py-4 md:py-6 border-b-2 border-slate-100 sticky top-[80px] md:top-[56px] z-40 shadow-sm">
+        <div class="container mx-auto px-4 flex justify-center items-center">
+            <div class="flex items-center gap-3 group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="text-blue-600 w-8 h-8 md:w-12 md:h-12 drop-shadow-sm group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M11 22a2.48 2.48 0 0 1-2.5-2.5 2.47 2.47 0 0 1 1-2 2.47 2.47 0 0 1 1.5-3 2.47 2.47 0 0 1 1.5 3 2.47 2.47 0 0 1 1 2 2.48 2.48 0 0 1-2.5 2.5ZM4.5 15a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5Zm15 0a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5ZM7.5 7a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5Zm9 0a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5Z"/></svg>
+                <h1 class="text-2xl md:text-4xl font-black text-slate-950 tracking-tighter">
+                    MEGAPACK <span class="text-blue-600">PATRULHA</span>
+                </h1>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container hero-content">
-            <h2 class="fade-in">Megapack <span class="highlight">Patrulha Canina</span> para recortar, colar e brincar longe das telas!</h2>
-            <p class="subtitle fade-in">A coleção completa de moldes de todos os personagens: veículos, cenários e crachás para garantir a diversão total nas férias.</p>
-            
-            <div class="hero-image-wrapper fade-in">
-                <img src="https://i.ibb.co/23V3vYpt/Chat-GPT-Image-18-de-dez-de-2025-17-59-33.png" alt="Megapack Patrulha Canina">
+    <section class="py-10 md:py-24 bg-gradient-to-b from-blue-50 to-white relative overflow-hidden">
+        <div class="container mx-auto px-4 max-w-5xl text-center relative z-10">
+            <h2 class="text-3xl md:text-6xl font-black text-slate-950 mb-8 leading-[1.1] tracking-tighter px-2">
+                O Maior <span class="text-red-600 underline decoration-yellow-400 decoration-8 underline-offset-8">Megapack Patrulha Canina</span> para Brincar longe das telas!
+            </h2>
+            <p class="text-lg md:text-2xl text-slate-800 mb-10 max-w-3xl mx-auto font-black leading-relaxed">
+                Toda a Baía da Aventura na sua casa: veículos, cenários e personagens para recortar e montar.
+            </p>
+
+         <script src="https://fast.wistia.com/player.js" async></script><script src="https://fast.wistia.com/embed/f2vw57ho99.js" async type="module"></script><style>wistia-player[media-id='f2vw57ho99']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/f2vw57ho99/swatch'); display: block; filter: blur(5px); padding-top:176.92%; }</style> <wistia-player media-id="f2vw57ho99" seo="false" aspect="0.5652173913043478"></wistia-player>
+  <a href="#ofertas" class="inline-flex items-center justify-center gap-4 bg-green-600 text-white px-8 md:px-14 py-6 md:py-8 rounded-full text-xl md:text-3xl font-black btn-shadow hover:bg-green-500 transition-all mb-8 uppercase w-full md:w-auto tracking-tighter">
+                EU QUERO O MEGAPACK 🐾
+            </a>
+            <!-- Imagem Sample Low Res requested -->
+            <div class="mb-14 flex flex-col items-center">
+                <p class="text-sm font-black text-slate-500 mb-4 uppercase tracking-[0.2em]"></p>
+                <div class="max-w-[280px] md:max-w-md w-full mx-auto rounded-[2rem] overflow-hidden border-4 border-dashed border-slate-300 filter contrast-75 brightness-110 opacity-80 shadow-inner p-2 bg-white">
+                    <img src="https://i.ibb.co/23V3vYpt/Chat-GPT-Image-18-de-dez-de-2025-17-59-33.png" alt="Megapack Preview" class="w-full h-auto grayscale-[15%] blur-[0.6px] rounded-[1.5rem]">
+                </div>
+                <p class="mt-3 text-[10px] font-bold text-slate-400 italic italic">Arquivos em alta resolução entregues no seu e-mail!</p>
             </div>
 
-            <a href="#ofertas" class="btn-main-cta fade-in">QUERO O MEGAPACK PATRULHA CANINA</a>
-            <p class="cta-badge fade-in">Acesso Vitalício • Entrega Via E-mail</p>
+         
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10 text-xs md:text-sm text-slate-600 font-black uppercase tracking-wider">
+                <span class="flex items-center gap-2">✅ Acesso Vitalício</span>
+                <span class="flex items-center gap-2">✅ Envio Imediato</span>
+                <span class="flex items-center gap-2">✅ Pagamento Seguro</span>
+            </div>
         </div>
     </section>
 
     <!-- Marquee -->
-    <div class="marquee-container">
-        <div class="marquee-content">
-            <span>🐾 PATRULHA CANINA EM AÇÃO</span>
-            <span>🐾 ENTREGA NO E-MAIL</span>
-            <span>🐾 ACESSO VITALÍCIO</span>
-            <span>🐾 BRINQUE SEM TELAS</span>
-            <span>🐾 PATRULHA CANINA EM AÇÃO</span>
-            <span>🐾 ENTREGA NO E-MAIL</span>
-            <span>🐾 ACESSO VITALÍCIO</span>
-            <span>🐾 BRINQUE SEM TELAS</span>
+    <div class="bg-yellow-400 py-5 overflow-hidden border-y-4 border-yellow-500 relative z-20">
+        <div class="animate-marquee whitespace-nowrap">
+            <span class="text-yellow-950 font-black mx-12 text-sm md:text-xl flex items-center gap-4 uppercase tracking-tighter">
+                🐾 PATRULHA CANINA EM AÇÃO • ENTREGA NO E-MAIL • ACESSO VITALÍCIO • BRINQUE SEM TELAS • MATERIAL 100% DIGITAL • IMPRIMA QUANTAS VEZES QUISER • 🐾 PATRULHA CANINA EM AÇÃO • ENTREGA NO E-MAIL • ACESSO VITALÍCIO • BRINQUE SEM TELAS • MATERIAL 100% DIGITAL • IMPRIMA QUANTAS VEZES QUISER
+            </span>
+            <span class="text-yellow-950 font-black mx-12 text-sm md:text-xl flex items-center gap-4 uppercase tracking-tighter">
+                🐾 PATRULHA CANINA EM AÇÃO • ENTREGA NO E-MAIL • ACESSO VITALÍCIO • BRINQUE SEM TELAS • MATERIAL 100% DIGITAL • IMPRIMA QUANTAS VEZES QUISER • 🐾 PATRULHA CANINA EM AÇÃO • ENTREGA NO E-MAIL • ACESSO VITALÍCIO • BRINQUE SEM TELAS • MATERIAL 100% DIGITAL • IMPRIMA QUANTAS VEZES QUISER
+            </span>
         </div>
     </div>
 
-    <!-- Inventory / O que recebe -->
-    <section class="inventory container">
-        <div class="section-title fade-in">
-            <h2>O que você recebe no Megapack</h2>
-            <p>Tudo o que sua criança precisa para criar sua própria Baía da Aventura</p>
-        </div>
-        <div class="grid grid-4 fade-in">
-            <div class="card">
-                <span class="card-icon">🚓</span>
-                <h3>Chase e Viaturas</h3>
-                <p>Moldes detalhados do líder e seu carro de polícia.</p>
-            </div>
-            <div class="card">
-                <span class="card-icon">🚒</span>
-                <h3>Marshall e Bombeiros</h3>
-                <p>O dálmata favorito e seu caminhão de resgate.</p>
-            </div>
-            <div class="card">
-                <span class="card-icon">🚁</span>
-                <h3>Skye e Helicópteros</h3>
-                <p>Pronta para voar com moldes da Skye.</p>
-            </div>
-            <div class="card">
-                <span class="card-icon">🗼</span>
-                <h3>Torre de Vigilância</h3>
-                <p>O QG completo para horas de diversão.</p>
+    <!-- O QUE VOCE RECEBE -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-5xl font-black mb-16 text-slate-950 uppercase tracking-tighter">O que tem no seu Megapack?</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-slate-50 p-10 rounded-[2.5rem] border-2 border-slate-100 shadow-sm hover:border-blue-400 hover:shadow-xl transition-all group">
+                    <span class="text-7xl mb-6 block drop-shadow-lg group-hover:scale-110 transition-transform">🚓</span>
+                    <h3 class="text-2xl font-black mb-4 text-slate-950 uppercase">Chase & Viaturas</h3>
+                    <p class="text-slate-800 font-bold leading-relaxed">Moldes completos do líder e seu carro de polícia detalhado.</p>
+                </div>
+                <div class="bg-slate-50 p-10 rounded-[2.5rem] border-2 border-slate-100 shadow-sm hover:border-red-400 hover:shadow-xl transition-all group">
+                    <span class="text-7xl mb-6 block drop-shadow-lg group-hover:scale-110 transition-transform">🚒</span>
+                    <h3 class="text-2xl font-black mb-4 text-slate-950 uppercase">Marshall & Bombeiro</h3>
+                    <p class="text-slate-800 font-bold leading-relaxed">O dálmata herói e seu caminhão pronto para o resgate.</p>
+                </div>
+                <div class="bg-slate-50 p-10 rounded-[2.5rem] border-2 border-slate-100 shadow-sm hover:border-pink-400 hover:shadow-xl transition-all group">
+                    <span class="text-7xl mb-6 block drop-shadow-lg group-hover:scale-110 transition-transform">🚁</span>
+                    <h3 class="text-2xl font-black mb-4 text-slate-950 uppercase">Skye & Aéreo</h3>
+                    <p class="text-slate-800 font-bold leading-relaxed">Prepare-se para voar com a Skye e seu helicóptero rosa.</p>
+                </div>
+                <div class="bg-slate-50 p-10 rounded-[2.5rem] border-2 border-slate-100 shadow-sm hover:border-yellow-400 hover:shadow-xl transition-all group">
+                    <span class="text-7xl mb-6 block drop-shadow-lg group-hover:scale-110 transition-transform">🗼</span>
+                    <h3 class="text-2xl font-black mb-4 text-slate-950 uppercase">Torre de Vigilância</h3>
+                    <p class="text-slate-800 font-bold leading-relaxed">O QG da patrulha para você montar e decorar o quarto.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Galeria -->
-    <section class="gallery bg-white">
-        <div class="container">
-            <div class="section-title fade-in">
-                <h2>Exemplos dos Moldes da Patrulha</h2>
-                <p>Confira o que você vai poder imprimir agora mesmo</p>
-            </div>
-            <div class="grid grid-4 fade-in">
-                <div class="gallery-item"><img src="https://i.ibb.co/jCsjHWL/Chat-GPT-Image-18-de-dez-de-2025-17-59-28.png" alt="Exemplo 1"></div>
-                <div class="gallery-item"><img src="https://i.ibb.co/Fbb30WkS/Chat-GPT-Image-18-de-dez-de-2025-17-59-43.png" alt="Exemplo 2"></div>
-                <div class="gallery-item"><img src="https://i.ibb.co/0jCmFC2c/Chat-GPT-Image-18-de-dez-de-2025-17-59-40.png" alt="Exemplo 3"></div>
-                <div class="gallery-item"><img src="https://i.ibb.co/RTmBJrmM/Chat-GPT-Image-18-de-dez-de-2025-17-59-46.png" alt="Exemplo 4"></div>
+    <!-- EXEMPLOS -->
+    <section class="py-20 bg-slate-100">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-5xl font-black mb-4 text-slate-950 uppercase tracking-tighter">Exemplos Reais</h2>
+            <p class="text-slate-700 font-bold mb-16 max-w-2xl mx-auto">Confira a qualidade do material que você vai imprimir agora mesmo em casa.</p>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+                <div class="bg-white p-3 rounded-3xl shadow-lg border-4 border-white transform hover:-rotate-3 transition-all">
+                    <img src="https://i.ibb.co/jCsjHWL/Chat-GPT-Image-18-de-dez-de-2025-17-59-28.png" alt="Exemplo 1" class="w-full h-auto rounded-2xl object-cover aspect-square">
+                </div>
+                <div class="bg-white p-3 rounded-3xl shadow-lg border-4 border-white transform hover:rotate-3 transition-all">
+                    <img src="https://i.ibb.co/Fbb30WkS/Chat-GPT-Image-18-de-dez-de-2025-17-59-43.png" alt="Exemplo 2" class="w-full h-auto rounded-2xl object-cover aspect-square">
+                </div>
+                <div class="bg-white p-3 rounded-3xl shadow-lg border-4 border-white transform hover:-rotate-3 transition-all">
+                    <img src="https://i.ibb.co/0jCmFC2c/Chat-GPT-Image-18-de-dez-de-2025-17-59-40.png" alt="Exemplo 3" class="w-full h-auto rounded-2xl object-cover aspect-square">
+                </div>
+                <div class="bg-white p-3 rounded-3xl shadow-lg border-4 border-white transform hover:rotate-3 transition-all">
+                    <img src="https://i.ibb.co/RTmBJrmM/Chat-GPT-Image-18-de-dez-de-2025-17-59-46.png" alt="Exemplo 4" class="w-full h-auto rounded-2xl object-cover aspect-square">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Passos -->
-    <section class="how-to">
-        <div class="container">
-            <div class="section-title fade-in">
-                <h2 class="text-yellow">Como eu recebo meu material?</h2>
-                <p>Simples, rápido e divertido.</p>
-            </div>
-            <div class="steps-grid fade-in">
-                <div class="step-item"><span>1</span><p>Compre</p></div>
-                <div class="step-item"><span>2</span><p>E-mail</p></div>
-                <div class="step-item"><span>3</span><p>Baixe</p></div>
-                <div class="step-item"><span>4</span><p>Imprima</p></div>
-                <div class="step-item"><span>5</span><p>Recorte</p></div>
-                <div class="step-item"><span>6</span><p>Dobre</p></div>
-                <div class="step-item"><span>7</span><p>Cole</p></div>
-                <div class="step-item"><span>8</span><p>Brinque!</p></div>
+    <!-- COMO RECEBO -->
+    <section class="py-20 bg-blue-700 text-white text-center">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <h2 class="text-3xl md:text-5xl font-black mb-16 uppercase tracking-tighter">Como eu recebo meu material?</h2>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6">
+                <div class="bg-white/10 backdrop-blur-md px-6 py-4 rounded-[2rem] border border-white/20 flex items-center gap-4 shadow-xl">
+                    <span class="bg-yellow-400 text-yellow-950 w-10 h-10 rounded-full flex items-center justify-center font-black shrink-0 border-2 border-white shadow-md">1</span>
+                    <p class="font-black uppercase tracking-tight text-sm md:text-base">Compre Agora</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md px-6 py-4 rounded-[2rem] border border-white/20 flex items-center gap-4 shadow-xl">
+                    <span class="bg-yellow-400 text-yellow-950 w-10 h-10 rounded-full flex items-center justify-center font-black shrink-0 border-2 border-white shadow-md">2</span>
+                    <p class="font-black uppercase tracking-tight text-sm md:text-base">Acesse E-mail</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md px-6 py-4 rounded-[2rem] border border-white/20 flex items-center gap-4 shadow-xl">
+                    <span class="bg-yellow-400 text-yellow-950 w-10 h-10 rounded-full flex items-center justify-center font-black shrink-0 border-2 border-white shadow-md">3</span>
+                    <p class="font-black uppercase tracking-tight text-sm md:text-base">Imprima e Brinque!</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Ofertas -->
-    <section id="ofertas" class="pricing container">
-        <div class="section-title fade-in">
-            <h2>Escolha o seu Plano</h2>
-            <p>Acesso vitalício para garantir o entretenimento offline.</p>
-        </div>
-        <div class="pricing-grid fade-in">
-            <!-- Plano 17 -->
-            <div class="pricing-card">
-                <h3>Pacote Básico</h3>
-                <ul>
-                    <li>✓ Todos os Moldes Patrulha</li>
-                    <li>✓ Entrega Imediata</li>
-                    <li>✓ Garantia 30 dias</li>
-                    <li class="disabled">✕ Sem Atualizações</li>
-                </ul>
-                <div class="price-box">
-                    <span class="old-price">R$ 47</span>
-                    <span class="new-price">R$ 17,00</span>
-                </div>
-                <a href="https://pay.lowify.com.br/checkout?product_id=qvCjQ1" class="btn-buy-secondary">Quero o Pacote Básico</a>
+    <!-- OFERTAS -->
+    <section id="ofertas" class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-6xl font-black mb-6 text-slate-950 uppercase tracking-tighter">Escolha o seu Plano</h2>
+                <p class="text-slate-800 font-black text-xl md:text-2xl">Garanta o entretenimento do seu filho com preço de Black Friday!</p>
             </div>
-
-            <!-- Plano 27 -->
-            <div class="pricing-card featured">
-                <div class="badge">MAIS COMPLETO</div>
-                <h3>Pacote Premium</h3>
-                <ul>
-                    <li>✓ Todos os Moldes Patrulha</li>
-                    <li>✓ Atualizações Mensais</li>
-                    <li>✓ Suporte WhatsApp</li>
-                    <li>✓ Acesso Vitalício</li>
-                    <li>✓ Garantia 30 dias</li>
-                </ul>
-                <div class="price-box">
-                    <span class="old-price">R$ 97</span>
-                    <span class="new-price premium">R$ 27,00</span>
+            
+            <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <!-- Pacote Básico -->
+                <div class="bg-slate-50 p-10 md:p-14 rounded-[3rem] border-4 border-slate-200 shadow-2xl flex flex-col justify-between hover:border-slate-300 transition-all">
+                    <div>
+                        <h3 class="text-3xl font-black mb-10 text-slate-950 border-b-4 border-slate-200 pb-6 uppercase tracking-tight">PACOTE BÁSICO</h3>
+                        <ul class="space-y-6 mb-12 text-slate-900 font-black text-lg">
+                            <li class="flex items-start gap-4">
+                                <span class="text-green-600 font-black">✅</span> 
+                                <span>Todos os Moldes Principais</span>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="text-green-600 font-black">✅</span> 
+                                <span>Entrega Instantânea</span>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="text-green-600 font-black">✅</span> 
+                                <span>Certificado de Acesso</span>
+                            </li>
+                            <li class="flex items-start gap-4 text-slate-400 line-through decoration-red-400/50">
+                                <span>✕</span> 
+                                <span>Sem Atualizações Mensais</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="text-center">
+                        <div class="mb-8">
+                            <span class="line-through text-slate-400 text-xl block mb-2 font-black uppercase tracking-widest">DE R$ 47</span>
+                            <div class="text-7xl font-black text-slate-950 tracking-tighter drop-shadow-sm">R$ 17,00</div>
+                        </div>
+                        <a href="https://pay.lowify.com.br/checkout?product_id=qvCjQ1" class="block w-full bg-slate-950 text-white py-6 md:py-8 rounded-3xl font-black text-2xl hover:bg-slate-800 transition-all btn-shadow active:translate-y-[4px] active:shadow-none uppercase tracking-tight">COMPRAR BÁSICO</a>
+                    </div>
                 </div>
-                <a href="https://pay.lowify.com.br/checkout?product_id=s7OPrg" class="btn-buy-primary">QUERO O PACOTE COMPLETO</a>
+
+                <!-- Pacote Premium -->
+                <div class="bg-blue-600 p-10 md:p-14 rounded-[3.5rem] flex flex-col justify-between relative shadow-[0_40px_100px_-20px_rgba(37,99,235,0.4)] scale-105 border-[8px] border-blue-400 border-opacity-50">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-400 text-yellow-950 font-black px-10 py-3 rounded-full text-lg uppercase border-4 border-white shadow-2xl whitespace-nowrap z-30 animate-pulse tracking-widest">⭐ MAIS VENDIDO ⭐</div>
+                    
+                    <div>
+                        <h3 class="text-3xl font-black mb-10 text-white border-b-4 border-blue-500 pb-6 uppercase tracking-tight">PACOTE PREMIUM</h3>
+                        <ul class="space-y-6 mb-12 text-white font-black text-lg">
+                            <li class="flex items-start gap-4">
+                                <span class="text-yellow-400 font-black">⭐</span> 
+                                <span>Acesso a Todos os Moldes Atuais</span>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="text-yellow-400 font-black">⭐</span> 
+                                <span class="bg-white/10 px-2 rounded">Moldes Novos TODO MÊS</span>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="text-yellow-400 font-black">⭐</span> 
+                                <span>Suporte VIP WhatsApp</span>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="text-yellow-400 font-black">⭐</span> 
+                                <span>Acesso Vitalício Completo</span>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="text-yellow-400 font-black">⭐</span> 
+                                <span>Pack de Bônus Exclusivos</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="text-center">
+                        <div class="mb-8">
+                            <span class="line-through text-blue-300 text-xl block mb-2 font-black uppercase tracking-widest">DE R$ 97</span>
+                            <div class="text-8xl font-black text-white tracking-tighter drop-shadow-xl">R$ 27,00</div>
+                        </div>
+                        <a href="https://pay.lowify.com.br/checkout?product_id=s7OPrg" class="block w-full bg-yellow-400 text-blue-950 py-8 md:py-10 rounded-3xl font-black text-3xl hover:bg-yellow-300 transition-all shadow-[0_12px_0_0_#a16207] active:translate-y-[6px] active:shadow-none uppercase tracking-tight">QUERO O COMPLETO</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Garantia -->
-    <section class="guarantee container">
-        <div class="guarantee-box fade-in">
-            <div class="guarantee-badge">
-                <span>30</span>
-                <p>DIAS DE GARANTIA</p>
-            </div>
-            <div class="guarantee-text">
-                <h3>Sua compra 100% Segura!</h3>
-                <p>Se em 30 dias você não ficar satisfeito com a qualidade dos moldes, devolvemos todo o seu dinheiro. Teste sem riscos!</p>
+    <!-- GARANTIA -->
+    <section class="py-20 bg-slate-50 border-y border-slate-200">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="bg-white p-10 md:p-16 rounded-[3rem] shadow-2xl flex flex-col md:flex-row items-center gap-12 border-4 border-white relative overflow-hidden">
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-yellow-400/10 rounded-full blur-3xl"></div>
+                <div class="bg-yellow-400 p-8 rounded-full flex flex-col items-center justify-center w-48 h-48 md:w-60 md:h-60 shrink-0 border-8 border-yellow-100 shadow-2xl group hover:rotate-6 transition-transform duration-500">
+                    <span class="text-6xl md:text-8xl font-black text-yellow-950 leading-none tracking-tighter">30</span>
+                    <span class="text-xs md:text-sm font-black text-yellow-900 uppercase text-center mt-2 leading-tight">DIAS DE<br>GARANTIA</span>
+                </div>
+                <div class="text-center md:text-left relative z-10">
+                    <h3 class="text-3xl md:text-4xl font-black mb-6 flex flex-col md:flex-row items-center gap-4 text-slate-950 uppercase tracking-tighter">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="text-green-600 w-12 h-12 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        Segurança Total!
+                    </h3>
+                    <p class="text-slate-800 leading-relaxed font-black text-base md:text-lg">
+                        Se em 30 dias você não ficar impressionado com a qualidade do material, devolvemos todo o seu dinheiro sem perguntas. Brincadeira sem risco para você!
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Testemunhos -->
-    <section class="testimonials bg-white">
-        <div class="container">
-            <div class="section-title fade-in">
-                <h2>O que as famílias dizem</h2>
-            </div>
-            <div class="grid grid-4 fade-in">
-                <div class="testimonial-card">
-                    <p>"Meu filho amou montar o Chase! Entrega imediata."</p>
-                    <strong>- Ana Paula</strong>
+    <!-- DEPOIMENTOS -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-black mb-16 text-slate-950 uppercase tracking-tighter">Quem comprou amou!</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
+                <div class="bg-slate-50 p-8 rounded-[2.5rem] border-2 border-slate-100 shadow-lg relative">
+                    <div class="flex text-yellow-500 mb-6 gap-1">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-slate-950 font-black italic mb-8 leading-snug">"O melhor investimento que fiz esse mês. Meu filho esqueceu o celular e passamos o domingo montando a Baía da Aventura."</p>
+                    <div class="flex items-center gap-3 mt-auto">
+                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-sm uppercase">A</div>
+                        <p class="font-black text-slate-950 uppercase text-xs">Ana Paula R.</p>
+                    </div>
                 </div>
-                <div class="testimonial-card">
-                    <p>"Material excelente, fácil de imprimir. Recomendo!"</p>
-                    <strong>- Marcos L.</strong>
+                <div class="bg-slate-50 p-8 rounded-[2.5rem] border-2 border-slate-100 shadow-lg relative">
+                    <div class="flex text-yellow-500 mb-6 gap-1">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-slate-950 font-black italic mb-8 leading-snug">"Material impecável. Imprimi em papel 180g e os bonecos ficaram perfeitos, bem firmes. As crianças amaram!"</p>
+                    <div class="flex items-center gap-3 mt-auto">
+                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-sm uppercase">M</div>
+                        <p class="font-black text-slate-950 uppercase text-xs">Mariana S.</p>
+                    </div>
                 </div>
-                <div class="testimonial-card">
-                    <p>"Ficamos horas brincando longe do tablet."</p>
-                    <strong>- Clara M.</strong>
+                <div class="bg-slate-50 p-8 rounded-[2.5rem] border-2 border-slate-100 shadow-lg relative">
+                    <div class="flex text-yellow-500 mb-6 gap-1">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-slate-950 font-black italic mb-8 leading-snug">"Ficamos impressionadas com a variedade. Tem até os cenários e os emblemas. Melhor custo-benefício disparado!"</p>
+                    <div class="flex items-center gap-3 mt-auto">
+                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-sm uppercase">C</div>
+                        <p class="font-black text-slate-950 uppercase text-xs">Clara M.</p>
+                    </div>
                 </div>
-                <div class="testimonial-card">
-                    <p>"Perfeito para as férias. Crianças entretidas."</p>
-                    <strong>- Mariana S.</strong>
+                <div class="bg-slate-50 p-8 rounded-[2.5rem] border-2 border-slate-100 shadow-lg relative">
+                    <div class="flex text-yellow-500 mb-6 gap-1">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-slate-950 font-black italic mb-8 leading-snug">"Entrega vapt-vupt. Paguei no Pix e em 2 minutos o material estava no meu e-mail. Valeu cada centavo."</p>
+                    <div class="flex items-center gap-3 mt-auto">
+                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-sm uppercase">B</div>
+                        <p class="font-black text-slate-950 uppercase text-xs">Beatriz L.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FAQ -->
-    <section class="faq container">
-        <div class="section-title fade-in">
-            <h2>Perguntas Frequentes</h2>
-        </div>
-        <div class="faq-list fade-in">
-            <div class="faq-item">
-                <button class="faq-question">Como recebo os moldes? <span>+</span></button>
-                <div class="faq-answer">O acesso é imediato! Você recebe um link no seu e-mail logo após a confirmação do pagamento.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">É um produto físico? <span>+</span></button>
-                <div class="faq-answer">Não, é 100% digital em PDF. Você imprime em casa ou em uma gráfica.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">Qual papel usar? <span>+</span></button>
-                <div class="faq-answer">Funciona em papel comum, mas recomendamos gramatura 180g (tipo cartolina) para maior durabilidade.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">O acesso é vitalício? <span>+</span></button>
-                <div class="faq-answer">Sim! Uma vez comprado, o material é seu para sempre.</div>
+    <section class="py-24 bg-slate-100">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-4xl md:text-5xl font-black text-center mb-16 text-slate-950 uppercase tracking-tighter">Dúvidas Frequentes</h2>
+            <div class="bg-white p-8 md:p-12 rounded-[3rem] shadow-2xl border-4 border-white space-y-6">
+                <div class="faq-item border-b-2 border-slate-50 pb-6 cursor-pointer group" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center font-black text-slate-950 text-xl tracking-tight">
+                        <span>Como eu recebo os moldes?</span>
+                        <span class="faq-icon transition-transform bg-blue-50 p-2 rounded-full text-blue-600">▼</span>
+                    </div>
+                    <div class="faq-answer text-slate-700 font-bold leading-relaxed">
+                        O acesso é 100% imediato! Após a confirmação do pagamento, você recebe automaticamente um link exclusivo no seu e-mail para baixar todos os arquivos em PDF de alta qualidade.
+                    </div>
+                </div>
+                <div class="faq-item border-b-2 border-slate-50 pb-6 cursor-pointer group" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center font-black text-slate-950 text-xl tracking-tight">
+                        <span>É um produto enviado pelo correio?</span>
+                        <span class="faq-icon transition-transform bg-blue-50 p-2 rounded-full text-blue-600">▼</span>
+                    </div>
+                    <div class="faq-answer text-slate-700 font-bold leading-relaxed">
+                        Não. Trata-se de um produto 100% DIGITAL. Isso permite que você receba o material instantaneamente e possa imprimir quantas vezes quiser, além de mantermos o preço extremamente baixo.
+                    </div>
+                </div>
+                <div class="faq-item border-b-2 border-slate-50 pb-6 cursor-pointer group" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center font-black text-slate-950 text-xl tracking-tight">
+                        <span>Qual papel é recomendado usar?</span>
+                        <span class="faq-icon transition-transform bg-blue-50 p-2 rounded-full text-blue-600">▼</span>
+                    </div>
+                    <div class="faq-answer text-slate-700 font-bold leading-relaxed">
+                        Você pode imprimir em papel sulfite comum (75g), mas para brinquedos mais resistentes e duráveis, recomendamos usar papel de 180g (tipo Cartolina ou Offset).
+                    </div>
+                </div>
+                <div class="faq-item cursor-pointer group" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center font-black text-slate-950 text-xl tracking-tight">
+                        <span>O acesso tem prazo de validade?</span>
+                        <span class="faq-icon transition-transform bg-blue-50 p-2 rounded-full text-blue-600">▼</span>
+                    </div>
+                    <div class="faq-answer text-slate-700 font-bold leading-relaxed">
+                        Não! O seu acesso é VITALÍCIO. Uma vez comprado, o Megapack é seu para sempre. Você pode baixar e imprimir os moldes sempre que precisar.
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container text-center">
-            <div class="logo opacity-50">🐾 MegaMoldes Kids</div>
-            <p>&copy; 2025 MegaMoldes Kids. Todos os direitos reservados.</p>
-            <p class="disclaimer">Aviso: Artes inspiradas na Patrulha Canina. Marcas pertencem aos respectivos donos.</p>
+    <footer class="bg-slate-950 text-slate-400 py-20 text-center border-t border-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center gap-3 mb-10 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M11 22a2.48 2.48 0 0 1-2.5-2.5 2.47 2.47 0 0 1 1-2 2.47 2.47 0 0 1 1.5-3 2.47 2.47 0 0 1 1.5 3 2.47 2.47 0 0 1 1 2 2.48 2.48 0 0 1-2.5 2.5ZM4.5 15a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5Zm15 0a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5ZM7.5 7a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5Zm9 0a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5Z"/></svg>
+                <span class="font-black text-3xl tracking-tighter uppercase">MEGAMOLDES KIDS</span>
+            </div>
+            <p class="text-base font-black mb-8 uppercase tracking-widest text-slate-500 italic">Diversão Offline para Crianças de Todas as Idades</p>
+            <div class="max-w-3xl mx-auto space-y-6 opacity-30">
+                <p class="text-[10px] leading-relaxed font-black uppercase tracking-[0.2em]">
+                    AVISO LEGAL: ESTE PRODUTO NÃO POSSUI AFILIAÇÃO OFICIAL COM AS MARCAS SPIN MASTER OU NICKELODEON. TODAS AS ARTES SÃO CRIAÇÕES INSPIRADAS PARA FINS RECREATIVOS E EDUCATIVOS.
+                </p>
+                <div class="h-px bg-slate-800 w-full"></div>
+                <p class="text-[9px] font-bold uppercase">&copy; 2025 Megamoldes Kids • Todos os Direitos Reservados</p>
+            </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Data Atual Dinâmica
+        const dateEl = document.getElementById('current-date');
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        dateEl.textContent = new Date().toLocaleDateString('pt-BR', options).toUpperCase();
+
+        // Timer de Escassez
+        let time = 600; // 10 minutos
+        const timerEl = document.getElementById('countdown-timer');
+        setInterval(() => {
+            if (time <= 0) return;
+            time--;
+            const mins = Math.floor(time / 60);
+            const secs = time % 60;
+            timerEl.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }, 1000);
+
+        // Notificações de Venda (Somente Nomes Femininos)
+        const femaleNames = ['Ana Carolina', 'Mariana Oliveira', 'Clara Bittencourt', 'Beatriz Silva', 'Juliana Fernandes', 'Fernanda Mendes', 'Camila Souza', 'Letícia Santos', 'Amanda Rocha', 'Bruna Moreira', 'Patrícia Lima', 'Renata Costa', 'Daniela Nunes', 'Vivian Ribeiro'];
+        const notif = document.getElementById('notification');
+        const notifText = document.getElementById('notif-text');
+
+        function showNotif() {
+            const name = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+            notifText.textContent = `${name} acabou de comprar o Megapack! 🐾`;
+            notif.classList.remove('hidden-notif');
+            setTimeout(() => {
+                notif.classList.add('hidden-notif');
+            }, 5500);
+        }
+
+        // Loop de notificações (primeira após 3s, depois a cada 18s)
+        setTimeout(showNotif, 3000);
+        setInterval(showNotif, 22000);
+
+        // FAQ Toggle Logic
+        function toggleFaq(el) {
+            // Close other items if desired
+            const items = document.querySelectorAll('.faq-item');
+            items.forEach(item => {
+                if(item !== el) item.classList.remove('active');
+            });
+            el.classList.toggle('active');
+        }
+    </script>
 <script type="module" src="/index.tsx"></script>
 </body>
 </html>
