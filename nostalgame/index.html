@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Need for Speed: Most Wanted Mobile - R$ 17,90</title>
+    <meta name="description" content="Reviva a nostalgia das corridas urbanas no seu celular por apenas R$ 17,90. Entrega imediata e tutorial incluso.">
+    
+    <!-- Tailwind CSS para design moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+        }
+        .bg-carbon {
+            background-color: #0f172a;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .glow-orange {
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        #sticky-cta {
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        #sticky-cta.visible {
+            transform: translateY(0);
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="text-slate-100 antialiased overflow-x-hidden">
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-12 pb-16 md:pt-32 md:pb-24 bg-carbon overflow-hidden border-b border-slate-800">
+        <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-b md:bg-gradient-to-l from-orange-500/10 to-transparent pointer-events-none"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-16">
+                
+                <!-- Text Content -->
+                <div class="flex-1 text-center md:text-left order-2 md:order-1">
+                    <div class="inline-block px-4 py-1 rounded-full bg-orange-500/10 text-orange-500 text-xs md:text-sm font-bold mb-6 tracking-wider uppercase">
+                        🔥 Oferta de Lançamento
+                    </div>
+                    <h1 class="text-3xl md:text-6xl font-extrabold text-white leading-tight mb-6">
+                        Need for Speed: Most Wanted no seu celular por <span class="text-orange-500 whitespace-nowrap">R$ 17,90</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-400 mb-8 leading-relaxed max-w-2xl mx-auto md:mx-0">
+                        Reviva a nostalgia das corridas urbanas e perseguições policiais com instalação simples e entrega imediata no e-mail.
+                    </p>
+                    
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 text-left max-w-md mx-auto md:mx-0">
+                        <li class="flex items-center gap-3 text-slate-300 text-sm md:text-base">
+                            <span class="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 text-orange-500 flex items-center justify-center text-[10px]">✓</span>
+                            Compatível com Android e iOS
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-300 text-sm md:text-base">
+                            <span class="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 text-orange-500 flex items-center justify-center text-[10px]">✓</span>
+                            Instalação Rápida e Prática
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-300 text-sm md:text-base">
+                            <span class="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 text-orange-500 flex items-center justify-center text-[10px]">✓</span>
+                            Entrega Imediata no E-mail
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-300 text-sm md:text-base">
+                            <span class="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 text-orange-500 flex items-center justify-center text-[10px]">✓</span>
+                            Tutorial Passo a Passo
+                        </li>
+                    </ul>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
+                        <button onclick="handleCheckout()" class="w-full sm:w-auto px-10 py-5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-lg md:text-xl transition-all glow-orange transform hover:-translate-y-1 active:scale-95">
+                            Quero jogar agora
+                        </button>
+                        <p class="text-xs md:text-sm text-slate-500">
+                            ⚡ Acesso imediato após confirmação
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Hero Image -->
+                <div class="flex-1 w-full max-w-[400px] md:max-w-none order-1 md:order-2 mb-8 md:mb-0">
+                    <div class="relative group">
+                        <div class="absolute -inset-2 bg-orange-500/20 rounded-3xl blur-2xl group-hover:bg-orange-500/30 transition-all"></div>
+                        <div class="relative bg-slate-800 border border-slate-700 p-2 md:p-3 rounded-2xl md:rounded-3xl shadow-2xl rotate-1 md:rotate-2 transition-transform hover:rotate-0">
+                            <img 
+                                src="https://i.ibb.co/hF4HB3XV/Chat-GPT-Image-28-de-dez-de-2025-20-23-53.png" 
+                                alt="Need for Speed Most Wanted Mobile Gameplay" 
+                                class="rounded-xl md:rounded-2xl w-full h-auto object-cover shadow-inner"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section class="py-16 md:py-20 bg-slate-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Como funciona?</h2>
+                <p class="text-slate-400">Três passos simples para começar a correr.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+                <div class="bg-slate-800/40 border border-slate-800 p-8 rounded-2xl text-center">
+                    <div class="text-3xl mb-4 bg-slate-700/30 w-16 h-16 flex items-center justify-center rounded-2xl mx-auto border border-slate-700">🛒</div>
+                    <h3 class="text-lg font-bold mb-2">1. Comprar</h3>
+                    <p class="text-sm text-slate-400">Finalize seu pagamento seguro em menos de 1 minuto.</p>
+                </div>
+                <div class="bg-slate-800/40 border border-slate-800 p-8 rounded-2xl text-center">
+                    <div class="text-3xl mb-4 bg-slate-700/30 w-16 h-16 flex items-center justify-center rounded-2xl mx-auto border border-slate-700">📩</div>
+                    <h3 class="text-lg font-bold mb-2">2. Receber</h3>
+                    <p class="text-sm text-slate-400">O acesso chega na hora no seu e-mail cadastrado.</p>
+                </div>
+                <div class="bg-slate-800/40 border border-slate-800 p-8 rounded-2xl text-center">
+                    <div class="text-3xl mb-4 bg-slate-700/30 w-16 h-16 flex items-center justify-center rounded-2xl mx-auto border border-slate-700">🏎️</div>
+                    <h3 class="text-lg font-bold mb-2">3. Jogar</h3>
+                    <p class="text-sm text-slate-400">Siga o tutorial simples e divirta-se no seu celular!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O QUE VOCÊ RECEBE -->
+    <section class="py-16 md:py-20 bg-carbon">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="bg-slate-800/80 border border-slate-700 rounded-2xl md:rounded-3xl p-8 md:p-12 relative shadow-2xl">
+                <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">O que você recebe no seu e-mail</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-900/40 border border-slate-700/50">
+                        <span class="text-orange-500 font-bold text-xl">✓</span>
+                        <div>
+                            <h4 class="font-bold">O Jogo Completo</h4>
+                            <p class="text-xs text-slate-400">Versão otimizada para mobile.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-900/40 border border-slate-700/50">
+                        <span class="text-orange-500 font-bold text-xl">✓</span>
+                        <div>
+                            <h4 class="font-bold">Tutorial Passo a Passo</h4>
+                            <p class="text-xs text-slate-400">Guia ilustrado em português.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-900/40 border border-slate-700/50">
+                        <span class="text-orange-500 font-bold text-xl">✓</span>
+                        <div>
+                            <h4 class="font-bold">Arquivos Organizados</h4>
+                            <p class="text-xs text-slate-400">Tudo pronto para instalar.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-900/40 border border-slate-700/50">
+                        <span class="text-orange-500 font-bold text-xl">✓</span>
+                        <div>
+                            <h4 class="font-bold">Suporte Dedicado</h4>
+                            <p class="text-xs text-slate-400">Dúvidas? Estamos aqui para ajudar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="py-16 md:py-20 bg-slate-900">
+        <div class="container mx-auto px-6 max-w-2xl text-center">
+            <div class="text-5xl text-orange-500/30 mb-6 italic">"</div>
+            <p class="text-xl md:text-2xl font-medium text-slate-200 mb-8 italic">
+                "Reviver o Most Wanted no celular foi a melhor coisa. O jogo roda liso e as perseguições policiais são idênticas ao que eu jogava no console. Instalação rápida!"
+            </p>
+            <div class="flex items-center justify-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-orange-600 flex items-center justify-center font-bold text-white shadow-lg">R</div>
+                <div class="text-left">
+                    <p class="font-bold">Ricardo S.</p>
+                    <p class="text-slate-500 text-xs">Cliente Verificado ★★★★★</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 md:py-20 bg-slate-900 border-t border-slate-800">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-2xl md:text-3xl font-bold mb-12 text-center">Dúvidas Frequentes</h2>
+            <div id="faq-container" class="space-y-3">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item border border-slate-800 rounded-xl overflow-hidden bg-slate-800/20">
+                    <button class="faq-toggle w-full flex items-center justify-between p-5 text-left hover:bg-slate-800/40 transition-all font-semibold">
+                        <span>Funciona em quais aparelhos?</span>
+                        <span class="faq-icon transition-transform">▼</span>
+                    </button>
+                    <div class="faq-answer bg-slate-900/50 text-slate-400 text-sm border-t border-slate-800">
+                        <div class="p-5">O jogo é totalmente compatível com smartphones e tablets rodando Android e iOS. Testamos em diversas versões para garantir fluidez.</div>
+                    </div>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="faq-item border border-slate-800 rounded-xl overflow-hidden bg-slate-800/20">
+                    <button class="faq-toggle w-full flex items-center justify-between p-5 text-left hover:bg-slate-800/40 transition-all font-semibold">
+                        <span>Qual o tempo de entrega?</span>
+                        <span class="faq-icon transition-transform">▼</span>
+                    </button>
+                    <div class="faq-answer bg-slate-900/50 text-slate-400 text-sm border-t border-slate-800">
+                        <div class="p-5">A entrega é imediata! Assim que o seu pagamento for confirmado, o sistema envia automaticamente os dados de acesso para o seu e-mail.</div>
+                    </div>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="faq-item border border-slate-800 rounded-xl overflow-hidden bg-slate-800/20">
+                    <button class="faq-toggle w-full flex items-center justify-between p-5 text-left hover:bg-slate-800/40 transition-all font-semibold">
+                        <span>Como vou receber o jogo?</span>
+                        <span class="faq-icon transition-transform">▼</span>
+                    </button>
+                    <div class="faq-answer bg-slate-900/50 text-slate-400 text-sm border-t border-slate-800">
+                        <div class="p-5">Você receberá um e-mail contendo os arquivos organizados e um guia detalhado para realizar a instalação de forma simples.</div>
+                    </div>
+                </div>
+                <!-- FAQ Item 4 -->
+                <div class="faq-item border border-slate-800 rounded-xl overflow-hidden bg-slate-800/20">
+                    <button class="faq-toggle w-full flex items-center justify-between p-5 text-left hover:bg-slate-800/40 transition-all font-semibold">
+                        <span>É difícil de instalar?</span>
+                        <span class="faq-icon transition-transform">▼</span>
+                    </button>
+                    <div class="faq-answer bg-slate-900/50 text-slate-400 text-sm border-t border-slate-800">
+                        <div class="p-5">Não. Enviamos um tutorial passo a passo, ilustrado e em português, que torna a instalação rápida mesmo para iniciantes.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="py-20 bg-gradient-to-b from-slate-900 to-black text-center border-t border-slate-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-extrabold mb-6">Pronto para a fuga perfeita?</h2>
+            <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto">Garanta seu acesso agora por apenas R$ 17,90 (Pagamento Único).</p>
+            <button onclick="handleCheckout()" class="w-full sm:w-auto px-12 py-6 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-2xl text-xl md:text-2xl transition-all glow-orange transform hover:scale-105 active:scale-95">
+                QUERO JOGAR AGORA
+            </button>
+            <div class="mt-12 flex flex-wrap justify-center gap-8 opacity-40 grayscale text-[10px] font-bold uppercase tracking-widest">
+                <span>🔒 Compra Segura</span>
+                <span>📧 Entrega Instantânea</span>
+                <span>📱 Android & iOS</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 bg-black border-t border-slate-900 text-slate-600 text-[10px] md:text-xs">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center gap-6 mb-8 text-slate-400 font-bold uppercase">
+                <a href="#" class="hover:text-white">Termos</a>
+                <a href="#" class="hover:text-white">Privacidade</a>
+                <a href="mailto:suporte@exemplo.com" class="hover:text-white">Suporte</a>
+            </div>
+            <p class="max-w-3xl mx-auto leading-relaxed mb-6">
+                Need for Speed é uma marca comercial de seus respectivos proprietários. Esta página é um serviço de curadoria e fornecimento de tutoriais de instalação para uso pessoal. Não temos afiliação oficial com a Electronic Arts.
+            </p>
+            <p>© 2024 NFS Mobile Hub - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- STICKY MOBILE CTA -->
+    <div id="sticky-cta" class="fixed bottom-0 left-0 right-0 p-4 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 md:hidden z-50 flex items-center justify-between gap-4">
+        <div class="flex flex-col">
+            <p class="text-[10px] text-slate-400 font-bold uppercase leading-none mb-1">Oferta</p>
+            <p class="text-xl font-black text-orange-500">R$ 17,90</p>
+        </div>
+        <button onclick="handleCheckout()" class="flex-1 px-4 py-3 bg-orange-500 text-white font-black rounded-xl text-sm uppercase tracking-tighter">
+            COMPRAR AGORA
+        </button>
+    </div>
+
+    <script>
+        // CONFIGURAÇÕES
+        const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=I1FwAT";
+
+        // Ação de Checkout
+        function handleCheckout() {
+            console.log("cta_click");
+            window.open(CHECKOUT_URL, '_blank');
+        }
+
+        // Lógica do FAQ (Acordeão)
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Fecha todos antes de abrir o novo (opcional)
+                document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Visibilidade do Sticky CTA no Mobile
+        window.addEventListener('scroll', () => {
+            const sticky = document.getElementById('sticky-cta');
+            if (window.scrollY > 400) {
+                sticky.classList.add('visible');
+            } else {
+                sticky.classList.remove('visible');
+            }
+        });
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
