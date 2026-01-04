@@ -1,1347 +1,485 @@
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" style="scroll-behavior: smooth;">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App do Educador 360 - Mais de 20 Mil Atividades Para você usar!</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #0066ff;
-      --secondary: #3399ff;
-      --accent: #00ccff;
-      --purple: #8b5cf6;
-      --pink: #ec4899;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --dark: #0a0e1a;
-      --dark-blue: #1a1f3a;
-      --light-blue: #2d3561;
-      --neon: #00ffff;
-      --gradient-1: linear-gradient(135deg, #0066ff 0%, #8b5cf6 50%, #ec4899 100%);
-      --gradient-2: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%);
-      --text: #ffffff;
-      --text-light: #94a3b8;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.6;
-      color: var(--text);
-      background: var(--dark);
-      overflow-x: hidden;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    /* Timer no topo */
-    .timer {
-      background: linear-gradient(45deg, #ff0066, #ff6600);
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-weight: 700;
-      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-      box-shadow: 0 4px 20px rgba(255, 0, 102, 0.4);
-      animation: pulse 2s infinite;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-    }
-
-    /* Hero Section - Otimizado para primeira dobra */
-    .hero {
-      min-height: calc(100vh - 60px);
-      display: flex;
-      align-items: center;
-      background: var(--gradient-1);
-      position: relative;
-      overflow: hidden;
-      padding: 2rem 0;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-      opacity: 0.3;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      animation: fadeInUp 1s ease-out;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      margin-bottom: 1rem;
-      background: linear-gradient(45deg, #fff, #00ffff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      margin-bottom: 1.5rem;
-      color: rgba(255, 255, 255, 0.9);
-      font-weight: 500;
-    }
-
-    .hero-description {
-      font-size: clamp(0.9rem, 2vw, 1.1rem);
-      margin-bottom: 2rem;
-      color: rgba(255, 255, 255, 0.8);
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Video e botão na primeira dobra */
-    .hero-video-cta {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      align-items: center;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .video-container {
-      max-width: 300px;
-      margin: 0 auto;
-      position: relative;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 15px 40px rgba(0, 102, 255, 0.3);
-      border: 2px solid var(--neon);
-    }
-
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      height: 400px;
-      background: var(--dark);
-    }
-
-    .video-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-block;
-      padding: 1.25rem 2.5rem;
-      background: var(--gradient-1);
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-      border-radius: 50px;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
-      border: none;
-      cursor: pointer;
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn:hover::before {
-      left: 100%;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(0, 102, 255, 0.6);
-    }
-
-    .btn-cta {
-      font-size: 1.25rem;
-      padding: 1.5rem 3rem;
-      margin: 1rem;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
-
-    @keyframes glow {
-      from { box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4); }
-      to { box-shadow: 0 10px 30px rgba(0, 102, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.3); }
-    }
-
-    /* Sections */
-    .section {
-      padding: 5rem 0;
-      background: var(--dark);
-    }
-
-    .section:nth-child(even) {
-      background: var(--dark-blue);
-    }
-
-    .section h2 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      margin-bottom: 3rem;
-      text-align: center;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Arguments Section */
-    .arguments {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 3rem 0;
-    }
-
-    .argument-card {
-      background: var(--gradient-2);
-      padding: 2.5rem 2rem;
-      border-radius: 20px;
-      border: 1px solid rgba(0, 255, 255, 0.2);
-      transition: all 0.3s ease;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .argument-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--gradient-1);
-    }
-
-    .argument-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--neon);
-      box-shadow: 0 20px 60px rgba(0, 102, 255, 0.3);
-    }
-
-    .argument-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .argument-card h3 {
-      color: var(--neon);
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-
-    .argument-card p {
-      color: var(--text-light);
-      line-height: 1.7;
-    }
-
-    /* Benefits vs Problems */
-    .comparison {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      margin: 4rem 0;
-    }
-
-    .comparison-column {
-      padding: 2rem;
-      border-radius: 20px;
-      border: 2px solid;
-    }
-
-    .benefits {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1));
-      border-color: var(--success);
-    }
-
-    .problems {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
-      border-color: var(--warning);
-    }
-
-    .comparison h3 {
-      font-size: 1.75rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      font-weight: 700;
-    }
-
-    .benefits h3 { color: var(--success); }
-    .problems h3 { color: var(--warning); }
-
-    .comparison-item {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .comparison-icon {
-      font-size: 1.5rem;
-      margin-right: 1rem;
-      flex-shrink: 0;
-    }
-
-    .benefits .comparison-icon { color: var(--success); }
-    .problems .comparison-icon { color: var(--warning); }
-
-    /* Plans */
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 3rem;
-      margin: 4rem 0;
-    }
-
-    .plan {
-      background: var(--gradient-2);
-      padding: 3rem 2.5rem;
-      border-radius: 25px;
-      border: 2px solid rgba(0, 255, 255, 0.3);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    .plan.featured {
-      border-color: var(--neon);
-      transform: scale(1.05);
-      background: linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(139, 92, 246, 0.2));
-    }
-
-    .plan.featured::before {
-      content: '🔥 MAIS VENDIDO';
-      position: absolute;
-      top: 20px;
-      right: -40px;
-      background: var(--gradient-1);
-      color: white;
-      padding: 0.5rem 3rem;
-      font-size: 0.8rem;
-      font-weight: 700;
-      transform: rotate(45deg);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .plan:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 25px 70px rgba(0, 102, 255, 0.4);
-    }
-
-    .plan.featured:hover {
-      transform: scale(1.05) translateY(-10px);
-    }
-
-    .plan h3 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      color: var(--neon);
-      font-weight: 800;
-    }
-
-    .plan .price {
-      font-size: 3rem;
-      font-weight: 900;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin: 1.5rem 0;
-    }
-
-    .plan .old-price {
-      text-decoration: line-through;
-      color: var(--text-light);
-      font-size: 1.25rem;
-      margin-right: 1rem;
-    }
-
-    /* FAQ */
-    .faq {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .faq-item {
-      background: var(--gradient-2);
-      border: 1px solid rgba(0, 255, 255, 0.2);
-      border-radius: 15px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .faq-item:hover {
-      border-color: var(--neon);
-      transform: translateY(-2px);
-    }
-
-    .faq-question {
-      padding: 1.5rem 2rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--text);
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-    }
-
-    .faq-question:hover {
-      background: rgba(0, 255, 255, 0.1);
-    }
-
-    .faq-icon {
-      font-size: 1.5rem;
-      color: var(--neon);
-      transition: transform 0.3s ease;
-    }
-
-    .faq-item.active .faq-icon {
-      transform: rotate(45deg);
-    }
-
-    .faq-answer {
-      padding: 0 2rem;
-      max-height: 0;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      color: var(--text-light);
-      line-height: 1.7;
-    }
-
-    .faq-item.active .faq-answer {
-      padding: 0 2rem 1.5rem;
-      max-height: 500px;
-    }
-
-    /* Guarantee */
-    .guarantee {
-      background: var(--gradient-1);
-      color: white;
-      padding: 4rem 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .guarantee::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
-      opacity: 0.3;
-    }
-
-    .guarantee-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Footer */
-    .footer {
-      background: var(--dark);
-      color: var(--text-light);
-      padding: 3rem 0;
-      text-align: center;
-      border-top: 1px solid rgba(0, 255, 255, 0.2);
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .fade-in {
-      animation: fadeInUp 0.8s ease-out;
-    }
-
-    /* CTA Buttons Floating */
-    .floating-cta {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-      animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
-    }
-
-    /* Mobile optimizations */
-    @media (max-width: 768px) {
-      .container { padding: 0 1rem; }
-      .section { padding: 3rem 0; }
-      .hero { min-height: calc(100vh - 50px); padding: 1rem 0; }
-      .hero-content { gap: 1.5rem; }
-      .video-container { max-width: 280px; }
-      .video-wrapper { height: 350px; }
-      .comparison { grid-template-columns: 1fr; gap: 2rem; }
-      .plan.featured { transform: none; }
-      .plan.featured:hover { transform: translateY(-10px); }
-      .floating-cta { bottom: 10px; right: 10px; }
-      .btn-cta { font-size: 1.1rem; padding: 1.25rem 2rem; }
-      .timer { padding: 0.8rem; font-size: 0.9rem; }
-      .testimonials { grid-template-columns: 1fr; }
-      .benefits-grid { grid-template-columns: 1fr; }
-      .testimonial-card, .benefit-card { padding: 1.5rem; }
-    }
-
-    @media (min-width: 769px) {
-      .hero-video-cta {
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-      }
-      .video-container {
-        max-width: 350px;
-      }
-      .video-wrapper {
-        height: 500px;
-      }
-    }
-
-    /* Testimonials */
-    .testimonials {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 3rem 0;
-    }
-
-    .testimonial-card {
-      background: var(--gradient-2);
-      border: 1px solid rgba(0, 255, 255, 0.2);
-      border-radius: 20px;
-      padding: 2rem;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .testimonial-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--neon);
-      box-shadow: 0 15px 40px rgba(0, 102, 255, 0.3);
-    }
-
-    .testimonial-card::before {
-      content: '"';
-      position: absolute;
-      top: -10px;
-      left: 20px;
-      font-size: 4rem;
-      color: var(--primary);
-      font-family: serif;
-      font-weight: bold;
-    }
-
-    .testimonial-content {
-      margin-bottom: 1.5rem;
-      font-style: italic;
-      color: var(--text);
-      line-height: 1.6;
-      margin-top: 1rem;
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      border-top: 1px solid rgba(0, 255, 255, 0.2);
-      padding-top: 1rem;
-    }
-
-    .author-icon {
-      font-size: 2rem;
-      background: var(--gradient-1);
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .author-title {
-      color: var(--text-light);
-      font-size: 0.9rem;
-    }
-
-    /* Benefits Grid */
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin: 3rem 0;
-    }
-
-    .benefit-card {
-      background: var(--gradient-2);
-      padding: 2rem 1.5rem;
-      border-radius: 15px;
-      border: 1px solid rgba(0, 255, 255, 0.2);
-      transition: all 0.3s ease;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .benefit-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--gradient-1);
-    }
-
-    .benefit-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--neon);
-      box-shadow: 0 15px 35px rgba(0, 102, 255, 0.3);
-    }
-
-    .benefit-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      display: block;
-      background: var(--gradient-1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .benefit-card h3 {
-      color: var(--neon);
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-      font-weight: 700;
-    }
-
-    .benefit-card p {
-      color: var(--text-light);
-      line-height: 1.6;
-      font-size: 0.95rem;
-    }
-
-    /* Utility Classes */
-    .text-center { text-align: center; }
-    .mb-4 { margin-bottom: 2rem; }
-    .mb-6 { margin-bottom: 3rem; }
-    .glow-text {
-      text-shadow: 0 0 20px currentColor;
-    }
-
-    /* List Styles */
-    ul { list-style: none; padding-left: 0; }
-    ul li {
-      padding: 0.75rem 0;
-      position: relative;
-      padding-left: 2rem;
-      color: var(--text-light);
-    }
-    ul li::before {
-      content: '✓';
-      color: var(--success);
-      font-weight: bold;
-      font-size: 1.2rem;
-      position: absolute;
-      left: 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App do Educador 360 | 20.000 Atividades Prontas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* BASE STYLES & RESET */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #FFFFFF; 
+            color: #0F172A; 
+            line-height: 1.6; 
+            -webkit-font-smoothing: antialiased; 
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* COLOR VARIABLES */
+        :root {
+            --primary: #0F172A;
+            --secondary: #334155;
+            --accent: #16A34A;
+            --accent-hover: #22C55E;
+            --blue: #2563EB;
+            --light-bg: #F8FAFC;
+            --border: #E2E8F0;
+            --white: #FFFFFF;
+        }
+
+        /* UTILITIES */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 80px 0; }
+        .text-center { text-align: center; }
+        .rounded { border-radius: 16px; }
+        .shadow-premium { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02); }
+        
+        .btn { 
+            display: inline-block; 
+            padding: 18px 36px; 
+            font-weight: 900; 
+            text-decoration: none; 
+            border-radius: 12px; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; 
+            border: none; 
+            font-size: 1.2rem; 
+            width: 100%; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .btn-green { 
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover)); 
+            color: var(--white); 
+            box-shadow: 0 10px 20px rgba(22, 163, 74, 0.3);
+        }
+        .btn-green:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 15px 30px rgba(22, 163, 74, 0.4);
+        }
+        
+        /* TOP BAR */
+        .urgency-bar { 
+            background-color: #0F172A; 
+            color: var(--white); 
+            padding: 10px 0; 
+            text-align: center; 
+            font-size: 0.85rem; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            border-bottom: 3px solid var(--accent);
+            backdrop-filter: blur(10px);
+        }
+        .countdown { 
+            font-family: 'Orbitron', sans-serif; 
+            font-weight: 900; 
+            font-size: 1.4rem; 
+            display: block; 
+            color: var(--accent-hover);
+            text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+        }
+
+        /* HERO SECTION */
+        .hero { padding: 60px 0 80px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .hero h1 { 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem; 
+            font-weight: 900; 
+            line-height: 1.1; 
+            margin-bottom: 15px; 
+            color: var(--primary); 
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #0F172A, #2563EB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        .hero p.subheadline { font-size: 1.2rem; color: var(--secondary); margin-bottom: 30px; font-weight: 500; max-width: 800px; }
+        
+        .hero-bullets {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            text-align: left;
+            width: fit-content;
+        }
+        
+        /* SALES NOTIFICATION SIMULATOR */
+        .sales-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1100;
+            transform: translateY(150%);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--border);
+            max-width: 300px;
+        }
+        .sales-notification.active { transform: translateY(0); }
+        .sales-notification .avatar { width: 40px; height: 40px; border-radius: 50%; background: #E2E8F0; display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--blue); }
+        .sales-notification .content { font-size: 0.8rem; line-height: 1.3; }
+        .sales-notification b { color: var(--accent); }
+
+        /* VIDEO STYLES */
+        .video-highlight-box {
+            position: relative;
+            padding: 6px;
+            background: linear-gradient(135deg, #16A34A, #2563EB, #16A34A);
+            background-size: 200% 200%;
+            animation: gradientBorder 4s ease infinite;
+            border-radius: 28px;
+            width: 100%;
+            max-width: 380px;
+            margin: 30px 0;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .video-container { 
+            width: 100%; 
+            aspect-ratio: 9/16; 
+            background: #000; 
+            border-radius: 22px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .video-container iframe { width: 100%; height: 100%; border: none; }
+
+        /* FEATURES & PLANS */
+        .feature-card { background: var(--white); border: 1px solid var(--border); padding: 40px 30px; border-radius: 24px; transition: 0.3s; }
+        .plan-card { border: 1px solid var(--border); padding: 50px 35px; border-radius: 30px; background: white; transition: 0.4s; position: relative; }
+        .plan-card.featured { border: 2px solid var(--accent); transform: scale(1.03); z-index: 5; }
+        .plan-price { font-size: 3rem; font-weight: 900; color: var(--primary); letter-spacing: -2px; }
+
+        /* TESTIMONIALS */
+        .testimonials-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 40px; }
+        .testimonial-card { background: #F8FAFC; padding: 30px; border-radius: 20px; border: 1px solid var(--border); position: relative; text-align: left; }
+        .testimonial-card p { font-style: italic; color: var(--secondary); margin-bottom: 15px; font-size: 0.95rem; }
+        .testimonial-card b { color: var(--primary); display: block; font-size: 0.9rem; }
+        .stars { color: #FBBF24; margin-bottom: 10px; display: block; }
+
+        /* GUARANTEE */
+        .guarantee-section { background: white; border: 1px solid var(--border); padding: 40px; border-radius: 24px; margin: 40px auto; max-width: 800px; display: flex; align-items: center; gap: 30px; }
+        .guarantee-icon { font-size: 4rem; flex-shrink: 0; }
+
+        /* FAQ */
+        .faq-item { background: white; margin-bottom: 12px; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; }
+        .faq-question { width: 100%; padding: 22px; text-align: left; background: none; border: none; font-weight: 800; font-size: 1.05rem; display: flex; justify-content: space-between; cursor: pointer; color: var(--primary); }
+        .faq-answer { max-height: 0; padding: 0 22px; overflow: hidden; transition: 0.3s; }
+        .faq-item.active .faq-answer { max-height: 500px; padding-bottom: 22px; }
+
+        /* RESPONSIVE */
+        @media (min-width: 768px) {
+            .hero h1 { font-size: 4rem; }
+            .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+            .plans-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 900px; margin: 40px auto; }
+            .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 767px) {
+            .hero h1 { font-size: 2.2rem; }
+            .sticky-cta { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px; display: block; z-index: 1000; box-shadow: 0 -10px 20px rgba(0,0,0,0.05); }
+            body { padding-bottom: 80px; }
+            .sales-notification { left: 10px; bottom: 80px; width: calc(100% - 20px); }
+            .guarantee-section { flex-direction: column; text-align: center; padding: 30px 20px; }
+        }
+    </style>
+<link rel="stylesheet" href="/index.css">
 </head>
 <body>
-  <div class="timer" id="timer">
-    🔥 OFERTA EXCLUSIVA TERMINA EM: <span id="countdown">14:42</span> - <span id="current-date"></span>
-  </div>
 
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div>
-          <h1>📚 20 mil atividades prontas por R$10.
-</h1>
-          <div class="hero-subtitle">App Educador 360*</div>
-          <div class="hero-description">
-            O maior acervo pedagógico digital, Se você ainda cria atividades em cima da hora, isso aqui vai mudar seu ano.
-          </div>
+    <!-- URGENCE BAR -->
+    <div class="urgency-bar">
+        <div class="container">
+            ⚡ OFERTA DE LANÇAMENTO — ACESSO IMEDIATO
+            <span class="countdown" id="timer">00:00:00</span>
         </div>
-        
-        <div class="hero-video-cta">
-          <div class="video-container">
-            <div class="video-wrapper">
-              <iframe 
-                src="https://www.youtube.com/embed/gNodsZEk4qU" 
-                title="App do Educador - Como Funciona"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-              </iframe>
-            </div>
-          </div>
-          <div>
-            <a href="#planos" class="btn btn-cta scroll-to-plans">
-              🚀 QUERO MEU ACESSO AGORA POR APENAS R$10
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
 
-  <section class="section">
-    <div class="container">
-      <h2>🎯 Por Que Escolher o App do Educador 360?</h2>
-      <div class="arguments">
-        <div class="argument-card">
-          <span class="argument-icon">⏰</span>
-          <h3>Economize Horas Preciosas</h3>
-          <p>Pare de gastar 3-5 horas criando uma única atividade. Com nosso app, você tem centenas prontas em segundos!</p>
-        </div>
+    <!-- HERO SECTION -->
+    <section class="section-padding hero container">
+        <h1>20.000 Atividades Prontas BNCC</h1>
+        <p class="subheadline">Volta às aulas 2026 sem correria. Recursos organizados dentro do App do Educador 360.</p>
         
-        <div class="argument-card">
-          <span class="argument-icon">💎</span>
-          <h3>Qualidade Profissional</h3>
-          <p>Todas as atividades são criadas por especialistas em educação e seguem as diretrizes da BNCC.</p>
+        <div class="hero-bullets">
+            <div style="display: flex; align-items: center; margin-bottom: 12px; font-weight: 700; color: #1e293b;">✅ Economize horas de planejamento por semana.</div>
+            <div style="display: flex; align-items: center; margin-bottom: 12px; font-weight: 700; color: #1e293b;">✅ Português, Matemática, Artes e +</div>
+            <div style="display: flex; align-items: center; margin-bottom: 12px; font-weight: 700; color: #1e293b;">✅ Conteúdos alinhados à BNCC</div>
         </div>
-        
-        <div class="argument-card">
-          <span class="argument-icon">📱</span>
-          <h3>Acesso Instantâneo</h3>
-          <p>Baixe, imprima e use na mesma hora. Funciona em qualquer dispositivo, online ou offline.</p>
+
+        <!-- VÍDEO INTEGRADO -->
+        <div class="video-highlight-box">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/gNodsZEk4qU" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
         </div>
-        
-        <div class="argument-card">
-          <span class="argument-icon">🔄</span>
-          <h3>Sempre Atualizado</h3>
-          <p>Receba novas atividades mensalmente. Seu acervo cresce constantemente sem custo adicional.</p>
+
+        <div style="width: 100%; max-width: 500px; margin-top: 20px; display: flex; flex-direction: column; align-items: center;">
+            <a href="#planos" class="btn btn-green btn-scroll">QUERO MEU ACESSO AGORA</a>
+            <!-- TRUST IMAGE -->
+            <img src="https://i.ibb.co/jPCrFjj2/Chat-GPT-Image-4-de-jan-de-2026-08-21-21.png" alt="Garantia e Segurança" style="width: 100%; max-width: 400px; margin-top: 20px; border-radius: 12px;">
         </div>
-        
-        <div class="argument-card">
-          <span class="argument-icon">👨‍🏫</span>
-          <h3>Para Todos os Níveis</h3>
-          <p>Da educação infantil ao ensino fundamental. Todas as disciplinas cobertas.</p>
+    </section>
+
+    <!-- WHAT YOU GET -->
+    <section class="section-padding" style="background: #f8fafc;">
+        <div class="container text-center">
+            <h2 style="font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; margin-bottom: 50px;">O QUE VOCÊ RECEBE HOJE</h2>
+            <div class="grid-3">
+                <div class="feature-card shadow-premium">
+                    <h3 style="color: var(--blue); font-weight: 900; margin-bottom: 15px;">20.000 Atividades</h3>
+                    <p style="font-size: 0.95rem; color: var(--secondary); font-weight: 500;">Materiais completos do 1º ao 5º ano, organizados e prontos para imprimir.</p>
+                </div>
+                <div class="feature-card shadow-premium">
+                    <h3 style="color: var(--blue); font-weight: 900; margin-bottom: 15px;">Foco na BNCC</h3>
+                    <p style="font-size: 0.95rem; color: var(--secondary); font-weight: 500;">Todas as habilidades mapeadas com códigos oficiais para seu diário de classe.</p>
+                </div>
+                <div class="feature-card shadow-premium">
+                    <h3 style="color: var(--blue); font-weight: 900; margin-bottom: 15px;">Acesso no App</h3>
+                    <p style="font-size: 0.95rem; color: var(--secondary); font-weight: 500;">Use no celular, tablet ou PC. Seus materiais sempre à mão na sala de aula.</p>
+                </div>
+            </div>
         </div>
-        
-        <div class="argument-card">
-          <span class="argument-icon">💰</span>
-          <h3>Investimento Inteligente</h3>
-          <p>Por menos que o preço de um livro didático, tenha um acervo completo para toda sua carreira.</p>
+    </section>
+
+    <!-- GUARANTEE SECTION -->
+    <section class="container section-padding">
+        <div class="guarantee-section shadow-premium">
+            <div class="guarantee-icon">🛡️</div>
+            <div>
+                <h3 style="font-weight: 900; font-size: 1.5rem; margin-bottom: 10px;">Garantia Incondicional de 30 Dias</h3>
+                <p style="color: var(--secondary); font-weight: 500;">Teste todo o material por 30 dias. Se por qualquer motivo você não se sentir satisfeito, devolvemos 100% do seu investimento. Sem perguntas.</p>
+            </div>
         </div>
-      </div>
-      
-      <div class="text-center mb-6">
-        <a href="#planos" class="btn btn-cta scroll-to-plans">
-          💎 QUERO TRANSFORMAR MINHAS AULAS
-        </a>
-      </div>
+        <div class="text-center" style="margin-top: 30px;">
+            <a href="#planos" class="btn btn-green btn-scroll" style="max-width: 500px;">LIBERAR MEU ACESSO AGORA</a>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS (DEPOIMENTOS) -->
+    <section class="section-padding" style="background: white;">
+        <div class="container text-center">
+            <h2 style="font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; margin-bottom: 10px;">DEPOIMENTOS REAIS</h2>
+            <p style="color: var(--secondary); margin-bottom: 40px;">Veja o que outros educadores estão dizendo</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <span class="stars">★★★★★</span>
+                    <p>"Economizei horas de planejamento e minhas aulas ficaram muito mais dinâmicas! O material é de altíssima qualidade."</p>
+                    <b>Profª Mariana — São Paulo</b>
+                </div>
+                <div class="testimonial-card">
+                    <span class="stars">★★★★★</span>
+                    <p>"O começo de ano sempre foi um caos, mas com o App 360 ficou tudo muito mais leve. Ter tudo organizado por BNCC é vida!"</p>
+                    <b>Profª Juliana — Curitiba</b>
+                </div>
+                <div class="testimonial-card">
+                    <span class="stars">★★★★★</span>
+                    <p>"A organização facilita demais o acompanhamento pedagógico. Recomendo para todos os professores que querem produtividade."</p>
+                    <b>Coord. Elaine — Rio de Janeiro</b>
+                </div>
+            </div>
+            <!-- TRUST IMAGE -->
+            <img src="https://i.ibb.co/j98TZY4p/Chat-GPT-Image-4-de-jan-de-2026-08-38-01.png" alt="Garantia e Segurança" style="width: 100%; max-width: 400px; margin-top: 20px; border-radius: 12px;">
+        </div>
+    </section>
+            
+            <div style="margin-top: 50px;">
+                <a href="#planos" class="btn btn-green btn-scroll" style="max-width: 500px;">QUERO MEU ACESSO AGORA</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLANS (OFFERS) -->
+    <section class="section-padding" id="planos" style="background: #F1F5F9;">
+        <div class="container text-center">
+            <h2 style="font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; margin-bottom: 50px;">ESCOLHA SEU PLANO</h2>
+            <div class="plans-grid">
+                <!-- OFFER R$ 10 -->
+                <div class="plan-card shadow-premium">
+                    <h3 style="font-weight: 800; font-size: 1.5rem;">Plano Básico</h3>
+                    <div class="plan-price">R$ 10<span style="font-size: 1rem;">,00</span></div>
+                    <p style="font-size: 0.8rem; margin-bottom: 30px; font-weight: 800; color: #64748b;">PAGAMENTO ÚNICO</p>
+                    <ul style="list-style: none; text-align: left; margin-bottom: 40px; font-size: 0.95rem; color: #334155;">
+                        <li style="margin-bottom: 12px;">✅ Acesso Imediato</li>
+                        <li style="margin-bottom: 12px;">✅ Kit Volta às Aulas</li>
+                        <li style="margin-bottom: 12px;">✅ Inclui: Educação Infantil + 1º/2º ano</li>
+                        <li>✅ Garantia 30 Dias</li>
+                    </ul>
+                    <a href="https://pay.lowify.com.br/checkout?product_id=Dl2dYK" class="btn btn-green">QUERO MEU ACESSO POR R$10</a>
+                </div>
+
+                <!-- OFFER R$ 27 -->
+                <div class="plan-card featured shadow-premium">
+                    <div style="position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--blue); color: white; padding: 8px 25px; border-radius: 99px; font-weight: 900; font-size: 0.85rem; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);">MAIS ESCOLHIDO</div>
+                    <h3 style="font-weight: 800; font-size: 1.5rem;">Plano Gold Completo</h3>
+                    <p style="text-decoration: line-through; color: #94A3B8; font-weight: 600;">De R$ 97,90 por</p>
+                    <div class="plan-price" style="color: var(--accent);">R$ 27<span style="font-size: 1rem;">,00</span></div>
+                    <p style="font-size: 0.8rem; margin-bottom: 30px; font-weight: 800; color: #16a34a;">PAGAMENTO ÚNICO</p>
+                    <ul style="list-style: none; text-align: left; margin-bottom: 40px; font-size: 0.95rem; font-weight: 600; color: #334155;">
+                        <li style="margin-bottom: 12px;">✅ <b>Acesso Total Vitalício</b></li>
+                        <li style="margin-bottom: 12px;">✅ 20.000 Atividades</li>
+                        <li style="margin-bottom: 12px;">✅ Bônus: Planner 1ª Semana</li>
+                        <li style="margin-bottom: 12px;">✅ Bônus: Jogos de 5 Minutos</li>
+                        <li>✅ Suporte VIP WhatsApp</li>
+                    </ul>
+                    <a href="https://pay.lowify.com.br/checkout?product_id=qq6ucL" class="btn btn-green">PREFIRO O COMPLETO POR R$27</a>
+                </div>
+            </div>
+            
+            <p style="margin-top: 40px; font-size: 0.9rem; color: #94A3B8; font-weight: 600;">
+                💳 Compra 100% segura • 🔒 Dados protegidos • ⚡ Acesso imediato no app + link enviado por e-mail
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section-padding" style="background: #f8fafc;">
+        <div class="container">
+            <h2 class="text-center" style="font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; margin-bottom: 40px;">DÚVIDAS FREQUENTES</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">Como recebo o acesso? <span>+</span></button>
+                    <div class="faq-answer">
+                        <p>Imediatamente após a confirmação do pagamento, você receberá um e-mail com seus dados de login para o portal oficial e o aplicativo.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">As atividades seguem a BNCC? <span>+</span></button>
+                    <div class="faq-answer">
+                        <p>Sim! Todas as atividades foram desenvolvidas por especialistas e contêm as habilidades da BNCC 2026 mapeadas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">E se eu não gostar? <span>+</span></button>
+                    <div class="faq-answer">
+                        <p>Você tem 30 dias de garantia. Se não gostar, basta nos avisar que devolvemos seu dinheiro integralmente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center" style="padding: 60px 0; background: white; border-top: 1px solid var(--border);">
+        <div class="container">
+            <h2 style="font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--primary); font-size: 1.5rem; margin-bottom: 15px;">APP DO EDUCADOR 360</h2>
+            <p style="color: #94A3B8; font-size: 0.85rem;">© 2026 App do Educador 360. Transformando a educação através da tecnologia.</p>
+            <p style="color: #94A3B8; font-size: 0.75rem; margin-top: 10px;">Suporte: contato@educador360.com.br</p>
+        </div>
+    </footer>
+
+    <!-- STICKY MOBILE CTA -->
+    <div class="sticky-cta" style="display: none;">
+        <a href="#planos" class="btn btn-green btn-scroll" style="padding: 14px; font-size: 1rem;">LIBERAR ACESSO POR R$ 10</a>
     </div>
-  </section>
 
-   <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div>
-          <h1>📚 App do Educador 360</h1>
-          <div class="hero-subtitle">MAIS DE 500 PROFESSORAS JÁ ESTÃO USANDO DENTRO DA SALA DE AULA E O ALUNOS ESTÃO ADORANDO</div>
-          <div class="hero-description">
-          
-          </div>
+    <!-- SALES NOTIFICATION -->
+    <div id="sales-pop" class="sales-notification">
+        <div class="avatar" id="pop-avatar">A</div>
+        <div class="content">
+            <span id="pop-text">Profª Mariana (SP) acabou de comprar o <b>Plano Completo</b>!</span>
+            <div style="font-size: 0.65rem; opacity: 0.6; margin-top: 4px;">Acabou de adquirir</div>
         </div>
-        
-        <div class="hero-video-cta">
-          <div class="video-container">
-            <div class="video-wrapper">
-              <iframe 
-                src="https://www.youtube.com/embed/lU7j2V4ShSQ" 
-                title="App do Educador - Como Funciona"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-              </iframe>
-            </div>
-          </div>
-          <div>
-            <a href="#planos" class="btn btn-cta scroll-to-plans">
-              🚀 QUERO MEU ACESSO AGORA POR APENAS R$10
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
 
-  <section class="section">
-    <div class="container">
-      <h2>⚡ O Que Você Ganha VS O Que Você Perde</h2>
-      <div class="comparison">
-        <div class="comparison-column benefits">
-          <h3>✅ COM o App do Educador</h3>
-          <div class="comparison-item">
-            <span class="comparison-icon">🎯</span>
-            <div>
-              <strong>Tempo Livre Garantido</strong><br>
-              Recupere 15-20 horas por semana para sua família e descanso
-            </div>
-          </div>
-          <div class="comparison-item">
-            <span class="comparison-icon">💡</span>
-            <div>
-              <strong>Aulas Mais Criativas</strong><br>
-              Atividades inovadoras que encantam e engajam seus alunos
-            </div>
-          </div>
-          <div class="comparison-item">
-            <span class="comparison-icon">📈</span>
-            <div>
-              <strong>Resultados Melhores</strong><br>
-              Alunos mais motivados e aprendizado acelerado
-            </div>
-          </div>
-          <div class="comparison-item">
-            <span class="comparison-icon">😌</span>
-            <div>
-              <strong>Menos Estresse</strong><br>
-              Nunca mais se desespere na véspera de uma aula
-            </div>
-          </div>
-          <div class="comparison-item">
-            <span class="comparison-icon">⭐</span>
-            <div>
-              <strong>Reconhecimento</strong><br>
-              Seja o professor que todos admiram pela criatividade
-            </div>
-          </div>
-        </div>
-        
-        <div class="comparison-column problems">
-          <h3>❌ SEM o App do Educador</h3>
-          <div class="comparison-item">
-            <span class="comparison-icon">😰</span>
-            <div>
-              <strong>Noites em Claro</strong><br>
-              Madrugadas criando atividades na última hora
-            </div>
-          </div>
-          <div class="comparison-item">
-            <span class="comparison-icon">💸</span>
-            <div>
-              <strong>Gastos Desnecessários</strong><br>
-              Centenas de reais em materiais e impressões
-            </div>
-          </div>
-          <div class="comparison-item">
-            <span class="comparison-icon">😴</span>
-            <div>
-              <strong>Alunos Desinteressados</strong><br>
-              Atividades repetitivas que não prendem atenção
-            </div>
-          </div>
-          <div class="comparison-item">
-            <span class="comparison-icon">⚰️</span>
-            <div>
-              <strong>Burnout Garantido</strong><br>
-              Exaustão mental e física constante
-            </div>
-          </div>
-          <div class="comparison-item">
-            <span class="comparison-icon">👎</span>
-            <div>
-              <strong>Qualidade Inferior</strong><br>
-              Atividades fracas por falta de tempo e recursos
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="text-center mb-6">
-        <a href="#planos" class="btn btn-cta scroll-to-plans">
-          💎 SIM! QUERO TRANSFORMAR MINHAS AULAS
-        </a>
-      </div>
-    </div>
-  </section>
+    <script>
+        // COUNTDOWN TIMER
+        function updateTimer() {
+            const target = new Date('2026-01-04T23:59:59').getTime();
+            const now = new Date().getTime();
+            const dist = target - now;
+            if (dist < 0) return;
+            const h = Math.floor(dist / (1000*60*60));
+            const m = Math.floor((dist % (1000*60*60)) / (1000*60));
+            const s = Math.floor((dist % (1000*60)) / 1000);
+            document.getElementById('timer').innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
 
-  <section class="section">
-    <div class="container">
-      <h2>💬 O Que Dizem as Professoras</h2>
-      <div class="testimonials">
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            <p>"Desde que comecei a usar o App do Educador, minha vida mudou completamente! Economizo mais de 10 horas por semana e meus alunos adoram as atividades criativas. Vale cada centavo!"</p>
-          </div>
-          <div class="testimonial-author">
-            <span class="author-icon">👩‍🏫</span>
-            <div>
-              <strong>Maria Silva</strong>
-              <div class="author-title">Professora de 3º ano - SP</div>
-            </div>
-          </div>
-        </div>
+        // FAQ TOGGLE
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const isActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            if (!isActive) {
+                item.classList.add('active');
+            }
+            btn.querySelector('span').innerText = item.classList.contains('active') ? '-' : '+';
+        }
 
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            <p>"Incrível! Nunca mais precisei passar madrugadas criando atividades. O material é de excelente qualidade e meus alunos estão muito mais engajados. Recomendo para todas as colegas!"</p>
-          </div>
-          <div class="testimonial-author">
-            <span class="author-icon">👩‍🏫</span>
-            <div>
-              <strong>Ana Rodrigues</strong>
-              <div class="author-title">Professora de Educação Infantil - RJ</div>
-            </div>
-          </div>
-        </div>
+        // SALES SIMULATOR
+        const salesData = [
+            { name: "Mariana", state: "SP" },
+            { name: "Carlos", state: "PR" },
+            { name: "Juliana", state: "RJ" },
+            { name: "Fernanda", state: "MG" },
+            { name: "Ricardo", state: "BA" },
+            { name: "Beatriz", state: "CE" },
+            { name: "Marcos", state: "RS" },
+            { name: "Elaine", state: "GO" },
+            { name: "Patrícia", state: "SC" }
+        ];
 
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            <p>"O App do Educador me deu minha vida de volta! Agora tenho tempo para minha família e ainda consigo dar aulas muito mais criativas. É o melhor investimento que já fiz na minha carreira!"</p>
-          </div>
-          <div class="testimonial-author">
-            <span class="author-icon">👩‍🏫</span>
-            <div>
-              <strong>Carla Santos</strong>
-              <div class="author-title">Professora de 5º ano - MG</div>
-            </div>
-          </div>
-        </div>
+        function showSale() {
+            const pop = document.getElementById('sales-pop');
+            const data = salesData[Math.floor(Math.random() * salesData.length)];
+            document.getElementById('pop-avatar').innerText = data.name[0];
+            document.getElementById('pop-text').innerHTML = `Prof. ${data.name} (${data.state}) acabou de comprar o <b>Plano Completo</b>!`;
+            pop.classList.add('active');
+            setTimeout(() => pop.classList.remove('active'), 5000);
+        }
+        setInterval(showSale, 10000);
+        setTimeout(showSale, 2500);
 
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            <p>"Trabalho com educação há 15 anos e posso dizer: este é o recurso mais valioso que já encontrei. As atividades são perfeitas e seguem exatamente o que preciso para a BNCC!"</p>
-          </div>
-          <div class="testimonial-author">
-            <span class="author-icon">👩‍🏫</span>
-            <div>
-              <strong>Juliana Costa</strong>
-              <div class="author-title">Coordenadora Pedagógica - BA</div>
-            </div>
-          </div>
-        </div>
+        // PERFECT SCROLL HANDLER
+        document.querySelectorAll('.btn-scroll').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offset = 80; // Offset for header/urgency bar
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            <p>"Meus alunos ficaram muito mais motivados depois que comecei a usar as atividades do app. São dinâmicas, coloridas e educativas. Minha produtividade triplicou!"</p>
-          </div>
-          <div class="testimonial-author">
-            <span class="author-icon">👩‍🏫</span>
-            <div>
-              <strong>Patricia Lima</strong>
-              <div class="author-title">Professora de 2º ano - PR</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="text-center mb-6">
-        <a href="#planos" class="btn btn-cta scroll-to-plans">
-          🌟 EU TAMBÉM QUERO ESSES RESULTADOS
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>🎁 Benefícios Exclusivos Que Você Vai Receber</h2>
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <span class="benefit-icon">🎯</span>
-          <h3>Atividades Por Faixa Etária</h3>
-          <p>Conteúdo específico para cada idade, do maternal ao 9º ano, sempre adequado ao desenvolvimento cognitivo</p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">🎨</span>
-          <h3>Design Profissional</h3>
-          <p>Layouts coloridos e atrativos que capturam a atenção dos alunos e facilitam o aprendizado</p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">📊</span>
-          <h3>Relatórios de Progresso</h3>
-          <p>Acompanhe o desenvolvimento de cada aluno com atividades que geram dados de aprendizagem</p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">🏆</span>
-          <h3>Certificações Incluídas</h3>
-          <p>Atividades que preparam seus alunos para avaliações externas e olimpíadas</p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">👥</span>
-          <h3>Comunidade Exclusiva</h3>
-          <p>Acesso ao grupo privado com mais de 2.000 professoras trocando experiências</p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">🔧</span>
-          <h3>Atividades Personalizáveis</h3>
-          <p>Modifique textos, cores e dificuldades para adaptar às necessidades da sua turma</p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">📚</span>
-          <h3>Material Complementar</h3>
-          <p>Jogos educativos, cartazes, fichas de avaliação e muito mais em cada pacote</p>
-        </div>
-        
-        <div class="benefit-card">
-          <span class="benefit-icon">⚡</span>
-          <h3>Suporte Prioritário</h3>
-          <p>Atendimento especializado em até 2 horas para tirar qualquer dúvida</p>
-        </div>
-      </div>
-      
-      <div class="text-center mb-6">
-        <a href="#planos" class="btn btn-cta scroll-to-plans">
-          🔥 QUERO TODOS ESSES BENEFÍCIOS
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="planos">
-    <div class="container">
-      <h2>🚀 Escolha Seu Plano e Transforme Sua Carreira</h2>
-      <div class="plans">
-        <div class="plan">
-          <h3>Plano Básico</h3>
-          <div class="price">R$ 10,00</div>
-          <p style="color: var(--text-light); margin-bottom: 2rem;">Pagamento único</p>
-          <ul>
-            <li>Acesso a 3 áreas de ensino</li>
-            <li>Não atualiza</li>
-            <li>Apenas 1 mês de acesso</li>
-            <li>3 bônus exclusivos</li>
-            <li>Suporte apenas por email</li>
-          </ul>
-          <a href="https://pay.lowify.com.br/checkout?product_id=Dl2dYK" class="btn" style="margin-top: 2rem;">
-            Começar Agora
-          </a>
-        </div>
-        
-        <div class="plan featured">
-          <h3>🔥 Plano Gold Completo</h3>
-          <div class="price">
-            <span class="old-price">R$ 97,90</span>
-            R$ 27,90
-          </div>
-          <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem;">Pagamento único - OFERTA LIMITADA</p>
-          <ul>
-            <li>✨ Acesso total VITALÍCIO</li>
-            <li>🎯 7 áreas completas</li>
-            <li>📚 20 Mil atividades </li>
-            <li>🔄 Atualizações mensais</li>
-            <li>🎁 10 bônus exclusivos</li>
-            <li>⚡ Suporte prioritário</li>
-            <li>📱 Grupo de Professores Whatsapp</li>
-            <li>🎨 Kit de recursos visuais</li>
-          </ul>
-          <a href="https://pay.lowify.com.br/checkout?product_id=qq6ucL" class="btn btn-cta" style="margin-top: 2rem;">
-            🚀 QUERO ACESSO COMPLETO
-          </a>
-        </div>
-      </div>
-      
-      <div class="text-center" style="margin-top: 3rem;">
-        <p style="font-size: 1.1rem; color: var(--text-light);">
-          💳 <strong>Pagamento 100% Seguro</strong> | 🔒 <strong>Dados Protegidos</strong> | ⚡ <strong>Acesso Imediato</strong>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="guarantee">
-    <div class="container">
-      <div class="guarantee-content">
-        <h2>🛡️ Garantia Blindada de 30 Dias</h2>
-        <p style="font-size: 1.25rem; margin-bottom: 2rem;">
-          Experimente por 30 dias sem risco! Use o app, baixe atividades, aplique em sala
-Se não economizar tempo, devolvemos 100% do seu dinheiro!
-        </p>
-        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 2rem;">
-          <div style="text-align: center;">
-            <div style="font-size: 3rem;">🔒</div>
-            <strong>Compra Protegida</strong>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 3rem;">💰</div>
-            <strong>Reembolso Total</strong>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 3rem;">⚡</div>
-            <strong>Sem Burocracias</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>❓ Perguntas Frequentes</h2>
-      <div class="faq">
-        <div class="faq-item">
-          <button class="faq-question">
-            Como funciona o acesso ao conteúdo?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Após o pagamento, você recebe imediatamente por email os dados de acesso ao app. É só baixar e começar a usar! Funciona em qualquer dispositivo.
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <button class="faq-question">
-            As atividades seguem a BNCC?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Sim! Todas as atividades são desenvolvidas seguindo rigorosamente as diretrizes da Base Nacional Comum Curricular (BNCC) e são criadas por especialistas em educação.
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <button class="faq-question">
-            Posso usar em quantas turmas eu quiser?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Claro! Não há limite de turmas ou impressões. Uma vez que você tem acesso, pode usar com quantas turmas precisar, durante todo o período do seu plano.
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <button class="faq-question">
-            E se eu não souber usar tecnologia?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Nosso app é super simples e intuitivo! Além disso, fornecemos tutoriais passo a passo e suporte completo para tirar qualquer dúvida.
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <button class="faq-question">
-            Como posso ter certeza que vale a pena?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Você tem 30 dias de garantia total! Se não ficar satisfeito, devolvemos 100% do seu dinheiro. Além disso, veja os depoimentos de centenas de professores que já transformaram suas aulas.
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <button class="faq-question">
-            Preciso de internet para acessar?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            Não! Após baixar as atividades, você pode acessá-las offline a qualquer momento. Perfeito para usar na escola mesmo sem internet.
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <button class="faq-question">
-            Quando recebo as atualizações?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            No plano Gold, você recebe automaticamente todas as atualizações mensais com novas atividades. São sempre conteúdos frescos e atualizados para manter suas aulas sempre interessantes.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <p>© 2026 App do Educador - Transformando a educação, uma atividade por vez</p>
-      <p style="margin-top: 1rem; color: var(--text-light);">
-        📧 Suporte: suporte@appdoeducador.com | 
-      </p>
-    </div>
-  </footer>
-
-  <!-- Floating CTA -->
-  <div class="floating-cta">
-    <a href="#planos" class="btn btn-cta scroll-to-plans" style="font-size: 0.9rem; padding: 1rem 1.5rem;">
-      🔥 Oferta Acaba Logo!
-    </a>
-  </div>
-
-  <script>
-    // Data atual
-    function updateCurrentDate() {
-      const now = new Date();
-      const options = { 
-        day: '2-digit', 
-        month: '2-digit', 
-        year: 'numeric' 
-      };
-      const dateStr = now.toLocaleDateString('pt-BR', options);
-      document.getElementById('current-date').textContent = dateStr;
-    }
-    
-    // Timer otimizado
-    let minutes = 14;
-    let seconds = 42;
-    const countdownEl = document.getElementById("countdown");
-
-    function updateCountdown() {
-      seconds--;
-      if (seconds < 0) {
-        seconds = 59;
-        minutes--;
-      }
-      if (minutes < 0) {
-        minutes = 14;
-        seconds = 42;
-      }
-      countdownEl.textContent = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-    }
-
-    // Inicializar data e timer
-    updateCurrentDate();
-    setInterval(updateCountdown, 1000);
-
-    // FAQ Toggle
-    document.querySelectorAll('.faq-question').forEach(question => {
-      question.addEventListener('click', () => {
-        const faqItem = question.parentElement;
-        const isActive = faqItem.classList.contains('active');
-        
-        // Fechar todos os outros
-        document.querySelectorAll('.faq-item').forEach(item => {
-          item.classList.remove('active');
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
-        
-        // Abrir o clicado se não estava ativo
-        if (!isActive) {
-          faqItem.classList.add('active');
+
+        // MOBILE STICKY
+        if(window.innerWidth < 768) {
+            document.querySelector('.sticky-cta').style.display = 'block';
         }
-      });
-    });
-
-    // Scroll para planos
-    document.querySelectorAll('.scroll-to-plans').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const planosSection = document.getElementById('planos');
-        if (planosSection) {
-          planosSection.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-
-    // Smooth scroll para outros links âncora
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const targetId = this.getAttribute('href');
-        if (targetId && targetId !== '#' && targetId.length > 1 && !this.classList.contains('scroll-to-plans')) {
-          e.preventDefault();
-          const target = document.querySelector(targetId);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      });
-    });
-
-    // Intersection Observer para animações
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in');
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.argument-card, .comparison-column, .plan, .faq-item, .testimonial-card, .benefit-card').forEach(el => {
-      observer.observe(el);
-    });
-  </script>
+    </script>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>
-
 
 <script>
   window.pixelId = "6956868c7b30f2db0b3edacb";
