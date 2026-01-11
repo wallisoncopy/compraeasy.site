@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Kit Psicopedagogo Pro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --emerald-glow: rgba(16, 185, 129, 0.3); }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f0f9f6;
+      color: #0f172a;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .neo-shadow {
+      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05), 0 0 20px var(--emerald-glow);
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slideIn { animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .bg-cyber-gradient {
+      background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.1), transparent),
+                  radial-gradient(circle at bottom left, rgba(5, 150, 105, 0.05), transparent);
+    }
+    .tab-active { color: #059669; }
+    .tab-inactive { color: #64748b; }
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+    @media (max-width: 640px) {
+      nav { padding-bottom: calc(1.0rem + env(safe-area-inset-bottom)); }
+    }
+  </style>
+</head>
+
+<body class="bg-cyber-gradient">
+  <!-- TOP BAR -->
+  <header class="sticky top-0 z-40 glass-nav border-b border-emerald-100">
+    <div class="max-w-md mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="leading-tight">
+        <div class="text-emerald-700 font-extrabold text-lg">App Kit Psicopedagogo Pro</div>
+        <div id="topTitle" class="text-[11px] tracking-[0.22em] text-emerald-600 font-bold uppercase">INÍCIO</div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button class="h-11 w-11 rounded-2xl bg-white border border-emerald-100 neo-shadow flex items-center justify-center active:scale-95 transition" aria-label="Notificações">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-emerald-700">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0a3 3 0 11-6 0m6 0H9"/>
+          </svg>
+        </button>
+        <button class="h-11 w-11 rounded-2xl bg-white border border-emerald-100 neo-shadow flex items-center justify-center active:scale-95 transition" aria-label="Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-emerald-700">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- VIEWS -->
+  <main class="min-h-screen">
+    <!-- HOME -->
+    <section id="view-home" class="animate-slideIn">
+      <div class="max-w-md mx-auto px-4 pt-4 pb-24">
+        <div class="rounded-[28px] bg-gradient-to-br from-emerald-600 to-emerald-500 text-white p-6 neo-shadow">
+          <div class="text-[12px] font-bold tracking-[0.22em] uppercase opacity-95">Bem-vinda</div>
+          <h1 class="text-3xl font-extrabold mt-2 leading-tight">Olá, Psicopedagoga!</h1>
+          <p class="mt-2 text-white/90">
+            Aqui você encontra estrutura, clareza e materiais para atender com segurança e excelência profissional.
+          </p>
+
+          <div class="mt-4 inline-flex items-center gap-2 bg-white/15 border border-white/20 rounded-full px-4 py-2 text-sm">
+            <span class="h-2.5 w-2.5 rounded-full bg-white"></span>
+            Novos materiais Toda semana!
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mt-4">
+          <div class="bg-white border border-emerald-100 rounded-3xl p-4 neo-shadow">
+            <div class="text-sm font-extrabold text-emerald-800">Acesso vitalício</div>
+            <div class="text-xs text-slate-500 mt-1">Pagamento único</div>
+          </div>
+          <div class="bg-white border border-emerald-100 rounded-3xl p-4 neo-shadow">
+            <div class="text-sm font-extrabold text-emerald-800">Atualizações</div>
+            <div class="text-xs text-slate-500 mt-1">Toda semana</div>
+          </div>
+        </div>
+
+        <div class="mt-4 space-y-3">
+          <div class="bg-white border border-emerald-100 rounded-3xl p-4 neo-shadow">
+            <div class="text-sm font-extrabold">Acesso rápido</div>
+            <p class="text-sm text-slate-600 mt-1">Abra o Kit completo de materiais em um único link.</p>
+            <div class="mt-3">
+              <a id="kitLinkHome" href="https://drive.google.com/drive/folders/1iidCfN3RWrVsB1MMydyre_tKfXCI9otT?usp=sharing" target="_blank" rel="noopener"
+                 class="w-full inline-flex items-center justify-center px-4 py-3 rounded-2xl bg-emerald-600 text-white font-extrabold active:scale-[0.98] transition">
+                Abrir Kit Completo
+              </a>
+            </div>
+            <p class="text-xs text-slate-500 mt-2">Fácil e rápido</p>
+          </div>
+
+          <div class="bg-white border border-emerald-100 rounded-3xl p-4 neo-shadow">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-sm font-extrabold">Suporte no WhatsApp</div>
+                <div class="text-xs text-slate-500 mt-1">Se tiver dúvida, fale com a gente.</div>
+                <div class="mt-3">
+                  <a id="whatsHome" href="https://wa.me/55SEUNUMEROAQUI" target="_blank" rel="noopener"
+                     class="w-full inline-flex items-center justify-center px-4 py-3 rounded-2xl bg-white border border-emerald-200 text-emerald-800 font-extrabold active:scale-[0.98] transition">
+                    Falar no WhatsApp
+                  </a>
+                </div>
+              </div>
+              <div class="h-12 w-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                <span class="text-emerald-700 font-extrabold">WA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AULAS -->
+    <section id="view-aulas" class="hidden animate-slideIn">
+      <div class="max-w-md mx-auto px-4 pt-4 pb-24">
+        <h2 class="text-xl font-extrabold">Aulas em vídeo</h2>
+        <p class="text-sm text-slate-600 mt-1">Curadoria para aplicar com segurança na prática clínica.</p>
+        <div id="videosList" class="mt-4 space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- KITS (1 LINK ÚNICO) -->
+    <section id="view-kits" class="hidden animate-slideIn">
+      <div class="max-w-md mx-auto px-4 pt-4 pb-24">
+        <h2 class="text-xl font-extrabold">Kit de Materiais</h2>
+        <p class="text-sm text-slate-600 mt-1">Um único link com todos os materiais (editáveis e sem logomarca).</p>
+
+        <div class="mt-4 bg-white border border-emerald-100 rounded-3xl p-5 neo-shadow">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex-1">
+              <div class="text-sm font-extrabold text-slate-900">Acesso ao Kit Completo</div>
+              <div class="text-sm text-slate-600 mt-1">
+                Clique abaixo para abrir a pasta com <strong>todos os materiais</strong> em um só lugar.
+              </div>
+              <div class="mt-4">
+                <a id="kitLink" href="https://drive.google.com/drive/folders/1iidCfN3RWrVsB1MMydyre_tKfXCI9otT?usp=sharing" target="_blank" rel="noopener"
+                   class="w-full inline-flex items-center justify-center px-4 py-3 rounded-2xl bg-emerald-600 text-white font-extrabold active:scale-[0.98] transition">
+                  Abrir / Baixar Kit Completo
+                </a>
+              </div>
+              <div class="mt-3 text-xs text-slate-500">
+           
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 bg-emerald-50 border border-emerald-100 text-emerald-900 rounded-3xl p-4 text-sm">
+      
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIS (UPSELLS) -->
+    <section id="view-mais" class="hidden animate-slideIn">
+      <div class="max-w-md mx-auto px-4 pt-4 pb-24">
+        <h2 class="text-xl font-extrabold">Mais conteúdos</h2>
+        <p class="text-sm text-slate-600 mt-1">Guias extras para aumentar seus resultados na prática clínica.</p>
+
+        <div id="upsellsList" class="mt-4 space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- AJUDA -->
+    <section id="view-ajuda" class="hidden animate-slideIn">
+      <div class="max-w-md mx-auto px-4 pt-4 pb-24">
+        <h2 class="text-xl font-extrabold">Ajuda</h2>
+        <p class="text-sm text-slate-600 mt-1">Dúvidas? Te acompanhamos com carinho e acolhimento.</p>
+
+        <div class="mt-4 bg-white border border-emerald-100 rounded-3xl p-5 neo-shadow">
+          <div class="text-sm font-extrabold">Suporte Direto</div>
+          <div class="text-sm text-slate-600 mt-1">Clique para falar no WhatsApp.</div>
+          <div class="mt-4">
+            <a id="whatsLink" href="https://wa.me/55SEUNUMEROAQUI" target="_blank" rel="noopener"
+               class="w-full inline-flex items-center justify-center px-4 py-3 rounded-2xl bg-emerald-600 text-white font-extrabold active:scale-[0.98] transition">
+              Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-3 bg-white border border-emerald-100 rounded-3xl p-5 neo-shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-extrabold">Fórum de Alunas</div>
+              <div class="text-sm text-slate-600">Troca de experiências e networking</div>
+            </div>
+            <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-800">EM BREVE</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="fixed bottom-0 left-0 right-0 glass-nav border-t border-emerald-100 safe-bottom z-50">
+    <div class="max-w-md mx-auto px-4 py-3">
+      <div class="grid grid-cols-5 gap-2">
+        <button class="tab-btn flex flex-col items-center justify-center gap-1 py-2 rounded-2xl transition active:scale-95 tab-active" data-tab="home">
+          <span class="text-lg">🏠</span>
+          <span class="text-[11px] font-extrabold">Início</span>
+        </button>
+        <button class="tab-btn flex flex-col items-center justify-center gap-1 py-2 rounded-2xl transition active:scale-95 tab-inactive" data-tab="aulas">
+          <span class="text-lg">🎥</span>
+          <span class="text-[11px] font-extrabold">Aulas</span>
+        </button>
+        <button class="tab-btn flex flex-col items-center justify-center gap-1 py-2 rounded-2xl transition active:scale-95 tab-inactive" data-tab="kits">
+          <span class="text-lg">⬇️</span>
+          <span class="text-[11px] font-extrabold">Kit</span>
+        </button>
+        <button class="tab-btn flex flex-col items-center justify-center gap-1 py-2 rounded-2xl transition active:scale-95 tab-inactive" data-tab="mais">
+          <span class="text-lg">✨</span>
+          <span class="text-[11px] font-extrabold">Mais</span>
+        </button>
+        <button class="tab-btn flex flex-col items-center justify-center gap-1 py-2 rounded-2xl transition active:scale-95 tab-inactive" data-tab="ajuda">
+          <span class="text-lg">💬</span>
+          <span class="text-[11px] font-extrabold">Ajuda</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <script src="./app.js"></script>
+</body>
+</html>
