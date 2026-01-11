@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Kit Psicopedagogo Pro | Materiais Profissionais</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #f0fdf4 0%, #f5f3ff 100%); }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05); }
+        
+        .cta-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        @keyframes border-flash {
+            0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.6); border-color: rgba(34, 197, 94, 0.8); }
+            50% { box-shadow: 0 0 30px rgba(34, 197, 94, 1); border-color: rgba(255, 255, 255, 1); }
+        }
+        .animate-border-flash {
+            animation: border-flash 1.5s infinite;
+        }
+
+        @keyframes notification-slide {
+            0% { transform: translateY(100px); opacity: 0; }
+            10% { transform: translateY(0); opacity: 1; }
+            90% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100px); opacity: 0; }
+        }
+        .notification-active {
+            animation: notification-slide 4s ease-in-out forwards;
+        }
+        .notification-hidden { display: none; }
+        
+        .faq-answer { display: none; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active i { transform: rotate(180deg); }
+    </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="text-slate-800 antialiased overflow-x-hidden">
+
+    <!-- Notificação de Vendas -->
+    <div id="sales-notification" class="fixed bottom-6 left-6 z-[60] bg-white p-4 rounded-xl shadow-2xl border border-slate-100 flex items-center gap-4 notification-hidden">
+        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white">
+            <i class="fas fa-shopping-cart text-sm"></i>
+        </div>
+        <div>
+            <p class="text-xs font-bold text-slate-800"><span id="notif-name">Adriana</span> acabou de assinar!</p>
+            <p class="text-[10px] text-slate-500">Plano Profissional • agora</p>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center text-white shadow-lg shadow-green-200">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <span class="font-bold text-slate-900 tracking-tight">App Kit Psicopedagogo Pro</span>
+            </div>
+            <button onclick="scrollToPricing()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors">
+                Assinar Agora
+            </button>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <section class="pt-32 pb-20 px-4 gradient-bg relative">
+        <div class="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <div class="inline-block bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-sm font-bold mb-6 uppercase tracking-wider">
+                <i class="fas fa-star mr-2 text-yellow-500"></i> O MAIS COMPLETO DO BRASIL
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 mb-6 leading-tight">
+                Materiais Profissionais Toda Semana Para Psicopedagogas Atenderem com <span class="text-green-600">Segurança</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Um aplicativo completo com fichas, testes, roteiros e protocolos psicopedagógicos sempre atualizados.
+            </p>
+
+            <!-- Video UGC Reels Section -->
+            <div class="relative mb-12 w-full max-w-[320px] mx-auto p-1.5 rounded-[2.5rem] bg-gradient-to-r from-green-400 via-green-500 to-green-400 animate-border-flash shadow-2xl">
+                <div class="relative pt-[177.77%] overflow-hidden rounded-[2.3rem] bg-black">
+                    <iframe 
+                        class="absolute top-0 left-0 w-full h-full border-0"
+                        src="https://www.youtube.com/embed/RlJVM-0OYPI"
+                        title="UGC Video"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+                
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center gap-4">
+                <button onclick="scrollToPricing()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold py-5 px-10 rounded-2xl shadow-xl transition-all cta-pulse flex items-center gap-3">
+                    Quero Acessar o App Agora
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <img src="https://i.ibb.co/LzHJ1Z9X/Chat-GPT-Image-11-de-jan-de-2026-16-29-32.png" alt="Segurança" class="w-full max-w-[350px] mt-4">
+                <p class="text-sm text-slate-500 flex items-center gap-2">
+                    <i class="fas fa-shield-halved text-green-500"></i> Compra 100% segura e acesso imediato
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Seção de Dor -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-5xl mx-auto">
+            <div class="bg-slate-900 rounded-[3rem] p-8 md:p-16 text-white overflow-hidden relative border-4 border-green-500/20">
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center leading-tight">Você se sente assim na sua prática clínica?</h2>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0 mt-1"><i class="fas fa-times text-xs"></i></div><p class="text-slate-300 text-lg">Medo de errar no atendimento</p></div>
+                        <div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0 mt-1"><i class="fas fa-times text-xs"></i></div><p class="text-slate-300 text-lg">Insegurança ao conversar com pais</p></div>
+                        <div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0 mt-1"><i class="fas fa-times text-xs"></i></div><p class="text-slate-300 text-lg">Dificuldade em saber o que aplicar em cada sessão</p></div>
+                        <div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0 mt-1"><i class="fas fa-times text-xs"></i></div><p class="text-slate-300 text-lg">Falta de organização e estrutura clínica</p></div>
+                    </div>
+                    <p class="mt-12 text-green-400 font-bold text-xl text-center italic">"Se você se identificou com pelo menos uma dessas situações, esse app é para você."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOVA: Seção de Depoimentos (Prova Social) -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-black mb-12 text-center text-slate-900">O que dizem as profissionais que já usam</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Depoimento 1 -->
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 flex flex-col gap-4 hover:shadow-lg transition-all">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">MS</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900">Mariana Silva</h4>
+                            <p class="text-xs text-green-600 font-medium uppercase tracking-wider">Iniciante</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 text-xs">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 italic leading-relaxed">"Eu tinha muito medo de atender meu primeiro paciente. O app me deu o roteiro exato do que falar na anamnese e quais testes aplicar. Hoje me sinto outra profissional!"</p>
+                </div>
+                <!-- Depoimento 2 -->
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 flex flex-col gap-4 hover:shadow-lg transition-all">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold">CR</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900">Cláudia Rocha</h4>
+                            <p class="text-xs text-green-600 font-medium uppercase tracking-wider">Psicopedagoga Clínica</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 text-xs">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 italic leading-relaxed">"O que eu mais amo são as atualizações semanais. Sempre tem um recurso lúdico novo que as crianças adoram e que realmente tem embasamento clínico. Recomendo muito!"</p>
+                </div>
+                <!-- Depoimento 3 -->
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 flex flex-col gap-4 hover:shadow-lg transition-all">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">RM</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900">Renata Mendes</h4>
+                            <p class="text-xs text-green-600 font-medium uppercase tracking-wider">Neuropsicopedagoga</p>
+                        </div>
+                    </div>
+                    <div class="flex text-yellow-400 text-xs">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 italic leading-relaxed">"A organização das fichas editáveis me poupa horas de trabalho. O suporte no WhatsApp é excelente e os protocolos de TEA são os mais completos que já vi."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3 & 4. Apresentação e O Que Tem Dentro -->
+    <section class="py-20 px-4 bg-slate-50">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-black mb-4">Tudo o que você precisa em um só lugar</h2>
+            <p class="text-slate-600 mb-12">Materiais organizados por etapa do atendimento, prontos para uso.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-file-signature"></i></div><h3 class="font-bold">Fichas editáveis</h3></div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-vial"></i></div><h3 class="font-bold">Testes completos</h3></div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-route"></i></div><h3 class="font-bold">Roteiros sessões</h3></div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-shield-alt"></i></div><h3 class="font-bold">Protocolos TEA/TDAH</h3></div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-clipboard-list"></i></div><h3 class="font-bold">Relatórios prontos</h3></div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-gamepad"></i></div><h3 class="font-bold">Recursos lúdicos</h3></div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-yellow-100 text-yellow-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-calendar-check"></i></div><h3 class="font-bold">Agendas/Planejamento</h3></div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-cyan-100 text-cyan-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-check-double"></i></div><h3 class="font-bold">Checklists clínicos</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Diferencial das Atualizações Semanais -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="bg-green-50 border-2 border-green-500 border-dashed rounded-[2rem] p-10">
+                <h2 class="text-3xl font-bold mb-4 text-green-800">Toda semana novos materiais!</h2>
+                <p class="text-lg text-slate-700 leading-relaxed mb-6">Dentro do app, você nunca fica estagnada. Liberamos novos protocolos, jogos e fichas toda semana para manter sua prática sempre atualizada com as melhores evidências.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <span class="bg-white px-4 py-2 rounded-full text-sm font-bold shadow-sm border border-green-200">Novos Jogos Lúdicos</span>
+                    <span class="bg-white px-4 py-2 rounded-full text-sm font-bold shadow-sm border border-green-200">Protocolos TEA/TDAH</span>
+                    <span class="bg-white px-4 py-2 rounded-full text-sm font-bold shadow-sm border border-green-200">Planejamentos Mensais</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Planos e Preços -->
+    <section id="precos" class="py-24 px-4 bg-slate-50">
+        <div class="max-w-5xl mx-auto text-center">
+            <h2 class="text-4xl font-black mb-16">Escolha o Melhor Plano para Você</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
+                <!-- Essencial -->
+                <div class="relative p-8 rounded-3xl border border-slate-200 bg-white flex flex-col h-full text-left">
+                    <h3 class="text-xl font-bold mb-2">Plano Básico</h3>
+                    <div class="mb-6">
+                        <span class="text-slate-500 text-sm">Por apenas</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-2xl font-bold">R$</span>
+                            <span class="text-5xl font-black text-slate-900">17,90</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mt-1">Pagamento Único</p>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-sm text-slate-600"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Acesso ao app</li>
+                        <li class="flex items-start gap-3 text-sm text-slate-600"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Materiais essenciais</li>
+                        <li class="flex items-start gap-3 text-sm text-slate-600"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Atualizações semanais básicas</li>
+                        <li class="flex items-start gap-3 text-sm text-slate-600"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Acesso Vitalício</li>
+                    </ul>
+                    <a href="https://pay.lowify.com.br/checkout?product_id=GOQ4T1" class="w-full py-4 rounded-xl text-center font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all">Escolher Básico</a>
+                </div>
+                <!-- Profissional -->
+                <div class="relative p-8 rounded-3xl border-2 border-green-500 bg-white scale-105 z-10 shadow-2xl flex flex-col h-full text-left">
+                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Mais Escolhido</span>
+                    <h3 class="text-xl font-bold mb-2 text-green-700">Plano Profissional Pro</h3>
+                    <div class="mb-6">
+                        <span class="text-slate-500 text-sm">Por apenas</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-2xl font-bold text-green-600">R$</span>
+                            <span class="text-5xl font-black text-slate-900">27,90</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mt-1">Pagamento Único</p>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Tudo do plano Essencial</li>
+                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Testes psicopedagógicos completos</li>
+                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Protocolos avançados TEA/TDAH</li>
+                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Recursos lúdicos exclusivos</li>
+                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Comunidade Fechada</li>
+                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Suporte VIP WhatsApp</li>
+                    </ul>
+                    <a href="https://pay.lowify.com.br/checkout?product_id=XCKs8W" class="w-full py-4 rounded-xl text-center font-bold bg-green-600 hover:bg-green-700 text-white cta-pulse shadow-lg shadow-green-200 transition-all">Assinar Profissional Agora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Garantia -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10 bg-slate-50 p-10 rounded-[2.5rem] border-2 border-green-500 shadow-xl">
+            <div class="relative shrink-0 w-32 h-32 bg-green-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-shield-check text-5xl text-green-600"></i>
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold mb-4">Garantia Incondicional</h2>
+                <p class="text-slate-600 text-lg leading-relaxed">Se em até 7 dias você não se sentir mais segura para atender, ou simplesmente achar que o app não é para você, devolvemos 100% do seu dinheiro. Sem perguntas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. O Que Você Recebe -->
+    <section class="py-20 px-4 bg-slate-900 text-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Tudo o que você recebe ao entrar hoje:</h2>
+            <div class="space-y-4">
+                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10"><i class="fas fa-check-circle text-green-500 text-xl"></i><span>Acesso vitalício ao app</span></div>
+                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10"><i class="fas fa-check-circle text-green-500 text-xl"></i><span>Todos os materiais editáveis e sem logomarca</span></div>
+                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10"><i class="fas fa-check-circle text-green-500 text-xl"></i><span>Atualizações semanais inclusas</span></div>
+                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10"><i class="fas fa-check-circle text-green-500 text-xl"></i><span>Suporte direto via WhatsApp</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FAQ -->
+    <section class="py-24 px-4 bg-white">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-black mb-12 text-center">Perguntas Frequentes</h2>
+            <div class="space-y-4">
+                <div class="faq-item border-b border-slate-200 pb-4">
+                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
+                        É só para iniciantes?
+                        <i class="fas fa-chevron-down text-slate-400"></i>
+                    </button>
+                    <div class="faq-answer text-slate-600 pb-4">Não! O app é ideal tanto para iniciantes que precisam de segurança, quanto para profissionais experientes que desejam otimizar o tempo e ter materiais atualizados.</div>
+                </div>
+                <div class="faq-item border-b border-slate-200 pb-4">
+                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
+                        Os materiais são editáveis?
+                        <i class="fas fa-chevron-down text-slate-400"></i>
+                    </button>
+                    <div class="faq-answer text-slate-600 pb-4">Sim! Grande parte dos materiais são editáveis para que você coloque seu nome ou ajuste de acordo com a necessidade do seu paciente.</div>
+                </div>
+                <div class="faq-item border-b border-slate-200 pb-4">
+                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
+                        Recebo acesso na hora?
+                        <i class="fas fa-chevron-down text-slate-400"></i>
+                    </button>
+                    <div class="faq-answer text-slate-600 pb-4">Sim! O acesso é enviado imediatamente para o seu e-mail após a confirmação do pagamento.</div>
+                </div>
+                <div class="faq-item border-b border-slate-200 pb-4">
+                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
+                        O acesso é vitalício?
+                        <i class="fas fa-chevron-down text-slate-400"></i>
+                    </button>
+                    <div class="faq-answer text-slate-600 pb-4">Sim. Você paga uma única vez e tem acesso para sempre ao app e às atualizações.</div>
+                </div>
+                <div class="faq-item border-b border-slate-200 pb-4">
+                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
+                        Tem suporte no WhatsApp?
+                        <i class="fas fa-chevron-down text-slate-400"></i>
+                    </button>
+                    <div class="faq-answer text-slate-600 pb-4">Sim, o Plano Profissional inclui suporte direto para dúvidas sobre o uso do app e materiais.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. CTA Final -->
+    <section class="py-24 px-4 bg-slate-900 text-white text-center">
+        <div class="max-w-4xl mx-auto flex flex-col items-center">
+            <h2 class="text-3xl md:text-5xl font-black mb-10 leading-tight">Não é só um kit. É um aplicativo que te acompanha na prática clínica.</h2>
+            <button onclick="scrollToPricing()" class="bg-green-600 hover:bg-green-700 text-white text-2xl font-bold py-6 px-12 rounded-2xl shadow-2xl transition-all cta-pulse flex items-center gap-4">
+                <i class="fas fa-rocket"></i> Acessar o App Agora
+            </button>
+            <div class="flex justify-center gap-6 opacity-50 grayscale contrast-125 mt-12 text-4xl">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-pix"></i>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 px-4 border-t border-slate-800 bg-slate-900 text-center text-slate-500 text-sm">
+        <p>© 2024 App Kit Psicopedagogo Pro. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Notificações de Venda Fake
+        const names = ["Mariana", "Camila", "Luciana", "Fernanda", "Patrícia", "Eliane", "Beatriz", "Gabriela", "Renata", "Heloísa", "Isabela", "Priscila", "Tatiana"];
+        const notif = document.getElementById('sales-notification');
+        const notifName = document.getElementById('notif-name');
+
+        function showNotification() {
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            notifName.innerText = randomName;
+            notif.classList.remove('notification-hidden');
+            notif.classList.add('notification-active');
+            
+            setTimeout(() => {
+                notif.classList.remove('notification-active');
+                notif.classList.add('notification-hidden');
+            }, 4000);
+        }
+
+        setInterval(showNotification, 15000);
+        setTimeout(showNotification, 5000);
+
+        // Scroll Suave
+        function scrollToPricing() {
+            document.getElementById('precos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // FAQ Toggle
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
