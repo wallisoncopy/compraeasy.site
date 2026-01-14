@@ -36,8 +36,8 @@ const UPSELLS = [
     desc: "Organize seu Ano de 2026 com clareza.",
     oldPrice: "R$ 79,90",
     discount: "63%",
-    price: "R$ 29,90",
-    link: "#"
+    price: "R$ 9,90",
+    link: "https://pay.lowify.com.br/checkout?product_id=zru8Ym"
   },
 ];
 
