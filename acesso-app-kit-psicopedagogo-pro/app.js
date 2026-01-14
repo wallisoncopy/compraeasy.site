@@ -26,10 +26,10 @@ const UPSELLS = [
   {
     name: "Guia com Atividades para Adolescentes com Dislexia",
     desc: "Roteiros e atividades práticas focadas em intervenção com adolescentes com dislexia.",
-    oldPrice: "R$ 29,90",
+    oldPrice: "R$ 97,90",
     discount: "57%",
-    price: "R$ 12,90",
-    link: "#"
+    price: "R$ 9,90",
+    link: "https://pay.lowify.com.br/checkout?product_id=3Aa1Uq"
   },
   {
     name: "Planner Psicopedagógico 2026",
