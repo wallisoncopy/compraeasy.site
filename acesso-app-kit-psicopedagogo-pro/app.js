@@ -1,7 +1,7 @@
 // App 100% estático (GitHub Pages). Edite seus links abaixo:
 const CONFIG = {
   kitLink: "https://drive.google.com/drive/folders/1iidCfN3RWrVsB1MMydyre_tKfXCI9otT?usp=sharing",
-  whatsappLink: "https://wa.me/55SEUNUMEROAQUI?text=Ol%C3%A1!%20Preciso%20de%20ajuda%20no%20App%20Kit%20Psicopedagogo%20Pro.",
+  whatsappLink: "https://chat.whatsapp.com/KoWjKoLz3w24x3AXyqeT0q",
 };
 
 // 5 vídeos (você pode trocar depois)
