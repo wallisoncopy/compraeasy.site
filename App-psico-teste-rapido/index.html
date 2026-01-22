@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>PsicoPro – Kit Psicopedagogo</title>
+    
+    <!-- Tailwind CSS para design moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bibliotecas para PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .active-tab { color: #10b981; }
+        .test-stimulus { font-size: 5rem; transition: transform 0.1s; }
+        .hidden-report { position: absolute; left: -9999px; top: -9999px; width: 800px; }
+        input, textarea, select { font-size: 16px !important; } /* Previne zoom no iOS */
+    </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-emerald-50 text-slate-800 min-h-screen flex flex-col pb-20">
+
+    <!-- Header Fixo -->
+    <header class="bg-white border-b border-emerald-100 sticky top-0 z-40 px-4 py-3 flex justify-between items-center shadow-sm">
+        <h1 class="text-emerald-700 font-bold text-lg flex items-center gap-2">
+            <i class="fas fa-brain text-emerald-500"></i>
+            PsicoPro
+        </h1>
+        <div id="status-badge" class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold uppercase">Online</div>
+    </header>
+
+    <!-- Viewport (Onde o conteúdo troca) -->
+    <main id="app-content" class="flex-grow p-4 md:max-w-xl md:mx-auto w-full">
+        <!-- Injetado via app.js -->
+    </main>
+
+    <!-- Navegação Inferior Fixa -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-emerald-50 flex justify-around items-center py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50">
+        <button onclick="router.navigate('home')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="home">
+            <i class="fas fa-house text-xl"></i>
+            <span>Início</span>
+        </button>
+        <button onclick="router.navigate('testes')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="testes">
+            <i class="fas fa-vial text-xl"></i>
+            <span>Testes</span>
+        </button>
+        <button onclick="router.navigate('relatorios')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="relatorios">
+            <i class="fas fa-file-lines text-xl"></i>
+            <span>Relatórios</span>
+        </button>
+        <button onclick="router.navigate('alunos')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="alunos">
+            <i class="fas fa-user-graduate text-xl"></i>
+            <span>Alunos</span>
+        </button>
+        <button onclick="router.navigate('config')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="config">
+            <i class="fas fa-gear text-xl"></i>
+            <span>Ajustes</span>
+        </button>
+    </nav>
+
+    <!-- Template Oculto para PDF -->
+    <div id="pdf-render-area" class="hidden-report bg-white p-12"></div>
+
+    <script src="app.js"></script>
+    <script>
+        // Service Worker Simples para funcionamento Offline
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
+            });
+        }
+        // Detector de conexão
+        window.addEventListener('online', () => document.getElementById('status-badge').innerText = 'Online');
+        window.addEventListener('offline', () => document.getElementById('status-badge').innerText = 'Offline');
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
