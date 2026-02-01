@@ -16,12 +16,12 @@ const VIDEOS = [
 // 3 ofertas (upsell)
 const UPSELLS = [
   {
-    name: "A Sessão Termina, Mas a Intervenção Não",
-    desc: "Guia prático com orientações e atividades para dar continuidade à intervenção após a sessão.",
-    oldPrice: "R$ 147,90",
-    discount: "36%",
-    price: "R$ 9,90",
-    link: "https://pay.lowify.com.br/checkout?product_id=FTFoAP"
+    name: "+Leads no zap + Lucro!",
+    desc: "Consultoria individual para lotar seu Whatsapp e não depender de ficar postando conteúdo todos os dias nas redes sociais.",
+    oldPrice: "R$ 377,90",
+    discount: "+de 100%",
+    price: "R$ 97,00",
+    link: "https://pay.lowify.com.br/checkout?product_id=3wDCRR"
   },
   {
     name: "Guia com Atividades para Adolescentes com Dislexia",
