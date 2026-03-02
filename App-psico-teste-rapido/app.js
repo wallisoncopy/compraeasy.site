@@ -1302,9 +1302,20 @@ function renderFichas(el) {
                 <button onclick="router.navigate('config')" class="bg-violet-600 text-white text-xs font-bold px-4 py-2 rounded-xl">Configurar</button>
             </div>`}
 
+            <a href="manual.html" target="_blank" rel="noopener" class="flex items-center gap-4 bg-gradient-to-r from-blue-500 to-indigo-600 p-4 rounded-3xl text-white shadow-lg active:scale-95 transition-all">
+                <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="flex-grow">
+                    <p class="font-black">Manual Completo do App</p>
+                    <p class="text-blue-100 text-xs">Passo a passo de todas as funções</p>
+                </div>
+                <i class="fas fa-external-link-alt text-white/60"></i>
+            </a>
+
             <div class="flex items-center gap-2 px-1">
                 <div class="h-px flex-grow bg-slate-100"></div>
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Manual de Uso</span>
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Resumo de Uso</span>
                 <div class="h-px flex-grow bg-slate-100"></div>
             </div>
 

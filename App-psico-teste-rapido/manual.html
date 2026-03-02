@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Uso – PsicoPro Teste Rápido</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #059669;
+      --green-light: #d1fae5;
+      --green-dark: #065f46;
+      --violet: #7c3aed;
+      --violet-light: #ede9fe;
+      --amber: #d97706;
+      --amber-light: #fef3c7;
+      --rose: #e11d48;
+      --rose-light: #ffe4e6;
+      --blue: #2563eb;
+      --blue-light: #dbeafe;
+      --slate: #334155;
+      --slate-light: #f1f5f9;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0fdf4;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .hero {
+      background: linear-gradient(135deg, #059669 0%, #047857 60%, #065f46 100%);
+      color: white;
+      padding: 48px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    }
+    .hero-icon {
+      width: 72px; height: 72px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    .hero h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+    .hero p { font-size: 14px; opacity: 0.9; max-width: 320px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-size: 11px; font-weight: 700;
+      margin-top: 16px; letter-spacing: 0.05em;
+    }
+
+    /* ÍNDICE */
+    .index-bar {
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 12px 16px;
+      overflow-x: auto;
+      white-space: nowrap;
+      position: sticky; top: 0; z-index: 10;
+      display: flex; gap: 8px;
+    }
+    .index-bar a {
+      display: inline-flex; align-items: center; gap-5px;
+      background: #f1f5f9;
+      color: #475569;
+      text-decoration: none;
+      border-radius: 99px;
+      padding: 6px 12px;
+      font-size: 11px; font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .index-bar a:hover { background: var(--green-light); color: var(--green-dark); }
+
+    /* CONTEÚDO */
+    .container { max-width: 600px; margin: 0 auto; padding: 0 16px 80px; }
+
+    /* SEÇÃO */
+    .section {
+      margin-top: 32px;
+      scroll-margin-top: 64px;
+    }
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px;
+    }
+    .section-icon {
+      width: 44px; height: 44px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .section-title { font-size: 18px; font-weight: 800; color: #0f172a; }
+    .section-subtitle { font-size: 12px; color: #64748b; font-weight: 500; }
+
+    /* PASSO */
+    .steps { display: flex; flex-direction: column; gap: 12px; }
+    .step {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: white;
+      border-radius: 16px;
+      padding: 14px 16px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--green);
+      color: white; font-size: 12px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-content { flex: 1; }
+    .step-title { font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
+    .step-text { font-size: 13px; color: #475569; }
+
+    /* MOCKUP CELULAR */
+    .phone-wrap { display: flex; justify-content: center; margin: 20px 0; }
+    .phone {
+      width: 220px;
+      background: #0f172a;
+      border-radius: 32px;
+      padding: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+    .phone-screen {
+      background: #f0fdf4;
+      border-radius: 22px;
+      overflow: hidden;
+      min-height: 360px;
+    }
+    .phone-bar {
+      background: white;
+      padding: 10px 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .phone-bar-title { font-size: 11px; font-weight: 800; color: #059669; }
+    .phone-bar-badge { font-size: 8px; background: #d1fae5; color: #065f46; border-radius: 99px; padding: 2px 6px; font-weight: 700; }
+    .phone-content { padding: 10px; }
+    .phone-card {
+      background: white; border-radius: 12px;
+      padding: 10px; margin-bottom: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 11px;
+    }
+    .phone-card-title { font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .phone-card-sub { color: #64748b; font-size: 10px; }
+    .phone-btn {
+      display: block; text-align: center;
+      padding: 8px; border-radius: 10px;
+      font-size: 10px; font-weight: 800;
+      color: white; margin-bottom: 6px;
+    }
+    .phone-nav {
+      background: white; border-top: 1px solid #e2e8f0;
+      padding: 6px 4px; display: flex; justify-content: space-around;
+    }
+    .phone-nav-item { text-align: center; font-size: 7px; font-weight: 700; color: #94a3b8; }
+    .phone-nav-item.active { color: #059669; }
+    .phone-nav-item i { display: block; font-size: 14px; margin-bottom: 2px; }
+
+    /* HIGHLIGHT BOX */
+    .highlight {
+      border-radius: 16px; padding: 14px 16px;
+      margin: 16px 0; font-size: 13px;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .highlight i { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .highlight.tip { background: var(--green-light); color: var(--green-dark); border: 1px solid #a7f3d0; }
+    .highlight.warn { background: var(--amber-light); color: #92400e; border: 1px solid #fcd34d; }
+    .highlight.info { background: var(--blue-light); color: #1e40af; border: 1px solid #93c5fd; }
+    .highlight.violet { background: var(--violet-light); color: #4c1d95; border: 1px solid #c4b5fd; }
+
+    /* CORES POR SEÇÃO */
+    .color-green { background: var(--green-light); color: var(--green-dark); }
+    .color-violet { background: var(--violet-light); color: var(--violet); }
+    .color-amber { background: var(--amber-light); color: var(--amber); }
+    .color-blue { background: var(--blue-light); color: var(--blue); }
+    .color-rose { background: var(--rose-light); color: var(--rose); }
+    .color-slate { background: var(--slate-light); color: var(--slate); }
+
+    /* TABELA DE TESTES */
+    .test-grid { display: flex; flex-direction: column; gap: 8px; }
+    .test-item {
+      background: white; border-radius: 14px; padding: 12px 14px;
+      border: 1px solid #e2e8f0; display: flex; gap: 12px; align-items: center;
+    }
+    .test-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .test-name { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .test-desc { font-size: 11px; color: #64748b; margin-top: 2px; }
+    .test-tag { font-size: 9px; font-weight: 700; border-radius: 99px; padding: 2px 8px; margin-top: 4px; display: inline-block; }
+
+    /* DIVISOR */
+    .divider { border: none; border-top: 1px dashed #cbd5e1; margin: 28px 0; }
+
+    /* RODAPÉ */
+    .footer {
+      text-align: center; padding: 32px 16px;
+      background: white; border-top: 1px solid #e2e8f0;
+      margin-top: 40px;
+    }
+    .footer p { font-size: 12px; color: #94a3b8; }
+    .footer strong { color: var(--green-dark); }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-icon">🧠</div>
+  <h1>Manual de Uso</h1>
+  <p>PsicoPro — Teste Rápido Online<br>Guia completo passo a passo</p>
+  <div class="hero-badge">
+    <span style="width:7px;height:7px;background:white;border-radius:50%;display:inline-block"></span>
+    Versão atualizada com TEA/TDAH e Evolução
+  </div>
+</div>
+
+<!-- ÍNDICE RÁPIDO -->
+<div class="index-bar">
+  <a href="#acesso">🔗 Acesso</a>
+  <a href="#aluno">👤 Aluno</a>
+  <a href="#sessao">📋 Sessão</a>
+  <a href="#testes">🔬 Testes</a>
+  <a href="#tea">🧩 TEA/TDAH</a>
+  <a href="#evolucao">📈 Evolução</a>
+  <a href="#relatorio">📄 Relatório</a>
+  <a href="#fichas">📁 Fichas</a>
+  <a href="#config">⚙️ Ajustes</a>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- 1. ACESSO AO APP -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="acesso">
+    <div class="section-header">
+      <div class="section-icon color-green"><i class="fas fa-mobile-screen"></i></div>
+      <div>
+        <div class="section-title">1. Acessando o App</div>
+        <div class="section-subtitle">Como abrir e instalar no celular</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Abra o link no navegador</div>
+          <div class="step-text">Acesse <strong>compraeasy.site/App-psico-teste-rapido/</strong> pelo navegador do celular (Chrome ou Safari).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Salve na tela inicial (recomendado)</div>
+          <div class="step-text">
+            <strong>Android:</strong> Menu (⋮) → "Adicionar à tela inicial"<br>
+            <strong>iPhone:</strong> Botão compartilhar (□↑) → "Adicionar à Tela de Início"
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Funciona offline</div>
+          <div class="step-text">Após o primeiro acesso, o app funciona sem internet. Os dados ficam salvos no seu celular.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight tip">
+      <i class="fas fa-lightbulb"></i>
+      <div>Salvando na tela inicial o app abre como se fosse um aplicativo nativo — sem barra do navegador, mais rápido e profissional.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- 2. CADASTRAR ALUNO -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="aluno">
+    <div class="section-header">
+      <div class="section-icon color-blue"><i class="fas fa-user-graduate"></i></div>
+      <div>
+        <div class="section-title">2. Cadastrar um Aluno</div>
+        <div class="section-subtitle">Aba "Alunos" na navegação inferior</div>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-bar">
+            <div class="phone-bar-title">🎓 PsicoPro – Teste Rápido</div>
+            <div class="phone-bar-badge">Online</div>
+          </div>
+          <div class="phone-content">
+            <div style="font-size:13px;font-weight:800;color:#0f172a;margin-bottom:8px">Meus Alunos</div>
+            <div class="phone-btn" style="background:linear-gradient(135deg,#059669,#047857)">
+              <i class="fas fa-plus" style="margin-right:6px"></i> Novo Aluno
+            </div>
+            <div class="phone-card">
+              <div class="phone-card-title">👧 Ana Beatriz, 8 anos</div>
+              <div class="phone-card-sub">3 sessões • Última: 28/02</div>
+            </div>
+            <div class="phone-card">
+              <div class="phone-card-title">👦 Pedro Henrique, 10 anos</div>
+              <div class="phone-card-sub">1 sessão • Última: 01/03</div>
+            </div>
+          </div>
+          <div class="phone-nav">
+            <div class="phone-nav-item"><i class="fas fa-house"></i>Início</div>
+            <div class="phone-nav-item"><i class="fas fa-vial"></i>Testes</div>
+            <div class="phone-nav-item"><i class="fas fa-file-lines"></i>Relatórios</div>
+            <div class="phone-nav-item active"><i class="fas fa-user-graduate"></i>Alunos</div>
+            <div class="phone-nav-item"><i class="fas fa-folder-open"></i>Fichas</div>
+            <div class="phone-nav-item"><i class="fas fa-gear"></i>Ajustes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Toque em "Alunos" na barra inferior</div>
+          <div class="step-text">Ícone de formando na navegação do rodapé.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Toque em "+ Novo Aluno"</div>
+          <div class="step-text">Botão verde no topo da tela.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Preencha os dados</div>
+          <div class="step-text">Nome, data de nascimento, escola e observações iniciais. Toque em <strong>Salvar</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- 3. INICIAR SESSÃO -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="sessao">
+    <div class="section-header">
+      <div class="section-icon color-amber"><i class="fas fa-clipboard-list"></i></div>
+      <div>
+        <div class="section-title">3. Iniciar uma Sessão</div>
+        <div class="section-subtitle">Registro de atendimento por aluno</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Toque no nome do aluno</div>
+          <div class="step-text">Na lista de alunos, toque no aluno que você vai atender.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Toque em "Iniciar Sessão"</div>
+          <div class="step-text">Botão verde no perfil do aluno. Uma nova sessão é criada com a data de hoje.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Marque os testes que vai aplicar</div>
+          <div class="step-text">Selecione o checklist de testes da sessão (leitura, fonologia, atenção, TEA/TDAH). Pode marcar apenas os que for usar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Aplique cada teste</div>
+          <div class="step-text">Toque em cada item do checklist para abrir o teste correspondente.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight info">
+      <i class="fas fa-circle-info"></i>
+      <div>Você também pode acessar os testes diretamente pela aba <strong>Testes</strong> no menu inferior, sem precisar estar em uma sessão.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- 4. OS TESTES DISPONÍVEIS -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="testes">
+    <div class="section-header">
+      <div class="section-icon color-violet"><i class="fas fa-flask"></i></div>
+      <div>
+        <div class="section-title">4. Testes Disponíveis</div>
+        <div class="section-subtitle">O que cada teste avalia</div>
+      </div>
+    </div>
+
+    <div class="test-grid">
+
+      <div class="test-item">
+        <div class="test-icon color-blue"><i class="fas fa-book-open-reader"></i></div>
+        <div>
+          <div class="test-name">Velocidade de Leitura</div>
+          <div class="test-desc">O aluno lê um texto em voz alta enquanto você cronometra. O app calcula automaticamente as Palavras Por Minuto (PPM) e indica se está na faixa esperada para a idade.</div>
+          <span class="test-tag color-blue">🕐 ~5 min</span>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <div class="test-icon color-amber"><i class="fas fa-spell-check"></i></div>
+        <div>
+          <div class="test-name">Consciência Fonológica</div>
+          <div class="test-desc">Exibe estímulos sonoros e visuais (palavras, sílabas, fonemas). Você anota os acertos do aluno e o app calcula o percentual de desempenho.</div>
+          <span class="test-tag color-amber">🔤 ~8 min</span>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <div class="test-icon color-green"><i class="fas fa-eye"></i></div>
+        <div>
+          <div class="test-name">Atenção / Stroop</div>
+          <div class="test-desc">Tarefa Stroop adaptada: palavras de cores exibidas em cores diferentes. Avalia atenção seletiva e controle inibitório. Tempo de reação registrado automaticamente.</div>
+          <span class="test-tag color-green">⚡ ~6 min</span>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <div class="test-icon color-rose"><i class="fas fa-brain"></i></div>
+        <div>
+          <div class="test-name">Escala TEA/TDAH — DSM-5</div>
+          <div class="test-desc">28 comportamentos observáveis baseados nos critérios diagnósticos do DSM-5. Avalia TDAH Desatento, TDAH Hiperativo, TEA Social e TEA Repetitivo separadamente.</div>
+          <span class="test-tag color-rose">🆕 Novo</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- 5. ESCALA TEA/TDAH -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="tea">
+    <div class="section-header">
+      <div class="section-icon color-rose"><i class="fas fa-brain"></i></div>
+      <div>
+        <div class="section-title">5. Escala TEA/TDAH (DSM-5)</div>
+        <div class="section-subtitle">Como aplicar a triagem comportamental</div>
+      </div>
+    </div>
+
+    <div class="highlight warn">
+      <i class="fas fa-triangle-exclamation"></i>
+      <div><strong>Importante:</strong> Este instrumento é uma <strong>triagem de rastreio</strong>, não um diagnóstico. Os resultados devem ser interpretados por profissional habilitado e não substituem avaliação clínica completa.</div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Acesse pela aba "Testes"</div>
+          <div class="step-text">Toque em <strong>Testes</strong> no menu inferior → encontre o card <strong>"Escala TEA/TDAH – DSM-5"</strong> com o badge "Novo".</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Responda os 28 comportamentos</div>
+          <div class="step-text">Para cada comportamento descrito, marque <strong>Não/Raramente</strong>, <strong>Às vezes</strong> ou <strong>Frequentemente/Sempre</strong> conforme o que você observa do aluno.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Veja os indicadores automáticos</div>
+          <div class="step-text">O app calcula pontuações em 4 dimensões separadamente e exibe indicadores coloridos: <span style="color:#059669;font-weight:700">✔ Sem indicativos</span> ou <span style="color:#e11d48;font-weight:700">⚠ Indicativo clínico</span>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Salve na sessão</div>
+          <div class="step-text">Toque em <strong>"Salvar na Sessão"</strong>. Os resultados ficam registrados e aparecem no relatório PDF gerado depois.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight violet">
+      <i class="fas fa-table-list"></i>
+      <div>
+        <strong>O que o app avalia nos 28 itens:</strong><br>
+        <span style="display:block;margin-top:6px">📌 <strong>9 itens</strong> — TDAH Desatento (limiares DSM-5: ≥6)</span>
+        <span style="display:block">📌 <strong>9 itens</strong> — TDAH Hiperativo/Impulsivo (≥6)</span>
+        <span style="display:block">📌 <strong>5 itens</strong> — TEA Social (≥3)</span>
+        <span style="display:block">📌 <strong>5 itens</strong> — TEA Comportamentos Repetitivos (≥2)</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- 6. EVOLUÇÃO -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="evolucao">
+    <div class="section-header">
+      <div class="section-icon color-violet"><i class="fas fa-chart-line"></i></div>
+      <div>
+        <div class="section-title">6. Gráficos de Evolução</div>
+        <div class="section-subtitle">Acompanhe o progresso ao longo das sessões</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Abra o perfil do aluno</div>
+          <div class="step-text">Aba Alunos → toque no nome do aluno.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Toque em "Ver Evolução"</div>
+          <div class="step-text">Botão roxo ao lado de "Iniciar Sessão" no perfil do aluno.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Analise os gráficos</div>
+          <div class="step-text">São exibidos 4 gráficos de linha mostrando a evolução sessão a sessão: Velocidade de Leitura (PPM), Fonologia (%), Atenção (acertos) e TDAH (pontuação).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight tip">
+      <i class="fas fa-lightbulb"></i>
+      <div>Os gráficos ficam mais ricos conforme você aplica mais sessões. <strong>A partir da 2ª sessão</strong> já é possível ver tendências de melhora ou dificuldade persistente.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- 7. GERAR RELATÓRIO -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="relatorio">
+    <div class="section-header">
+      <div class="section-icon color-amber"><i class="fas fa-file-pdf"></i></div>
+      <div>
+        <div class="section-title">7. Gerar Relatório PDF</div>
+        <div class="section-subtitle">Documente o atendimento profissionalmente</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Vá para aba "Relatórios"</div>
+          <div class="step-text">Ícone de documento no menu inferior.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Selecione o aluno e a sessão</div>
+          <div class="step-text">Escolha o aluno e qual sessão deseja incluir no relatório.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Toque em "Gerar PDF"</div>
+          <div class="step-text">O relatório é gerado com os resultados de todos os testes aplicados na sessão, incluindo TEA/TDAH se foi aplicado.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Salve ou compartilhe</div>
+          <div class="step-text">Seu celular abrirá opções para salvar o PDF, enviar por WhatsApp ou e-mail para os responsáveis.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight info">
+      <i class="fas fa-circle-info"></i>
+      <div>O relatório inclui automaticamente o <strong>nome da psicopedagoga, cidade e assinatura</strong> configurados em Ajustes. Configure antes de gerar o primeiro relatório.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- 8. FICHAS & MATERIAIS -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="fichas">
+    <div class="section-header">
+      <div class="section-icon" style="background:#ede9fe;color:#7c3aed"><i class="fas fa-folder-open"></i></div>
+      <div>
+        <div class="section-title">8. Fichas & Materiais</div>
+        <div class="section-subtitle">Acesse seus recursos do Google Drive</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Configure o link do Drive (1x)</div>
+          <div class="step-text">Vá em <strong>Ajustes → Link da Pasta de Fichas</strong> e cole o link da sua pasta do Google Drive.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Acesse a aba "Fichas"</div>
+          <div class="step-text">Ícone de pasta no menu inferior. Aparecerá o botão verde <strong>"Abrir Pasta do Drive"</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Navegue pelo manual embutido</div>
+          <div class="step-text">Na mesma tela há 7 seções de manual com dicas de como usar cada recurso do kit.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════ -->
+  <!-- 9. AJUSTES -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="config">
+    <div class="section-header">
+      <div class="section-icon color-slate"><i class="fas fa-gear"></i></div>
+      <div>
+        <div class="section-title">9. Configurar seu Perfil</div>
+        <div class="section-subtitle">Aparece nos relatórios gerados</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Vá em "Ajustes" (ícone de engrenagem)</div>
+          <div class="step-text">Último ícone no menu inferior.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Preencha os campos</div>
+          <div class="step-text">Nome completo, cidade, telefone, e-mail e assinatura profissional. Esses dados aparecem no rodapé de todos os relatórios.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Cole o link do Drive</div>
+          <div class="step-text">No campo <strong>"Link da Pasta de Fichas"</strong>, cole o link da sua pasta compartilhada do Google Drive.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Toque em "Salvar Perfil"</div>
+          <div class="step-text">Os dados ficam salvos no seu dispositivo e você não precisa preencher de novo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- DÚVIDAS FREQUENTES -->
+  <div class="section" id="faq">
+    <div class="section-header">
+      <div class="section-icon color-green"><i class="fas fa-circle-question"></i></div>
+      <div>
+        <div class="section-title">Dúvidas Frequentes</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"><i class="fas fa-question" style="font-size:10px"></i></div>
+        <div class="step-content">
+          <div class="step-title">O app perde os dados se eu fechar?</div>
+          <div class="step-text">Não. Os dados ficam salvos no armazenamento local do celular. Só perdem se você limpar os dados do navegador ou desinstalar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><i class="fas fa-question" style="font-size:10px"></i></div>
+        <div class="step-content">
+          <div class="step-title">Funciona sem internet?</div>
+          <div class="step-text">Sim, após o primeiro carregamento. Exceto o botão de abrir o Google Drive, que precisa de conexão.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><i class="fas fa-question" style="font-size:10px"></i></div>
+        <div class="step-content">
+          <div class="step-title">Posso usar em tablet?</div>
+          <div class="step-text">Sim. O app é responsivo e funciona em tablets. A experiência é melhor em telas até 600px de largura (celular).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><i class="fas fa-question" style="font-size:10px"></i></div>
+        <div class="step-content">
+          <div class="step-title">O resultado da Escala TEA/TDAH é um diagnóstico?</div>
+          <div class="step-text">Não. É uma triagem de rastreio baseada no DSM-5. Indica <em>sinais de alerta</em> que devem ser investigados por avaliação clínica completa.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- RODAPÉ -->
+<div class="footer">
+  <p>📱 <strong>PsicoPro – Teste Rápido Online</strong></p>
+  <p style="margin-top:4px">Kit Psicopedagogo Pro · compraeasy.site</p>
+  <p style="margin-top:8px;font-size:11px">Dúvidas? Fale pelo WhatsApp do suporte no app principal.</p>
+</div>
+
+</body>
+</html>
