@@ -128,6 +128,14 @@ function renderHome(el) {
                     </div>
                     <i class="fas fa-arrow-right text-white/60 ml-auto"></i>
                 </button>
+                <a href="https://compraeasy.site/acesso-app-kit-psicopedagogo-pro/" target="_blank" rel="noopener" class="flex items-center gap-4 bg-gradient-to-r from-emerald-600 to-teal-600 p-4 rounded-2xl shadow-lg hover:opacity-90">
+                    <div class="w-12 h-12 bg-white/20 text-white rounded-xl flex items-center justify-center text-xl"><i class="fas fa-star"></i></div>
+                    <div class="text-left">
+                        <p class="font-bold text-white">Kit Psicopedagogo Pro</p>
+                        <p class="text-xs text-emerald-100">Acesse o kit completo de materiais e recursos.</p>
+                    </div>
+                    <i class="fas fa-arrow-up-right-from-square text-white/60 ml-auto"></i>
+                </a>
             </div>
         </div>
     `;
