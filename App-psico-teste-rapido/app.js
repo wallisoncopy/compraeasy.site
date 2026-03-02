@@ -53,6 +53,9 @@ const router = {
             case 'test_attention': renderTestAttention(root); break;
             case 'test_writing': renderTestWriting(root); break;
             case 'test_tea_tdah': renderTestTEA(root); break;
+            case 'test_span_digitos': renderTestSpanDigitos(root); break;
+            case 'test_memoria_visual': renderTestMemoriaVisual(root); break;
+            case 'test_fluencia_verbal': renderTestFluenciaVerbal(root); break;
             case 'fichas': renderFichas(root); break;
             case 'evolucao': renderEvolucao(root); break;
             default: renderHome(root);
@@ -476,6 +479,44 @@ function renderTestList(el) {
                         <p class="text-xs text-slate-400">Rastreio comportamental DSM-5.</p>
                     </div>
                     <span class="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">Novo</span>
+                </div>
+            </div>
+
+            <!-- SEÇÃO NEURO -->
+            <div class="flex items-center gap-3 mt-2">
+                <div class="h-px flex-grow bg-gradient-to-r from-indigo-200 to-transparent"></div>
+                <div class="flex items-center gap-2 bg-indigo-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
+                    <i class="fas fa-brain text-xs"></i> Neuropsicopedagogia
+                </div>
+                <div class="h-px flex-grow bg-gradient-to-l from-indigo-200 to-transparent"></div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+                <div onclick="router.navigate('test_span_digitos')" class="bg-gradient-to-r from-indigo-50 to-violet-50 p-6 rounded-3xl border border-indigo-100 shadow-sm flex items-center gap-4 cursor-pointer active:scale-95 transition-all">
+                    <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-hashtag"></i></div>
+                    <div class="flex-grow">
+                        <p class="font-bold text-slate-700">Span de Dígitos</p>
+                        <p class="text-xs text-slate-400">Memória de trabalho verbal — direto e inverso.</p>
+                    </div>
+                    <span class="bg-indigo-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">Neuro</span>
+                </div>
+
+                <div onclick="router.navigate('test_memoria_visual')" class="bg-gradient-to-r from-indigo-50 to-violet-50 p-6 rounded-3xl border border-indigo-100 shadow-sm flex items-center gap-4 cursor-pointer active:scale-95 transition-all">
+                    <div class="w-14 h-14 bg-violet-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-border-all"></i></div>
+                    <div class="flex-grow">
+                        <p class="font-bold text-slate-700">Memória Visual (Corsi)</p>
+                        <p class="text-xs text-slate-400">Span visuoespacial — sequência de blocos.</p>
+                    </div>
+                    <span class="bg-violet-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">Neuro</span>
+                </div>
+
+                <div onclick="router.navigate('test_fluencia_verbal')" class="bg-gradient-to-r from-indigo-50 to-violet-50 p-6 rounded-3xl border border-indigo-100 shadow-sm flex items-center gap-4 cursor-pointer active:scale-95 transition-all">
+                    <div class="w-14 h-14 bg-sky-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-comment-dots"></i></div>
+                    <div class="flex-grow">
+                        <p class="font-bold text-slate-700">Fluência Verbal</p>
+                        <p class="text-xs text-slate-400">Semântica e fonêmica com timer de 60s.</p>
+                    </div>
+                    <span class="bg-sky-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">Neuro</span>
                 </div>
             </div>
         </div>
@@ -1345,6 +1386,404 @@ function renderFichas(el) {
             </div>
         </div>
     `;
+}
+
+// =====================================================
+// --- NEURO: SPAN DE DÍGITOS ---
+// =====================================================
+function renderTestSpanDigitos(el) {
+    const sequences = {
+        direto: [
+            [2,4],  [5,8,1], [7,2,9,4], [3,8,1,6,5], [4,9,2,7,1,8], [1,5,3,9,7,2,6]
+        ],
+        inverso: [
+            [1,3], [6,2,9], [4,7,1,5], [8,3,9,2,6], [3,7,1,5,9,2]
+        ]
+    };
+
+    el.innerHTML = `
+        <div class="space-y-5">
+            <div class="flex items-center gap-3">
+                <button onclick="router.navigate('testes')" class="w-10 h-10 bg-white border border-slate-100 rounded-2xl flex items-center justify-center shadow-sm"><i class="fas fa-arrow-left text-slate-500"></i></button>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Span de Dígitos</h2>
+                    <p class="text-xs text-indigo-600 font-bold uppercase tracking-wide">Memória de Trabalho Verbal</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-indigo-600 to-violet-700 p-5 rounded-3xl text-white">
+                <p class="text-sm font-bold mb-1">Como aplicar:</p>
+                <ol class="text-sm text-indigo-100 space-y-1 list-decimal list-inside">
+                    <li>Fale os dígitos em voz alta, 1 por segundo</li>
+                    <li>Peça à criança para repetir na ordem correta (direto)</li>
+                    <li>Depois peça para repetir ao contrário (inverso)</li>
+                    <li>Marque "Acertou" ou "Errou" para cada sequência</li>
+                </ol>
+            </div>
+
+            <div id="span-tabs" class="grid grid-cols-2 gap-2">
+                <button onclick="showSpanTab('direto')" id="tab-direto" class="py-3 rounded-2xl font-bold text-sm bg-indigo-600 text-white shadow">▶ Direto</button>
+                <button onclick="showSpanTab('inverso')" id="tab-inverso" class="py-3 rounded-2xl font-bold text-sm bg-white border border-slate-200 text-slate-500">◀ Inverso</button>
+            </div>
+
+            <div id="span-content"></div>
+
+            <div id="span-result" class="hidden bg-white border border-emerald-100 rounded-3xl p-5 shadow-sm">
+                <h3 class="font-black text-slate-800 mb-3">📊 Resultado</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-indigo-50 rounded-2xl p-3 text-center">
+                        <div id="res-direto" class="text-3xl font-black text-indigo-700">—</div>
+                        <div class="text-xs font-bold text-indigo-500 mt-1">Span Direto</div>
+                    </div>
+                    <div class="bg-violet-50 rounded-2xl p-3 text-center">
+                        <div id="res-inverso" class="text-3xl font-black text-violet-700">—</div>
+                        <div class="text-xs font-bold text-violet-500 mt-1">Span Inverso</div>
+                    </div>
+                </div>
+                <div id="span-interp" class="mt-3 text-sm text-slate-600 bg-slate-50 rounded-2xl p-3"></div>
+                <button onclick="saveSpanSession()" class="mt-4 w-full bg-indigo-600 text-white font-bold py-3 rounded-2xl">Salvar na Sessão</button>
+            </div>
+        </div>
+    `;
+
+    window._spanScores = { direto: 0, inverso: 0 };
+
+    window.showSpanTab = (type) => {
+        document.getElementById('tab-direto').className = type === 'direto'
+            ? 'py-3 rounded-2xl font-bold text-sm bg-indigo-600 text-white shadow'
+            : 'py-3 rounded-2xl font-bold text-sm bg-white border border-slate-200 text-slate-500';
+        document.getElementById('tab-inverso').className = type === 'inverso'
+            ? 'py-3 rounded-2xl font-bold text-sm bg-indigo-600 text-white shadow'
+            : 'py-3 rounded-2xl font-bold text-sm bg-white border border-slate-200 text-slate-500';
+
+        const seqs = sequences[type];
+        const color = type === 'direto' ? 'indigo' : 'violet';
+        document.getElementById('span-content').innerHTML = `
+            <div class="space-y-3">
+                ${seqs.map((seq, i) => `
+                <div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-black text-${color}-600 uppercase">Sequência ${i+1} (${seq.length} dígitos)</span>
+                    </div>
+                    <div class="flex gap-2 mb-3">
+                        ${seq.map(d => `<span class="w-10 h-10 rounded-xl bg-${color}-100 text-${color}-700 font-black text-lg flex items-center justify-center">${d}</span>`).join('')}
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="markSpan('${type}',${i},'ok',this)" class="py-2 rounded-xl text-sm font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 active:scale-95 transition-all">✔ Acertou</button>
+                        <button onclick="markSpan('${type}',${i},'fail',this)" class="py-2 rounded-xl text-sm font-bold bg-red-50 text-red-600 border border-red-200 active:scale-95 transition-all">✘ Errou</button>
+                    </div>
+                </div>`).join('')}
+            </div>`;
+    };
+
+    window.markSpan = (type, idx, result, btn) => {
+        const seqs = sequences[type];
+        if (result === 'ok' && seqs[idx].length > window._spanScores[type]) {
+            window._spanScores[type] = seqs[idx].length;
+        }
+        btn.closest('.grid').querySelectorAll('button').forEach(b => b.classList.remove('ring-2','ring-offset-1'));
+        btn.classList.add('ring-2', result === 'ok' ? 'ring-emerald-400' : 'ring-red-400', 'ring-offset-1');
+
+        document.getElementById('res-direto').textContent = window._spanScores.direto || '—';
+        document.getElementById('res-inverso').textContent = window._spanScores.inverso || '—';
+
+        const d = window._spanScores.direto, inv = window._spanScores.inverso;
+        if (d || inv) {
+            document.getElementById('span-result').classList.remove('hidden');
+            let interp = '';
+            if (d > 0) {
+                if (d <= 3) interp += '⚠️ Span direto abaixo da média (esperado ≥5 para 7+ anos). ';
+                else if (d <= 5) interp += '✔ Span direto na média para a faixa etária. ';
+                else interp += '✨ Span direto acima da média — boa memória de trabalho verbal. ';
+            }
+            if (inv > 0) {
+                if (inv <= 2) interp += '⚠️ Span inverso reduzido (esperado ≥3) — pode indicar dificuldade de manipulação mental.';
+                else interp += '✔ Span inverso adequado.';
+            }
+            document.getElementById('span-interp').textContent = interp;
+        }
+    };
+
+    window.saveSpanSession = () => {
+        if (!AppState.activeSessionId) return alert('Nenhuma sessão ativa.');
+        const sessions = DB.get('psy_sessions');
+        const idx = sessions.findIndex(s => s.id === AppState.activeSessionId);
+        if (idx === -1) return;
+        sessions[idx].spanDigitos = { direto: window._spanScores.direto, inverso: window._spanScores.inverso, date: new Date().toISOString() };
+        DB.set('psy_sessions', sessions);
+        alert('Span de Dígitos salvo na sessão!');
+        router.navigate('new_session');
+    };
+
+    showSpanTab('direto');
+}
+
+// =====================================================
+// --- NEURO: MEMÓRIA VISUAL (CORSI) ---
+// =====================================================
+function renderTestMemoriaVisual(el) {
+    const GRID = [0,1,2,3,4,5,6,7,8]; // 3x3 grid
+    const sequences = [
+        [0,4],[1,5,7],[2,4,6,0],[3,7,1,5,8],[0,6,2,8,4,1],[5,3,7,0,8,2,4]
+    ];
+    let currentSeq = 0, highlighting = false;
+
+    el.innerHTML = `
+        <div class="space-y-5">
+            <div class="flex items-center gap-3">
+                <button onclick="router.navigate('testes')" class="w-10 h-10 bg-white border border-slate-100 rounded-2xl flex items-center justify-center shadow-sm"><i class="fas fa-arrow-left text-slate-500"></i></button>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Memória Visual</h2>
+                    <p class="text-xs text-violet-600 font-bold uppercase tracking-wide">Span Visuoespacial – Corsi Blocks</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-violet-600 to-indigo-700 p-5 rounded-3xl text-white">
+                <p class="text-sm font-bold mb-1">Como aplicar:</p>
+                <ol class="text-sm text-violet-100 space-y-1 list-decimal list-inside">
+                    <li>Toque em "Mostrar Sequência" — os blocos acenderão um por um</li>
+                    <li>Peça à criança para tocar os blocos na mesma ordem</li>
+                    <li>Marque se acertou ou errou a sequência</li>
+                </ol>
+            </div>
+
+            <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5">
+                <div class="flex justify-between items-center mb-4">
+                    <span id="corsi-level" class="text-sm font-black text-violet-700">Sequência 1 de ${sequences.length} (${sequences[0].length} blocos)</span>
+                    <span id="corsi-span-badge" class="text-xs bg-violet-100 text-violet-700 px-3 py-1 rounded-full font-bold">Span: —</span>
+                </div>
+
+                <div id="corsi-grid" class="grid grid-cols-3 gap-3 mb-5">
+                    ${GRID.map(i => `<div id="corsi-${i}" onclick="corsiTap(${i})" class="h-16 rounded-2xl bg-slate-100 border-2 border-slate-200 cursor-pointer active:scale-95 transition-all"></div>`).join('')}
+                </div>
+
+                <button id="corsi-show-btn" onclick="showCorsiSequence()" class="w-full bg-violet-600 text-white font-bold py-3 rounded-2xl mb-3 active:scale-95 transition-all">▶ Mostrar Sequência</button>
+
+                <div id="corsi-mark" class="hidden grid grid-cols-2 gap-2">
+                    <button onclick="markCorsi('ok')" class="py-2.5 rounded-xl text-sm font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">✔ Acertou</button>
+                    <button onclick="markCorsi('fail')" class="py-2.5 rounded-xl text-sm font-bold bg-red-50 text-red-600 border border-red-200">✘ Errou</button>
+                </div>
+            </div>
+
+            <div id="corsi-result" class="hidden bg-white border border-emerald-100 rounded-3xl p-5 shadow-sm">
+                <h3 class="font-black text-slate-800 mb-2">📊 Resultado</h3>
+                <div class="bg-violet-50 rounded-2xl p-4 text-center mb-3">
+                    <div id="corsi-final-span" class="text-4xl font-black text-violet-700">—</div>
+                    <div class="text-xs font-bold text-violet-500 mt-1">Span Visuoespacial</div>
+                </div>
+                <div id="corsi-interp" class="text-sm text-slate-600 bg-slate-50 rounded-2xl p-3 mb-3"></div>
+                <button onclick="saveCorsiSession()" class="w-full bg-violet-600 text-white font-bold py-3 rounded-2xl">Salvar na Sessão</button>
+            </div>
+        </div>
+    `;
+
+    window._corsiSpan = 0;
+    window._corsiSeqIdx = 0;
+
+    window.showCorsiSequence = async () => {
+        const seq = sequences[window._corsiSeqIdx];
+        document.getElementById('corsi-show-btn').disabled = true;
+        document.getElementById('corsi-mark').classList.add('hidden');
+
+        for (let i = 0; i < seq.length; i++) {
+            const box = document.getElementById(`corsi-${seq[i]}`);
+            box.classList.add('bg-violet-500','border-violet-600','scale-95');
+            await new Promise(r => setTimeout(r, 600));
+            box.classList.remove('bg-violet-500','border-violet-600','scale-95');
+            await new Promise(r => setTimeout(r, 300));
+        }
+        document.getElementById('corsi-show-btn').disabled = false;
+        document.getElementById('corsi-mark').classList.remove('hidden');
+        document.getElementById('corsi-mark').style.display = 'grid';
+    };
+
+    window.corsiTap = (idx) => {
+        const box = document.getElementById(`corsi-${idx}`);
+        box.classList.add('bg-indigo-300','scale-90');
+        setTimeout(() => box.classList.remove('bg-indigo-300','scale-90'), 200);
+    };
+
+    window.markCorsi = (result) => {
+        const seq = sequences[window._corsiSeqIdx];
+        if (result === 'ok') window._corsiSpan = seq.length;
+
+        document.getElementById('corsi-span-badge').textContent = `Span: ${window._corsiSpan || '—'}`;
+        document.getElementById('corsi-final-span').textContent = window._corsiSpan || '—';
+
+        let interp = '';
+        if (window._corsiSpan <= 2) interp = '⚠️ Span visuoespacial muito reduzido (esperado ≥4 para 6+ anos) — avalie memória de trabalho não-verbal.';
+        else if (window._corsiSpan <= 4) interp = '✔ Span visuoespacial na média inferior para a faixa etária.';
+        else if (window._corsiSpan <= 5) interp = '✔ Span visuoespacial adequado para a faixa etária.';
+        else interp = '✨ Span visuoespacial acima da média — boa memória de trabalho não-verbal.';
+        document.getElementById('corsi-interp').textContent = interp;
+        document.getElementById('corsi-result').classList.remove('hidden');
+
+        window._corsiSeqIdx++;
+        if (window._corsiSeqIdx < sequences.length && result === 'ok') {
+            const next = sequences[window._corsiSeqIdx];
+            document.getElementById('corsi-level').textContent = `Sequência ${window._corsiSeqIdx+1} de ${sequences.length} (${next.length} blocos)`;
+            document.getElementById('corsi-mark').classList.add('hidden');
+            document.getElementById('corsi-mark').style.display = 'none';
+        }
+    };
+
+    window.saveCorsiSession = () => {
+        if (!AppState.activeSessionId) return alert('Nenhuma sessão ativa.');
+        const sessions = DB.get('psy_sessions');
+        const idx = sessions.findIndex(s => s.id === AppState.activeSessionId);
+        if (idx === -1) return;
+        sessions[idx].memoriaVisual = { span: window._corsiSpan, date: new Date().toISOString() };
+        DB.set('psy_sessions', sessions);
+        alert('Memória Visual salva na sessão!');
+        router.navigate('new_session');
+    };
+}
+
+// =====================================================
+// --- NEURO: FLUÊNCIA VERBAL ---
+// =====================================================
+function renderTestFluenciaVerbal(el) {
+    const categories = [
+        { type: 'Semântica', label: 'Animais', desc: 'Fale o máximo de animais que conseguir em 60 segundos' },
+        { type: 'Semântica', label: 'Frutas', desc: 'Fale o máximo de frutas que conseguir em 60 segundos' },
+        { type: 'Fonêmica', label: 'Letra "F"', desc: 'Fale palavras que comecem com a letra F em 60 segundos' },
+        { type: 'Fonêmica', label: 'Letra "A"', desc: 'Fale palavras que comecem com a letra A em 60 segundos' },
+    ];
+    let timerInterval = null, timeLeft = 60, running = false;
+    let results = [];
+
+    el.innerHTML = `
+        <div class="space-y-5">
+            <div class="flex items-center gap-3">
+                <button onclick="router.navigate('testes')" class="w-10 h-10 bg-white border border-slate-100 rounded-2xl flex items-center justify-center shadow-sm"><i class="fas fa-arrow-left text-slate-500"></i></button>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Fluência Verbal</h2>
+                    <p class="text-xs text-sky-600 font-bold uppercase tracking-wide">Semântica & Fonêmica — 60s</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-sky-600 to-indigo-700 p-5 rounded-3xl text-white">
+                <p class="text-sm font-bold mb-1">Como aplicar:</p>
+                <ol class="text-sm text-sky-100 space-y-1 list-decimal list-inside">
+                    <li>Selecione a categoria e explique para a criança</li>
+                    <li>Toque em "Iniciar 60s" e conte as palavras corretas</li>
+                    <li>Ao término, registre o número de palavras válidas</li>
+                </ol>
+            </div>
+
+            <div class="space-y-3">
+                ${categories.map((cat, i) => `
+                <div class="bg-white border border-slate-100 rounded-3xl p-4 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <span class="text-sm font-black text-slate-800">${cat.label}</span>
+                            <span class="ml-2 text-[9px] font-bold px-2 py-0.5 rounded-full ${cat.type === 'Semântica' ? 'bg-sky-100 text-sky-700' : 'bg-indigo-100 text-indigo-700'}">${cat.type}</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-3">${cat.desc}</p>
+
+                    <div id="timer-display-${i}" class="text-center mb-3 hidden">
+                        <div id="timer-num-${i}" class="text-5xl font-black text-sky-600">60</div>
+                        <div class="text-xs text-slate-400">segundos</div>
+                    </div>
+
+                    <div id="cat-controls-${i}" class="space-y-2">
+                        <button onclick="startTimer(${i})" id="start-btn-${i}" class="w-full bg-sky-600 text-white font-bold py-2.5 rounded-2xl text-sm active:scale-95 transition-all">▶ Iniciar 60s</button>
+                        <div id="count-row-${i}" class="hidden">
+                            <div class="flex items-center gap-2 bg-slate-50 rounded-2xl p-2">
+                                <button onclick="adjCount(${i},-1)" class="w-10 h-10 bg-white rounded-xl border border-slate-200 font-black text-xl text-slate-600 active:scale-95">−</button>
+                                <div id="count-${i}" class="flex-grow text-center text-2xl font-black text-sky-700">0</div>
+                                <button onclick="adjCount(${i},1)" class="w-10 h-10 bg-white rounded-xl border border-slate-200 font-black text-xl text-sky-600 active:scale-95">+</button>
+                            </div>
+                            <button onclick="saveCategory(${i},'${cat.label}','${cat.type}')" class="w-full mt-2 bg-emerald-600 text-white font-bold py-2.5 rounded-2xl text-sm">✔ Salvar Categoria</button>
+                        </div>
+                    </div>
+                    <div id="saved-${i}" class="hidden mt-2 text-center text-xs font-bold text-emerald-600 bg-emerald-50 rounded-xl p-2">✔ Salvo!</div>
+                </div>`).join('')}
+            </div>
+
+            <div id="fluencia-result" class="hidden bg-white border border-emerald-100 rounded-3xl p-5 shadow-sm">
+                <h3 class="font-black text-slate-800 mb-3">📊 Resultado Consolidado</h3>
+                <div id="fluencia-table" class="space-y-2 mb-3"></div>
+                <div id="fluencia-interp" class="text-sm text-slate-600 bg-slate-50 rounded-2xl p-3 mb-3"></div>
+                <button onclick="saveFluenciaSession()" class="w-full bg-sky-600 text-white font-bold py-3 rounded-2xl">Salvar na Sessão</button>
+            </div>
+        </div>
+    `;
+
+    window._fluenciaResults = [];
+    window._fluenciaCounts = [0,0,0,0];
+    window._activeTimers = {};
+
+    window.adjCount = (idx, delta) => {
+        window._fluenciaCounts[idx] = Math.max(0, (window._fluenciaCounts[idx]||0) + delta);
+        document.getElementById(`count-${idx}`).textContent = window._fluenciaCounts[idx];
+    };
+
+    window.startTimer = (idx) => {
+        if (window._activeTimers[idx]) return;
+        let t = 60;
+        document.getElementById(`timer-display-${idx}`).classList.remove('hidden');
+        document.getElementById(`start-btn-${idx}`).classList.add('hidden');
+        document.getElementById(`count-row-${idx}`).classList.remove('hidden');
+        document.getElementById(`count-row-${idx}`).style.display = 'block';
+
+        window._activeTimers[idx] = setInterval(() => {
+            t--;
+            document.getElementById(`timer-num-${idx}`).textContent = t;
+            if (t <= 10) document.getElementById(`timer-num-${idx}`).classList.add('text-red-500');
+            if (t <= 0) {
+                clearInterval(window._activeTimers[idx]);
+                window._activeTimers[idx] = null;
+                document.getElementById(`timer-num-${idx}`).textContent = '⏱ Fim!';
+            }
+        }, 1000);
+    };
+
+    window.saveCategory = (idx, label, type) => {
+        window._fluenciaResults = window._fluenciaResults.filter(r => r.label !== label);
+        window._fluenciaResults.push({ label, type, count: window._fluenciaCounts[idx]||0 });
+        if (window._activeTimers[idx]) { clearInterval(window._activeTimers[idx]); window._activeTimers[idx] = null; }
+        document.getElementById(`saved-${idx}`).classList.remove('hidden');
+        document.getElementById(`count-row-${idx}`).style.display = 'none';
+        document.getElementById(`timer-display-${idx}`).classList.add('hidden');
+
+        // Atualiza resultado consolidado
+        const res = document.getElementById('fluencia-result');
+        res.classList.remove('hidden');
+        const sem = window._fluenciaResults.filter(r => r.type === 'Semântica');
+        const fon = window._fluenciaResults.filter(r => r.type === 'Fonêmica');
+        document.getElementById('fluencia-table').innerHTML = window._fluenciaResults.map(r => `
+            <div class="flex justify-between items-center bg-slate-50 rounded-xl px-4 py-2">
+                <span class="text-sm font-bold text-slate-700">${r.label}</span>
+                <span class="text-lg font-black ${r.count < 10 ? 'text-red-600' : r.count < 14 ? 'text-amber-600' : 'text-emerald-600'}">${r.count}</span>
+            </div>`).join('');
+
+        let interp = '';
+        if (sem.length) {
+            const avgSem = sem.reduce((a,b) => a+b.count, 0) / sem.length;
+            if (avgSem < 10) interp += '⚠️ Fluência semântica reduzida (esperado ≥12 palavras/60s para 6+ anos). ';
+            else if (avgSem < 14) interp += '✔ Fluência semântica na média inferior. ';
+            else interp += '✨ Fluência semântica adequada ou acima da média. ';
+        }
+        if (fon.length) {
+            const avgFon = fon.reduce((a,b) => a+b.count, 0) / fon.length;
+            if (avgFon < 8) interp += '⚠️ Fluência fonêmica reduzida (esperado ≥10/60s). Pode indicar dificuldade em acesso lexical.';
+            else interp += '✔ Fluência fonêmica dentro do esperado.';
+        }
+        document.getElementById('fluencia-interp').textContent = interp || 'Complete mais categorias para a interpretação.';
+    };
+
+    window.saveFluenciaSession = () => {
+        if (!AppState.activeSessionId) return alert('Nenhuma sessão ativa.');
+        const sessions = DB.get('psy_sessions');
+        const idx = sessions.findIndex(s => s.id === AppState.activeSessionId);
+        if (idx === -1) return;
+        sessions[idx].fluenciaVerbal = { results: window._fluenciaResults, date: new Date().toISOString() };
+        DB.set('psy_sessions', sessions);
+        alert('Fluência Verbal salva na sessão!');
+        router.navigate('new_session');
+    };
 }
 
 // --- INICIALIZAÇÃO ---
