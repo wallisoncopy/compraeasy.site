@@ -41,7 +41,142 @@ const UPSELLS = [
   },
 ];
 
-const TITLES = { home: "INÍCIO", aulas: "AULAS", kits: "KIT", mais: "MAIS", ajuda: "AJUDA" };
+const TITLES = { home: "INÍCIO", aulas: "AULAS", kits: "KIT", mais: "MAIS", ajuda: "AJUDA", chat: "ASSISTENTE IA" };
+
+// ─── CHAT IA ────────────────────────────────────────────────────────────────
+const GEMINI_API_KEY = "AIzaSyAwf9_cakILYziCQH_Rw5bR61btwQwGAaQ";
+
+const SYSTEM_PROMPT = `Você é o Assistente Virtual do Kit Psicopedagogo Pro, um app exclusivo para psicopedagogas e profissionais da educação especial.
+
+SOBRE O KIT PSICOPEDAGOGO PRO:
+- Produto digital com acesso vitalício (pagamento único)
+- Atualizações semanais com novos materiais
+- Criado para psicopedagogas atenderem com mais segurança, clareza e excelência profissional
+
+O QUE ESTÁ INCLUÍDO:
+1. KIT DE MATERIAIS COMPLETO: Uma pasta no Google Drive com todos os materiais editáveis e sem logomarca, acessível pelo botão "Abrir Kit Completo" na aba Kit ou Início
+2. AULAS EM VÍDEO: Curadoria de vídeos práticos sobre como realizar atendimentos psicopedagógicos, estruturar sessões e conduzir o processo com segurança
+3. TESTE RÁPIDO ONLINE: Ferramenta para aplicar avaliações de leitura, fonologia, atenção, TEA e TDAH diretamente pelo app, acessível pelo botão "Abrir Teste Rápido" na aba Início
+4. SUPORTE: Suporte via WhatsApp disponível na aba Ajuda
+
+ABAS DO APP:
+- Início: Boas-vindas, acesso rápido ao Kit, Teste Rápido e suporte WhatsApp
+- Aulas: Vídeos curados sobre atendimento psicopedagógico
+- Kit: Link único para todos os materiais no Google Drive
+- Mais: Produtos complementares com desconto (guias extras, consultoria, planner)
+- Ajuda: Suporte via WhatsApp e em breve Fórum de Alunas
+- IA: Este chat de suporte inteligente
+
+PRODUTOS EXTRAS DISPONÍVEIS (aba Mais):
+- Consultoria "+Leads no zap + Lucro!" (R$ 97,00 - como lotar o WhatsApp sem postar todo dia)
+- Guia de Atividades para Adolescentes com Dislexia (R$ 9,90)
+- Planner Psicopedagógico 2026 (R$ 9,90)
+
+REGRAS DE COMPORTAMENTO:
+- Responda SOMENTE perguntas relacionadas ao app, ao kit psicopedagógico ou à área de psicopedagogia
+- Seja acolhedora, empática e profissional — o público é de psicopedagogas
+- Respostas curtas e objetivas (máximo 3-4 parágrafos)
+- Se a pergunta for sobre algo não relacionado ao app, redirecione gentilmente
+- Nunca invente funcionalidades que não existem
+- Se não souber algo específico, indique o suporte via WhatsApp
+- Responda sempre em português do Brasil`;
+
+let chatHistory = [];
+let chatInitialized = false;
+
+function renderChatMessage(role, text) {
+  const wrap = document.getElementById("chatMessages");
+  if (!wrap) return;
+
+  const isUser = role === "user";
+  const div = document.createElement("div");
+  div.className = `flex ${isUser ? "justify-end" : "justify-start"} animate-slideIn`;
+
+  const bubble = document.createElement("div");
+  bubble.className = isUser
+    ? "max-w-[80%] bg-emerald-600 text-white rounded-3xl rounded-br-lg px-4 py-3 text-sm"
+    : "max-w-[85%] bg-white border border-emerald-100 text-slate-800 rounded-3xl rounded-bl-lg px-4 py-3 text-sm neo-shadow";
+
+  bubble.innerHTML = text.replace(/\n/g, "<br>");
+  div.appendChild(bubble);
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function showChatTyping() {
+  const wrap = document.getElementById("chatMessages");
+  if (!wrap) return;
+  const div = document.createElement("div");
+  div.id = "chat-typing";
+  div.className = "flex justify-start animate-slideIn";
+  div.innerHTML = `<div class="bg-white border border-emerald-100 rounded-3xl rounded-bl-lg px-4 py-3 neo-shadow flex gap-1 items-center">
+    <span class="h-2 w-2 rounded-full bg-emerald-400" style="animation:bounce 1s infinite 0s"></span>
+    <span class="h-2 w-2 rounded-full bg-emerald-400" style="animation:bounce 1s infinite 0.2s"></span>
+    <span class="h-2 w-2 rounded-full bg-emerald-400" style="animation:bounce 1s infinite 0.4s"></span>
+  </div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function removeChatTyping() {
+  const t = document.getElementById("chat-typing");
+  if (t) t.remove();
+}
+
+function initChat() {
+  if (chatInitialized) return;
+  chatInitialized = true;
+  chatHistory = [];
+  renderChatMessage("model", "Olá! 👋 Sou o Assistente do Kit Psicopedagogo Pro.\n\nPode me perguntar qualquer coisa sobre o app, os materiais ou como funciona o kit! 😊");
+}
+
+async function sendChatMessage() {
+  const input = document.getElementById("chatInput");
+  const btn = document.getElementById("chatSendBtn");
+  if (!input) return;
+
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = "";
+  input.disabled = true;
+  btn.disabled = true;
+
+  renderChatMessage("user", text);
+  chatHistory.push({ role: "user", parts: [{ text }] });
+
+  showChatTyping();
+
+  try {
+    const body = {
+      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      contents: chatHistory,
+      generationConfig: { temperature: 0.7, maxOutputTokens: 500 }
+    };
+
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }
+    );
+
+    const data = await res.json();
+    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text
+      || "Desculpe, não consegui processar sua mensagem. Tente novamente ou fale com o suporte via WhatsApp.";
+
+    chatHistory.push({ role: "model", parts: [{ text: reply }] });
+    removeChatTyping();
+    renderChatMessage("model", reply);
+  } catch (e) {
+    removeChatTyping();
+    renderChatMessage("model", "Ops! Ocorreu um erro de conexão. Verifique sua internet e tente novamente. 🙏");
+  }
+
+  input.disabled = false;
+  btn.disabled = false;
+  input.focus();
+}
+
+window.sendChatMessage = sendChatMessage;
 
 function el(html) {
   const t = document.createElement("template");
@@ -107,12 +242,17 @@ function renderUpsells() {
 }
 
 function setTab(tab) {
-  const views = ["home","aulas","kits","mais","ajuda"];
+  const views = ["home","aulas","kits","mais","ajuda","chat"];
   views.forEach(k => {
     const sec = document.getElementById("view-" + k);
     if (!sec) return;
-    if (k === tab) sec.classList.remove("hidden");
-    else sec.classList.add("hidden");
+    if (k === tab) {
+      sec.classList.remove("hidden");
+      sec.style.display = "";
+    } else {
+      sec.classList.add("hidden");
+      sec.style.display = "none";
+    }
   });
 
   const top = document.getElementById("topTitle");
@@ -126,6 +266,7 @@ function setTab(tab) {
 
   if (tab === "aulas") renderVideos();
   if (tab === "mais") renderUpsells();
+  if (tab === "chat") initChat();
 }
 
 function init() {
