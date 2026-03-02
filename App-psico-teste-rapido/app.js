@@ -419,21 +419,16 @@ function renderNewSession(el) {
 // --- ABA TESTES ---
 
 function renderTestList(el) {
-    if (!AppState.activeSessionId) {
-        el.innerHTML = `
-            <div class="flex flex-col items-center justify-center py-20 text-center space-y-4">
-                <div class="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center text-3xl"><i class="fas fa-exclamation-triangle"></i></div>
-                <h2 class="text-xl font-bold text-slate-800">Selecione uma sessão</h2>
-                <p class="text-sm text-slate-400 max-w-xs">Você precisa iniciar um atendimento na aba Alunos antes de aplicar testes.</p>
-                <button onclick="router.navigate('alunos')" class="bg-emerald-600 text-white px-8 py-3 rounded-2xl font-bold">Ir para Alunos</button>
-            </div>
-        `;
-        return;
-    }
+    const semSessao = !AppState.activeSessionId;
 
     el.innerHTML = `
         <div class="space-y-6">
             <h2 class="text-2xl font-bold text-emerald-800">Bateria de Testes</h2>
+            ${semSessao ? `
+            <div class="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-3">
+                <i class="fas fa-circle-info text-amber-500 text-lg flex-shrink-0"></i>
+                <div class="text-xs text-amber-800"><strong>Sem sessão ativa.</strong> Inicie um atendimento em <button onclick="router.navigate('alunos')" class="underline font-bold">Alunos</button> para salvar os resultados. Os testes abaixo podem ser explorados livremente.</div>
+            </div>` : ''}
             
             <div class="grid grid-cols-1 gap-4">
                 <div onclick="router.navigate('test_fluency')" class="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm flex items-center gap-4 cursor-pointer active:scale-95 transition-all">
