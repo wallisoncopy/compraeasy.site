@@ -44,7 +44,7 @@ const UPSELLS = [
 const TITLES = { home: "INÍCIO", aulas: "AULAS", kits: "KIT", mais: "MAIS", ajuda: "AJUDA", chat: "ASSISTENTE IA" };
 
 // ─── CHAT IA ────────────────────────────────────────────────────────────────
-const GEMINI_API_KEY = "AIzaSyAwf9_cakILYziCQH_Rw5bR61btwQwGAaQ";
+const GEMINI_API_KEY = "AIzaSyCVUZwc8lC_NDqWCLS7JewtzmTZcpsm8h0";
 
 const SYSTEM_PROMPT = `Você é o Assistente Virtual do Kit Psicopedagogo Pro, um app exclusivo para psicopedagogas e profissionais da educação especial.
 
