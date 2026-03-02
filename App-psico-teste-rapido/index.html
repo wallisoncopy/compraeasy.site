@@ -13,6 +13,8 @@
     <!-- Bibliotecas para PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -43,25 +45,29 @@
     </main>
 
     <!-- Navegação Inferior Fixa -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-emerald-50 flex justify-around items-center py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50">
-        <button onclick="router.navigate('home')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="home">
-            <i class="fas fa-house text-xl"></i>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-emerald-50 flex justify-around items-center py-1.5 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50">
+        <button onclick="router.navigate('home')" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400 text-[9px] font-bold" data-tab="home">
+            <i class="fas fa-house text-lg"></i>
             <span>Início</span>
         </button>
-        <button onclick="router.navigate('testes')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="testes">
-            <i class="fas fa-vial text-xl"></i>
+        <button onclick="router.navigate('testes')" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400 text-[9px] font-bold" data-tab="testes">
+            <i class="fas fa-vial text-lg"></i>
             <span>Testes</span>
         </button>
-        <button onclick="router.navigate('relatorios')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="relatorios">
-            <i class="fas fa-file-lines text-xl"></i>
+        <button onclick="router.navigate('relatorios')" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400 text-[9px] font-bold" data-tab="relatorios">
+            <i class="fas fa-file-lines text-lg"></i>
             <span>Relatórios</span>
         </button>
-        <button onclick="router.navigate('alunos')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="alunos">
-            <i class="fas fa-user-graduate text-xl"></i>
+        <button onclick="router.navigate('alunos')" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400 text-[9px] font-bold" data-tab="alunos">
+            <i class="fas fa-user-graduate text-lg"></i>
             <span>Alunos</span>
         </button>
-        <button onclick="router.navigate('config')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 text-[10px] font-bold" data-tab="config">
-            <i class="fas fa-gear text-xl"></i>
+        <button onclick="router.navigate('fichas')" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400 text-[9px] font-bold" data-tab="fichas">
+            <i class="fas fa-folder-open text-lg"></i>
+            <span>Fichas</span>
+        </button>
+        <button onclick="router.navigate('config')" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400 text-[9px] font-bold" data-tab="config">
+            <i class="fas fa-gear text-lg"></i>
             <span>Ajustes</span>
         </button>
     </nav>

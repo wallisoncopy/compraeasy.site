@@ -8,7 +8,7 @@ const DB = {
     get: (key, def = []) => JSON.parse(localStorage.getItem(key)) || def,
     set: (key, val) => localStorage.setitem ? localStorage.setItem(key, JSON.stringify(val)) : localStorage.setItem(key, JSON.stringify(val)), // Small polyfill for some browsers
     init() {
-        if (!localStorage.getItem('psy_profile')) this.set('psy_profile', { name: '', city: '', phone: '', email: '', signature: '' });
+        if (!localStorage.getItem('psy_profile')) this.set('psy_profile', { name: '', city: '', phone: '', email: '', signature: '', driveUrl: '' });
         if (!localStorage.getItem('psy_students')) this.set('psy_students', []);
         if (!localStorage.getItem('psy_sessions')) this.set('psy_sessions', []);
         if (!localStorage.getItem('psy_reports')) this.set('psy_reports', []);
@@ -52,6 +52,9 @@ const router = {
             case 'test_phonology': renderTestPhonology(root); break;
             case 'test_attention': renderTestAttention(root); break;
             case 'test_writing': renderTestWriting(root); break;
+            case 'test_tea_tdah': renderTestTEA(root); break;
+            case 'fichas': renderFichas(root); break;
+            case 'evolucao': renderEvolucao(root); break;
             default: renderHome(root);
         }
     }
@@ -117,6 +120,14 @@ function renderHome(el) {
                         <p class="text-xs text-slate-400">Documente as sessões aplicadas.</p>
                     </div>
                 </button>
+                <button onclick="router.navigate('fichas')" class="flex items-center gap-4 bg-gradient-to-r from-violet-500 to-purple-600 p-4 rounded-2xl shadow-lg hover:opacity-90">
+                    <div class="w-12 h-12 bg-white/20 text-white rounded-xl flex items-center justify-center text-xl"><i class="fas fa-folder-open"></i></div>
+                    <div class="text-left">
+                        <p class="font-bold text-white">Fichas & Materiais</p>
+                        <p class="text-xs text-purple-100">Acesse a biblioteca de recursos e o manual.</p>
+                    </div>
+                    <i class="fas fa-arrow-right text-white/60 ml-auto"></i>
+                </button>
             </div>
         </div>
     `;
@@ -149,6 +160,11 @@ function renderConfig(el) {
                 <div>
                     <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Assinatura Digital (Texto)</label>
                     <textarea name="signature" class="w-full bg-slate-50 p-3 rounded-xl border border-slate-100 outline-none">${profile.signature}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Link da Pasta de Fichas (Google Drive)</label>
+                    <input type="url" name="driveUrl" value="${profile.driveUrl || ''}" class="w-full bg-slate-50 p-3 rounded-xl border border-slate-100 outline-none" placeholder="https://drive.google.com/drive/folders/...">
+                    <p class="text-[10px] text-slate-400 mt-1">Cole o link da pasta compartilhada do Drive com seus materiais.</p>
                 </div>
                 <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-lg">Salvar Perfil</button>
             </form>
@@ -273,7 +289,11 @@ function renderStudentDetail(el) {
                 <button onclick="window.startSession()" class="flex-grow bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-lg flex items-center justify-center gap-2">
                     <i class="fas fa-plus"></i> Iniciar Sessão
                 </button>
-                <button onclick="window.deleteStudent('${student.id}')" class="bg-red-50 text-red-500 px-5 rounded-2xl border border-red-100"><i class="fas fa-trash"></i></button>
+                <button onclick="router.navigate('evolucao')" class="bg-violet-100 text-violet-600 px-4 rounded-2xl border border-violet-100 flex flex-col items-center justify-center gap-0.5">
+                    <i class="fas fa-chart-line text-lg"></i>
+                    <span class="text-[8px] font-black uppercase">Evolução</span>
+                </button>
+                <button onclick="window.deleteStudent('${student.id}')" class="bg-red-50 text-red-500 px-4 rounded-2xl border border-red-100"><i class="fas fa-trash"></i></button>
             </div>
 
             <h3 class="font-bold text-slate-700 px-1">Histórico</h3>
@@ -352,10 +372,11 @@ function renderNewSession(el) {
                 <div class="bg-white p-5 rounded-3xl border border-slate-100">
                     <h4 class="text-xs font-black text-slate-400 uppercase mb-3">Checklist de Testes Aplicados</h4>
                     <div class="space-y-2">
-                        ${['fluency','phonology','attention','writing'].map(t => {
+                        ${['fluency','phonology','attention','writing','tea_tdah'].map(t => {
                             const applied = session.tests && session.tests[t];
-                            const labels = { fluency: 'Leitura', phonology: 'Consciência Fonológica', attention: 'Atenção', writing: 'Escrita' };
-                            return `<div class="flex items-center gap-2 text-sm ${applied ? 'text-emerald-600 font-bold' : 'text-slate-300'}"><i class="fas fa-${applied ? 'check-circle' : 'circle'}"></i> ${labels[t]}</div>`;
+                            const labels = { fluency: 'Leitura', phonology: 'Consciência Fonológica', attention: 'Atenção', writing: 'Escrita', tea_tdah: 'Escala TEA/TDAH' };
+                            const colors = { fluency: 'text-emerald-600', phonology: 'text-blue-600', attention: 'text-purple-600', writing: 'text-orange-500', tea_tdah: 'text-rose-500' };
+                            return `<div class="flex items-center gap-2 text-sm ${applied ? (colors[t] + ' font-bold') : 'text-slate-300'}"><i class="fas fa-${applied ? 'check-circle' : 'circle'}"></i> ${labels[t]}</div>`;
                         }).join('')}
                     </div>
                 </div>
@@ -438,6 +459,15 @@ function renderTestList(el) {
                         <p class="text-xs text-slate-400">Registro guiado de erros ortográficos.</p>
                     </div>
                     <i class="fas fa-chevron-right text-slate-200"></i>
+                </div>
+
+                <div onclick="router.navigate('test_tea_tdah')" class="bg-gradient-to-r from-rose-50 to-pink-50 p-6 rounded-3xl border border-rose-100 shadow-sm flex items-center gap-4 cursor-pointer active:scale-95 transition-all">
+                    <div class="w-14 h-14 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-puzzle-piece"></i></div>
+                    <div class="flex-grow">
+                        <p class="font-bold text-slate-700">Escala TEA / TDAH</p>
+                        <p class="text-xs text-slate-400">Rastreio comportamental DSM-5.</p>
+                    </div>
+                    <span class="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase">Novo</span>
                 </div>
             </div>
         </div>
@@ -819,6 +849,15 @@ async function generatePDF(report) {
                     <p style="margin: 0; font-size: 13px;"><b>Escrita Funcional</b></p>
                     <p style="margin: 0; font-size: 12px;">Erros identificados: ${session.tests.writing.checklist.join(', ') || 'Nenhum'}</p>
                 </div>` : ''}
+
+                ${session.tests.tea_tdah ? `<div style="margin-bottom: 10px; padding-left: 10px; border-left: 2px solid #f43f5e;">
+                    <p style="margin: 0; font-size: 13px;"><b>Escala de Rastreio TEA / TDAH (DSM-5)</b></p>
+                    <p style="margin: 0; font-size: 12px;">TDAH Desatenção: ${session.tests.tea_tdah.scores.I}/9 itens significativos${session.tests.tea_tdah.scores.I >= 6 ? ' ⚠️ Indicativo' : ''}</p>
+                    <p style="margin: 0; font-size: 12px;">TDAH Hiperatividade: ${session.tests.tea_tdah.scores.H}/9 itens significativos${session.tests.tea_tdah.scores.H >= 6 ? ' ⚠️ Indicativo' : ''}</p>
+                    <p style="margin: 0; font-size: 12px;">TEA Interação Social: ${session.tests.tea_tdah.scores.TA}/5 itens significativos${session.tests.tea_tdah.scores.TA >= 3 ? ' ⚠️ Indicativo' : ''}</p>
+                    <p style="margin: 0; font-size: 12px;">TEA Padrões Repetitivos: ${session.tests.tea_tdah.scores.TB}/5 itens significativos${session.tests.tea_tdah.scores.TB >= 2 ? ' ⚠️ Indicativo' : ''}</p>
+                    <p style="margin: 3px 0 0 0; font-size: 11px; color: #666; font-style: italic;">Este rastreio não substitui avaliação diagnóstica especializada.</p>
+                </div>` : ''}
             </div>
 
             <div style="margin-top: 60px; text-align: center;">
@@ -838,6 +877,455 @@ async function generatePDF(report) {
     const h = (canvas.height * w) / canvas.width;
     pdf.addImage(imgData, 'PNG', 0, 0, w, h);
     pdf.save(`Relatorio_${student.name.replace(/\s/g,'_')}.pdf`);
+}
+
+// =====================================================
+// --- NOVO: ESCALA TEA/TDAH (DSM-5 RASTREIO) ---
+// =====================================================
+
+const TEA_TDAH_SCALE = {
+    I: {
+        label: 'TDAH – Desatenção',
+        color: '#3b82f6',
+        threshold: 6,
+        total: 9,
+        items: [
+            'Não presta atenção em detalhes / comete erros por descuido nas tarefas.',
+            'Tem dificuldade em manter a atenção em tarefas ou atividades lúdicas.',
+            'Parece não ouvir quando se fala diretamente com ela(e).',
+            'Não segue instruções até o fim e não conclui tarefas escolares.',
+            'Tem dificuldade em organizar tarefas e atividades.',
+            'Evita ou reluta em tarefas que exigem esforço mental sustentado.',
+            'Perde objetos necessários (lápis, caderno, material escolar).',
+            'É facilmente distraída(o) por estímulos externos.',
+            'É esquecida(o) em atividades cotidianas.'
+        ]
+    },
+    H: {
+        label: 'TDAH – Hiperatividade / Impulsividade',
+        color: '#8b5cf6',
+        threshold: 6,
+        total: 9,
+        items: [
+            'Remexe as mãos, os pés ou se contorce na cadeira.',
+            'Levanta da cadeira quando se espera que permaneça sentada(o).',
+            'Corre ou escala em situações inadequadas.',
+            'Não consegue brincar ou participar de atividades com calma.',
+            'Está frequentemente "a mil", como se fosse movida(o) a motor.',
+            'Fala em excesso.',
+            'Deixa escapar a resposta antes de a pergunta ser concluída.',
+            'Tem dificuldade em aguardar a sua vez.',
+            'Interrompe ou se intromete em conversas e brincadeiras dos outros.'
+        ]
+    },
+    TA: {
+        label: 'TEA – Comunicação e Interação Social',
+        color: '#ec4899',
+        threshold: 3,
+        total: 5,
+        items: [
+            'Dificuldade em reciprocidade socioemocional (não compartilha interesses ou emoções).',
+            'Dificuldade com comunicação não verbal (evita contato visual, expressão facial atípica).',
+            'Dificuldade em desenvolver e manter relacionamentos com pares.',
+            'Prefere brincar sozinha(o) / pouco interesse em interagir com outras crianças.',
+            'Não responde ao próprio nome quando chamado(a).'
+        ]
+    },
+    TB: {
+        label: 'TEA – Padrões Repetitivos e Restritos',
+        color: '#f43f5e',
+        threshold: 2,
+        total: 5,
+        items: [
+            'Movimentos motores repetitivos (balançar, agitar as mãos, girar objetos).',
+            'Insistência em rotinas / resistência intensa a mudanças.',
+            'Interesses muito restritos e fixos com intensidade excessiva.',
+            'Hiper ou hipossensibilidade a estímulos sensoriais (sons, texturas, luz, dor).',
+            'Linguagem repetitiva ou ecolalia (repete frases de TV, filmes ou o que acabou de ouvir).'
+        ]
+    }
+};
+
+function renderTestTEA(el) {
+    const groups = Object.keys(TEA_TDAH_SCALE);
+    let currentGroup = 0;
+    let currentItem = 0;
+    const answers = { I: [], H: [], TA: [], TB: [] };
+    const OPTIONS = ['Nunca', 'Às vezes', 'Frequentemente', 'Sempre'];
+
+    const renderQuestion = () => {
+        const gKey = groups[currentGroup];
+        const group = TEA_TDAH_SCALE[gKey];
+        const totalItems = groups.reduce((acc, k) => acc + TEA_TDAH_SCALE[k].items.length, 0);
+        const doneItems = groups.slice(0, currentGroup).reduce((acc, k) => acc + TEA_TDAH_SCALE[k].items.length, 0) + currentItem;
+        const progress = Math.round((doneItems / totalItems) * 100);
+
+        el.innerHTML = `
+            <div class="space-y-5">
+                <div class="flex items-center gap-3">
+                    <button onclick="router.navigate('testes')" class="w-10 h-10 flex items-center justify-center bg-white rounded-full border border-slate-100 text-slate-400"><i class="fas fa-arrow-left"></i></button>
+                    <h2 class="text-lg font-bold text-slate-800">Escala TEA / TDAH</h2>
+                </div>
+
+                <div class="bg-white rounded-2xl p-3 border border-slate-100">
+                    <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase mb-1.5">
+                        <span>${group.label}</span>
+                        <span>${currentItem + 1}/${group.items.length}</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2">
+                        <div class="h-2 rounded-full transition-all duration-300" style="width:${progress}%; background:${group.color}"></div>
+                    </div>
+                    <p class="text-[10px] text-slate-300 mt-1">${progress}% concluído</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl text-white shadow-lg" style="background:${group.color}">
+                        <i class="fas fa-${gKey === 'I' || gKey === 'H' ? 'bolt' : 'puzzle-piece'}"></i>
+                    </div>
+                    <p class="text-base font-semibold text-slate-700 leading-relaxed">${group.items[currentItem]}</p>
+                    <p class="text-xs text-slate-400 italic">Com que frequência esse comportamento é observado?</p>
+                    <div class="space-y-2">
+                        ${OPTIONS.map((opt, i) => `
+                            <button onclick="window.answerTEA(${i})"
+                                class="w-full flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-opacity-100 active:scale-95 transition-all text-left font-semibold text-sm text-slate-600"
+                                style="border-color: ${i >= 2 ? group.color + '30' : ''}">
+                                <span class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black border-2" style="border-color:${group.color}; color:${group.color}">${i}</span>
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        window.answerTEA = (score) => {
+            answers[gKey].push(score);
+            currentItem++;
+            if (currentItem >= group.items.length) {
+                currentGroup++;
+                currentItem = 0;
+                if (currentGroup >= groups.length) {
+                    showTEAResult();
+                } else {
+                    renderQuestion();
+                }
+            } else {
+                renderQuestion();
+            }
+        };
+    };
+
+    const showTEAResult = () => {
+        const scores = {
+            I:  answers.I.filter(s => s >= 2).length,
+            H:  answers.H.filter(s => s >= 2).length,
+            TA: answers.TA.filter(s => s >= 2).length,
+            TB: answers.TB.filter(s => s >= 2).length
+        };
+
+        const flags = [];
+        if (scores.I >= 6)  flags.push({ label: 'Indicativo de Desatenção Significativa', color: '#3b82f6' });
+        if (scores.H >= 6)  flags.push({ label: 'Indicativo de Hiperatividade/Impulsividade', color: '#8b5cf6' });
+        if (scores.I >= 6 && scores.H >= 6) flags.push({ label: 'Padrão Combinado de TDAH', color: '#6366f1' });
+        if (scores.TA >= 3 && scores.TB >= 2) flags.push({ label: 'Perfil Consistente com TEA – Encaminhar para Avaliação', color: '#f43f5e' });
+        else if (scores.TA >= 3) flags.push({ label: 'Dificuldades Sociocomunicativas Relevantes', color: '#ec4899' });
+
+        const bars = Object.entries(scores).map(([k, v]) => {
+            const g = TEA_TDAH_SCALE[k];
+            const pct = Math.round((v / g.total) * 100);
+            const alert = v >= g.threshold;
+            return `
+                <div>
+                    <div class="flex justify-between text-[10px] font-bold mb-1" style="color:${g.color}">
+                        <span>${g.label}</span>
+                        <span>${v}/${g.total} itens${alert ? ' ⚠️' : ''}</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-3">
+                        <div class="h-3 rounded-full" style="width:${pct}%; background:${g.color}"></div>
+                    </div>
+                </div>`;
+        }).join('');
+
+        el.innerHTML = `
+            <div class="space-y-5">
+                <div class="flex items-center gap-3">
+                    <button onclick="router.navigate('testes')" class="w-10 h-10 flex items-center justify-center bg-white rounded-full border border-slate-100 text-slate-400"><i class="fas fa-arrow-left"></i></button>
+                    <h2 class="text-lg font-bold text-slate-800">Resultado da Escala</h2>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+                    <h3 class="font-black text-slate-700 text-base">Pontuação por Dimensão</h3>
+                    ${bars}
+                </div>
+
+                ${flags.length > 0 ? `
+                <div class="space-y-2">
+                    <h3 class="font-black text-slate-700 text-sm px-1">Indicadores Identificados</h3>
+                    ${flags.map(f => `
+                        <div class="flex items-center gap-3 p-4 rounded-2xl border-2" style="border-color:${f.color}20; background:${f.color}08">
+                            <i class="fas fa-exclamation-circle text-xl" style="color:${f.color}"></i>
+                            <span class="font-bold text-sm" style="color:${f.color}">${f.label}</span>
+                        </div>
+                    `).join('')}
+                </div>` : `
+                <div class="flex items-center gap-3 p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
+                    <i class="fas fa-check-circle text-xl text-emerald-500"></i>
+                    <span class="font-bold text-sm text-emerald-700">Nenhum indicador significativo identificado.</span>
+                </div>`}
+
+                <div class="bg-amber-50 border border-amber-100 p-4 rounded-2xl text-xs text-amber-700">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    <b>Importante:</b> Este rastreio é um instrumento de observação clínica e <b>não substitui avaliação diagnóstica</b> por equipe especializada.
+                </div>
+
+                <button onclick="window.saveTEA(${JSON.stringify(scores).replace(/"/g, '&quot;')})" class="w-full bg-rose-500 text-white font-bold py-4 rounded-2xl shadow-lg">
+                    <i class="fas fa-save mr-2"></i>Salvar no Prontuário
+                </button>
+            </div>
+        `;
+
+        window.saveTEA = (sc) => {
+            saveTest('tea_tdah', { scores: sc, flags: flags.map(f => f.label) });
+            alert('Escala salva na sessão!');
+            router.navigate('testes');
+        };
+    };
+
+    renderQuestion();
+}
+
+// =====================================================
+// --- NOVO: GRÁFICOS DE EVOLUÇÃO POR ALUNO ---
+// =====================================================
+
+function renderEvolucao(el) {
+    const student = DB.get('psy_students').find(s => s.id === AppState.activeStudentId);
+    if (!student) return router.navigate('alunos');
+
+    const sessions = DB.get('psy_sessions')
+        .filter(s => s.studentId === student.id)
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    const labels    = sessions.map(s => Utils.date(s.date));
+    const wpmData   = sessions.map(s => s.tests?.fluency?.wpm   || null);
+    const phonoData = sessions.map(s => s.tests?.phonology ? (s.tests.phonology.score / 8 * 100).toFixed(0) : null);
+    const attnData  = sessions.map(s => s.tests?.attention?.avg || null);
+    const teaI      = sessions.map(s => s.tests?.tea_tdah ? s.tests.tea_tdah.scores.I  : null);
+    const teaH      = sessions.map(s => s.tests?.tea_tdah ? s.tests.tea_tdah.scores.H  : null);
+
+    const hasData = wpmData.some(v=>v) || phonoData.some(v=>v) || attnData.some(v=>v);
+
+    el.innerHTML = `
+        <div class="space-y-5">
+            <div class="flex items-center gap-3">
+                <button onclick="router.navigate('student_detail')" class="w-10 h-10 flex items-center justify-center bg-white rounded-full border border-slate-100 text-slate-400"><i class="fas fa-arrow-left"></i></button>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800">Evolução</h2>
+                    <p class="text-xs text-slate-400">${student.name}</p>
+                </div>
+            </div>
+
+            ${!hasData ? `
+            <div class="flex flex-col items-center justify-center py-16 text-center space-y-3">
+                <div class="w-16 h-16 bg-violet-50 text-violet-400 rounded-full flex items-center justify-center text-2xl"><i class="fas fa-chart-line"></i></div>
+                <p class="font-bold text-slate-600">Ainda sem dados para exibir</p>
+                <p class="text-xs text-slate-400 max-w-xs">Aplique os testes nas sessões do aluno para acompanhar a evolução aqui.</p>
+            </div>` : `
+
+            ${wpmData.some(v=>v) ? `
+            <div class="bg-white p-5 rounded-3xl border border-emerald-100 shadow-sm">
+                <h3 class="font-black text-slate-700 text-sm mb-3 flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>Fluência Leitora (WPM)</h3>
+                <canvas id="chart-wpm" height="160"></canvas>
+            </div>` : ''}
+
+            ${phonoData.some(v=>v) ? `
+            <div class="bg-white p-5 rounded-3xl border border-blue-100 shadow-sm">
+                <h3 class="font-black text-slate-700 text-sm mb-3 flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span>Consciência Fonológica (%)</h3>
+                <canvas id="chart-phono" height="160"></canvas>
+            </div>` : ''}
+
+            ${attnData.some(v=>v) ? `
+            <div class="bg-white p-5 rounded-3xl border border-purple-100 shadow-sm">
+                <h3 class="font-black text-slate-700 text-sm mb-3 flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-purple-500 inline-block"></span>Atenção – Tempo de Reação (ms)<span class="text-[9px] text-slate-400 font-normal">(menor = melhor)</span></h3>
+                <canvas id="chart-attn" height="160"></canvas>
+            </div>` : ''}
+
+            ${(teaI.some(v=>v!==null) || teaH.some(v=>v!==null)) ? `
+            <div class="bg-white p-5 rounded-3xl border border-rose-100 shadow-sm">
+                <h3 class="font-black text-slate-700 text-sm mb-3 flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>TDAH – Itens Significativos por Sessão</h3>
+                <canvas id="chart-tdah" height="160"></canvas>
+            </div>` : ''}
+            `}
+        </div>
+    `;
+
+    if (!hasData) return;
+
+    const chartDefaults = {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { ticks: { font: { size: 9 }, maxRotation: 30 }, grid: { display: false } },
+            y: { ticks: { font: { size: 9 } }, grid: { color: '#f1f5f9' } }
+        }
+    };
+
+    const makeChart = (id, color, data, label) => {
+        const ctx = document.getElementById(id);
+        if (!ctx) return;
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{
+                    label,
+                    data,
+                    borderColor: color,
+                    backgroundColor: color + '15',
+                    borderWidth: 2.5,
+                    pointBackgroundColor: color,
+                    pointRadius: 5,
+                    tension: 0.35,
+                    fill: true,
+                    spanGaps: true
+                }]
+            },
+            options: { ...chartDefaults }
+        });
+    };
+
+    if (wpmData.some(v=>v))   makeChart('chart-wpm',   '#10b981', wpmData,   'WPM');
+    if (phonoData.some(v=>v)) makeChart('chart-phono', '#3b82f6', phonoData, 'Fonologia %');
+    if (attnData.some(v=>v))  makeChart('chart-attn',  '#8b5cf6', attnData,  'Reação ms');
+
+    if (teaI.some(v=>v!==null) || teaH.some(v=>v!==null)) {
+        const ctx = document.getElementById('chart-tdah');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: 'Desatenção', data: teaI, borderColor: '#3b82f6', backgroundColor: '#3b82f615', borderWidth: 2, pointRadius: 4, tension: 0.35, spanGaps: true, fill: false },
+                        { label: 'Hiperatividade', data: teaH, borderColor: '#8b5cf6', backgroundColor: '#8b5cf615', borderWidth: 2, pointRadius: 4, tension: 0.35, spanGaps: true, fill: false }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: true, labels: { font: { size: 10 }, boxWidth: 12 } } },
+                    scales: {
+                        x: { ticks: { font: { size: 9 }, maxRotation: 30 }, grid: { display: false } },
+                        y: { min: 0, max: 9, ticks: { font: { size: 9 }, stepSize: 1 }, grid: { color: '#f1f5f9' } }
+                    }
+                }
+            });
+        }
+    }
+}
+
+// =====================================================
+// --- NOVO: FICHAS & MATERIAIS ---
+// =====================================================
+
+function renderFichas(el) {
+    const profile = DB.get('psy_profile');
+    const driveUrl = profile.driveUrl || '';
+
+    const manualItems = [
+        {
+            icon: 'fa-user-plus', color: '#10b981', title: '1. Cadastrar um Aluno',
+            text: 'Acesse <b>Alunos</b> na barra inferior → toque no botão <b>"+"</b> → preencha os dados e salve. O aluno ficará disponível para iniciar sessões.'
+        },
+        {
+            icon: 'fa-calendar-plus', color: '#3b82f6', title: '2. Iniciar uma Sessão',
+            text: 'Em <b>Alunos</b>, toque no nome do aluno → clique <b>"Iniciar Sessão"</b> → preencha data, objetivo e observações → salve. Após salvar, o botão de testes aparece.'
+        },
+        {
+            icon: 'fa-vial', color: '#8b5cf6', title: '3. Aplicar os Testes',
+            text: 'Com uma sessão ativa, acesse <b>Testes</b>. Aplique quantos quiser: Leitura, Fonologia, Atenção, Escrita ou a Escala TEA/TDAH. Os resultados ficam salvos na sessão automaticamente.'
+        },
+        {
+            icon: 'fa-puzzle-piece', color: '#f43f5e', title: '4. Escala TEA/TDAH (DSM-5)',
+            text: 'São <b>28 perguntas</b> divididas em 4 dimensões: Desatenção, Hiperatividade, Interação Social e Padrões Repetitivos. Responda com base no comportamento observado. O app calcula os indicadores automaticamente. <b>Não substitui diagnóstico clínico.</b>'
+        },
+        {
+            icon: 'fa-chart-line', color: '#a855f7', title: '5. Ver a Evolução do Aluno',
+            text: 'No prontuário do aluno, toque no botão roxo <b>"Evolução"</b>. Gráficos de WPM, fonologia, atenção e TDAH são exibidos ao longo das sessões, mostrando o progresso real.'
+        },
+        {
+            icon: 'fa-file-pdf', color: '#f97316', title: '6. Emitir o Relatório PDF',
+            text: 'Dentro de uma sessão, toque em <b>"Emitir Relatório"</b>. O PDF é gerado com dados do paciente, resultados dos testes e assinatura. Configure seu nome e assinatura em <b>Ajustes</b> antes.'
+        },
+        {
+            icon: 'fa-folder-open', color: '#7c3aed', title: '7. Acessar as Fichas do Drive',
+            text: 'Cole o link da sua pasta do Google Drive em <b>Ajustes → Link da Pasta de Fichas</b>. Depois o botão abaixo abre direto os seus materiais. As fichas ficam no Drive e abrem no seu navegador/app.'
+        }
+    ];
+
+    el.innerHTML = `
+        <div class="space-y-5">
+            <div class="bg-gradient-to-br from-violet-600 to-purple-700 p-6 rounded-3xl text-white shadow-lg">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-folder-open text-2xl text-purple-200"></i>
+                    <h2 class="text-xl font-bold">Fichas & Materiais</h2>
+                </div>
+                <p class="text-purple-100 text-sm">Biblioteca de recursos e manual de uso do app.</p>
+            </div>
+
+            ${driveUrl ? `
+            <a href="${driveUrl}" target="_blank" rel="noopener" class="flex items-center gap-4 bg-gradient-to-r from-emerald-500 to-teal-600 p-5 rounded-3xl text-white shadow-lg active:scale-95 transition-all">
+                <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl">
+                    <i class="fab fa-google-drive"></i>
+                </div>
+                <div class="flex-grow">
+                    <p class="font-black text-lg">Abrir Pasta de Fichas</p>
+                    <p class="text-emerald-100 text-xs">Google Drive → Seus materiais</p>
+                </div>
+                <i class="fas fa-external-link-alt text-white/60"></i>
+            </a>` : `
+            <div class="flex items-center gap-4 bg-slate-50 border-2 border-dashed border-slate-200 p-5 rounded-3xl">
+                <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-2xl flex items-center justify-center text-xl">
+                    <i class="fab fa-google-drive"></i>
+                </div>
+                <div class="flex-grow">
+                    <p class="font-bold text-slate-500 text-sm">Pasta do Drive não configurada</p>
+                    <p class="text-xs text-slate-400">Vá em <b>Ajustes</b> e cole o link da sua pasta.</p>
+                </div>
+                <button onclick="router.navigate('config')" class="bg-violet-600 text-white text-xs font-bold px-4 py-2 rounded-xl">Configurar</button>
+            </div>`}
+
+            <div class="flex items-center gap-2 px-1">
+                <div class="h-px flex-grow bg-slate-100"></div>
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Manual de Uso</span>
+                <div class="h-px flex-grow bg-slate-100"></div>
+            </div>
+
+            <div class="space-y-3">
+                ${manualItems.map((item, i) => `
+                <details class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden group" ${i === 0 ? 'open' : ''}>
+                    <summary class="flex items-center gap-3 p-4 cursor-pointer list-none select-none">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white text-sm flex-shrink-0" style="background:${item.color}">
+                            <i class="fas ${item.icon}"></i>
+                        </div>
+                        <span class="font-bold text-slate-700 text-sm flex-grow">${item.title}</span>
+                        <i class="fas fa-chevron-down text-slate-300 text-xs group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <div class="px-4 pb-4 pt-0">
+                        <p class="text-sm text-slate-500 leading-relaxed pl-12">${item.text}</p>
+                    </div>
+                </details>
+                `).join('')}
+            </div>
+
+            <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl text-xs text-emerald-700 space-y-1">
+                <p class="font-black uppercase tracking-wide">Dicas rápidas</p>
+                <p>• O app funciona <b>offline</b> após o primeiro acesso.</p>
+                <p>• Todos os dados ficam salvos localmente no seu celular.</p>
+                <p>• Para instalar como app: no Chrome, toque em <b>⋮ → Adicionar à tela inicial</b>.</p>
+                <p>• Os testes podem ser aplicados em qualquer ordem dentro da sessão.</p>
+            </div>
+        </div>
+    `;
 }
 
 // --- INICIALIZAÇÃO ---
