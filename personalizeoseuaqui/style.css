@@ -416,6 +416,41 @@ body {
 .summary-box .row span:first-child { color: #6b7280; }
 .summary-box .row span:last-child { font-weight: 600; color: #14532d; }
 
+.summary-group {
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.summary-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid #bbf7d0;
+}
+.summary-group-header strong {
+  color: #14532d;
+  font-size: 0.85rem;
+}
+.btn-edit-group {
+  background: none;
+  border: 1.5px solid #15803d;
+  color: #15803d;
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-edit-group:hover {
+  background: #15803d;
+  color: #fff;
+}
+
 /* ─── Generate Area ───────────────────────────── */
 .generate-area {
   text-align: center;
