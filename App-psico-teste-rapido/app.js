@@ -304,7 +304,35 @@ function renderStudentDetail(el) {
                     <i class="fas fa-chart-line text-lg"></i>
                     <span class="text-[8px] font-black uppercase">Evolução</span>
                 </button>
-                <button onclick="window.deleteStudent('${student.id}')" class="bg-red-50 text-red-500 px-4 rounded-2xl border border-red-100"><i class="fas fa-trash"></i></button>
+                <button onclick="window.openEditStudentModal('${student.id}')" class="bg-emerald-50 text-emerald-600 px-4 rounded-2xl border border-emerald-100 flex flex-col items-center justify-center gap-0.5">
+                    <i class="fas fa-pen text-lg"></i>
+                    <span class="text-[8px] font-black uppercase">Editar</span>
+                </button>
+                <button onclick="window.deleteStudent('${student.id}')" class="bg-red-50 text-red-500 px-4 rounded-2xl border border-red-100 flex flex-col items-center justify-center gap-0.5">
+                    <i class="fas fa-trash text-lg"></i>
+                    <span class="text-[8px] font-black uppercase">Excluir</span>
+                </button>
+            </div>
+
+            <!-- Modal Editar Aluno -->
+            <div id="modal-edit-student" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-end justify-center">
+                <div class="bg-white w-full max-w-md rounded-t-[40px] p-8 shadow-2xl animate-in slide-in-from-bottom duration-300">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-slate-800">Editar Aluno</h3>
+                        <button onclick="document.getElementById('modal-edit-student').classList.add('hidden')" class="text-slate-400"><i class="fas fa-times text-xl"></i></button>
+                    </div>
+                    <form id="edit-student-form" class="space-y-4">
+                        <input type="text" name="name" placeholder="Nome Completo *" class="w-full bg-slate-50 p-4 rounded-2xl border border-slate-100 outline-none" required>
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="date" name="birthDate" class="w-full bg-slate-50 p-4 rounded-2xl border border-slate-100 outline-none">
+                            <input type="text" name="grade" placeholder="Série/Ano" class="w-full bg-slate-50 p-4 rounded-2xl border border-slate-100 outline-none">
+                        </div>
+                        <input type="text" name="school" placeholder="Escola" class="w-full bg-slate-50 p-4 rounded-2xl border border-slate-100 outline-none">
+                        <input type="text" name="parent" placeholder="Responsável" class="w-full bg-slate-50 p-4 rounded-2xl border border-slate-100 outline-none">
+                        <textarea name="notes" placeholder="Observações iniciais..." class="w-full bg-slate-50 p-4 rounded-2xl border border-slate-100 outline-none" rows="2"></textarea>
+                        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl">Salvar Alterações</button>
+                    </form>
+                </div>
             </div>
 
             <h3 class="font-bold text-slate-700 px-1">Histórico</h3>
@@ -334,6 +362,29 @@ function renderStudentDetail(el) {
             DB.set('psy_students', list);
             router.navigate('alunos');
         }
+    };
+    window.openEditStudentModal = (id) => {
+        const student = DB.get('psy_students').find(s => s.id === id);
+        if (!student) return;
+        const form = document.getElementById('edit-student-form');
+        form.name.value = student.name || '';
+        form.birthDate.value = student.birthDate || '';
+        form.grade.value = student.grade || '';
+        form.school.value = student.school || '';
+        form.parent.value = student.parent || '';
+        form.notes.value = student.notes || '';
+        form.dataset.editId = id;
+        document.getElementById('modal-edit-student').classList.remove('hidden');
+    };
+    document.getElementById('edit-student-form').onsubmit = (e) => {
+        e.preventDefault();
+        const id = e.target.dataset.editId;
+        const fd = new FormData(e.target);
+        const updates = Object.fromEntries(fd.entries());
+        const list = DB.get('psy_students').map(s => s.id === id ? { ...s, ...updates } : s);
+        DB.set('psy_students', list);
+        document.getElementById('modal-edit-student').classList.add('hidden');
+        renderStudentDetail(el);
     };
 }
 
