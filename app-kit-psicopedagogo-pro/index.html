@@ -1,414 +1,1160 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Kit Psicopedagogo Pro | Materiais Profissionais</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #f0fdf4 0%, #f5f3ff 100%); }
-        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05); }
-        
-        .cta-pulse { animation: pulse 2s infinite; }
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App Kit Psicopedagogo Pro</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        @keyframes border-flash {
-            0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.6); border-color: rgba(34, 197, 94, 0.8); }
-            50% { box-shadow: 0 0 30px rgba(34, 197, 94, 1); border-color: rgba(255, 255, 255, 1); }
-        }
-        .animate-border-flash {
-            animation: border-flash 1.5s infinite;
-        }
+    :root {
+      --laranja: #F97316;
+      --laranja-escuro: #C2410C;
+      --laranja-claro: #FFF7ED;
+      --texto: #1C1917;
+      --cinza: #78716C;
+      --cinza-claro: #F5F5F4;
+      --branco: #FFFFFF;
+    }
 
-        @keyframes notification-slide {
-            0% { transform: translateY(100px); opacity: 0; }
-            10% { transform: translateY(0); opacity: 1; }
-            90% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(100px); opacity: 0; }
-        }
-        .notification-active {
-            animation: notification-slide 4s ease-in-out forwards;
-        }
-        .notification-hidden { display: none; }
-        
-        .faq-answer { display: none; }
-        .faq-item.active .faq-answer { display: block; }
-        .faq-item.active i { transform: rotate(180deg); }
-    </style>
-<link rel="stylesheet" href="/index.css">
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--texto);
+      background: var(--branco);
+    }
+
+    /* ───── HEADER BAR ───── */
+    .topbar {
+      background: var(--laranja-escuro);
+      color: white;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ───── HERO ───── */
+    .hero {
+      background: linear-gradient(135deg, #1C1917 0%, #292524 60%, #431407 100%);
+      color: white;
+      padding: 64px 20px 72px;
+      text-align: center;
+    }
+
+    .hero .badge {
+      display: inline-block;
+      background: var(--laranja);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.15;
+      max-width: 780px;
+      margin: 0 auto 20px;
+    }
+
+    .hero h1 span { color: var(--laranja); }
+
+    .hero p {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: #D6D3D1;
+      max-width: 580px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+
+    .btn-principal {
+      display: inline-block;
+      background: var(--laranja);
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 18px 40px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 24px rgba(249,115,22,0.4);
+    }
+
+    .btn-principal:hover {
+      background: var(--laranja-escuro);
+      transform: translateY(-2px);
+    }
+
+    .hero-sub {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #A8A29E;
+    }
+
+    /* ───── NUMEROS ───── */
+    .numeros {
+      background: var(--laranja);
+      padding: 32px 20px;
+    }
+
+    .numeros-grid {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .numero-item {
+      text-align: center;
+      color: white;
+    }
+
+    .numero-item strong {
+      display: block;
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .numero-item span {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ───── DOR ───── */
+    .dor {
+      padding: 64px 20px;
+      background: var(--branco);
+    }
+
+    .dor h2 {
+      font-size: clamp(22px, 3.5vw, 36px);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 40px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .dor-lista {
+      max-width: 560px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .dor-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .dor-item .icone { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+    /* ───── SOLUCAO ───── */
+    .solucao {
+      padding: 64px 20px;
+      background: var(--laranja-claro);
+    }
+
+    .solucao h2 {
+      font-size: clamp(22px, 3.5vw, 36px);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 12px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .solucao .sub {
+      text-align: center;
+      color: var(--cinza);
+      font-size: 16px;
+      max-width: 520px;
+      margin: 0 auto 40px;
+    }
+
+    .recursos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .recurso-card {
+      background: white;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border-top: 3px solid var(--laranja);
+    }
+
+    .recurso-card .emoji { font-size: 28px; margin-bottom: 10px; }
+    .recurso-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .recurso-card p { font-size: 14px; color: var(--cinza); line-height: 1.5; }
+
+    /* ───── DEPOIMENTOS ───── */
+    .depoimentos {
+      padding: 64px 20px;
+      background: var(--cinza-claro);
+    }
+
+    .depoimentos h2 {
+      font-size: clamp(20px, 3vw, 32px);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .depo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .depo-card {
+      background: white;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .depo-estrelas { color: #F59E0B; font-size: 16px; margin-bottom: 10px; }
+    .depo-texto { font-size: 14px; line-height: 1.6; color: #44403C; margin-bottom: 14px; }
+    .depo-nome { font-size: 13px; font-weight: 700; color: var(--texto); }
+    .depo-cargo { font-size: 12px; color: var(--cinza); }
+
+    /* ───── PRECO ───── */
+    .preco {
+      padding: 72px 20px;
+      background: linear-gradient(135deg, #1C1917, #292524);
+      color: white;
+      text-align: center;
+    }
+
+    .preco h2 {
+      font-size: clamp(22px, 3.5vw, 38px);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .preco .sub {
+      color: #A8A29E;
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+
+    .preco-card {
+      background: white;
+      color: var(--texto);
+      border-radius: 20px;
+      padding: 40px 32px;
+      max-width: 420px;
+      margin: 0 auto;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    }
+
+    .preco-tag {
+      display: inline-block;
+      background: var(--laranja);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .preco-valor {
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--laranja-escuro);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .preco-valor small {
+      font-size: 20px;
+      font-weight: 700;
+      vertical-align: top;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    .preco-de {
+      font-size: 14px;
+      color: var(--cinza);
+      margin-bottom: 4px;
+    }
+
+    .preco-parcelado {
+      font-size: 13px;
+      color: var(--cinza);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .preco-lista {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+
+    .preco-lista li {
+      font-size: 14px;
+      padding: 8px 0;
+      border-bottom: 1px solid #F5F5F4;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .preco-lista li:last-child { border-bottom: none; }
+    .preco-lista .check { color: #16A34A; font-size: 16px; }
+
+    .btn-comprar {
+      display: block;
+      background: var(--laranja);
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      padding: 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: background 0.2s;
+      box-shadow: 0 4px 20px rgba(249,115,22,0.35);
+    }
+
+    .btn-comprar:hover { background: var(--laranja-escuro); }
+
+    .garantia {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--cinza);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* ───── GARANTIA BOX ───── */
+    .garantia-box {
+      max-width: 560px;
+      margin: 48px auto 0;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 28px 32px;
+      text-align: center;
+    }
+
+    .garantia-titulo {
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .garantia-desc {
+      color: #d6d3d1;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ───── RECEBE BOX ───── */
+    .recebe-box {
+      max-width: 420px;
+      margin: 32px auto 0;
+      background: white;
+      border-radius: 16px;
+      padding: 28px 32px;
+      text-align: left;
+    }
+
+    .recebe-titulo {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--texto);
+      margin-bottom: 16px;
+    }
+
+    .recebe-lista {
+      list-style: none;
+    }
+
+    .recebe-lista li {
+      font-size: 14px;
+      color: var(--texto);
+      padding: 7px 0;
+      border-bottom: 1px solid #f5f5f4;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .recebe-lista li:last-child { border-bottom: none; }
+    .recebe-lista .check { color: #16A34A; font-size: 16px; }
+
+    /* ───── SEGURANCA BADGE ───── */
+    .seguranca-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .seguranca-img {
+      width: 80px;
+      height: auto;
+      opacity: 0.9;
+    }
+
+    .seguranca-texto {
+      color: #a8a29e;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* ───── FAQ ───── */
+    .faq {
+      padding: 64px 20px;
+      background: var(--branco);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .faq h2 {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #E7E5E4;
+      padding: 18px 0;
+    }
+
+    .faq-item summary {
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-item summary::after {
+      content: '+';
+      font-size: 20px;
+      color: var(--laranja);
+      flex-shrink: 0;
+    }
+
+    details[open] summary::after { content: '−'; }
+
+    .faq-item p {
+      font-size: 14px;
+      color: var(--cinza);
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* ───── FOOTER CTA ───── */
+    .footer-cta {
+      background: var(--laranja);
+      padding: 48px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .footer-cta h2 {
+      font-size: clamp(20px, 3vw, 32px);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .footer-cta p {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 28px;
+    }
+
+    .btn-footer {
+      display: inline-block;
+      background: white;
+      color: var(--laranja-escuro);
+      font-size: 17px;
+      font-weight: 800;
+      padding: 16px 36px;
+      border-radius: 12px;
+      text-decoration: none;
+    }
+
+    footer {
+      background: #1C1917;
+      color: #78716C;
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+    }
+
+    /* ───── VIDEO ───── */
+    .video-section {
+      padding: 56px 20px;
+      background: var(--cinza-claro);
+      text-align: center;
+    }
+
+    .video-section h2 {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .video-section p {
+      color: var(--cinza);
+      font-size: 15px;
+      margin-bottom: 28px;
+    }
+
+    .video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 760px;
+      margin: 0 auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+      border-radius: 16px;
+    }
+
+    /* ───── PRECO DOIS CARDS ───── */
+    .preco-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .preco-card-destaque {
+      position: relative;
+      border: 3px solid var(--laranja);
+    }
+
+    .badge-popular {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--laranja);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    /* ───── RESPONSIVE ───── */
+    @media (max-width: 600px) {
+      .numeros-grid { gap: 28px; }
+      .preco-card { padding: 28px 20px; }
+      .preco-grid { grid-template-columns: 1fr; max-width: 380px; }
+    }
+
+    /* ───── MOCKUPS CAROUSEL ───── */
+    .mockups {
+      background: #1C1917;
+      padding: 72px 20px 64px;
+      text-align: center;
+    }
+    .mockups > h2 {
+      color: white;
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .mockups > .sub {
+      color: #a8a29e;
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+    .carousel-wrap {
+      position: relative;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .car-overflow {
+      overflow: hidden;
+      border-radius: 20px;
+    }
+    .car-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .car-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+    }
+    .car-slide img {
+      width: 100%;
+      display: block;
+      height: 280px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 20px 20px 0 0;
+    }
+    .car-caption {
+      background: #292524;
+      padding: 16px 18px;
+      border-radius: 0 0 20px 20px;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: none;
+    }
+    .car-caption .tag {
+      display: inline-block;
+      background: var(--laranja);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 3px 9px;
+      border-radius: 99px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .car-caption h3 {
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .car-caption p {
+      color: #a8a29e;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .car-btn {
+      position: absolute;
+      top: 38%;
+      transform: translateY(-50%);
+      background: var(--laranja);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      transition: background .2s, transform .1s;
+    }
+    .car-btn:hover { background: var(--laranja-escuro); }
+    .car-btn:active { transform: translateY(-50%) scale(0.92); }
+    .car-prev { left: -20px; }
+    .car-next { right: -20px; }
+    .car-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 20px;
+    }
+    .car-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #57534e;
+      border: none;
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+      padding: 0;
+    }
+    .car-dot.active {
+      background: var(--laranja);
+      transform: scale(1.3);
+    }
+
+  </style>
 </head>
-<body class="text-slate-800 antialiased overflow-x-hidden">
+<body>
 
-    <!-- Notificação de Vendas -->
-    <div id="sales-notification" class="fixed bottom-6 left-6 z-[60] bg-white p-4 rounded-xl shadow-2xl border border-slate-100 flex items-center gap-4 notification-hidden">
-        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white">
-            <i class="fas fa-shopping-cart text-sm"></i>
-        </div>
-        <div>
-            <p class="text-xs font-bold text-slate-800"><span id="notif-name">Adriana</span> acabou de assinar!</p>
-            <p class="text-[10px] text-slate-500">Plano Profissional • agora</p>
-        </div>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    ⚡ Acesso imediato apos a compra &nbsp;|&nbsp; Garantia de 7 dias
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Pare de Criar Materiais do Zero.<br><span>500+ Fichas e Protocolos Prontos</span><br>Para Usar Agora.</h1>
+    <p>O app completo para psicopedagogos que querem atender com mais qualidade e parar de perder horas toda semana montando material.</p>
+
+    <!-- VIDEO DENTRO DO HERO -->
+    <div class="video-wrap" style="margin-bottom:36px;">
+      <iframe src="https://player.vimeo.com/video/1153737685?autoplay=0&muted=0&loop=0" allowfullscreen allow="autoplay; fullscreen"></iframe>
     </div>
 
-    <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center text-white shadow-lg shadow-green-200">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <span class="font-bold text-slate-900 tracking-tight">App Kit Psicopedagogo Pro</span>
+    <a href="#preco" class="btn-principal">Quero Acesso Agora &rarr;</a>
+    <div class="hero-sub">Acesso vitalicio &bull; Atualizacoes semanais &bull; Sem mensalidade</div>
+  </section>
+
+  <!-- NUMEROS -->
+  <div class="numeros">
+    <div class="numeros-grid">
+      <div class="numero-item"><strong>500+</strong><span>materiais prontos</span></div>
+      <div class="numero-item"><strong>8</strong><span>categorias clinicas</span></div>
+      <div class="numero-item"><strong>7 dias</strong><span>garantia total</span></div>
+      <div class="numero-item"><strong>1x</strong><span>acesso vitalicio</span></div>
+    </div>
+  </div>
+
+  <!-- DOR -->
+  <section class="dor">
+    <h2>Voce reconhece alguma dessas situacoes?</h2>
+    <div class="dor-lista">
+      <div class="dor-item">
+        <span class="icone">😩</span>
+        <span>Passa horas toda semana criando fichas e atividades do zero antes das sessoes</span>
+      </div>
+      <div class="dor-item">
+        <span class="icone">📂</span>
+        <span>Tem arquivos espalhados em dezenas de pastas e nunca encontra o que precisa rapido</span>
+      </div>
+      <div class="dor-item">
+        <span class="icone">😰</span>
+        <span>Sente inseguranca na hora de escolher o protocolo certo para cada caso</span>
+      </div>
+      <div class="dor-item">
+        <span class="icone">🔄</span>
+        <span>Usa sempre os mesmos materiais porque nao tem tempo de criar novidades para os pacientes</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUCAO -->
+  <section class="solucao">
+    <h2>Tudo que voce precisa.<br>Em um unico lugar. Pronto para usar.</h2>
+    <p class="sub">Abra o app, escolha a categoria e em segundos voce tem o material certo para cada paciente.</p>
+    <div class="recursos-grid">
+      <div class="recurso-card">
+        <div class="emoji">🧠</div>
+        <h3>Fichas de Avaliacao</h3>
+        <p>Protocolos completos para avaliacao cognitiva, atencional e de aprendizagem.</p>
+      </div>
+      <div class="recurso-card">
+        <div class="emoji">🎯</div>
+        <h3>Atividades TEA / TDAH</h3>
+        <p>Materiais especificos para criancas com necessidades especiais, prontos para imprimir.</p>
+      </div>
+      <div class="recurso-card">
+        <div class="emoji">📋</div>
+        <h3>Roteiros de Anamnese</h3>
+        <p>Questionarios estruturados para primeira consulta com pais e responsaveis.</p>
+      </div>
+      <div class="recurso-card">
+        <div class="emoji">🎲</div>
+        <h3>Recursos Ludicos</h3>
+        <p>Jogos e atividades ludicas para engajar criancas durante as sessoes.</p>
+      </div>
+      <div class="recurso-card">
+        <div class="emoji">📊</div>
+        <h3>Checklists Clinicos</h3>
+        <p>Listas de verificacao para acompanhar a evolucao de cada paciente.</p>
+      </div>
+      <div class="recurso-card">
+        <div class="emoji">🔄</div>
+        <h3>Atualizacoes Semanais</h3>
+        <p>Novos materiais adicionados toda semana. Voce nunca fica sem opcao nova.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOCKUPS CAROUSEL -->
+  <section class="mockups">
+    <h2>Veja o app por dentro</h2>
+    <p class="sub">Tudo na tela do seu celular. Sem instalar, sem complicar.</p>
+
+    <div class="carousel-wrap">
+      <button class="car-btn car-prev" aria-label="Anterior">&#8592;</button>
+      <button class="car-btn car-next" aria-label="Proximo">&#8594;</button>
+
+      <div class="car-overflow">
+        <div class="car-track" id="carTrack">
+
+          <div class="car-slide">
+            <img src="https://i.ibb.co/C3bGpDQH/Captura-de-Tela-2026-03-17-a-s-18-16-52.png" alt="App Interface" loading="lazy" />
+            <div class="car-caption">
+              <span class="tag">Interface</span>
+              <h3>Moderno, rapido e intuitivo — direto do celular, sem instalar nada.</h3>
+              <p>Acesse de qualquer dispositivo. Funciona como app, abre como site.</p>
             </div>
-            <button onclick="scrollToPricing()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors">
-                Assinar Agora
-            </button>
+          </div>
+
+          <div class="car-slide">
+            <img src="https://i.ibb.co/JwcnPsyr/Captura-de-Tela-2026-03-17-a-s-18-18-32.png" alt="Cadastrar Aluno" loading="lazy" />
+            <div class="car-caption">
+              <span class="tag">Organizacao</span>
+              <h3>Cadastre seus alunos em segundos. Tudo organizado num so lugar.</h3>
+              <p>Nome, idade, escola e observacoes iniciais — sem papel, sem caderno.</p>
+            </div>
+          </div>
+
+          <div class="car-slide">
+            <img src="https://i.ibb.co/HDRTTh6k/Captura-de-Tela-2026-03-17-a-s-18-18-55.png" alt="Fluencia Leitora" loading="lazy" />
+            <div class="car-caption">
+              <span class="tag">Fluencia</span>
+              <h3>Timer automatico. Conta cada erro enquanto voce so observa.</h3>
+              <p>Omissao, troca, inversao e acrescimo — registrados com um toque.</p>
+            </div>
+          </div>
+
+          <div class="car-slide">
+            <img src="https://i.ibb.co/xqWQc9KD/Captura-de-Tela-2026-03-17-a-s-18-19-07.png" alt="Neuropsicopedagogia" loading="lazy" />
+            <div class="car-caption">
+              <span class="tag">Neuropsico</span>
+              <h3>Testes neuropsico que profissionais cobram caro — no seu app.</h3>
+              <p>Span de digitos, memoria visual (Corsi) e fluencia verbal com timer de 60s.</p>
+            </div>
+          </div>
+
+          <div class="car-slide">
+            <img src="https://i.ibb.co/4gN8BxPH/Captura-de-Tela-2026-03-17-a-s-18-19-25.png" alt="Como usar" loading="lazy" />
+            <div class="car-caption">
+              <span class="tag">Simples</span>
+              <h3>6 passos e voce ja esta atendendo. Sem curva de aprendizado.</h3>
+              <p>Cadastra o aluno, aplica os testes e emite o PDF. So isso.</p>
+            </div>
+          </div>
+
+          <div class="car-slide">
+            <img src="https://i.ibb.co/93qMtby5/Captura-de-Tela-2026-03-17-a-s-18-19-51.png" alt="Testes disponiveis" loading="lazy" />
+            <div class="car-caption">
+              <span class="tag">Avaliacoes</span>
+              <h3>6 instrumentos clinicos prontos. Sem imprimir, sem procurar.</h3>
+              <p>Leitura, fonologia, atencao, escrita funcional e Escala TEA/TDAH — tudo no app.</p>
+            </div>
+          </div>
+
+          <div class="car-slide">
+            <img src="https://i.ibb.co/x8dqRZxC/Captura-de-Tela-2026-03-17-a-s-18-20-38.png" alt="Relatorio PDF" loading="lazy" />
+            <div class="car-caption">
+              <span class="tag">Relatorio</span>
+              <h3>Relatorio PDF gerado na hora. Com nome do paciente e tudo.</h3>
+              <p>Encerra a sessao, clica em exportar. O relatorio ja vem pronto e profissional.</p>
+            </div>
+          </div>
+
         </div>
-    </nav>
+      </div>
+    </div>
 
-    <!-- 1. Hero Section -->
-    <section class="pt-32 pb-20 px-4 gradient-bg relative">
-        <div class="max-w-4xl mx-auto text-center flex flex-col items-center">
-            <div class="inline-block bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-sm font-bold mb-6 uppercase tracking-wider">
-                <i class="fas fa-star mr-2 text-yellow-500"></i> + DE 3000 ACESSOS SEMANAL
-            </div>
-            <h1 class="text-4xl md:text-6xl font-black text-slate-900 mb-6 leading-tight">
-                Abra o App, Escolha a Atividade e Atenda com Mais <span class="text-green-600">Segurança</span>
-            </h1>
-            <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Um aplicativo completo com fichas, testes, roteiros e protocolos psicopedagógicos sempre atualizados.
-            </p>
+    <div class="car-dots" id="carDots"></div>
+  </section>
 
-            <!-- Video UGC Reels Section -->
-            <div class="relative mb-12 w-full max-w-[320px] mx-auto p-1.5 rounded-[2.5rem] bg-gradient-to-r from-green-400 via-green-500 to-green-400 animate-border-flash shadow-2xl">
-                <div class="relative pt-[177.77%] overflow-hidden rounded-[2.3rem] bg-black">
-                    <iframe 
-                        class="absolute top-0 left-0 w-full h-full border-0"
-                        src="https://player.vimeo.com/video/1153737685?autoplay=1&muted=1&loop=1"
-                        title="UGC Video"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                    ></iframe>
-                </div>
-                
-                </div>
-            </div>
+  <script>
+    (function(){
+      var track = document.getElementById('carTrack');
+      var dotsWrap = document.getElementById('carDots');
+      var slides = track.querySelectorAll('.car-slide');
+      var total = slides.length;
+      var cur = 0;
+      var timer;
 
-            <div class="flex flex-col items-center gap-4">
-                <button onclick="scrollToPricing()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold py-5 px-10 rounded-2xl shadow-xl transition-all cta-pulse flex items-center gap-3">
-                    Quero Acessar o App Agora
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-                <img src="https://i.ibb.co/LzHJ1Z9X/Chat-GPT-Image-11-de-jan-de-2026-16-29-32.png" alt="Segurança" class="w-full max-w-[350px] mt-4">
-                <p class="text-sm text-slate-500 flex items-center gap-2">
-                    <i class="fas fa-shield-halved text-green-500"></i> Compra 100% segura e acesso imediato
-                </p>
-            </div>
-        </div>
-    </section>
+      // criar dots
+      slides.forEach(function(_, i){
+        var d = document.createElement('button');
+        d.className = 'car-dot' + (i === 0 ? ' active' : '');
+        d.setAttribute('aria-label', 'Slide ' + (i+1));
+        d.addEventListener('click', function(){ goTo(i); resetTimer(); });
+        dotsWrap.appendChild(d);
+      });
 
-    <!-- 2. Seção de Dor -->
-    <section class="py-20 px-4 bg-white">
-        <div class="max-w-5xl mx-auto">
-            <div class="bg-slate-900 rounded-[3rem] p-8 md:p-16 text-white overflow-hidden relative border-4 border-green-500/20">
-                <div class="relative z-10">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center leading-tight">Você se sente assim na sua prática clínica?</h2>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0 mt-1"><i class="fas fa-times text-xs"></i></div><p class="text-slate-300 text-lg">Medo de errar no atendimento</p></div>
-                        <div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0 mt-1"><i class="fas fa-times text-xs"></i></div><p class="text-slate-300 text-lg">Insegurança ao conversar com pais</p></div>
-                        <div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0 mt-1"><i class="fas fa-times text-xs"></i></div><p class="text-slate-300 text-lg">Dificuldade em saber o que aplicar em cada sessão</p></div>
-                        <div class="flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 shrink-0 mt-1"><i class="fas fa-times text-xs"></i></div><p class="text-slate-300 text-lg">Falta de organização e estrutura clínica</p></div>
-                    </div>
-                    <p class="mt-12 text-green-400 font-bold text-xl text-center italic">"Se você se identificou com pelo menos uma dessas situações, esse app é para você."</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      function goTo(n){
+        cur = (n + total) % total;
+        track.style.transform = 'translateX(-' + cur * 100 + '%)';
+        dotsWrap.querySelectorAll('.car-dot').forEach(function(d, i){
+          d.classList.toggle('active', i === cur);
+        });
+      }
 
-    <!-- NOVA: Seção de Depoimentos (Prova Social) -->
-    <section class="py-20 px-4 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-black mb-12 text-center text-slate-900">O que dizem as profissionais que já usam</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Depoimento 1 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 flex flex-col gap-4 hover:shadow-lg transition-all">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">MS</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900">Mariana Silva</h4>
-                            <p class="text-xs text-green-600 font-medium uppercase tracking-wider">Iniciante</p>
-                        </div>
-                    </div>
-                    <div class="flex text-yellow-400 text-xs">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-slate-600 italic leading-relaxed">"Eu tinha muito medo de atender meu primeiro paciente. O app me deu o roteiro exato do que falar na anamnese e quais testes aplicar. Hoje me sinto outra profissional!"</p>
-                </div>
-                <!-- Depoimento 2 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 flex flex-col gap-4 hover:shadow-lg transition-all">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold">CR</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900">Cláudia Rocha</h4>
-                            <p class="text-xs text-green-600 font-medium uppercase tracking-wider">Psicopedagoga Clínica</p>
-                        </div>
-                    </div>
-                    <div class="flex text-yellow-400 text-xs">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-slate-600 italic leading-relaxed">"O que eu mais amo são as atualizações semanais. Sempre tem um recurso lúdico novo que as crianças adoram e que realmente tem embasamento clínico. Recomendo muito!"</p>
-                </div>
-                <!-- Depoimento 3 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 flex flex-col gap-4 hover:shadow-lg transition-all">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">RM</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900">Renata Mendes</h4>
-                            <p class="text-xs text-green-600 font-medium uppercase tracking-wider">Neuropsicopedagoga</p>
-                        </div>
-                    </div>
-                    <div class="flex text-yellow-400 text-xs">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-slate-600 italic leading-relaxed">"A organização das fichas editáveis me poupa horas de trabalho. O suporte no WhatsApp é excelente e os protocolos de TEA são os mais completos que já vi."</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      function next(){ goTo(cur + 1); }
+      function prev(){ goTo(cur - 1); }
 
-    <!-- 3 & 4. Apresentação e O Que Tem Dentro -->
-    <section class="py-20 px-4 bg-slate-50">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-black mb-4">Tudo o que você precisa em um só lugar</h2>
-            <p class="text-slate-600 mb-12">Materiais organizados por etapa do atendimento, prontos para uso.</p>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-file-signature"></i></div><h3 class="font-bold">Fichas editáveis</h3></div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-vial"></i></div><h3 class="font-bold">Testes completos</h3></div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-route"></i></div><h3 class="font-bold">Roteiros sessões</h3></div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-shield-alt"></i></div><h3 class="font-bold">Protocolos TEA/TDAH</h3></div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-clipboard-list"></i></div><h3 class="font-bold">Relatórios prontos</h3></div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-gamepad"></i></div><h3 class="font-bold">Recursos lúdicos</h3></div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-yellow-100 text-yellow-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-calendar-check"></i></div><h3 class="font-bold">Agendas/Planejamento</h3></div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-100 soft-shadow flex flex-col items-center"><div class="w-14 h-14 bg-cyan-100 text-cyan-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fas fa-check-double"></i></div><h3 class="font-bold">Checklists clínicos</h3></div>
-            </div>
-        </div>
-    </section>
+      function startTimer(){ timer = setInterval(next, 4000); }
+      function resetTimer(){ clearInterval(timer); startTimer(); }
 
-    <!-- 5. Diferencial das Atualizações Semanais -->
-    <section class="py-20 px-4 bg-white">
-        <div class="max-w-4xl mx-auto text-center">
-            <div class="bg-green-50 border-2 border-green-500 border-dashed rounded-[2rem] p-10">
-                <h2 class="text-3xl font-bold mb-4 text-green-800">Toda semana novos materiais!</h2>
-                <p class="text-lg text-slate-700 leading-relaxed mb-6">Dentro do app, você nunca fica estagnada. Liberamos novos protocolos, jogos e fichas toda semana para manter sua prática sempre atualizada com as melhores evidências.</p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <span class="bg-white px-4 py-2 rounded-full text-sm font-bold shadow-sm border border-green-200">Novos Jogos Lúdicos</span>
-                    <span class="bg-white px-4 py-2 rounded-full text-sm font-bold shadow-sm border border-green-200">Protocolos TEA/TDAH</span>
-                    <span class="bg-white px-4 py-2 rounded-full text-sm font-bold shadow-sm border border-green-200">Planejamentos Mensais</span>
-                </div>
-            </div>
-        </div>
-    </section>
+      document.querySelector('.car-prev').addEventListener('click', function(){ prev(); resetTimer(); });
+      document.querySelector('.car-next').addEventListener('click', function(){ next(); resetTimer(); });
 
-    <!-- 6. Planos e Preços -->
-    <section id="precos" class="py-24 px-4 bg-slate-50">
-        <div class="max-w-5xl mx-auto text-center">
-            <h2 class="text-4xl font-black mb-16">Escolha o Melhor Plano para Você</h2>
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
-                <!-- Essencial -->
-                <div class="relative p-8 rounded-3xl border border-slate-200 bg-white flex flex-col h-full text-left">
-                    <h3 class="text-xl font-bold mb-2">Plano Básico</h3>
-                    <div class="mb-6">
-                        <span class="text-slate-500 text-sm">Por apenas</span>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-2xl font-bold">R$</span>
-                            <span class="text-5xl font-black text-slate-900">17,90</span>
-                        </div>
-                        <p class="text-slate-400 text-sm mt-1">Pagamento Único</p>
-                    </div>
-                    <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3 text-sm text-slate-600"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Acesso ao app</li>
-                        <li class="flex items-start gap-3 text-sm text-slate-600"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Materiais essenciais</li>
-                        <li class="flex items-start gap-3 text-sm text-slate-600"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Atualizações semanais básicas</li>
-                        <li class="flex items-start gap-3 text-sm text-slate-600"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Acesso Vitalício</li>
-                    </ul>
-                    <a href="https://pay.hotmart.com/Q104360693V?off=551toyj8&checkoutMode=10" class="w-full py-4 rounded-xl text-center font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all">Escolher Básico</a>
-                </div>
-                <!-- Profissional -->
-                <div class="relative p-8 rounded-3xl border-2 border-green-500 bg-white scale-105 z-10 shadow-2xl flex flex-col h-full text-left">
-                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Mais Escolhido</span>
-                    <h3 class="text-xl font-bold mb-2 text-green-700">Plano Profissional Pro</h3>
-                    <div class="mb-6">
-                        <span class="text-slate-500 text-sm">Por apenas</span>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-2xl font-bold text-green-600">R$</span>
-                            <span class="text-5xl font-black text-slate-900">27,90</span>
-                        </div>
-                        <p class="text-slate-400 text-sm mt-1">Pagamento Único</p>
-                    </div>
-                    <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Tudo do plano Essencial</li>
-                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Testes psicopedagógicos completos</li>
-                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Protocolos avançados TEA/TDAH</li>
-                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Recursos lúdicos exclusivos</li>
-                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Comunidade Fechada</li>
-                        <li class="flex items-start gap-3 text-sm text-slate-600 font-bold"><i class="fas fa-check-circle text-green-500 mt-0.5"></i>Suporte VIP WhatsApp</li>
-                    </ul>
-                    <a href="https://pay.hotmart.com/Q104360693V?checkoutMode=10" class="w-full py-4 rounded-xl text-center font-bold bg-green-600 hover:bg-green-700 text-white cta-pulse shadow-lg shadow-green-200 transition-all">Assinar Profissional Agora</a>
-                </div>
-            </div>
-        </div>
-    </section>
+      // swipe touch
+      var startX = 0;
+      track.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+      track.addEventListener('touchend', function(e){
+        var diff = startX - e.changedTouches[0].clientX;
+        if(Math.abs(diff) > 40){ diff > 0 ? next() : prev(); resetTimer(); }
+      }, {passive:true});
 
-    <!-- 7. Garantia -->
-    <section class="py-20 px-4 bg-white">
-        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10 bg-slate-50 p-10 rounded-[2.5rem] border-2 border-green-500 shadow-xl">
-            <div class="relative shrink-0 w-32 h-32 bg-green-100 rounded-full flex items-center justify-center">
-                <i class="fas fa-shield-check text-5xl text-green-600"></i>
-            </div>
-            <div>
-                <h2 class="text-3xl font-bold mb-4">Garantia Incondicional</h2>
-                <p class="text-slate-600 text-lg leading-relaxed">Se em até 7 dias você não se sentir mais segura para atender, ou simplesmente achar que o app não é para você, devolvemos 100% do seu dinheiro. Sem perguntas.</p>
-            </div>
-        </div>
-    </section>
+      startTimer();
+    })();
+  </script>
 
-    <!-- 8. O Que Você Recebe -->
-    <section class="py-20 px-4 bg-slate-900 text-white">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-center">Tudo o que você recebe ao entrar hoje:</h2>
-            <div class="space-y-4">
-                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10"><i class="fas fa-check-circle text-green-500 text-xl"></i><span>Acesso vitalício ao app</span></div>
-                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10"><i class="fas fa-check-circle text-green-500 text-xl"></i><span>Todos os materiais editáveis e sem logomarca</span></div>
-                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10"><i class="fas fa-check-circle text-green-500 text-xl"></i><span>Atualizações semanais inclusas</span></div>
-                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10"><i class="fas fa-check-circle text-green-500 text-xl"></i><span>Suporte direto via WhatsApp</span></div>
-            </div>
-        </div>
-    </section>
+  <!-- DEPOIMENTOS -->
+  <section class="depoimentos">
+    <h2>O que outras psicopedagogas estao dizendo</h2>
+    <div class="depo-grid">
+      <div class="depo-card">
+        <div class="depo-estrelas">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="depo-texto">"Economizo pelo menos 3 horas por semana. Antes ficava ate meia-noite criando ficha. Agora abro o app e pronto."</p>
+        <div class="depo-nome">Camila R.</div>
+        <div class="depo-cargo">Psicopedagoga Clinica — SP</div>
+      </div>
+      <div class="depo-card">
+        <div class="depo-estrelas">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="depo-texto">"Os protocolos para TEA mudaram minha pratica. Nunca mais fiquei sem saber o que usar em sessao."</p>
+        <div class="depo-nome">Patricia M.</div>
+        <div class="depo-cargo">Neuropsicopedagoga — MG</div>
+      </div>
+      <div class="depo-card">
+        <div class="depo-estrelas">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="depo-texto">"Estou comecando agora e esse kit me deu a base que eu nao tive na faculdade. Vale muito mais do que paguei."</p>
+        <div class="depo-nome">Ana Luiza S.</div>
+        <div class="depo-cargo">Psicopedagoga Iniciante — RJ</div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 9. FAQ -->
-    <section class="py-24 px-4 bg-white">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-4xl font-black mb-12 text-center">Perguntas Frequentes</h2>
-            <div class="space-y-4">
-                <div class="faq-item border-b border-slate-200 pb-4">
-                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
-                        É só para iniciantes?
-                        <i class="fas fa-chevron-down text-slate-400"></i>
-                    </button>
-                    <div class="faq-answer text-slate-600 pb-4">Não! O app é ideal tanto para iniciantes que precisam de segurança, quanto para profissionais experientes que desejam otimizar o tempo e ter materiais atualizados.</div>
-                </div>
-                <div class="faq-item border-b border-slate-200 pb-4">
-                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
-                        Os materiais são editáveis?
-                        <i class="fas fa-chevron-down text-slate-400"></i>
-                    </button>
-                    <div class="faq-answer text-slate-600 pb-4">Sim! Grande parte dos materiais são editáveis para que você coloque seu nome ou ajuste de acordo com a necessidade do seu paciente.</div>
-                </div>
-                <div class="faq-item border-b border-slate-200 pb-4">
-                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
-                        Recebo acesso na hora?
-                        <i class="fas fa-chevron-down text-slate-400"></i>
-                    </button>
-                    <div class="faq-answer text-slate-600 pb-4">Sim! O acesso é enviado imediatamente para o seu e-mail após a confirmação do pagamento.</div>
-                </div>
-                <div class="faq-item border-b border-slate-200 pb-4">
-                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
-                        O acesso é vitalício?
-                        <i class="fas fa-chevron-down text-slate-400"></i>
-                    </button>
-                    <div class="faq-answer text-slate-600 pb-4">Sim. Você paga uma única vez e tem acesso para sempre ao app e às atualizações.</div>
-                </div>
-                <div class="faq-item border-b border-slate-200 pb-4">
-                    <button class="w-full flex items-center justify-between font-bold text-lg py-4 text-left" onclick="toggleFaq(this)">
-                        Tem suporte no WhatsApp?
-                        <i class="fas fa-chevron-down text-slate-400"></i>
-                    </button>
-                    <div class="faq-answer text-slate-600 pb-4">Sim, o Plano Profissional inclui suporte direto para dúvidas sobre o uso do app e materiais.</div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- PRECO -->
+  <section class="preco" id="preco">
+    <h2>Investimento unico.<br>Acesso para sempre.</h2>
+    <p class="sub">Sem mensalidade. Sem renovacao. Paga uma vez e usa para sempre.</p>
+    <div class="preco-grid">
 
-    <!-- 10. CTA Final -->
-    <section class="py-24 px-4 bg-slate-900 text-white text-center">
-        <div class="max-w-4xl mx-auto flex flex-col items-center">
-            <h2 class="text-3xl md:text-5xl font-black mb-10 leading-tight">Não é só um kit. É um aplicativo que te acompanha na prática clínica.</h2>
-            <button onclick="scrollToPricing()" class="bg-green-600 hover:bg-green-700 text-white text-2xl font-bold py-6 px-12 rounded-2xl shadow-2xl transition-all cta-pulse flex items-center gap-4">
-                <i class="fas fa-rocket"></i> Acessar o App Agora
-            </button>
-            <div class="flex justify-center gap-6 opacity-50 grayscale contrast-125 mt-12 text-4xl">
-                <i class="fab fa-cc-visa"></i>
-                <i class="fab fa-cc-mastercard"></i>
-                <i class="fab fa-pix"></i>
-            </div>
-        </div>
-    </section>
+      <!-- BASICO -->
+      <div class="preco-card">
+        <div class="preco-tag">Plano Basico</div>
+        <div class="preco-valor"><small>R$</small> 17,90</div>
+        <div class="preco-parcelado">Pagamento Unico</div>
+        <ul class="preco-lista">
+          <li><span class="check">&#10003;</span> Acesso ao app</li>
+          <li><span class="check">&#10003;</span> Materiais essenciais</li>
+          <li><span class="check">&#10003;</span> Atualizacoes semanais basicas</li>
+          <li><span class="check">&#10003;</span> Acesso Vitalicio</li>
+        </ul>
+        <a href="https://pay.hotmart.com/Q104360693V?off=551toyj8&checkoutMode=10" class="btn-comprar">Escolher Basico &rarr;</a>
+        <div class="garantia">&#128274; Garantia de 7 dias</div>
+      </div>
 
-    <footer class="py-12 px-4 border-t border-slate-800 bg-slate-900 text-center text-slate-500 text-sm">
-        <p>© 2024 App Kit Psicopedagogo Pro. Todos os direitos reservados.</p>
-    </footer>
+      <!-- PROFISSIONAL -->
+      <div class="preco-card preco-card-destaque">
+        <div class="badge-popular">&#11088; Mais Escolhido</div>
+        <div class="preco-tag" style="background:#C2410C;">Plano Profissional Pro</div>
+        <div class="preco-valor"><small>R$</small> 27,90</div>
+        <div class="preco-parcelado">Pagamento Unico</div>
+        <ul class="preco-lista">
+          <li><span class="check">&#10003;</span> Tudo do plano Basico</li>
+          <li><span class="check">&#10003;</span> Testes psicopedagogicos completos</li>
+          <li><span class="check">&#10003;</span> Protocolos avancados TEA/TDAH</li>
+          <li><span class="check">&#10003;</span> Recursos ludicos exclusivos</li>
+          <li><span class="check">&#10003;</span> Comunidade Fechada</li>
+          <li><span class="check">&#10003;</span> Suporte VIP WhatsApp</li>
+        </ul>
+        <a href="https://pay.hotmart.com/Q104360693V?checkoutMode=10" class="btn-comprar">Assinar Profissional Agora &rarr;</a>
+        <div class="garantia">&#128274; Garantia de 7 dias</div>
+      </div>
 
-    <script>
-        // Notificações de Venda Fake
-        const names = ["Mariana", "Camila", "Luciana", "Fernanda", "Patrícia", "Eliane", "Beatriz", "Gabriela", "Renata", "Heloísa", "Isabela", "Priscila", "Tatiana"];
-        const notif = document.getElementById('sales-notification');
-        const notifName = document.getElementById('notif-name');
+    </div>
 
-        function showNotification() {
-            const randomName = names[Math.floor(Math.random() * names.length)];
-            notifName.innerText = randomName;
-            notif.classList.remove('notification-hidden');
-            notif.classList.add('notification-active');
-            
-            setTimeout(() => {
-                notif.classList.remove('notification-active');
-                notif.classList.add('notification-hidden');
-            }, 4000);
-        }
+    <!-- GARANTIA -->
+    <div class="garantia-box">
+      <div class="garantia-titulo">&#127347; Garantia Incondicional</div>
+      <p class="garantia-desc">Se em ate 7 dias voce nao se sentir mais segura para atender, ou simplesmente achar que o app nao e para voce, devolvemos 100% do seu dinheiro. Sem perguntas.</p>
+    </div>
 
-        setInterval(showNotification, 15000);
-        setTimeout(showNotification, 5000);
+    <!-- TUDO QUE VOCE RECEBE -->
+    <div class="recebe-box">
+      <div class="recebe-titulo">Tudo o que voce recebe ao entrar hoje:</div>
+      <ul class="recebe-lista">
+        <li><span class="check">&#10003;</span> Acesso vitalicio ao app</li>
+        <li><span class="check">&#10003;</span> Todos os materiais editaveis e sem logomarca</li>
+        <li><span class="check">&#10003;</span> Atualizacoes semanais inclusas</li>
+        <li><span class="check">&#10003;</span> Suporte direto via WhatsApp</li>
+      </ul>
+    </div>
 
-        // Scroll Suave
-        function scrollToPricing() {
-            document.getElementById('precos').scrollIntoView({ behavior: 'smooth' });
-        }
+    <!-- BADGE SEGURANCA -->
+    <div class="seguranca-box">
+      <img src="https://i.ibb.co/LzHJ1Z9X/Chat-GPT-Image-11-de-jan-de-2026-16-29-32.png" alt="Seguranca" class="seguranca-img" />
+      <div class="seguranca-texto">Compra 100% segura e acesso imediato</div>
+    </div>
 
-        // FAQ Toggle
-        function toggleFaq(btn) {
-            const item = btn.parentElement;
-            const isActive = item.classList.contains('active');
-            
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-            
-            if (!isActive) {
-                item.classList.add('active');
-            }
-        }
-    </script>
-<script type="module" src="/index.tsx"></script>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>Perguntas frequentes</h2>
+
+    <details class="faq-item">
+      <summary>Como vou receber o acesso?</summary>
+      <p>Imediatamente apos a confirmacao do pagamento voce recebe o link de acesso por e-mail. Em menos de 5 minutos voce ja esta usando.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Funciona no celular?</summary>
+      <p>Sim. O app funciona em qualquer dispositivo — celular, tablet ou computador. Basta ter um navegador.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Posso usar os materiais com meus pacientes?</summary>
+      <p>Sim. Todos os materiais sao editaveis e sem logomarca. Voce pode personalizar e usar livremente na sua pratica clinica.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>E realmente vitalicio?</summary>
+      <p>Sim. Voce paga uma unica vez e tem acesso para sempre, incluindo todas as atualizacoes futuras sem custo adicional.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>E se eu nao gostar?</summary>
+      <p>Voce tem 7 dias de garantia total. Se nao ficar satisfeita por qualquer motivo, devolvemos 100% do valor sem perguntas.</p>
+    </details>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <div class="footer-cta">
+    <h2>Comece a usar ainda hoje.</h2>
+    <p>500+ materiais prontos. Acesso imediato. Sem mensalidade.</p>
+    <a href="#preco" class="btn-footer">Garantir Meu Acesso &rarr;</a>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 App Kit Psicopedagogo Pro &bull; Todos os direitos reservados</p>
+  </footer>
+
+  <!-- POPUP PROVA SOCIAL -->
+  <div id="provaPopup" style="
+    position: fixed;
+    bottom: 24px;
+    left: 20px;
+    z-index: 9999;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 300px;
+    width: calc(100vw - 40px);
+    transform: translateY(120px);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+    pointer-events: none;
+  ">
+    <div style="
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 50%;
+      background: #22c55e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+    </div>
+    <div>
+      <div id="provaTitle" style="font-size:14px;font-weight:800;color:#1c1917;line-height:1.3;"></div>
+      <div id="provaSub" style="font-size:12px;color:#78716c;margin-top:2px;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var nomes = [
+        "Heloisa","Mariana","Fernanda","Ana Paula","Juliana","Camila",
+        "Patricia","Larissa","Beatriz","Gabriela","Renata","Carla",
+        "Luciana","Aline","Vanessa","Simone","Cristina","Debora",
+        "Tatiane","Andreia","Fabiana","Priscila","Leticia","Amanda"
+      ];
+      var planos = ["Plano Profissional Pro","Plano Basico","Plano Profissional Pro"];
+      var tempos = ["agora","ha 1 minuto","ha 2 minutos","ha 3 minutos","ha 5 minutos","agora"];
+
+      var popup = document.getElementById('provaPopup');
+      var title = document.getElementById('provaTitle');
+      var sub   = document.getElementById('provaSub');
+
+      function mostrar() {
+        var nome  = nomes[Math.floor(Math.random() * nomes.length)];
+        var plano = planos[Math.floor(Math.random() * planos.length)];
+        var tempo = tempos[Math.floor(Math.random() * tempos.length)];
+
+        title.textContent = nome + ' acabou de assinar!';
+        sub.textContent   = plano + ' \u2022 ' + tempo;
+
+        // entra
+        popup.style.transform = 'translateY(0)';
+        popup.style.opacity   = '1';
+
+        // sai apos 4s
+        setTimeout(function(){
+          popup.style.transform = 'translateY(120px)';
+          popup.style.opacity   = '0';
+        }, 4000);
+      }
+
+      // primeira exibicao apos 3s, depois a cada 8s
+      setTimeout(function(){
+        mostrar();
+        setInterval(mostrar, 8000);
+      }, 3000);
+    })();
+  </script>
+
 </body>
 </html>
-
-<script>
-  window.pixelId = "698affc4b6a5a0640b7ae503";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
-
-<script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
