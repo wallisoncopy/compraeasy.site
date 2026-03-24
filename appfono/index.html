@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App Kit Fonoaudióloga Pro | 400+ Fichas e Protocolos Prontos</title>
+  <meta name="description" content="O app completo para fonoaudiólogas que querem atender com mais qualidade e parar de perder horas criando material do zero." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            teal: {
+              50:  '#f0fdfa',
+              100: '#ccfbf1',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    * { font-family: 'Inter', sans-serif; }
+    .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #134e4a 50%, #0f172a 100%); }
+    .card-hover { transition: transform .2s, box-shadow .2s; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(13,148,136,.2); }
+    .pulse-btn { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(13,148,136,.4)} 50%{box-shadow:0 0 0 12px rgba(13,148,136,0)} }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    .faq-answer.open { max-height: 300px; }
+    .popup-toast { animation: slideIn .4s ease; }
+    @keyframes slideIn { from{transform:translateX(-120%)} to{transform:translateX(0)} }
+    .tag-badge {
+      background: linear-gradient(90deg, #0d9488, #14b8a6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 overflow-x-hidden">
+
+<!-- TOP BAR -->
+<div class="bg-teal-600 text-white text-center py-2 px-4 text-sm font-medium">
+  Acesso imediato após compra &nbsp;|&nbsp; <strong>Garantia de 7 dias</strong> sem perguntas
+</div>
+
+<!-- HERO -->
+<section class="hero-gradient text-white py-16 px-4">
+  <div class="max-w-3xl mx-auto text-center">
+    <span class="inline-block bg-teal-600/30 border border-teal-400/40 text-teal-300 text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">
+      Para Fonoaudiólogas
+    </span>
+    <h1 class="text-3xl md:text-5xl font-black leading-tight mb-5">
+      Pare de Criar Fichas do Zero.<br/>
+      <span class="text-teal-400">400+ Fichas e Protocolos</span><br/>
+      Fonoaudiológicos Prontos Para Usar Agora.
+    </h1>
+    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+      O app completo para fonoaudiólogas que querem atender com mais qualidade e parar de perder horas toda semana montando material do zero.
+    </p>
+    <a href="#preco" class="inline-block bg-teal-500 hover:bg-teal-400 text-white font-bold text-lg px-10 py-4 rounded-2xl pulse-btn transition-all mb-4">
+      Quero Acesso Agora →
+    </a>
+    <p class="text-gray-400 text-sm">Acesso vitalício &nbsp;•&nbsp; Atualizações semanais &nbsp;•&nbsp; Sem mensalidade</p>
+  </div>
+</section>
+
+<!-- NÚMEROS -->
+<section class="bg-gray-50 border-b border-gray-100 py-10 px-4">
+  <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+    <div>
+      <div class="text-3xl md:text-4xl font-black text-teal-600">400+</div>
+      <div class="text-sm text-gray-500 mt-1">materiais prontos</div>
+    </div>
+    <div>
+      <div class="text-3xl md:text-4xl font-black text-teal-600">6</div>
+      <div class="text-sm text-gray-500 mt-1">áreas clínicas</div>
+    </div>
+    <div>
+      <div class="text-3xl md:text-4xl font-black text-teal-600">7 dias</div>
+      <div class="text-sm text-gray-500 mt-1">garantia total</div>
+    </div>
+    <div>
+      <div class="text-3xl md:text-4xl font-black text-teal-600">1x</div>
+      <div class="text-sm text-gray-500 mt-1">acesso vitalício</div>
+    </div>
+  </div>
+</section>
+
+<!-- DOR -->
+<section class="py-16 px-4 bg-white">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-2xl md:text-3xl font-black text-center mb-2">Você reconhece alguma dessas situações?</h2>
+    <p class="text-gray-500 text-center mb-10">Se sim, o App Kit Fonoaudióloga Pro foi feito para você.</p>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="bg-red-50 border border-red-100 rounded-2xl p-5 flex gap-4">
+        <span class="text-3xl mt-1">😩</span>
+        <div>
+          <p class="font-semibold text-gray-800">Passa horas criando fichas e protocolos do zero</p>
+          <p class="text-sm text-gray-500 mt-1">Toda semana o mesmo ciclo: buscar modelo, adaptar, formatar, imprimir.</p>
+        </div>
+      </div>
+      <div class="bg-red-50 border border-red-100 rounded-2xl p-5 flex gap-4">
+        <span class="text-3xl mt-1">📂</span>
+        <div>
+          <p class="font-semibold text-gray-800">Documentos espalhados em dezenas de pastas</p>
+          <p class="text-sm text-gray-500 mt-1">Na hora da consulta, perde tempo procurando o protocolo certo.</p>
+        </div>
+      </div>
+      <div class="bg-red-50 border border-red-100 rounded-2xl p-5 flex gap-4">
+        <span class="text-3xl mt-1">😰</span>
+        <div>
+          <p class="font-semibold text-gray-800">Insegurança ao escolher o teste adequado para cada caso</p>
+          <p class="text-sm text-gray-500 mt-1">Sem um guia claro, cada avaliação vira uma pesquisa demorada.</p>
+        </div>
+      </div>
+      <div class="bg-red-50 border border-red-100 rounded-2xl p-5 flex gap-4">
+        <span class="text-3xl mt-1">🔄</span>
+        <div>
+          <p class="font-semibold text-gray-800">Perde tempo com relatórios e burocracias</p>
+          <p class="text-sm text-gray-500 mt-1">Tempo que poderia ser do paciente vai para papelada administrativa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO -->
+<section class="py-16 px-4 bg-gray-50">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-2xl md:text-3xl font-black mb-2">Tudo que você precisa. Em um único lugar. Pronto para usar.</h2>
+    <p class="text-gray-500 mb-10">Abra o app, escolha a categoria e em segundos você tem o material certo para cada paciente.</p>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100 shadow-sm">
+        <div class="text-4xl mb-3">🗣️</div>
+        <h3 class="font-bold text-gray-800">Fichas de Avaliação de Fala</h3>
+        <p class="text-sm text-gray-500 mt-2">Protocolos completos de articulação, fonologia e triagem.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100 shadow-sm">
+        <div class="text-4xl mb-3">👄</div>
+        <h3 class="font-bold text-gray-800">Protocolos de Deglutição</h3>
+        <p class="text-sm text-gray-500 mt-2">Avaliação e reabilitação de disfagia com scoring automático.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100 shadow-sm">
+        <div class="text-4xl mb-3">📋</div>
+        <h3 class="font-bold text-gray-800">Anamnese Fonoaudiológica</h3>
+        <p class="text-sm text-gray-500 mt-2">Formulários completos para adultos, crianças e idosos.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100 shadow-sm">
+        <div class="text-4xl mb-3">🎯</div>
+        <h3 class="font-bold text-gray-800">Testes de Linguagem Online</h3>
+        <p class="text-sm text-gray-500 mt-2">Aplique o teste na tela e veja o resultado na hora.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100 shadow-sm">
+        <div class="text-4xl mb-3">📊</div>
+        <h3 class="font-bold text-gray-800">Relatórios em PDF Automático</h3>
+        <p class="text-sm text-gray-500 mt-2">Clique um botão e gere um relatório profissional em segundos.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100 shadow-sm">
+        <div class="text-4xl mb-3">🔄</div>
+        <h3 class="font-bold text-gray-800">Atualizações Semanais</h3>
+        <p class="text-sm text-gray-500 mt-2">Novos protocolos e fichas adicionados toda semana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO / MOCKUPS -->
+<section class="py-16 px-4 hero-gradient text-white">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-2xl md:text-3xl font-black mb-2">Veja o app por dentro</h2>
+    <p class="text-gray-300 mb-10">Tudo na tela do seu celular. Sem instalar, sem complicar.</p>
+    <div class="grid md:grid-cols-3 gap-4 mb-10">
+      <div class="bg-white/10 border border-white/20 rounded-2xl p-5 text-left">
+        <div class="text-2xl mb-2">📱</div>
+        <h4 class="font-bold mb-1">Interface Simples</h4>
+        <p class="text-sm text-gray-300">Design intuitivo. Qualquer pessoa usa sem tutorial.</p>
+      </div>
+      <div class="bg-white/10 border border-white/20 rounded-2xl p-5 text-left">
+        <div class="text-2xl mb-2">⚡</div>
+        <h4 class="font-bold mb-1">Testes em 3 minutos</h4>
+        <p class="text-sm text-gray-300">Aplique o protocolo digitalmente e veja o score imediato.</p>
+      </div>
+      <div class="bg-white/10 border border-white/20 rounded-2xl p-5 text-left">
+        <div class="text-2xl mb-2">📄</div>
+        <h4 class="font-bold mb-1">PDF em 1 clique</h4>
+        <p class="text-sm text-gray-300">Relatório profissional gerado automaticamente com dados do paciente.</p>
+      </div>
+      <div class="bg-white/10 border border-white/20 rounded-2xl p-5 text-left">
+        <div class="text-2xl mb-2">📁</div>
+        <h4 class="font-bold mb-1">Pacientes Salvos</h4>
+        <p class="text-sm text-gray-300">Cadastre e acompanhe cada paciente com histórico completo.</p>
+      </div>
+      <div class="bg-white/10 border border-white/20 rounded-2xl p-5 text-left">
+        <div class="text-2xl mb-2">🌐</div>
+        <h4 class="font-bold mb-1">Funciona Offline</h4>
+        <p class="text-sm text-gray-300">Sem internet no consultório? Sem problema. App funciona offline.</p>
+      </div>
+      <div class="bg-white/10 border border-white/20 rounded-2xl p-5 text-left">
+        <div class="text-2xl mb-2">🔒</div>
+        <h4 class="font-bold mb-1">Dados no Seu Aparelho</h4>
+        <p class="text-sm text-gray-300">Zero envio de dados. Privacidade total do seu paciente.</p>
+      </div>
+    </div>
+    <a href="#preco" class="inline-block bg-teal-500 hover:bg-teal-400 text-white font-bold text-lg px-10 py-4 rounded-2xl transition-all">
+      Quero Acesso Agora →
+    </a>
+  </div>
+</section>
+
+<!-- SCREENSHOTS - COMO FUNCIONA NA PRÁTICA -->
+<section class="py-20 px-4 bg-white">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-14">
+      <span class="inline-block bg-teal-50 text-teal-700 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">Como Funciona na Prática</span>
+      <h2 class="text-2xl md:text-4xl font-black mb-3">Veja o App em Ação.<br/><span class="text-teal-600">Cada Etapa do Atendimento.</span></h2>
+      <p class="text-gray-500 max-w-xl mx-auto">Do primeiro acesso ao relatório final — tudo integrado, tudo rápido, tudo profissional.</p>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="flex flex-col md:flex-row items-center gap-10 mb-20">
+      <div class="flex-1 order-2 md:order-1">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-teal-600 text-white font-black text-lg flex items-center justify-center flex-shrink-0">1</span>
+          <span class="text-teal-600 font-semibold text-sm uppercase tracking-wide">Início do Atendimento</span>
+        </div>
+        <h3 class="text-2xl md:text-3xl font-black text-gray-900 leading-tight mb-4">
+          A Central de Comando do Seu Consultório —<br/><span class="text-teal-600">Tudo a 1 Clique de Distância.</span>
+        </h3>
+        <p class="text-gray-600 leading-relaxed mb-5">
+          Abra o app e veja todo o seu arsenal clínico organizado na tela. Testes, fichas, pacientes e relatórios — separados por categoria, prontos para usar. Sem navegar em dezenas de pastas. Sem lembrar onde salvou cada protocolo.
+        </p>
+        <div class="flex items-center gap-2 text-sm text-teal-700 font-semibold">
+          <span class="text-teal-500">✓</span> Acesso instantâneo a todos os protocolos
+        </div>
+      </div>
+      <div class="flex-shrink-0 order-1 md:order-2">
+        <div class="relative mx-auto" style="width:220px">
+          <div class="bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
+            <div class="bg-gray-800 rounded-[2rem] p-1">
+              <img src="https://i.ibb.co/9Fz7WTy/Captura-de-Tela-2026-03-24-a-s-13-08-48.png" alt="App Kit Fonoaudióloga - Tela Inicial" class="rounded-[1.8rem] w-full object-cover" />
+            </div>
+          </div>
+          <div class="absolute inset-0 -z-10 rounded-[2.5rem] bg-teal-400/30 blur-2xl transform scale-110"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="flex flex-col md:flex-row items-center gap-10 mb-20">
+      <div class="flex-shrink-0">
+        <div class="relative mx-auto" style="width:220px">
+          <div class="bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
+            <div class="bg-gray-800 rounded-[2rem] p-1">
+              <img src="https://i.ibb.co/1Jzpx4sN/Captura-de-Tela-2026-03-24-a-s-13-11-24.png" alt="App Kit Fonoaudióloga - Lista de Testes" class="rounded-[1.8rem] w-full object-cover" />
+            </div>
+          </div>
+          <div class="absolute inset-0 -z-10 rounded-[2.5rem] bg-teal-400/30 blur-2xl transform scale-110"></div>
+        </div>
+      </div>
+      <div class="flex-1">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-teal-600 text-white font-black text-lg flex items-center justify-center flex-shrink-0">2</span>
+          <span class="text-teal-600 font-semibold text-sm uppercase tracking-wide">Seleção do Protocolo</span>
+        </div>
+        <h3 class="text-2xl md:text-3xl font-black text-gray-900 leading-tight mb-4">
+          11 Testes Clínicos Validados.<br/><span class="text-teal-600">O Protocolo Certo Para Cada Caso. Na Hora.</span>
+        </h3>
+        <p class="text-gray-600 leading-relaxed mb-5">
+          Linguagem, deglutição, voz, fluência, articulação, motricidade orofacial, TEA, dislexia, IDV-10, FOIS, processamento auditivo. 11 testes completos numa única tela. Toque no que precisa e já começa — sem pesquisar, sem dúvida, sem perda de tempo.
+        </p>
+        <div class="flex items-center gap-2 text-sm text-teal-700 font-semibold">
+          <span class="text-teal-500">✓</span> Novos protocolos adicionados a cada atualização
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="flex flex-col md:flex-row items-center gap-10 mb-20">
+      <div class="flex-1 order-2 md:order-1">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-teal-600 text-white font-black text-lg flex items-center justify-center flex-shrink-0">3</span>
+          <span class="text-teal-600 font-semibold text-sm uppercase tracking-wide">Aplicação do Teste</span>
+        </div>
+        <h3 class="text-2xl md:text-3xl font-black text-gray-900 leading-tight mb-4">
+          Aplique o Protocolo na Tela.<br/><span class="text-teal-600">Sem Papel. Sem Planilha. Sem Transcrição Depois.</span>
+        </h3>
+        <p class="text-gray-600 leading-relaxed mb-5">
+          Interface limpa e objetiva. Marque as respostas direto na tela enquanto aplica o teste. Nada para anotar depois, nada para transferir de papel para computador. O dado fica registrado no exato momento que você toca — e funciona offline.
+        </p>
+        <div class="flex items-center gap-2 text-sm text-teal-700 font-semibold">
+          <span class="text-teal-500">✓</span> Funciona sem internet — perfeito para qualquer consultório
+        </div>
+      </div>
+      <div class="flex-shrink-0 order-1 md:order-2">
+        <div class="relative mx-auto" style="width:220px">
+          <div class="bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
+            <div class="bg-gray-800 rounded-[2rem] p-1">
+              <img src="https://i.ibb.co/6cCX7yqW/Captura-de-Tela-2026-03-24-a-s-13-12-41.png" alt="App Kit Fonoaudióloga - Teste em andamento" class="rounded-[1.8rem] w-full object-cover" />
+            </div>
+          </div>
+          <div class="absolute inset-0 -z-10 rounded-[2.5rem] bg-teal-400/30 blur-2xl transform scale-110"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="flex flex-col md:flex-row items-center gap-10 mb-20">
+      <div class="flex-shrink-0">
+        <div class="relative mx-auto" style="width:220px">
+          <div class="bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
+            <div class="bg-gray-800 rounded-[2rem] p-1">
+              <img src="https://i.ibb.co/wZX9g8d7/Captura-de-Tela-2026-03-24-a-s-13-13-46.png" alt="App Kit Fonoaudióloga - Resultado automático" class="rounded-[1.8rem] w-full object-cover" />
+            </div>
+          </div>
+          <div class="absolute inset-0 -z-10 rounded-[2.5rem] bg-teal-400/30 blur-2xl transform scale-110"></div>
+        </div>
+      </div>
+      <div class="flex-1">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-teal-600 text-white font-black text-lg flex items-center justify-center flex-shrink-0">4</span>
+          <span class="text-teal-600 font-semibold text-sm uppercase tracking-wide">Resultado Imediato</span>
+        </div>
+        <h3 class="text-2xl md:text-3xl font-black text-gray-900 leading-tight mb-4">
+          Score Automático na Hora.<br/><span class="text-teal-600">Decisão Clínica Mais Rápida e Mais Segura.</span>
+        </h3>
+        <p class="text-gray-600 leading-relaxed mb-5">
+          Terminou o teste? O score já aparece calculado e interpretado. Sem fazer conta na cabeça, sem consultar tabela de referência. O app entrega o resultado com a classificação correta — você foca no que realmente importa: o seu paciente.
+        </p>
+        <div class="flex items-center gap-2 text-sm text-teal-700 font-semibold">
+          <span class="text-teal-500">✓</span> Zero risco de erro de cálculo manual
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="flex flex-col md:flex-row items-center gap-10">
+      <div class="flex-1 order-2 md:order-1">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-teal-600 text-white font-black text-lg flex items-center justify-center flex-shrink-0">5</span>
+          <span class="text-teal-600 font-semibold text-sm uppercase tracking-wide">Relatório Profissional</span>
+        </div>
+        <h3 class="text-2xl md:text-3xl font-black text-gray-900 leading-tight mb-4">
+          Relatório em PDF com 1 Clique.<br/><span class="text-teal-600">Do Atendimento ao Prontuário em Minutos.</span>
+        </h3>
+        <p class="text-gray-600 leading-relaxed mb-5">
+          Toque em "Gerar PDF" e o relatório completo fica pronto — com nome do paciente, scores, interpretações e data. Profissional o suficiente para ir direto ao prontuário, plano terapêutico ou devolutiva para os pais. Tudo em segundos.
+        </p>
+        <div class="flex items-center gap-2 text-sm text-teal-700 font-semibold">
+          <span class="text-teal-500">✓</span> Documento pronto para prontuário e devolutiva
+        </div>
+      </div>
+      <div class="flex-shrink-0 order-1 md:order-2">
+        <div class="relative mx-auto" style="width:220px">
+          <div class="bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
+            <div class="bg-gray-800 rounded-[2rem] p-1">
+              <img src="https://i.ibb.co/4wnRYCMD/Captura-de-Tela-2026-03-24-a-s-13-14-58.png" alt="App Kit Fonoaudióloga - Relatório PDF" class="rounded-[1.8rem] w-full object-cover" />
+            </div>
+          </div>
+          <div class="absolute inset-0 -z-10 rounded-[2.5rem] bg-teal-400/30 blur-2xl transform scale-110"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA da seção -->
+    <div class="text-center mt-16 p-10 bg-teal-50 rounded-3xl border border-teal-100">
+      <p class="text-teal-700 font-semibold text-sm uppercase tracking-wide mb-2">Pronta para começar?</p>
+      <h3 class="text-2xl font-black text-gray-900 mb-4">É assim que cada atendimento seu vai ser daqui pra frente.</h3>
+      <a href="#preco" class="inline-block bg-teal-600 hover:bg-teal-500 text-white font-bold text-lg px-10 py-4 rounded-2xl pulse-btn transition-all">
+        Quero Usar Isso Agora →
+      </a>
+      <p class="text-gray-400 text-sm mt-3">Acesso imediato · Sem instalação · Funciona no celular</p>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="py-16 px-4 bg-white">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-2xl md:text-3xl font-black text-center mb-10">O que fonoaudiólogas estão dizendo</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="bg-gray-50 border border-gray-100 rounded-2xl p-6">
+        <div class="flex text-teal-500 mb-3">★★★★★</div>
+        <p class="text-gray-700 text-sm italic mb-4">"Economizo pelo menos 3 horas por semana. Antes passava noites criando fichas. Agora abro o app e pronto."</p>
+        <div class="text-sm">
+          <p class="font-semibold text-gray-800">Ana P.</p>
+          <p class="text-gray-400">Fonoaudióloga Clínica — SP</p>
+        </div>
+      </div>
+      <div class="bg-gray-50 border border-gray-100 rounded-2xl p-6">
+        <div class="flex text-teal-500 mb-3">★★★★★</div>
+        <p class="text-gray-700 text-sm italic mb-4">"Os relatórios automáticos me salvaram. Meus pacientes ficam impressionados com a profissionalidade dos documentos."</p>
+        <div class="text-sm">
+          <p class="font-semibold text-gray-800">Juliana M.</p>
+          <p class="text-gray-400">Fonoaudióloga Infantil — RJ</p>
+        </div>
+      </div>
+      <div class="bg-gray-50 border border-gray-100 rounded-2xl p-6">
+        <div class="flex text-teal-500 mb-3">★★★★★</div>
+        <p class="text-gray-700 text-sm italic mb-4">"Nunca imaginei ter protocolos de deglutição tão organizados num app. Uso todo dia no consultório e em home care."</p>
+        <div class="text-sm">
+          <p class="font-semibold text-gray-800">Carla S.</p>
+          <p class="text-gray-400">Fonoaudióloga — MG</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇO -->
+<section id="preco" class="py-16 px-4 bg-gray-50">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-2xl md:text-3xl font-black mb-2">Escolha o seu plano</h2>
+    <p class="text-gray-500 mb-10">Acesso imediato após a compra. Sem mensalidade, sem pegadinha.</p>
+    <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+
+      <!-- BÁSICO -->
+      <div class="bg-white border-2 border-gray-200 rounded-3xl p-8 text-left flex flex-col">
+        <p class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-1">Básico</p>
+        <div class="flex items-end gap-1 mb-1">
+          <span class="text-4xl font-black text-gray-900">R$ 17,90</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-6">pagamento único</p>
+        <ul class="space-y-3 mb-8 flex-1">
+          <li class="flex gap-2 text-sm"><span class="text-teal-500 font-bold">✓</span> Acesso a 400+ fichas e protocolos</li>
+          <li class="flex gap-2 text-sm"><span class="text-teal-500 font-bold">✓</span> Testes online com scoring automático</li>
+          <li class="flex gap-2 text-sm"><span class="text-teal-500 font-bold">✓</span> Relatórios PDF automáticos</li>
+          <li class="flex gap-2 text-sm"><span class="text-teal-500 font-bold">✓</span> Acesso vitalício</li>
+        </ul>
+        <a href="#checkout" class="block text-center border-2 border-teal-600 text-teal-600 hover:bg-teal-50 font-bold py-3 rounded-xl transition-all">
+          Escolher Básico
+        </a>
+      </div>
+
+      <!-- PRO -->
+      <div class="bg-teal-600 border-2 border-teal-600 rounded-3xl p-8 text-left flex flex-col text-white relative">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-yellow-900 text-xs font-black px-4 py-1 rounded-full uppercase tracking-wide">
+          ⭐ Mais Escolhido
+        </div>
+        <p class="text-sm font-semibold text-teal-200 uppercase tracking-wider mb-1">Profissional Pro</p>
+        <div class="flex items-end gap-1 mb-1">
+          <span class="text-4xl font-black">R$ 27,90</span>
+        </div>
+        <p class="text-xs text-teal-200 mb-4">pagamento único</p>
+        <div class="rounded-2xl overflow-hidden mb-5 ring-2 ring-white/20 shadow-xl">
+          <img src="https://i.ibb.co/B52nzK7w/Chat-GPT-Image-24-de-mar-de-2026-18-12-59.png"
+               alt="App Kit Fonoaudióloga Pro"
+               class="w-full object-cover" />
+        </div>
+        <ul class="space-y-3 mb-8 flex-1">
+          <li class="flex gap-2 text-sm"><span class="text-yellow-300 font-bold">✓</span> Tudo do plano Básico</li>
+          <li class="flex gap-2 text-sm"><span class="text-yellow-300 font-bold">✓</span> Atualizações semanais inclusas</li>
+          <li class="flex gap-2 text-sm"><span class="text-yellow-300 font-bold">✓</span> Suporte direto via WhatsApp</li>
+          <li class="flex gap-2 text-sm"><span class="text-yellow-300 font-bold">✓</span> Acesso à comunidade exclusiva</li>
+          <li class="flex gap-2 text-sm"><span class="text-yellow-300 font-bold">✓</span> Materiais editáveis sem logomarca</li>
+          <li class="flex gap-2 text-sm"><span class="text-yellow-300 font-bold">✓</span> Novos testes a cada atualização</li>
+        </ul>
+        <a href="#checkout" class="block text-center bg-white text-teal-700 hover:bg-teal-50 font-bold py-3 rounded-xl transition-all pulse-btn">
+          Assinar Profissional Agora
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+      <span>🔒 Pagamento 100% seguro</span>
+      <span>⚡ Acesso em minutos</span>
+      <span>↩️ 7 dias de garantia</span>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section class="py-16 px-4 bg-white">
+  <div class="max-w-2xl mx-auto text-center">
+    <div class="bg-teal-50 border-2 border-teal-200 rounded-3xl p-10">
+      <div class="text-5xl mb-4">🛡️</div>
+      <h2 class="text-2xl font-black mb-3">Garantia Incondicional de 7 Dias</h2>
+      <p class="text-gray-600 mb-6">
+        Se em até 7 dias você não se sentir mais segura para atender, ou simplesmente achar que o app não é para você, <strong>devolvemos 100% do seu dinheiro. Sem perguntas.</strong>
+      </p>
+      <ul class="text-sm text-left inline-block space-y-2 text-gray-700">
+        <li class="flex gap-2"><span class="text-teal-500">✓</span> Acesso vitalício ao app</li>
+        <li class="flex gap-2"><span class="text-teal-500">✓</span> Materiais editáveis e sem logomarca</li>
+        <li class="flex gap-2"><span class="text-teal-500">✓</span> Atualizações semanais inclusas</li>
+        <li class="flex gap-2"><span class="text-teal-500">✓</span> Suporte direto via WhatsApp</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="py-16 px-4 bg-gray-50">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="text-2xl font-black text-center mb-10">Perguntas Frequentes</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-4 font-semibold flex justify-between items-center hover:bg-gray-50">
+          Como vou receber o acesso?
+          <span class="faq-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-4 text-gray-600 text-sm">
+          Após a confirmação do pagamento, você recebe o link de acesso direto no e-mail e WhatsApp. É instantâneo — em menos de 5 minutos você já está dentro do app.
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-4 font-semibold flex justify-between items-center hover:bg-gray-50">
+          Funciona no celular?
+          <span class="faq-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-4 text-gray-600 text-sm">
+          Sim! O app foi desenvolvido mobile-first e funciona perfeitamente em qualquer smartphone. Não precisa instalar nada — abre direto no navegador.
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-4 font-semibold flex justify-between items-center hover:bg-gray-50">
+          Posso usar os materiais com meus pacientes?
+          <span class="faq-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-4 text-gray-600 text-sm">
+          Sim, totalmente. Todos os materiais são para uso clínico profissional. No plano Pro, os materiais vêm sem logomarca para você personalizar como quiser.
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-4 font-semibold flex justify-between items-center hover:bg-gray-50">
+          É realmente vitalício?
+          <span class="faq-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-4 text-gray-600 text-sm">
+          Sim. Paga uma vez, usa para sempre. Não tem mensalidade, não tem renovação. E todas as atualizações futuras estão inclusas.
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+        <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-4 font-semibold flex justify-between items-center hover:bg-gray-50">
+          E se eu não gostar?
+          <span class="faq-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="faq-answer px-6 pb-4 text-gray-600 text-sm">
+          Garantia de 7 dias sem perguntas. Se não ficar satisfeita por qualquer motivo, é só pedir o reembolso e devolvemos 100% do valor pago.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="hero-gradient text-white py-16 px-4 text-center">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="text-2xl md:text-3xl font-black mb-3">Pronta para atender sem estresse?</h2>
+    <p class="text-gray-300 mb-8">Mais de 400 profissionais já transformaram sua prática clínica com o app.</p>
+    <a href="#preco" class="inline-block bg-teal-500 hover:bg-teal-400 text-white font-bold text-xl px-12 py-5 rounded-2xl pulse-btn transition-all mb-4">
+      Quero Acesso Agora →
+    </a>
+    <p class="text-gray-400 text-sm">🔒 Pagamento seguro &nbsp;•&nbsp; Acesso imediato &nbsp;•&nbsp; Garantia 7 dias</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-400 text-center py-6 text-sm">
+  <p>App Kit Fonoaudióloga Pro &nbsp;•&nbsp; Todos os direitos reservados</p>
+  <p class="mt-1">✅ Acesso imediato · Sem anúncios · Sem envio de dados</p>
+</footer>
+
+<!-- POPUP DE COMPRAS RECENTES -->
+<div id="toast" class="fixed bottom-4 left-4 bg-white border border-gray-200 shadow-xl rounded-2xl p-4 flex gap-3 items-center z-50 max-w-xs popup-toast hidden">
+  <div class="text-3xl">🎉</div>
+  <div>
+    <p class="font-semibold text-gray-800 text-sm" id="toast-name">Alguém de SP</p>
+    <p class="text-gray-500 text-xs">acaba de comprar o plano Pro</p>
+  </div>
+</div>
+
+<script>
+  // FAQ Toggle
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const icon = btn.querySelector('.faq-icon');
+    answer.classList.toggle('open');
+    icon.textContent = answer.classList.contains('open') ? '−' : '+';
+  }
+
+  // Popup de compras
+  const names = ['Ana de SP','Juliana do RJ','Carla de MG','Fernanda de PR','Beatriz de SC','Márcia de BA','Renata de GO'];
+  let toastIndex = 0;
+  function showToast() {
+    const toast = document.getElementById('toast');
+    document.getElementById('toast-name').textContent = names[toastIndex % names.length];
+    toastIndex++;
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 4000);
+  }
+  setTimeout(() => { showToast(); setInterval(showToast, 18000); }, 6000);
+</script>
+</body>
+</html>

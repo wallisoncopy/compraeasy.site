@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="theme-color" content="#0d9488"/>
+  <title>App Kit Fonoaudióloga Pro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    * { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: #f8fafc; }
+    .tab-btn.active { color: #0d9488; border-bottom: 2px solid #0d9488; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .test-card:hover { transform: translateY(-2px); transition: .2s; }
+    .progress-bar { height: 4px; background: #e2e8f0; border-radius: 2px; }
+    .progress-fill { height: 100%; background: #0d9488; border-radius: 2px; transition: width .3s; }
+    .radio-opt input:checked + label { background: #ccfbf1; border-color: #0d9488; color: #0f766e; }
+    .check-opt input:checked + label { background: #ccfbf1; border-color: #0d9488; }
+    .score-badge { padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 13px; }
+    .score-normal { background: #dcfce7; color: #166534; }
+    .score-risco  { background: #fef9c3; color: #854d0e; }
+    .score-altera { background: #fee2e2; color: #991b1b; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  </style>
+</head>
+<body class="max-w-md mx-auto min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-teal-600 text-white px-4 py-3 flex items-center justify-between shadow-md sticky top-0 z-50">
+  <div>
+    <h1 class="font-bold text-base leading-tight">App Kit Fonoaudióloga Pro</h1>
+    <p class="text-teal-200 text-xs">Protocolos clínicos profissionais</p>
+  </div>
+  <div class="text-2xl">🗣️</div>
+</header>
+
+<!-- TAB BAR -->
+<nav class="bg-white border-b border-gray-100 flex sticky top-14 z-40 shadow-sm">
+  <button onclick="showTab('inicio')" class="tab-btn active flex-1 py-3 text-xs font-semibold text-gray-500 flex flex-col items-center gap-1" id="tab-inicio">
+    <span class="text-lg">🏠</span>Início
+  </button>
+  <button onclick="showTab('testes')" class="tab-btn flex-1 py-3 text-xs font-semibold text-gray-500 flex flex-col items-center gap-1" id="tab-testes">
+    <span class="text-lg">🧪</span>Testes
+  </button>
+  <button onclick="showTab('fichas')" class="tab-btn flex-1 py-3 text-xs font-semibold text-gray-500 flex flex-col items-center gap-1" id="tab-fichas">
+    <span class="text-lg">📋</span>Fichas
+  </button>
+  <button onclick="showTab('pacientes')" class="tab-btn flex-1 py-3 text-xs font-semibold text-gray-500 flex flex-col items-center gap-1" id="tab-pacientes">
+    <span class="text-lg">👤</span>Pacientes
+  </button>
+  <button onclick="showTab('relatorios')" class="tab-btn flex-1 py-3 text-xs font-semibold text-gray-500 flex flex-col items-center gap-1" id="tab-relatorios">
+    <span class="text-lg">📄</span>Relatórios
+  </button>
+  <button onclick="showTab('ajuda')" class="tab-btn flex-1 py-3 text-xs font-semibold text-gray-500 flex flex-col items-center gap-1" id="tab-ajuda">
+    <span class="text-lg">📖</span>Ajuda
+  </button>
+</nav>
+
+<!-- CONTEÚDO -->
+<main class="flex-1 overflow-y-auto pb-4">
+
+  <!-- ===== INÍCIO ===== -->
+  <div id="screen-inicio" class="screen active p-4">
+    <div class="bg-gradient-to-r from-teal-600 to-teal-500 rounded-2xl p-5 text-white mb-4">
+      <p class="text-sm text-teal-100 mb-1">Bem-vinda de volta 👋</p>
+      <h2 class="text-xl font-bold">Seu consultório digital</h2>
+      <p class="text-teal-100 text-sm mt-1">Fichas e protocolos prontos para usar.</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <div class="bg-white rounded-2xl p-4 text-center border border-gray-100 shadow-sm">
+        <div class="text-3xl font-black text-teal-600" id="stat-pacientes">0</div>
+        <div class="text-xs text-gray-500 mt-1">Pacientes</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 text-center border border-gray-100 shadow-sm">
+        <div class="text-3xl font-black text-teal-600" id="stat-testes">11</div>
+        <div class="text-xs text-gray-500 mt-1">Testes disponíveis</div>
+      </div>
+    </div>
+
+    <h3 class="font-bold text-gray-700 text-sm mb-3">Acesso rápido</h3>
+    <div class="grid grid-cols-2 gap-3">
+      <button onclick="showTab('testes')" class="bg-white rounded-2xl p-4 flex items-center gap-3 border border-gray-100 shadow-sm hover:bg-teal-50 transition-all">
+        <span class="text-2xl">🧪</span>
+        <span class="text-sm font-semibold text-gray-700">Novo Teste</span>
+      </button>
+      <button onclick="showTab('pacientes')" class="bg-white rounded-2xl p-4 flex items-center gap-3 border border-gray-100 shadow-sm hover:bg-teal-50 transition-all">
+        <span class="text-2xl">👤</span>
+        <span class="text-sm font-semibold text-gray-700">Paciente</span>
+      </button>
+      <button onclick="showTab('fichas')" class="bg-white rounded-2xl p-4 flex items-center gap-3 border border-gray-100 shadow-sm hover:bg-teal-50 transition-all">
+        <span class="text-2xl">📋</span>
+        <span class="text-sm font-semibold text-gray-700">Fichas</span>
+      </button>
+      <button onclick="showTab('relatorios')" class="bg-white rounded-2xl p-4 flex items-center gap-3 border border-gray-100 shadow-sm hover:bg-teal-50 transition-all">
+        <span class="text-2xl">📄</span>
+        <span class="text-sm font-semibold text-gray-700">Relatório PDF</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== TESTES ===== -->
+  <div id="screen-testes" class="screen p-4">
+    <div id="lista-testes">
+      <h2 class="font-bold text-gray-800 mb-1">Testes Online</h2>
+      <p class="text-gray-500 text-sm mb-4">Aplique, calcule o score e gere relatório em PDF.</p>
+      <div class="space-y-3">
+        <div onclick="iniciarTeste('linguagem')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">🗣️</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">Triagem de Linguagem Infantil</p>
+            <p class="text-xs text-gray-500">0–6 anos · ~5 min · 10 itens</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('degluticao')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">👄</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">Avaliação de Deglutição</p>
+            <p class="text-xs text-gray-500">Adultos · ~8 min · Protocolo DOSS</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('voz')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">🎵</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">Protocolo de Qualidade Vocal</p>
+            <p class="text-xs text-gray-500">Escala GRBAS · ~5 min</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('fluencia')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">⏱️</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">Avaliação de Fluência</p>
+            <p class="text-xs text-gray-500">% disfluência · tipos · classificação</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('articulacao')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">🔤</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">Inventário de Articulação</p>
+            <p class="text-xs text-gray-500">Fonemas por posição · erros</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('motricidade')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">👅</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">Motricidade Orofacial</p>
+            <p class="text-xs text-gray-500">Estruturas e funções · base MBGR</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('tea')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">🧩</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">Triagem TEA / Autismo</p>
+            <p class="text-xs text-gray-500">0–6 anos · sinais precoces · M-CHAT</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('dislexia')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">📚</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">Rastreio de Dislexia</p>
+            <p class="text-xs text-gray-500">6–12 anos · consciência fonológica</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('idv')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">🎤</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">IDV-10 — Desvantagem Vocal</p>
+            <p class="text-xs text-gray-500">Auto-relato do paciente · 10 itens</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('fois')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">🍽️</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">FOIS — Ingestão Oral</p>
+            <p class="text-xs text-gray-500">Nível funcional de deglutição</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('processamento')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">👂</div>
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800">Triagem Processamento Auditivo</p>
+            <p class="text-xs text-gray-500">Escolares · risco de TPAC</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÁREA DO TESTE ATIVO -->
+    <div id="area-teste" class="hidden">
+      <button onclick="voltarListaTestes()" class="flex items-center gap-2 text-teal-600 font-semibold text-sm mb-4">
+        ← Voltar aos testes
+      </button>
+      <div id="teste-container"></div>
+    </div>
+  </div>
+
+  <!-- ===== FICHAS ===== -->
+  <div id="screen-fichas" class="screen p-4">
+    <h2 class="font-bold text-gray-800 mb-1">Fichas Clínicas</h2>
+    <p class="text-gray-500 text-sm mb-4">Formulários digitais. Preencha e gere PDF.</p>
+    <div class="space-y-3">
+      <div onclick="abrirFicha('anamnese')" class="bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300 transition-all">
+        <div class="bg-teal-50 rounded-xl p-3 text-2xl">📝</div>
+        <div class="flex-1">
+          <p class="font-semibold text-gray-800">Anamnese Fonoaudiológica</p>
+          <p class="text-xs text-gray-500">Adultos e infantil · completa</p>
+        </div>
+        <span class="text-gray-300 text-xl">›</span>
+      </div>
+      <div onclick="abrirFicha('evolucao')" class="bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300 transition-all">
+        <div class="bg-teal-50 rounded-xl p-3 text-2xl">📊</div>
+        <div class="flex-1">
+          <p class="font-semibold text-gray-800">Ficha de Evolução</p>
+          <p class="text-xs text-gray-500">Registro de sessão · progresso</p>
+        </div>
+        <span class="text-gray-300 text-xl">›</span>
+      </div>
+      <div onclick="abrirFicha('encaminhamento')" class="bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300 transition-all">
+        <div class="bg-teal-50 rounded-xl p-3 text-2xl">📤</div>
+        <div class="flex-1">
+          <p class="font-semibold text-gray-800">Carta de Encaminhamento</p>
+          <p class="text-xs text-gray-500">Para outros profissionais</p>
+        </div>
+        <span class="text-gray-300 text-xl">›</span>
+      </div>
+      <div onclick="abrirFicha('plano')" class="bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300 transition-all">
+        <div class="bg-teal-50 rounded-xl p-3 text-2xl">🎯</div>
+        <div class="flex-1">
+          <p class="font-semibold text-gray-800">Plano Terapêutico</p>
+          <p class="text-xs text-gray-500">Objetivos · estratégias · metas</p>
+        </div>
+        <span class="text-gray-300 text-xl">›</span>
+      </div>
+    </div>
+
+    <!-- ÁREA DA FICHA ATIVA -->
+    <div id="area-ficha" class="hidden mt-4">
+      <button onclick="voltarListaFichas()" class="flex items-center gap-2 text-teal-600 font-semibold text-sm mb-4">
+        ← Voltar às fichas
+      </button>
+      <div id="ficha-container"></div>
+    </div>
+  </div>
+
+  <!-- ===== PACIENTES ===== -->
+  <div id="screen-pacientes" class="screen p-4">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="font-bold text-gray-800">Pacientes</h2>
+      <button onclick="toggleFormPaciente()" class="bg-teal-600 text-white text-sm font-semibold px-4 py-2 rounded-xl">+ Novo</button>
+    </div>
+
+    <div id="form-paciente" class="hidden bg-white rounded-2xl p-4 border border-teal-200 mb-4 shadow-sm">
+      <h3 class="font-bold text-gray-700 mb-3">Cadastrar Paciente</h3>
+      <div class="space-y-3">
+        <input id="p-nome" type="text" placeholder="Nome completo" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-teal-500 outline-none"/>
+        <input id="p-nasc" type="date" placeholder="Data de nascimento" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-teal-500 outline-none"/>
+        <input id="p-queixa" type="text" placeholder="Queixa principal" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-teal-500 outline-none"/>
+        <input id="p-contato" type="text" placeholder="Telefone / contato" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-teal-500 outline-none"/>
+        <button onclick="salvarPaciente()" class="w-full bg-teal-600 text-white font-bold py-3 rounded-xl text-sm">Salvar Paciente</button>
+      </div>
+    </div>
+
+    <div id="lista-pacientes-container">
+      <p class="text-gray-400 text-sm text-center mt-8" id="msg-sem-pacientes">Nenhum paciente cadastrado ainda.</p>
+      <div id="lista-pacientes" class="space-y-3"></div>
+    </div>
+  </div>
+
+  <!-- ===== RELATÓRIOS ===== -->
+  <div id="screen-relatorios" class="screen p-4">
+    <h2 class="font-bold text-gray-800 mb-1">Gerar Relatório PDF</h2>
+    <p class="text-gray-500 text-sm mb-4">Selecione o paciente e tipo de relatório.</p>
+
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-4">
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Paciente</label>
+        <select id="sel-paciente-rel" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-teal-500 outline-none bg-white">
+          <option value="">Selecionar paciente...</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Tipo de Relatório</label>
+        <select id="sel-tipo-rel" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-teal-500 outline-none bg-white">
+          <option value="avaliacao">Relatório de Avaliação</option>
+          <option value="evolucao">Relatório de Evolução</option>
+          <option value="alta">Relatório de Alta</option>
+          <option value="encaminhamento">Encaminhamento</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Observações / Resultados</label>
+        <textarea id="txt-obs-rel" rows="5" placeholder="Descreva aqui os achados clínicos, resultados dos testes e recomendações..." class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-teal-500 outline-none resize-none"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">Nome da Fonoaudióloga</label>
+        <input id="txt-fono-nome" type="text" placeholder="Dra. Seu Nome — CRFa XXXXX" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-teal-500 outline-none"/>
+      </div>
+      <button onclick="gerarRelatorioPDF()" class="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-all">
+        📄 Gerar Relatório em PDF
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ===== AJUDA / MANUAL ===== -->
+  <div id="screen-ajuda" class="screen p-4">
+
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-teal-600 to-teal-500 rounded-2xl p-5 text-white mb-5">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-3xl">📖</span>
+        <div>
+          <h2 class="text-lg font-bold">Manual de Uso</h2>
+          <p class="text-teal-100 text-xs">Tudo que você precisa saber para usar o app</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Índice rápido -->
+    <div class="grid grid-cols-3 gap-2 mb-5">
+      <button onclick="scrollToSection('sec-inicio')" class="bg-teal-50 border border-teal-100 rounded-xl p-3 text-center text-xs font-semibold text-teal-700">
+        🚀<br/>Primeiros<br/>Passos
+      </button>
+      <button onclick="scrollToSection('sec-testes')" class="bg-teal-50 border border-teal-100 rounded-xl p-3 text-center text-xs font-semibold text-teal-700">
+        🧪<br/>Testes<br/>Clínicos
+      </button>
+      <button onclick="scrollToSection('sec-fichas')" class="bg-teal-50 border border-teal-100 rounded-xl p-3 text-center text-xs font-semibold text-teal-700">
+        📋<br/>Fichas de<br/>Avaliação
+      </button>
+      <button onclick="scrollToSection('sec-pacientes')" class="bg-teal-50 border border-teal-100 rounded-xl p-3 text-center text-xs font-semibold text-teal-700">
+        👤<br/>Gestão de<br/>Pacientes
+      </button>
+      <button onclick="scrollToSection('sec-relatorios')" class="bg-teal-50 border border-teal-100 rounded-xl p-3 text-center text-xs font-semibold text-teal-700">
+        📄<br/>Relatório<br/>PDF
+      </button>
+      <button onclick="scrollToSection('sec-faq')" class="bg-teal-50 border border-teal-100 rounded-xl p-3 text-center text-xs font-semibold text-teal-700">
+        ❓<br/>Perguntas<br/>Frequentes
+      </button>
+    </div>
+
+    <!-- ——— SEÇÃO 1: Primeiros Passos ——— -->
+    <div id="sec-inicio" class="mb-4">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="bg-teal-600 text-white text-xs font-black px-2 py-1 rounded-lg">01</span>
+        <h3 class="font-black text-gray-800 text-base">Primeiros Passos</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">🚀 Como começar a usar o app</span>
+          <span class="help-icon text-teal-600 font-bold text-xl transition-transform">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <p>O app funciona direto no navegador do celular, sem precisar instalar nada.</p>
+          <div class="bg-teal-50 rounded-xl p-3 space-y-2">
+            <p class="font-semibold text-teal-800">Fluxo básico de uso:</p>
+            <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">1</span><p>Cadastre o paciente na aba <strong>Pacientes</strong></p></div>
+            <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">2</span><p>Acesse a aba <strong>Testes</strong> e escolha o protocolo</p></div>
+            <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">3</span><p>Marque as respostas durante a aplicação</p></div>
+            <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">4</span><p>Veja o <strong>score automático</strong> ao finalizar</p></div>
+            <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">5</span><p>Gere o <strong>relatório PDF</strong> com 1 toque</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">💾 Os dados ficam salvos?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <p>Sim. Todos os dados ficam salvos <strong>no próprio aparelho</strong> (localStorage do navegador), sem enviar nada para servidores externos.</p>
+          <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-3">
+            <p class="font-semibold text-yellow-800 mb-1">⚠️ Atenção</p>
+            <p class="text-yellow-700 text-xs">Limpar os dados do navegador ou desinstalar o app apaga os registros. Para não perder, gere o PDF do paciente antes de limpar o dispositivo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">🌐 Precisa de internet?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600">
+          <p>Apenas para carregar o app pela primeira vez. Depois, <strong>funciona completamente offline</strong>. Se ficar sem sinal durante o atendimento, o app continua funcionando normalmente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ——— SEÇÃO 2: Testes Clínicos ——— -->
+    <div id="sec-testes" class="mb-4">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="bg-teal-600 text-white text-xs font-black px-2 py-1 rounded-lg">02</span>
+        <h3 class="font-black text-gray-800 text-base">Testes Clínicos</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">🧪 Como aplicar um teste</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">1</span><p>Toque na aba <strong>Testes</strong></p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">2</span><p>Escolha o protocolo adequado para o caso</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">3</span><p>Marque as respostas questão por questão</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">4</span><p>Toque em <strong>"Finalizar e Ver Score"</strong></p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">5</span><p>O score é calculado e classificado automaticamente</p></div>
+          <p class="text-xs text-gray-400 pt-1">A barra de progresso no topo mostra quantas questões restam.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">📋 Os 11 testes disponíveis</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-3">
+          <div class="border-l-4 border-teal-400 pl-3">
+            <p class="font-semibold text-gray-800">🗣️ Linguagem</p>
+            <p class="text-xs text-gray-500">Triagem de desenvolvimento e compreensão de linguagem. Indicado para crianças com queixa de atraso de fala e linguagem.</p>
+          </div>
+          <div class="border-l-4 border-teal-400 pl-3">
+            <p class="font-semibold text-gray-800">👄 Deglutição</p>
+            <p class="text-xs text-gray-500">Triagem de disfagia orofaríngea. Indicado para pacientes com queixa de engasgo, tosse ou dificuldade de deglutição.</p>
+          </div>
+          <div class="border-l-4 border-teal-400 pl-3">
+            <p class="font-semibold text-gray-800">🎤 Voz</p>
+            <p class="text-xs text-gray-500">Avaliação de disfonia e qualidade vocal. Indicado para pacientes com rouquidão, fadiga vocal ou alteração de pitch.</p>
+          </div>
+          <div class="border-l-4 border-teal-400 pl-3">
+            <p class="font-semibold text-gray-800">💬 Fluência</p>
+            <p class="text-xs text-gray-500">Rastreio de gagueira e disfluências. Indicado para crianças e adultos com alteração no ritmo e fluência da fala.</p>
+          </div>
+          <div class="border-l-4 border-teal-400 pl-3">
+            <p class="font-semibold text-gray-800">🔤 Articulação</p>
+            <p class="text-xs text-gray-500">Triagem fonológica e articulatória. Indicado para crianças com trocas, omissões ou distorções de fonemas.</p>
+          </div>
+          <div class="border-l-4 border-blue-400 pl-3">
+            <p class="font-semibold text-gray-800">👅 Motricidade Orofacial</p>
+            <p class="text-xs text-gray-500">Avaliação de estruturas e funções orofaciais (mastigação, respiração, postura). Indicado para casos de má oclusão, respirador oral e disfunções miofuncionais.</p>
+          </div>
+          <div class="border-l-4 border-blue-400 pl-3">
+            <p class="font-semibold text-gray-800">🧩 TEA / Autismo</p>
+            <p class="text-xs text-gray-500">Rastreio de sinais de TEA com foco em comunicação e linguagem. Indicado quando há suspeita de autismo referenciada por pais ou médico.</p>
+          </div>
+          <div class="border-l-4 border-blue-400 pl-3">
+            <p class="font-semibold text-gray-800">📚 Dislexia</p>
+            <p class="text-xs text-gray-500">Rastreio de sinais de dislexia em escolares. Indicado para crianças com dificuldade persistente de leitura e escrita.</p>
+          </div>
+          <div class="border-l-4 border-blue-400 pl-3">
+            <p class="font-semibold text-gray-800">📊 IDV-10</p>
+            <p class="text-xs text-gray-500">Índice de Desvantagem Vocal — mede o impacto da disfonia na qualidade de vida. Aplicado em conjunto com a avaliação de voz.</p>
+          </div>
+          <div class="border-l-4 border-blue-400 pl-3">
+            <p class="font-semibold text-gray-800">🍽️ FOIS</p>
+            <p class="text-xs text-gray-500">Functional Oral Intake Scale — escala de 7 níveis para classificar a ingesta oral em pacientes com disfagia. Fundamental em home care e hospitalar.</p>
+          </div>
+          <div class="border-l-4 border-blue-400 pl-3">
+            <p class="font-semibold text-gray-800">👂 Processamento Auditivo</p>
+            <p class="text-xs text-gray-500">Rastreio de Transtorno do Processamento Auditivo Central. Indicado para crianças com dificuldade de atenção auditiva e queixa de "não entende o que ouve".</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">🎯 O que significa cada classificação?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <div class="flex items-center gap-3 p-2 bg-green-50 rounded-xl">
+            <span class="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></span>
+            <div><p class="font-semibold text-green-800 text-xs">Normal / Dentro do esperado</p><p class="text-green-600 text-xs">Sem indicativo de alteração para a faixa etária avaliada.</p></div>
+          </div>
+          <div class="flex items-center gap-3 p-2 bg-yellow-50 rounded-xl">
+            <span class="w-3 h-3 rounded-full bg-yellow-400 flex-shrink-0"></span>
+            <div><p class="font-semibold text-yellow-800 text-xs">Risco / Atenção</p><p class="text-yellow-600 text-xs">Sinais de alerta presentes. Indicado investigação mais detalhada.</p></div>
+          </div>
+          <div class="flex items-center gap-3 p-2 bg-red-50 rounded-xl">
+            <span class="w-3 h-3 rounded-full bg-red-500 flex-shrink-0"></span>
+            <div><p class="font-semibold text-red-800 text-xs">Alterado</p><p class="text-red-600 text-xs">Indicativo de alteração. Avaliação completa e conduta terapêutica recomendadas.</p></div>
+          </div>
+          <p class="text-xs text-gray-400 pt-1">⚠️ Os testes são de triagem. O diagnóstico definitivo é sempre responsabilidade da fonoaudióloga.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ——— SEÇÃO 3: Fichas ——— -->
+    <div id="sec-fichas" class="mb-4">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="bg-teal-600 text-white text-xs font-black px-2 py-1 rounded-lg">03</span>
+        <h3 class="font-black text-gray-800 text-base">Fichas de Avaliação</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">📋 O que são as fichas?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <p>As fichas são formulários estruturados para coleta e registro de dados clínicos durante o atendimento. Diferente dos testes (que geram score automático), as fichas são documentos de registro livre.</p>
+          <div class="bg-teal-50 rounded-xl p-3">
+            <p class="font-semibold text-teal-800 mb-1">Fichas disponíveis:</p>
+            <ul class="text-teal-700 text-xs space-y-1">
+              <li>• Anamnese Fonoaudiológica — histórico completo do paciente</li>
+              <li>• Avaliação de Linguagem — checklist de habilidades por faixa</li>
+              <li>• Avaliação de Voz — parâmetros vocais e achados clínicos</li>
+              <li>• Avaliação de Deglutição — protocolo de avaliação clínica</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">✏️ Como preencher e salvar uma ficha</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">1</span><p>Toque em uma ficha na aba <strong>Fichas</strong></p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">2</span><p>Preencha os campos durante ou após a consulta</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">3</span><p>Toque em <strong>"Salvar Ficha"</strong> para registrar</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">4</span><p>A ficha fica disponível na aba <strong>Relatórios</strong> para gerar PDF</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ——— SEÇÃO 4: Pacientes ——— -->
+    <div id="sec-pacientes" class="mb-4">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="bg-teal-600 text-white text-xs font-black px-2 py-1 rounded-lg">04</span>
+        <h3 class="font-black text-gray-800 text-base">Gestão de Pacientes</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">👤 Como cadastrar um paciente</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">1</span><p>Toque na aba <strong>Pacientes</strong></p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">2</span><p>Toque em <strong>"+ Novo Paciente"</strong></p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">3</span><p>Preencha nome, data de nascimento e queixa principal</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">4</span><p>Toque em <strong>"Salvar"</strong></p></div>
+          <p class="text-xs text-gray-400 pt-1">O paciente cadastrado aparece como opção ao gerar relatórios PDF.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">🗑️ Como excluir um paciente</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <p>Na lista de pacientes, toque no ícone 🗑️ ao lado do nome. Uma confirmação aparecerá antes de excluir definitivamente.</p>
+          <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-3">
+            <p class="text-yellow-700 text-xs">⚠️ A exclusão é permanente. Antes de excluir, gere o PDF do paciente se precisar manter um registro.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ——— SEÇÃO 5: Relatórios ——— -->
+    <div id="sec-relatorios" class="mb-4">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="bg-teal-600 text-white text-xs font-black px-2 py-1 rounded-lg">05</span>
+        <h3 class="font-black text-gray-800 text-base">Relatório PDF</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">📄 Como gerar um relatório PDF</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">1</span><p>Toque na aba <strong>Relatórios</strong></p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">2</span><p>Selecione o <strong>paciente</strong> no menu</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">3</span><p>Escolha o <strong>tipo de relatório</strong> (avaliação, evolução, alta, encaminhamento)</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">4</span><p>Escreva as <strong>observações clínicas</strong> no campo de texto</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">5</span><p>Informe seu nome e CRFa</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">6</span><p>Toque em <strong>"Gerar Relatório em PDF"</strong></p></div>
+          <p class="text-xs text-gray-400 pt-1">O PDF é baixado automaticamente para o seu dispositivo.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">📤 Como compartilhar o PDF</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <p>Após gerar o PDF, ele é salvo na pasta de <strong>Downloads</strong> do seu celular. A partir daí você pode:</p>
+          <ul class="space-y-1 pl-2">
+            <li>• Abrir no visualizador de PDF e imprimir</li>
+            <li>• Compartilhar pelo WhatsApp diretamente</li>
+            <li>• Enviar por e-mail ao paciente ou médico</li>
+            <li>• Salvar na nuvem (Google Drive, iCloud)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">📑 O que o PDF inclui?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <div class="bg-teal-50 rounded-xl p-3">
+            <ul class="text-teal-700 text-xs space-y-1">
+              <li>✓ Cabeçalho com nome da fonoaudióloga e CRFa</li>
+              <li>✓ Dados do paciente (nome, data de nascimento, idade)</li>
+              <li>✓ Tipo de relatório e data de emissão</li>
+              <li>✓ Observações e achados clínicos preenchidos</li>
+              <li>✓ Rodapé com assinatura profissional</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ——— SEÇÃO 6: FAQ ——— -->
+    <div id="sec-faq" class="mb-6">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="bg-teal-600 text-white text-xs font-black px-2 py-1 rounded-lg">06</span>
+        <h3 class="font-black text-gray-800 text-base">Perguntas Frequentes</h3>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">❓ O app funciona no iPhone?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600">
+          <p>Sim. Funciona em qualquer dispositivo com navegador: iPhone (Safari), Android (Chrome) e computador. Não precisa instalar nada.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">❓ Posso adicionar o app à tela inicial?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <p class="font-semibold text-gray-700">No iPhone (Safari):</p>
+          <p>Toque no ícone de <strong>Compartilhar</strong> (quadrado com seta) → "Adicionar à Tela de Início"</p>
+          <p class="font-semibold text-gray-700 pt-1">No Android (Chrome):</p>
+          <p>Toque nos <strong>3 pontinhos</strong> do menu → "Adicionar à tela inicial"</p>
+          <p class="text-xs text-gray-400 pt-1">Depois o app aparece como ícone no seu celular, igual a um app instalado.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">❓ O PDF sai com o nome do meu consultório?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600">
+          <p>O relatório inclui o nome e CRFa que você preencher no campo <em>"Nome da Fonoaudióloga"</em>. Escreva como preferir, incluindo o nome do consultório se quiser — ex: <em>"Dra. Maria Silva — CRFa 12345 — Clínica Falar Bem"</em>.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">❓ Quantos pacientes posso cadastrar?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600">
+          <p>Não há limite de pacientes. O app armazena todos localmente no seu dispositivo, limitado apenas pelo espaço disponível (que normalmente é mais que suficiente para centenas de registros).</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">❓ Os testes substituem uma avaliação completa?</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600">
+          <p>Não. Os testes do app são <strong>protocolos de triagem</strong> — ferramentas para identificar sinais de alerta e orientar a investigação clínica. O diagnóstico e a conduta terapêutica são sempre responsabilidade da fonoaudióloga a partir de uma avaliação completa.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Versão -->
+    <div class="text-center py-4 text-xs text-gray-300">
+      App Kit Fonoaudióloga Pro &nbsp;·&nbsp; v1.0
+    </div>
+
+  </div>
+
+</main>
+
+<!-- TOAST -->
+<div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-sm px-5 py-3 rounded-2xl shadow-xl z-50 hidden transition-all">
+  Mensagem
+</div>
+
+<script>
+// ============================
+// ESTADO GLOBAL
+// ============================
+let pacientes = JSON.parse(localStorage.getItem('fono_pacientes') || '[]');
+let testeAtual = null;
+let fichaAtual = null;
+let respostasAtual = {};
+
+// ============================
+// TAB NAVIGATION
+// ============================
+function showTab(tab) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-' + tab).classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  if (tab === 'inicio') atualizarStats();
+  if (tab === 'pacientes') renderPacientes();
+  if (tab === 'relatorios') atualizarSelectPacientes();
+}
+
+function atualizarStats() {
+  document.getElementById('stat-pacientes').textContent = pacientes.length;
+}
+
+// ============================
+// AJUDA / MANUAL
+// ============================
+function toggleHelp(btn) {
+  const body = btn.nextElementSibling;
+  const icon = btn.querySelector('.help-icon');
+  const isOpen = !body.classList.contains('hidden');
+  body.classList.toggle('hidden', isOpen);
+  icon.textContent = isOpen ? '+' : '−';
+  icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(0deg)';
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// ============================
+// TOAST
+// ============================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.remove('hidden');
+  setTimeout(() => t.classList.add('hidden'), 2500);
+}
+
+// ============================
+// PACIENTES
+// ============================
+function toggleFormPaciente() {
+  const f = document.getElementById('form-paciente');
+  f.classList.toggle('hidden');
+}
+
+function salvarPaciente() {
+  const nome = document.getElementById('p-nome').value.trim();
+  if (!nome) { showToast('Informe o nome do paciente'); return; }
+  const p = {
+    id: Date.now(),
+    nome,
+    nasc: document.getElementById('p-nasc').value,
+    queixa: document.getElementById('p-queixa').value,
+    contato: document.getElementById('p-contato').value,
+    criado: new Date().toLocaleDateString('pt-BR')
+  };
+  pacientes.push(p);
+  localStorage.setItem('fono_pacientes', JSON.stringify(pacientes));
+  document.getElementById('p-nome').value = '';
+  document.getElementById('p-nasc').value = '';
+  document.getElementById('p-queixa').value = '';
+  document.getElementById('p-contato').value = '';
+  document.getElementById('form-paciente').classList.add('hidden');
+  renderPacientes();
+  atualizarSelectPacientes();
+  showToast('✅ Paciente salvo!');
+}
+
+function renderPacientes() {
+  const cont = document.getElementById('lista-pacientes');
+  const msg = document.getElementById('msg-sem-pacientes');
+  cont.innerHTML = '';
+  if (pacientes.length === 0) { msg.classList.remove('hidden'); return; }
+  msg.classList.add('hidden');
+  pacientes.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-center gap-3';
+    div.innerHTML = `
+      <div class="bg-teal-100 rounded-full w-10 h-10 flex items-center justify-center text-teal-600 font-bold text-sm flex-shrink-0">
+        ${p.nome.charAt(0).toUpperCase()}
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="font-semibold text-gray-800 text-sm truncate">${p.nome}</p>
+        <p class="text-xs text-gray-400">${p.queixa || 'Sem queixa registrada'}</p>
+      </div>
+      <button onclick="excluirPaciente(${p.id})" class="text-red-300 hover:text-red-500 text-sm px-2">✕</button>
+    `;
+    cont.appendChild(div);
+  });
+}
+
+function excluirPaciente(id) {
+  if (!confirm('Excluir este paciente?')) return;
+  pacientes = pacientes.filter(p => p.id !== id);
+  localStorage.setItem('fono_pacientes', JSON.stringify(pacientes));
+  renderPacientes();
+  atualizarSelectPacientes();
+}
+
+function atualizarSelectPacientes() {
+  const sel = document.getElementById('sel-paciente-rel');
+  sel.innerHTML = '<option value="">Selecionar paciente...</option>';
+  pacientes.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = p.nome;
+    sel.appendChild(opt);
+  });
+}
+
+// ============================
+// TESTES
+// ============================
+const testes = {
+  linguagem: {
+    titulo: 'Triagem de Linguagem Infantil',
+    instrucao: 'Avalie cada item conforme observação clínica e relato dos responsáveis.',
+    itens: [
+      { q: 'Responde ao nome quando chamado', opts: ['Sempre', 'Às vezes', 'Nunca'] },
+      { q: 'Usa palavras isoladas para comunicar', opts: ['Sim', 'Em desenvolvimento', 'Não'] },
+      { q: 'Combina 2 ou mais palavras', opts: ['Sim', 'Em desenvolvimento', 'Não'] },
+      { q: 'Compreende ordens simples (sem gestos)', opts: ['Sim', 'Parcialmente', 'Não'] },
+      { q: 'Vocabulário expressivo adequado para a idade', opts: ['Adequado', 'Limítrofe', 'Reduzido'] },
+      { q: 'Usa gestos comunicativos (apontar, acenar)', opts: ['Sim', 'Parcialmente', 'Não'] },
+      { q: 'Conta histórias ou descreve eventos', opts: ['Sim', 'Parcialmente', 'Não'] },
+      { q: 'Compreende perguntas complexas (quem, por quê)', opts: ['Sim', 'Parcialmente', 'Não'] },
+      { q: 'Linguagem compreensível por estranhos', opts: ['Totalmente', 'Parcialmente', 'Pouco'] },
+      { q: 'Demonstra interesse em comunicar com o outro', opts: ['Sim', 'Variável', 'Não'] },
+    ],
+    scores: { 0: 2, 1: 1, 2: 0 },
+    interpretar(total) {
+      if (total >= 16) return { classe: 'score-normal', texto: 'Desenvolvimento típico', rec: 'Sem indicação de acompanhamento fonoaudiológico no momento.' };
+      if (total >= 10) return { classe: 'score-risco', texto: 'Risco para atraso de linguagem', rec: 'Recomenda-se reavaliação em 3 meses e orientação familiar.' };
+      return { classe: 'score-altera', texto: 'Alteração de linguagem', rec: 'Indicado acompanhamento fonoaudiológico.' };
+    }
+  },
+  degluticao: {
+    titulo: 'Avaliação de Deglutição (Disfagia)',
+    instrucao: 'Marque os sinais e sintomas presentes durante a avaliação clínica.',
+    itens: [
+      { q: 'Tosse durante ou após deglutição', opts: ['Ausente', 'Ocasional', 'Frequente'] },
+      { q: 'Engasgos com sólidos', opts: ['Ausente', 'Ocasional', 'Frequente'] },
+      { q: 'Engasgos com líquidos', opts: ['Ausente', 'Ocasional', 'Frequente'] },
+      { q: 'Resíduo oral após deglutição', opts: ['Ausente', 'Leve', 'Intenso'] },
+      { q: 'Alteração de voz após deglutição (molhada/úmida)', opts: ['Ausente', 'Discreta', 'Presente'] },
+      { q: 'Tempo de refeição prolongado', opts: ['Não', 'Leve aumento', 'Muito lento'] },
+      { q: 'Dificuldade de mastigação', opts: ['Ausente', 'Leve', 'Severa'] },
+      { q: 'Perda de alimento pela boca', opts: ['Não', 'Ocasional', 'Frequente'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2 },
+    interpretar(total) {
+      if (total <= 4) return { classe: 'score-normal', texto: 'Disfagia ausente / mínima', rec: 'Sem restrição de dieta. Monitorar em consultas de rotina.' };
+      if (total <= 9) return { classe: 'score-risco', texto: 'Disfagia leve a moderada', rec: 'Orientações de adaptação de dieta e técnicas de deglutição.' };
+      return { classe: 'score-altera', texto: 'Disfagia moderada a grave', rec: 'Fonoterapia indicada. Avaliar risco de aspiração. Considerar equipe multidisciplinar.' };
+    }
+  },
+  voz: {
+    titulo: 'Protocolo de Qualidade Vocal (GRBAS)',
+    instrucao: 'Avalie a voz do paciente durante fonação sustentada e fala encadeada.',
+    itens: [
+      { q: 'G — Grau geral de alteração vocal', opts: ['Normal (0)', 'Leve (1)', 'Moderado (2)', 'Intenso (3)'] },
+      { q: 'R — Roughness (rugosidade / irregularidade)', opts: ['Ausente (0)', 'Leve (1)', 'Moderada (2)', 'Intensa (3)'] },
+      { q: 'B — Breathiness (soprosidade / ar)', opts: ['Ausente (0)', 'Leve (1)', 'Moderada (2)', 'Intensa (3)'] },
+      { q: 'A — Asthenicity (astenia / fraqueza)', opts: ['Ausente (0)', 'Leve (1)', 'Moderada (2)', 'Intensa (3)'] },
+      { q: 'S — Strain (tensão / esforço)', opts: ['Ausente (0)', 'Leve (1)', 'Moderada (2)', 'Intensa (3)'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2, 3: 3 },
+    interpretar(total) {
+      if (total <= 2) return { classe: 'score-normal', texto: 'Qualidade vocal normal', rec: 'Sem alteração vocal clinicamente significativa.' };
+      if (total <= 7) return { classe: 'score-risco', texto: 'Disfonia leve', rec: 'Orientações de higiene vocal. Reavaliação indicada.' };
+      return { classe: 'score-altera', texto: 'Disfonia moderada a severa', rec: 'Fonoterapia vocal indicada. Avaliar encaminhamento para otorrinolaringologia.' };
+    }
+  },
+  fluencia: {
+    titulo: 'Avaliação de Fluência',
+    instrucao: 'Analise amostra de fala de aproximadamente 200 sílabas.',
+    itens: [
+      { q: 'Repetições de sílabas (ex: "ca-ca-carro")', opts: ['Ausente', '1-5%', '6-10%', '>10%'] },
+      { q: 'Repetições de palavras (ex: "eu-eu-eu fui")', opts: ['Ausente', '1-5%', '6-10%', '>10%'] },
+      { q: 'Prolongamentos (ex: "cccomida")', opts: ['Ausente', '1-5%', '6-10%', '>10%'] },
+      { q: 'Bloqueios / interrupções', opts: ['Ausente', 'Raramente', 'Às vezes', 'Frequente'] },
+      { q: 'Tensão muscular (face, pescoço, boca)', opts: ['Ausente', 'Leve', 'Moderada', 'Intensa'] },
+      { q: 'Comportamentos associados (pestanejar, desviar olhar)', opts: ['Ausente', 'Leve', 'Moderado', 'Intenso'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2, 3: 3 },
+    interpretar(total) {
+      if (total <= 3) return { classe: 'score-normal', texto: 'Fluência normal / variações normais', rec: 'Sem indicação de intervenção no momento. Orientar família se criança.' };
+      if (total <= 9) return { classe: 'score-risco', texto: 'Gagueira leve a moderada', rec: 'Fonoterapia indicada. Abordagem direta/indireta conforme faixa etária.' };
+      return { classe: 'score-altera', texto: 'Gagueira moderada a severa', rec: 'Fonoterapia intensiva indicada. Considerar psicoterapia de apoio.' };
+    }
+  },
+  articulacao: {
+    titulo: 'Inventário de Articulação',
+    instrucao: 'Avalie a produção dos fonemas nas posições indicadas.',
+    itens: [
+      { q: 'Bilabiais /p/, /b/, /m/ — produção', opts: ['Adequada', 'Distorção', 'Substituição', 'Omissão'] },
+      { q: 'Labiodentais /f/, /v/ — produção', opts: ['Adequada', 'Distorção', 'Substituição', 'Omissão'] },
+      { q: 'Linguodentais /t/, /d/, /n/ — produção', opts: ['Adequada', 'Distorção', 'Substituição', 'Omissão'] },
+      { q: 'Alveolares /s/, /z/ — produção', opts: ['Adequada', 'Distorção', 'Substituição', 'Omissão'] },
+      { q: 'Palatais /ʃ/ (ch), /ʒ/ (j), /ɲ/ (nh) — produção', opts: ['Adequada', 'Distorção', 'Substituição', 'Omissão'] },
+      { q: 'Vibrantes /r/ e /R/ — produção', opts: ['Adequada', 'Distorção', 'Substituição', 'Omissão'] },
+      { q: 'Laterais /l/, /ʎ/ (lh) — produção', opts: ['Adequada', 'Distorção', 'Substituição', 'Omissão'] },
+      { q: 'Inteligibilidade geral da fala', opts: ['Boa (>75%)', 'Regular (50-75%)', 'Ruim (<50%)', 'Ininteligível'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2, 3: 3 },
+    interpretar(total) {
+      if (total <= 4) return { classe: 'score-normal', texto: 'Articulação adequada / sem erros significativos', rec: 'Sem indicação de intervenção articulatória.' };
+      if (total <= 12) return { classe: 'score-risco', texto: 'Erros articulatórios presentes', rec: 'Fonoterapia articulatória indicada.' };
+      return { classe: 'score-altera', texto: 'Comprometimento articulatório importante', rec: 'Fonoterapia intensiva. Avaliar possíveis causas orgânicas (estrutural, neurológica).' };
+    }
+  },
+  motricidade: {
+    titulo: 'Avaliação de Motricidade Orofacial',
+    instrucao: 'Avalie estruturas e funções orofaciais em repouso e em movimento (base MBGR).',
+    itens: [
+      { q: 'Tônus labial em repouso', opts: ['Normal', 'Hipotônico', 'Hipertônico'] },
+      { q: 'Mobilidade labial (protrução, retração, estiramento)', opts: ['Adequada', 'Reduzida', 'Ausente'] },
+      { q: 'Tônus de língua em repouso', opts: ['Normal', 'Hipotônico', 'Hipertônico'] },
+      { q: 'Mobilidade de língua (eleva, lateraliza, protrai)', opts: ['Adequada', 'Reduzida', 'Ausente'] },
+      { q: 'Modo respiratório predominante', opts: ['Nasal', 'Oronasal', 'Oral'] },
+      { q: 'Selamento labial em repouso', opts: ['Presente', 'Parcial', 'Ausente'] },
+      { q: 'Postura habitual de boca', opts: ['Fechada', 'Semiaberta', 'Aberta'] },
+      { q: 'Mastigação (tipo e eficiência)', opts: ['Bilateral eficiente', 'Unilateral / ineficiente', 'Muito alterada'] },
+      { q: 'Ressonância na fala', opts: ['Normal', 'Hipernasalidade leve', 'Hipernasalidade intensa / hiponasalidade'] },
+      { q: 'Deglutição de saliva observada', opts: ['Normal', 'Com adaptação', 'Atípica / disfuncional'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2 },
+    interpretar(total) {
+      if (total <= 4)  return { classe: 'score-normal', texto: 'Motricidade orofacial sem alterações significativas', rec: 'Sem indicação de intervenção miofuncional no momento.' };
+      if (total <= 10) return { classe: 'score-risco', texto: 'Alterações de motricidade orofacial leves a moderadas', rec: 'Fonoterapia miofuncional orofacial indicada.' };
+      return { classe: 'score-altera', texto: 'Alterações significativas de MO', rec: 'Fonoterapia miofuncional intensiva. Avaliar causas estruturais e realizar encaminhamentos necessários.' };
+    }
+  },
+  tea: {
+    titulo: 'Triagem de Sinais de TEA / Autismo',
+    instrucao: 'Baseado na observação clínica e relato dos responsáveis (0–6 anos prioritariamente). Adaptado do M-CHAT.',
+    itens: [
+      { q: 'Contato ocular consistente ao interagir', opts: ['Presente', 'Inconsistente', 'Ausente'] },
+      { q: 'Responde ao próprio nome quando chamado', opts: ['Sempre', 'Às vezes', 'Raramente / nunca'] },
+      { q: 'Aponta para mostrar algo de interesse (protodeclarativo)', opts: ['Sim', 'Raramente', 'Não'] },
+      { q: 'Imita ações, sons ou expressões do outro', opts: ['Sim', 'Com dificuldade', 'Não'] },
+      { q: 'Demonstra jogo simbólico / de faz de conta', opts: ['Sim (adequado à idade)', 'Rígido / limitado', 'Ausente'] },
+      { q: 'Interesse social em outras crianças', opts: ['Demonstra interesse', 'Indiferente', 'Evita'] },
+      { q: 'Usa linguagem para comunicar (não só para necessidades)', opts: ['Sim', 'Às vezes', 'Não / sem fala'] },
+      { q: 'Reage de forma típica a sons do ambiente', opts: ['Reação típica', 'Hipersensível', 'Hipossensível / ignora'] },
+      { q: 'Tolera mudanças de rotina sem reação intensa', opts: ['Tolera bem', 'Dificuldade leve', 'Resistência intensa / birras'] },
+      { q: 'Comportamentos repetitivos ou rituais rígidos', opts: ['Ausentes', 'Leves / ocasionais', 'Frequentes e intensos'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2 },
+    interpretar(total) {
+      if (total <= 4)  return { classe: 'score-normal', texto: 'Baixo risco para TEA', rec: 'Monitorar desenvolvimento. Repetir triagem se houver mudança comportamental.' };
+      if (total <= 10) return { classe: 'score-risco', texto: 'Risco moderado — sinais presentes', rec: 'Encaminhar para avaliação multidisciplinar (pediatria, neurologia, psicologia). Iniciar fonoterapia.' };
+      return { classe: 'score-altera', texto: 'Alto risco — múltiplos sinais de TEA', rec: 'Encaminhamento urgente para diagnóstico multidisciplinar. Intervenção fonoaudiológica imediata.' };
+    }
+  },
+  dislexia: {
+    titulo: 'Rastreio de Dislexia (6–12 anos)',
+    instrucao: 'Avalie habilidades de consciência fonológica, leitura e memória verbal durante a sessão clínica.',
+    itens: [
+      { q: 'Identificação de rimas (ex: gato / pato)', opts: ['Fácil', 'Com dificuldade', 'Não consegue'] },
+      { q: 'Segmentação silábica (contar sílabas de palavras)', opts: ['Correto', 'Erros esporádicos', 'Erros frequentes'] },
+      { q: 'Manipulação de fonemas (ex: "fala sem o /k/ de carro")', opts: ['Correto', 'Com apoio', 'Não consegue'] },
+      { q: 'Memória verbal sequencial (repetição de sequências)', opts: ['Adequada', 'Reduzida', 'Muito reduzida'] },
+      { q: 'Leitura de pseudopalavras (ex: "peluco", "dansito")', opts: ['Decodifica', 'Lenta / com erros', 'Não decodifica'] },
+      { q: 'Velocidade de nomeação rápida (objetos, cores, letras)', opts: ['Fluente', 'Lenta', 'Muito lenta / trava'] },
+      { q: 'Escrita espontânea (omissões, trocas de letras)', opts: ['Sem erros significativos', 'Erros ocasionais', 'Erros frequentes / sistemáticos'] },
+      { q: 'Compreensão leitora para a escolaridade', opts: ['Compatível', 'Abaixo do esperado', 'Muito abaixo'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2 },
+    interpretar(total) {
+      if (total <= 4)  return { classe: 'score-normal', texto: 'Sem sinais de dislexia', rec: 'Habilidades de linguagem escrita compatíveis com a idade. Monitorar.' };
+      if (total <= 9)  return { classe: 'score-risco', texto: 'Risco para dislexia / dificuldades de aprendizagem', rec: 'Encaminhar para avaliação neuropsicológica. Fonoterapia de linguagem escrita indicada.' };
+      return { classe: 'score-altera', texto: 'Fortes indicadores de dislexia', rec: 'Avaliação multidisciplinar urgente. Fonoterapia intensiva e apoio escolar necessários.' };
+    }
+  },
+  idv: {
+    titulo: 'IDV-10 — Índice de Desvantagem Vocal',
+    instrucao: 'Perguntas respondidas pelo próprio paciente sobre o impacto da voz na vida diária.',
+    itens: [
+      { q: 'As pessoas têm dificuldade de me ouvir por causa da minha voz', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+      { q: 'Fico sem fôlego quando preciso falar', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+      { q: 'Minha voz muda ou piora ao longo do dia', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+      { q: 'Minha voz causa problemas no trabalho / escola', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+      { q: 'Preciso me esforçar muito para falar', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+      { q: 'Minha voz sai tensa ou forçada', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+      { q: 'Evito conversar / falar em público por causa da voz', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+      { q: 'Sinto vergonha ou fico ansioso por causa da minha voz', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+      { q: 'Tenho dificuldade de usar o telefone pela voz', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+      { q: 'Minha voz me incomoda ou me frustra', opts: ['Nunca', 'Quase nunca', 'Às vezes', 'Quase sempre', 'Sempre'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4 },
+    interpretar(total) {
+      if (total <= 10) return { classe: 'score-normal', texto: 'Desvantagem vocal ausente ou mínima', rec: 'Sem impacto funcional relevante. Monitorar se houver disfonia ativa.' };
+      if (total <= 25) return { classe: 'score-risco', texto: 'Desvantagem vocal moderada', rec: 'Fonoterapia vocal indicada. Abordar aspectos funcionais e qualidade de vida.' };
+      return { classe: 'score-altera', texto: 'Desvantagem vocal importante', rec: 'Fonoterapia intensiva. Avaliar impacto psicossocial. Considerar encaminhamento para psicologia.' };
+    }
+  },
+  fois: {
+    titulo: 'FOIS — Escala de Ingestão Oral Funcional',
+    instrucao: 'Avalie o nível funcional de ingestão oral atual do paciente (complementar à avaliação de deglutição).',
+    itens: [
+      { q: 'Via alimentar atual', opts: ['Totalmente oral', 'Oral predominante (suplemento eventual)', 'Oral + alternativa (sonda / SNE)', 'Alimentação alternativa total'] },
+      { q: 'Consistência de sólidos tolerada', opts: ['Todos os alimentos (normal)', 'Sólidos macios / pastoso', 'Pastoso homogêneo / liquidificado', 'Sólidos não tolerados'] },
+      { q: 'Consistência de líquidos tolerada', opts: ['Finos sem restrição', 'Espessamento leve', 'Espessamento moderado / grosso', 'Líquidos por VO não tolerados'] },
+      { q: 'Sinais de engasgo / aspiração durante alimentação', opts: ['Ausentes', 'Ocasionais (1–2x/semana)', 'Frequentes (diários)', 'Sempre presentes'] },
+      { q: 'Tempo médio de refeição', opts: ['< 20 min (normal)', '20–40 minutos', '> 40 minutos', 'Não se alimenta por VO'] },
+      { q: 'Perda de peso relacionada à disfagia (últimos 3 meses)', opts: ['Não', 'Leve (< 5%)', 'Moderada (5–10%)', 'Importante (> 10%)'] },
+      { q: 'Pneumonia aspirativa nos últimos 6 meses', opts: ['Nenhum episódio', '1 episódio', '2 episódios', '3 ou mais episódios'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2, 3: 3 },
+    interpretar(total) {
+      if (total <= 4)  return { classe: 'score-normal', texto: 'Ingestão oral funcional', rec: 'Manutenção da dieta atual. Monitorar em consultas de rotina.' };
+      if (total <= 10) return { classe: 'score-risco', texto: 'Comprometimento moderado da ingestão oral', rec: 'Fonoterapia de deglutição e adaptação de dieta indicadas. Orientar família/cuidadores.' };
+      return { classe: 'score-altera', texto: 'Comprometimento grave da ingestão oral', rec: 'Avaliação multidisciplinar urgente. Considerar via alternativa e avaliação instrumental de aspiração.' };
+    }
+  },
+  processamento: {
+    titulo: 'Triagem de Processamento Auditivo Central',
+    instrucao: 'Checklist de risco para TPAC em escolares. Baseado em relato dos responsáveis e professores.',
+    itens: [
+      { q: 'Dificuldade para entender fala em ambiente ruidoso', opts: ['Não', 'Às vezes', 'Frequentemente'] },
+      { q: 'Solicita repetição com frequência ("hã?", "o quê?")', opts: ['Não', 'Às vezes', 'Sempre'] },
+      { q: 'Confunde palavras sonoramente similares', opts: ['Não', 'Às vezes', 'Frequentemente'] },
+      { q: 'Dificuldade para seguir instruções verbais longas', opts: ['Não', 'Às vezes', 'Sempre'] },
+      { q: 'Demora para responder após ser chamado ou questionado', opts: ['Não', 'Às vezes', 'Frequentemente'] },
+      { q: 'Dificuldade para localizar de onde vem o som', opts: ['Não', 'Às vezes', 'Frequentemente'] },
+      { q: 'Baixo rendimento em leitura / escrita para a escolaridade', opts: ['Não', 'Abaixo do esperado', 'Muito abaixo'] },
+      { q: 'Dificuldade para aprender músicas, rimas ou sequências verbais', opts: ['Não', 'Às vezes', 'Sempre'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2 },
+    interpretar(total) {
+      if (total <= 4)  return { classe: 'score-normal', texto: 'Sem risco para TPAC', rec: 'Habilidades auditivas compatíveis com a idade. Monitorar se houver mudança.' };
+      if (total <= 9)  return { classe: 'score-risco', texto: 'Risco moderado para TPAC', rec: 'Encaminhar para avaliação audiológica completa (incluindo testes comportamentais de PAC).' };
+      return { classe: 'score-altera', texto: 'Alto risco para TPAC', rec: 'Avaliação audiológica e fonoaudiológica urgente. Encaminhar para audiologista especializado em PAC.' };
+    }
+  }
+};
+
+function iniciarTeste(id) {
+  testeAtual = { id, dados: testes[id], respostas: [], step: 0 };
+  document.getElementById('lista-testes').classList.add('hidden');
+  document.getElementById('area-teste').classList.remove('hidden');
+  renderStep();
+}
+
+function voltarListaTestes() {
+  testeAtual = null;
+  document.getElementById('lista-testes').classList.remove('hidden');
+  document.getElementById('area-teste').classList.add('hidden');
+}
+
+function renderStep() {
+  const { dados, step, respostas } = testeAtual;
+  const total = dados.itens.length;
+  const progresso = Math.round((step / total) * 100);
+
+  if (step >= total) { mostrarResultadoTeste(); return; }
+
+  const item = dados.itens[step];
+  const container = document.getElementById('teste-container');
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+      <div class="flex justify-between text-xs text-gray-400 mb-2">
+        <span>${dados.titulo}</span>
+        <span>${step + 1}/${total}</span>
+      </div>
+      <div class="progress-bar mb-4"><div class="progress-fill" style="width:${progresso}%"></div></div>
+      <p class="font-semibold text-gray-800 mb-4 text-sm leading-relaxed">${item.q}</p>
+      <div class="space-y-2">
+        ${item.opts.map((opt, i) => `
+          <div class="radio-opt">
+            <input type="radio" name="opt" id="opt${i}" value="${i}" class="hidden" onchange="responderItem(${i})"/>
+            <label for="opt${i}" class="block border-2 border-gray-200 rounded-xl px-4 py-3 text-sm cursor-pointer hover:border-teal-400 transition-all">
+              ${opt}
+            </label>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function responderItem(val) {
+  testeAtual.respostas.push(val);
+  testeAtual.step++;
+  setTimeout(() => renderStep(), 200);
+}
+
+function mostrarResultadoTeste() {
+  const { dados, respostas } = testeAtual;
+  let total = 0;
+  respostas.forEach(r => { total += dados.scores[r] || 0; });
+  const result = dados.interpretar(total);
+  const maxScore = Object.values(dados.scores).reduce((a,b) => a > b ? a : b, 0) * dados.itens.length;
+
+  const container = document.getElementById('teste-container');
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+      <div class="text-center mb-5">
+        <div class="text-5xl mb-2">✅</div>
+        <h3 class="font-bold text-gray-800">${dados.titulo}</h3>
+        <p class="text-gray-500 text-sm">${new Date().toLocaleDateString('pt-BR')}</p>
+      </div>
+      <div class="bg-gray-50 rounded-2xl p-4 mb-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm text-gray-600">Score total</span>
+          <span class="font-black text-lg text-gray-800">${total} / ${maxScore}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${Math.round((total/maxScore)*100)}%"></div></div>
+      </div>
+      <div class="text-center mb-4">
+        <span class="score-badge ${result.classe}">${result.texto}</span>
+      </div>
+      <div class="bg-teal-50 rounded-xl p-4 text-sm text-teal-800 mb-4">
+        <strong>Recomendação:</strong> ${result.rec}
+      </div>
+      <button onclick="gerarPDFTeste('${testeAtual.id}', ${total}, ${maxScore}, '${result.texto}', '${result.rec.replace(/'/g,"\\'")}', '${result.classe}')"
+        class="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+        📄 Gerar Relatório PDF
+      </button>
+    </div>
+  `;
+}
+
+// ============================
+// FICHAS
+// ============================
+const fichas = {
+  anamnese: {
+    titulo: 'Anamnese Fonoaudiológica',
+    campos: [
+      { id: 'an-paciente', label: 'Nome do paciente', type: 'text', placeholder: 'Nome completo' },
+      { id: 'an-nasc', label: 'Data de nascimento', type: 'date' },
+      { id: 'an-responsavel', label: 'Responsável (se menor)', type: 'text', placeholder: 'Nome do responsável' },
+      { id: 'an-queixa', label: 'Queixa principal', type: 'textarea', placeholder: 'Descreva a queixa em detalhes...' },
+      { id: 'an-inicio', label: 'Início dos sintomas', type: 'text', placeholder: 'Ex: há 2 anos, desde o nascimento...' },
+      { id: 'an-tratamento', label: 'Tratamentos anteriores', type: 'textarea', placeholder: 'Outros tratamentos realizados...' },
+      { id: 'an-medico', label: 'Acompanhamento médico', type: 'text', placeholder: 'Especialidade e médico' },
+      { id: 'an-medicacao', label: 'Uso de medicação', type: 'text', placeholder: 'Medicamentos em uso' },
+      { id: 'an-gestacao', label: 'Histórico gestacional/parto', type: 'textarea', placeholder: 'Intercorrências na gestação ou parto...' },
+      { id: 'an-obs', label: 'Observações adicionais', type: 'textarea', placeholder: 'Outras informações relevantes...' },
+    ]
+  },
+  evolucao: {
+    titulo: 'Ficha de Evolução',
+    campos: [
+      { id: 'ev-paciente', label: 'Nome do paciente', type: 'text', placeholder: 'Nome completo' },
+      { id: 'ev-data', label: 'Data da sessão', type: 'date' },
+      { id: 'ev-sessao', label: 'Nº da sessão', type: 'text', placeholder: 'Ex: 12ª sessão' },
+      { id: 'ev-evolucao', label: 'Evolução clínica', type: 'textarea', placeholder: 'Descreva a evolução observada...' },
+      { id: 'ev-atividades', label: 'Atividades realizadas', type: 'textarea', placeholder: 'Atividades e técnicas utilizadas na sessão...' },
+      { id: 'ev-objetivos', label: 'Objetivos trabalhados', type: 'textarea', placeholder: 'Objetivos terapêuticos abordados...' },
+      { id: 'ev-proxima', label: 'Planejamento próxima sessão', type: 'textarea', placeholder: 'O que será trabalhado na próxima sessão...' },
+      { id: 'ev-obs', label: 'Observações', type: 'textarea', placeholder: 'Outras observações relevantes...' },
+    ]
+  },
+  encaminhamento: {
+    titulo: 'Carta de Encaminhamento',
+    campos: [
+      { id: 'enc-paciente', label: 'Paciente', type: 'text', placeholder: 'Nome completo e idade' },
+      { id: 'enc-para', label: 'Encaminhar para', type: 'text', placeholder: 'Ex: Otorrinolaringologista, Neurologista...' },
+      { id: 'enc-motivo', label: 'Motivo do encaminhamento', type: 'textarea', placeholder: 'Justificativa clínica para o encaminhamento...' },
+      { id: 'enc-hipotese', label: 'Hipótese diagnóstica', type: 'text', placeholder: 'Suspeita diagnóstica...' },
+      { id: 'enc-solicitacao', label: 'Solicitações / exames', type: 'textarea', placeholder: 'Exames ou avaliações solicitadas...' },
+      { id: 'enc-fono', label: 'Fonoaudióloga responsável', type: 'text', placeholder: 'Nome — CRFa XXXXX' },
+    ]
+  },
+  plano: {
+    titulo: 'Plano Terapêutico',
+    campos: [
+      { id: 'pt-paciente', label: 'Paciente', type: 'text', placeholder: 'Nome completo' },
+      { id: 'pt-diagnostico', label: 'Diagnóstico fonoaudiológico', type: 'text', placeholder: 'CID-10 e descrição' },
+      { id: 'pt-objetivos', label: 'Objetivos gerais', type: 'textarea', placeholder: 'O que se espera alcançar...' },
+      { id: 'pt-especificos', label: 'Objetivos específicos', type: 'textarea', placeholder: 'Metas mensuráveis por período...' },
+      { id: 'pt-estrategias', label: 'Estratégias terapêuticas', type: 'textarea', placeholder: 'Técnicas e abordagens a utilizar...' },
+      { id: 'pt-frequencia', label: 'Frequência / duração', type: 'text', placeholder: 'Ex: 2x por semana, sessões de 50 min' },
+      { id: 'pt-prognose', label: 'Prognóstico', type: 'text', placeholder: 'Favorável / reservado...' },
+    ]
+  }
+};
+
+function abrirFicha(id) {
+  fichaAtual = { id, dados: fichas[id] };
+  document.getElementById('lista-fichas').classList.add('hidden');
+  const listBlock = document.querySelector('#screen-fichas > .space-y-3');
+  if (listBlock) listBlock.classList.add('hidden');
+  document.getElementById('area-ficha').classList.remove('hidden');
+  renderFicha();
+}
+
+function voltarListaFichas() {
+  fichaAtual = null;
+  const listBlock = document.querySelector('#screen-fichas > .space-y-3');
+  if (listBlock) listBlock.classList.remove('hidden');
+  document.getElementById('area-ficha').classList.add('hidden');
+}
+
+function renderFicha() {
+  const { dados } = fichaAtual;
+  const container = document.getElementById('ficha-container');
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+      <h3 class="font-bold text-gray-800 mb-4">${dados.titulo}</h3>
+      <div class="space-y-4">
+        ${dados.campos.map(c => `
+          <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">${c.label}</label>
+            ${c.type === 'textarea'
+              ? `<textarea id="${c.id}" rows="3" placeholder="${c.placeholder || ''}" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-teal-500 outline-none resize-none"></textarea>`
+              : `<input id="${c.id}" type="${c.type}" placeholder="${c.placeholder || ''}" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-teal-500 outline-none"/>`
+            }
+          </div>
+        `).join('')}
+      </div>
+      <button onclick="gerarPDFFicha()" class="mt-5 w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 transition-all">
+        📄 Gerar Ficha em PDF
+      </button>
+    </div>
+  `;
+}
+
+// ============================
+// GERAÇÃO DE PDF — TESTE
+// ============================
+function gerarPDFTeste(id, score, maxScore, resultado, rec, classe) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const dados = testes[id];
+  const W = 210, margin = 20;
+  let y = 20;
+
+  // Header
+  doc.setFillColor(13, 148, 136);
+  doc.rect(0, 0, W, 35, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16); doc.setFont('helvetica', 'bold');
+  doc.text('App Kit Fonoaudióloga Pro', margin, 14);
+  doc.setFontSize(11); doc.setFont('helvetica', 'normal');
+  doc.text('Protocolo de Avaliação Clínica', margin, 22);
+  doc.setFontSize(9);
+  doc.text('✅ Dados privados — armazenados localmente no dispositivo', margin, 30);
+
+  y = 50;
+  doc.setTextColor(30, 30, 30);
+  doc.setFontSize(14); doc.setFont('helvetica', 'bold');
+  doc.text(dados.titulo, margin, y); y += 8;
+  doc.setFontSize(9); doc.setFont('helvetica', 'normal');
+  doc.setTextColor(100, 100, 100);
+  doc.text(`Data: ${new Date().toLocaleDateString('pt-BR')}`, margin, y); y += 12;
+
+  // Score
+  doc.setFillColor(240, 253, 250);
+  doc.rect(margin, y, W - margin * 2, 22, 'F');
+  doc.setDrawColor(13, 148, 136);
+  doc.rect(margin, y, W - margin * 2, 22, 'S');
+  doc.setTextColor(30, 30, 30);
+  doc.setFontSize(10); doc.setFont('helvetica', 'bold');
+  doc.text(`Score: ${score} / ${maxScore}`, margin + 4, y + 8);
+  doc.setFontSize(11);
+  doc.text(`Resultado: ${resultado}`, margin + 4, y + 16); y += 28;
+
+  // Recomendação
+  doc.setFillColor(248, 248, 248);
+  doc.rect(margin, y, W - margin * 2, 20, 'F');
+  doc.setTextColor(60, 60, 60);
+  doc.setFontSize(9); doc.setFont('helvetica', 'bold');
+  doc.text('Recomendação clínica:', margin + 4, y + 7);
+  doc.setFont('helvetica', 'normal');
+  const recLines = doc.splitTextToSize(rec, W - margin * 2 - 8);
+  doc.text(recLines, margin + 4, y + 13); y += 26;
+
+  // Respostas
+  doc.setFontSize(10); doc.setFont('helvetica', 'bold');
+  doc.setTextColor(30, 30, 30);
+  doc.text('Detalhamento por item:', margin, y); y += 6;
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
+
+  testeAtual.respostas.forEach((resp, i) => {
+    if (y > 270) { doc.addPage(); y = 20; }
+    const item = dados.itens[i];
+    doc.setTextColor(80, 80, 80);
+    const qLines = doc.splitTextToSize(`${i+1}. ${item.q}`, W - margin * 2 - 30);
+    doc.text(qLines, margin, y);
+    doc.setTextColor(13, 148, 136); doc.setFont('helvetica', 'bold');
+    doc.text(`→ ${item.opts[resp]}`, W - margin - 35, y);
+    doc.setFont('helvetica', 'normal');
+    y += qLines.length * 4 + 3;
+  });
+
+  // Footer
+  const pages = doc.getNumberOfPages();
+  for (let i = 1; i <= pages; i++) {
+    doc.setPage(i);
+    doc.setFontSize(7); doc.setTextColor(180, 180, 180);
+    doc.text(`App Kit Fonoaudióloga Pro — ${new Date().toLocaleDateString('pt-BR')} — Página ${i}/${pages}`, W/2, 290, { align: 'center' });
+  }
+
+  doc.save(`Avaliacao-Fono-${dados.titulo.replace(/\s/g,'-')}-${new Date().toISOString().slice(0,10)}.pdf`);
+  showToast('📄 PDF gerado com sucesso!');
+}
+
+// ============================
+// GERAÇÃO DE PDF — FICHA
+// ============================
+function gerarPDFFicha() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const { dados } = fichaAtual;
+  const W = 210, margin = 20;
+  let y = 20;
+
+  doc.setFillColor(13, 148, 136);
+  doc.rect(0, 0, W, 35, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16); doc.setFont('helvetica', 'bold');
+  doc.text('App Kit Fonoaudióloga Pro', margin, 14);
+  doc.setFontSize(11); doc.setFont('helvetica', 'normal');
+  doc.text(dados.titulo, margin, 22);
+  doc.setFontSize(9);
+  doc.text(`Data: ${new Date().toLocaleDateString('pt-BR')}`, margin, 30);
+
+  y = 50;
+  dados.campos.forEach(c => {
+    if (y > 265) { doc.addPage(); y = 20; }
+    const val = (document.getElementById(c.id)?.value || '').trim() || '—';
+    doc.setTextColor(80, 80, 80); doc.setFontSize(8); doc.setFont('helvetica', 'bold');
+    doc.text(c.label, margin, y); y += 4;
+    doc.setFont('helvetica', 'normal'); doc.setTextColor(30, 30, 30); doc.setFontSize(9);
+    const lines = doc.splitTextToSize(val, W - margin * 2);
+    doc.text(lines, margin, y);
+    y += lines.length * 4.5 + 5;
+    doc.setDrawColor(220, 220, 220);
+    doc.line(margin, y, W - margin, y); y += 4;
+  });
+
+  const pages = doc.getNumberOfPages();
+  for (let i = 1; i <= pages; i++) {
+    doc.setPage(i);
+    doc.setFontSize(7); doc.setTextColor(180, 180, 180);
+    doc.text(`App Kit Fonoaudióloga Pro — ${new Date().toLocaleDateString('pt-BR')} — Pág ${i}/${pages}`, W/2, 290, { align: 'center' });
+  }
+
+  doc.save(`${dados.titulo.replace(/\s/g,'-')}-${new Date().toISOString().slice(0,10)}.pdf`);
+  showToast('📄 PDF gerado com sucesso!');
+}
+
+// ============================
+// GERAÇÃO DE PDF — RELATÓRIO
+// ============================
+function gerarRelatorioPDF() {
+  const pacId = document.getElementById('sel-paciente-rel').value;
+  const tipo = document.getElementById('sel-tipo-rel').value;
+  const obs = document.getElementById('txt-obs-rel').value.trim();
+  const fonoNome = document.getElementById('txt-fono-nome').value.trim() || 'Fonoaudióloga Responsável';
+  const tiposLabels = { avaliacao: 'Relatório de Avaliação', evolucao: 'Relatório de Evolução', alta: 'Relatório de Alta', encaminhamento: 'Encaminhamento' };
+
+  const pac = pacId ? pacientes.find(p => p.id == pacId) : null;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const W = 210, margin = 20;
+  let y = 20;
+
+  doc.setFillColor(13, 148, 136);
+  doc.rect(0, 0, W, 38, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16); doc.setFont('helvetica', 'bold');
+  doc.text('App Kit Fonoaudióloga Pro', margin, 14);
+  doc.setFontSize(12); doc.setFont('helvetica', 'normal');
+  doc.text(tiposLabels[tipo] || tipo, margin, 23);
+  doc.setFontSize(9);
+  doc.text(`Data: ${new Date().toLocaleDateString('pt-BR')}`, margin, 32);
+
+  y = 52;
+  if (pac) {
+    doc.setFillColor(240, 253, 250);
+    doc.rect(margin, y, W - margin * 2, 28, 'F');
+    doc.setTextColor(30, 30, 30); doc.setFontSize(10); doc.setFont('helvetica', 'bold');
+    doc.text('Dados do Paciente', margin + 4, y + 7);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+    doc.text(`Nome: ${pac.nome}`, margin + 4, y + 13);
+    if (pac.nasc) doc.text(`Nascimento: ${pac.nasc}`, margin + 4, y + 19);
+    if (pac.queixa) doc.text(`Queixa: ${pac.queixa}`, margin + 4, y + 25);
+    y += 34;
+  }
+
+  doc.setTextColor(30, 30, 30); doc.setFontSize(10); doc.setFont('helvetica', 'bold');
+  doc.text('Relatório Clínico:', margin, y); y += 7;
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(50, 50, 50);
+  const obsLines = doc.splitTextToSize(obs || 'Sem observações registradas.', W - margin * 2);
+  obsLines.forEach(line => {
+    if (y > 260) { doc.addPage(); y = 20; }
+    doc.text(line, margin, y); y += 6;
+  });
+
+  y += 15;
+  doc.setDrawColor(13, 148, 136);
+  doc.line(margin, y, margin + 60, y); y += 5;
+  doc.setTextColor(80, 80, 80); doc.setFontSize(8); doc.setFont('helvetica', 'normal');
+  doc.text(fonoNome, margin, y);
+
+  const pages = doc.getNumberOfPages();
+  for (let i = 1; i <= pages; i++) {
+    doc.setPage(i);
+    doc.setFontSize(7); doc.setTextColor(180, 180, 180);
+    doc.text(`App Kit Fonoaudióloga Pro — ${new Date().toLocaleDateString('pt-BR')} — Pág ${i}/${pages}`, W/2, 290, { align: 'center' });
+  }
+
+  doc.save(`${tiposLabels[tipo]?.replace(/\s/g,'-') || 'Relatorio'}-${new Date().toISOString().slice(0,10)}.pdf`);
+  showToast('📄 Relatório gerado!');
+}
+
+// ============================
+// INIT
+// ============================
+window.onload = () => {
+  atualizarStats();
+  renderPacientes();
+  atualizarSelectPacientes();
+
+  // Esconde bloco de fichas lista e mostra só quando ativa
+  const listFichas = document.querySelector('#screen-fichas > .space-y-3');
+  if (listFichas) listFichas.id = 'lista-fichas-block';
+};
+</script>
+</body>
+</html>
