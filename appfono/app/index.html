@@ -1275,16 +1275,74 @@ const fichas = {
   anamnese: {
     titulo: 'Anamnese Fonoaudiológica',
     campos: [
+      // ── IDENTIFICAÇÃO ──
+      { type: 'section', label: '👤 Identificação' },
       { id: 'an-paciente', label: 'Nome do paciente', type: 'text', placeholder: 'Nome completo' },
       { id: 'an-nasc', label: 'Data de nascimento', type: 'date' },
+      { id: 'an-sexo', label: 'Sexo', type: 'select', options: ['Feminino', 'Masculino', 'Outro'] },
       { id: 'an-responsavel', label: 'Responsável (se menor)', type: 'text', placeholder: 'Nome do responsável' },
+      { id: 'an-contato', label: 'Contato / WhatsApp', type: 'text', placeholder: '(11) 99999-9999' },
+      { id: 'an-encaminhamento', label: 'Encaminhado por', type: 'text', placeholder: 'Médico, escola, espontâneo...' },
+      { id: 'an-escola', label: 'Escola / Instituição', type: 'text', placeholder: 'Nome da escola' },
+      { id: 'an-serie', label: 'Série / Ano escolar', type: 'text', placeholder: 'Ex: 3º ano EF, Maternal II...' },
+      // ── QUEIXA PRINCIPAL ──
+      { type: 'section', label: '🗣️ Queixa Principal' },
       { id: 'an-queixa', label: 'Queixa principal', type: 'textarea', placeholder: 'Descreva a queixa em detalhes...' },
       { id: 'an-inicio', label: 'Início dos sintomas', type: 'text', placeholder: 'Ex: há 2 anos, desde o nascimento...' },
-      { id: 'an-tratamento', label: 'Tratamentos anteriores', type: 'textarea', placeholder: 'Outros tratamentos realizados...' },
-      { id: 'an-medico', label: 'Acompanhamento médico', type: 'text', placeholder: 'Especialidade e médico' },
-      { id: 'an-medicacao', label: 'Uso de medicação', type: 'text', placeholder: 'Medicamentos em uso' },
-      { id: 'an-gestacao', label: 'Histórico gestacional/parto', type: 'textarea', placeholder: 'Intercorrências na gestação ou parto...' },
-      { id: 'an-obs', label: 'Observações adicionais', type: 'textarea', placeholder: 'Outras informações relevantes...' },
+      { id: 'an-evolucao', label: 'Evolução da queixa', type: 'select', options: ['Estável', 'Melhorou', 'Piorou', 'Oscila'] },
+      // ── HISTÓRICO GESTACIONAL E DESENVOLVIMENTO ──
+      { type: 'section', label: '🤰 Histórico Gestacional e Desenvolvimento' },
+      { id: 'an-gestacao', label: 'Intercorrências na gestação', type: 'textarea', placeholder: 'Infecções, medicações, estresse...' },
+      { id: 'an-parto', label: 'Tipo de parto', type: 'select', options: ['Normal / Vaginal', 'Cesárea', 'Fórceps / Vácuo'] },
+      { id: 'an-prematuro', label: 'Prematuro?', type: 'select', options: ['Não (a termo)', 'Sim — 34 a 36 semanas', 'Sim — 28 a 33 semanas', 'Sim — antes de 28 semanas'] },
+      { id: 'an-peso-nasc', label: 'Peso ao nascer', type: 'text', placeholder: 'Ex: 3,2 kg' },
+      { id: 'an-neonatal', label: 'Intercorrências neonatais (UTI, icterícia...)', type: 'textarea', placeholder: 'Descreva se houve...' },
+      { id: 'an-dnpm-palavras', label: 'Primeiras palavras (quando?)', type: 'text', placeholder: 'Ex: 12 meses, 18 meses, ainda não...' },
+      { id: 'an-dnpm-frases', label: 'Primeiras frases (quando?)', type: 'text', placeholder: 'Ex: 24 meses, 3 anos, ainda não...' },
+      { id: 'an-amamentacao', label: 'Amamentação', type: 'select', options: ['Peito — até 6 meses', 'Peito — mais de 6 meses', 'Mamadeira desde o início', 'Misto (peito + mamadeira)'] },
+      { id: 'an-chupeta', label: 'Uso de chupeta / bico / dedo', type: 'select', options: ['Nunca usou', 'Usou e já parou', 'Usa atualmente'] },
+      // ── ALIMENTAÇÃO E HÁBITOS ORAIS ──
+      { type: 'section', label: '🍽️ Alimentação e Hábitos Orais' },
+      { id: 'an-alim-consist', label: 'Consistência alimentar atual', type: 'select', options: ['Come de tudo normalmente', 'Evita sólidos duros', 'Come só pastosos', 'Come só líquidos / pastosos'] },
+      { id: 'an-mastigacao', label: 'Mastigação', type: 'select', options: ['Bilateral alternada (normal)', 'Unilateral (só um lado)', 'Rápida / sem mastigar bem', 'Dificuldade para mastigar'] },
+      { id: 'an-deglutinacao', label: 'Engasgo ou tosse durante refeições', type: 'select', options: ['Não', 'Às vezes', 'Frequentemente', 'Com líquidos', 'Com sólidos'] },
+      { id: 'an-salivacao', label: 'Salivação excessiva (baba)?', type: 'select', options: ['Não', 'Sim — ao falar', 'Sim — constante'] },
+      { id: 'an-respiracao', label: 'Respiração predominante', type: 'select', options: ['Nasal (normal)', 'Oral', 'Mista (oral + nasal)'] },
+      { id: 'an-ronco', label: 'Ronca ou apresenta apneia?', type: 'select', options: ['Não', 'Ronca levemente', 'Ronca bastante', 'Suspeita de apneia'] },
+      { id: 'an-bruxismo', label: 'Bruxismo / ranger de dentes', type: 'select', options: ['Não', 'Sim — noturno', 'Sim — diurno', 'Sim — noturno e diurno'] },
+      // ── AUDIÇÃO ──
+      { type: 'section', label: '👂 Audição' },
+      { id: 'an-otites', label: 'Histórico de otites', type: 'select', options: ['Sem histórico', 'Episódica (1-2 vezes/ano)', 'Frequente (3+ vezes/ano)', 'Otite crônica'] },
+      { id: 'an-audiometria', label: 'Já realizou audiometria?', type: 'select', options: ['Não', 'Sim — resultado normal', 'Sim — perda leve', 'Sim — perda moderada / severa'] },
+      { id: 'an-aparelho', label: 'Usa aparelho auditivo?', type: 'select', options: ['Não', 'Sim (ouvido direito)', 'Sim (ouvido esquerdo)', 'Sim (bilateral)'] },
+      { id: 'an-zumbido', label: 'Zumbido ou sensação de pressão no ouvido?', type: 'select', options: ['Não', 'Às vezes', 'Frequentemente'] },
+      // ── VOZ E FLUÊNCIA ──
+      { type: 'section', label: '🎙️ Voz e Fluência' },
+      { id: 'an-voz', label: 'Qualidade da voz', type: 'select', options: ['Normal', 'Rouca / Disfônica', 'Soprosa', 'Tensa', 'Nasalizada'] },
+      { id: 'an-pigarro', label: 'Pigarro ou tosse frequente?', type: 'select', options: ['Não', 'Às vezes', 'Frequentemente'] },
+      { id: 'an-fluencia', label: 'Gaguejamento / disfluência', type: 'select', options: ['Não', 'Repetições leves', 'Bloqueios e repetições', 'Gaguejamento moderado / severo'] },
+      { id: 'an-voz-obs', label: 'Observações sobre voz / fluência', type: 'textarea', placeholder: 'Detalhes adicionais...' },
+      // ── SAÚDE GERAL ──
+      { type: 'section', label: '🏥 Saúde Geral' },
+      { id: 'an-doencas', label: 'Diagnósticos / doenças relevantes', type: 'textarea', placeholder: 'TEA, TDAH, paralisia cerebral, síndromes...' },
+      { id: 'an-cirurgias', label: 'Cirurgias realizadas', type: 'text', placeholder: 'Ex: amígdalas, implante coclear, adenoide...' },
+      { id: 'an-alergias', label: 'Alergias', type: 'text', placeholder: 'Alimentos, medicamentos, respiratórias...' },
+      { id: 'an-medicacao', label: 'Medicações em uso', type: 'text', placeholder: 'Nome, dose e finalidade' },
+      { id: 'an-medico', label: 'Acompanhamento médico', type: 'text', placeholder: 'Especialidade e médico responsável' },
+      { id: 'an-visao', label: 'Visão', type: 'select', options: ['Normal', 'Usa óculos / lentes', 'Baixa visão', 'Avaliação pendente'] },
+      // ── ASPECTOS EDUCACIONAIS ──
+      { type: 'section', label: '📚 Aspectos Educacionais' },
+      { id: 'an-escola-freq', label: 'Frequenta escola?', type: 'select', options: ['Sim', 'Não', 'Educação domiciliar'] },
+      { id: 'an-rendimento', label: 'Rendimento escolar', type: 'select', options: ['Adequado para a idade', 'Abaixo do esperado', 'Muito abaixo do esperado', 'Não se aplica'] },
+      { id: 'an-dificuldades', label: 'Dificuldades escolares', type: 'textarea', placeholder: 'Leitura, escrita, matemática, atenção, socialização...' },
+      // ── HISTÓRICO TERAPÊUTICO ──
+      { type: 'section', label: '📋 Histórico Terapêutico' },
+      { id: 'an-terapia-fono', label: 'Fonoterapia anterior?', type: 'select', options: ['Não', 'Sim — concluída com alta', 'Sim — interrompida', 'Em andamento (outro local)'] },
+      { id: 'an-fono-motivo', label: 'Motivo de interrupção anterior', type: 'text', placeholder: 'Alta, mudança, financeiro, melhora...' },
+      { id: 'an-tratamento', label: 'Outros tratamentos em andamento', type: 'textarea', placeholder: 'Psicologia, TO, Fisio, Neurologia, Psicopedagogia...' },
+      // ── OBSERVAÇÕES ──
+      { type: 'section', label: '📝 Observações' },
+      { id: 'an-obs', label: 'Observações adicionais', type: 'textarea', placeholder: 'Informações relevantes não contempladas acima...' },
     ]
   },
   evolucao: {
@@ -1340,6 +1398,24 @@ function voltarListaFichas() {
   document.getElementById('area-ficha').classList.add('hidden');
 }
 
+function renderCampoFicha(c) {
+  if (c.type === 'section') {
+    return `<div class="border-t-2 border-teal-100 mt-3 pt-3">
+      <p class="text-xs font-black text-teal-700 uppercase tracking-wide">${c.label}</p>
+    </div>`;
+  }
+  let input;
+  if (c.type === 'textarea') {
+    input = `<textarea id="${c.id}" rows="2" placeholder="${c.placeholder||''}" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-teal-500 outline-none resize-none"></textarea>`;
+  } else if (c.type === 'select') {
+    const opts = (c.options||[]).map(o => `<option value="${o}">${o}</option>`).join('');
+    input = `<select id="${c.id}" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-teal-500 outline-none bg-white"><option value="">Selecionar...</option>${opts}</select>`;
+  } else {
+    input = `<input id="${c.id}" type="${c.type||'text'}" placeholder="${c.placeholder||''}" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-teal-500 outline-none"/>`;
+  }
+  return `<div><label class="block text-xs font-semibold text-gray-600 mb-1">${c.label}</label>${input}</div>`;
+}
+
 function renderFicha() {
   const { dados } = fichaAtual;
   const container = document.getElementById('ficha-container');
@@ -1357,16 +1433,8 @@ function renderFicha() {
         </select>
       </div>` : ''}
 
-      <div class="space-y-4">
-        ${dados.campos.map(c => `
-          <div>
-            <label class="block text-xs font-semibold text-gray-600 mb-1">${c.label}</label>
-            ${c.type === 'textarea'
-              ? `<textarea id="${c.id}" rows="3" placeholder="${c.placeholder || ''}" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-teal-500 outline-none resize-none"></textarea>`
-              : `<input id="${c.id}" type="${c.type}" placeholder="${c.placeholder || ''}" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-teal-500 outline-none"/>`
-            }
-          </div>
-        `).join('')}
+      <div class="space-y-3">
+        ${dados.campos.map(c => renderCampoFicha(c)).join('')}
       </div>
       <button onclick="gerarPDFFicha()" class="mt-5 w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 transition-all">
         📄 Gerar Ficha em PDF
@@ -1562,13 +1630,22 @@ function gerarPDFFicha() {
   y = drawPDFHeader(doc, dados.titulo);
   dados.campos.forEach(c => {
     if (y > 265) { doc.addPage(); y = 20; }
+    if (c.type === 'section') {
+      y += 3;
+      doc.setFillColor(240, 253, 250);
+      doc.rect(margin, y, W - margin * 2, 7, 'F');
+      doc.setFontSize(7.5); doc.setFont('helvetica', 'bold'); doc.setTextColor(13, 148, 136);
+      doc.text(c.label.replace(/[^\w\s\-\/]/g, '').trim().toUpperCase(), margin + 3, y + 5);
+      y += 11;
+      return;
+    }
     const val = (document.getElementById(c.id)?.value || '').trim() || '—';
     doc.setTextColor(80, 80, 80); doc.setFontSize(8); doc.setFont('helvetica', 'bold');
     doc.text(c.label, margin, y); y += 4;
     doc.setFont('helvetica', 'normal'); doc.setTextColor(30, 30, 30); doc.setFontSize(9);
     const lines = doc.splitTextToSize(val, W - margin * 2);
     doc.text(lines, margin, y);
-    y += lines.length * 4.5 + 5;
+    y += lines.length * 4.5 + 4;
     doc.setDrawColor(220, 220, 220);
     doc.line(margin, y, W - margin, y); y += 4;
   });
