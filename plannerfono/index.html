@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🗣️ Personalize seu Planner Fonoaudiológico</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-icon">🗣️</div>
+      <div>
+        <h1>Planner Fonoaudiológico</h1>
+        <p>Personalize e gere o seu planner profissional em PDF</p>
+      </div>
+    </header>
+
+    <!-- Steps Indicator -->
+    <div class="steps-bar">
+      <div class="step active" id="step-dot-1">
+        <div class="step-circle">1</div>
+        <span>Dados</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step-dot-2">
+        <div class="step-circle">2</div>
+        <span>Seções</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step-dot-3">
+        <div class="step-circle">3</div>
+        <span>Estilo</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step-dot-4">
+        <div class="step-circle">4</div>
+        <span>Gerar</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Dados -->
+    <section class="step-content active" id="step-1">
+      <div class="card">
+        <h2>✏️ Seus Dados Profissionais</h2>
+        <p class="card-desc">Essas informações vão aparecer na capa do seu planner.</p>
+
+        <div class="form-group">
+          <label>Seu nome completo</label>
+          <input type="text" id="fono-nome" placeholder="Ex: Fonoaudióloga Ana Paula Silva" maxlength="60">
+        </div>
+        <div class="form-group">
+          <label>Nome da clínica / consultório / escola</label>
+          <input type="text" id="fono-local" placeholder="Ex: Clínica Fala e Voz" maxlength="60">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Cidade / Estado</label>
+            <input type="text" id="fono-cidade" placeholder="Ex: São Paulo / SP" maxlength="40">
+          </div>
+          <div class="form-group">
+            <label>Ano letivo</label>
+            <input type="number" id="fono-ano" value="2026" min="2025" max="2030">
+          </div>
+        </div>
+
+        <!-- Logo Upload -->
+        <div class="form-group">
+          <label>Logo da clínica / consultório (opcional)</label>
+          <div class="logo-upload-area" id="logo-upload-area" onclick="document.getElementById('logo-input').click()">
+            <input type="file" id="logo-input" accept="image/*" style="display:none" onchange="handleLogo(event)">
+            <div id="logo-placeholder">
+              <span class="logo-icon">🖼️</span>
+              <span class="logo-text">Clique para fazer upload da logo</span>
+              <span class="logo-hint">PNG, JPG ou SVG · Aparece na capa do planner</span>
+            </div>
+            <div id="logo-preview" style="display:none">
+              <img id="logo-img" src="" alt="Logo">
+              <span class="logo-ok">✅ Logo carregada! Clique para trocar</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="goStep(2)">Próximo →</button>
+      </div>
+    </section>
+
+    <!-- Step 2: Seções -->
+    <section class="step-content" id="step-2">
+      <div class="card">
+        <h2>📋 Escolha as Seções</h2>
+        <p class="card-desc">Selecione o que deseja incluir no seu planner fonoaudiológico.</p>
+
+        <div class="sections-grid">
+
+          <label class="section-item checked">
+            <input type="checkbox" value="capa" checked>
+            <div class="section-icon">🎨</div>
+            <div class="section-text">
+              <strong>Capa Personalizada</strong>
+              <span>Com seus dados, logo e identidade visual</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item checked">
+            <input type="checkbox" value="agenda" checked>
+            <div class="section-icon">📅</div>
+            <div class="section-text">
+              <strong>Agenda Semanal</strong>
+              <span>48 semanas de atendimentos organizados</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item checked">
+            <input type="checkbox" value="pacientes" checked>
+            <div class="section-icon">👤</div>
+            <div class="section-text">
+              <strong>Ficha do Paciente</strong>
+              <span>Dados, histórico e queixas fonoaudiológicas</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item checked">
+            <input type="checkbox" value="evolucao" checked>
+            <div class="section-icon">📈</div>
+            <div class="section-text">
+              <strong>Registro de Evolução</strong>
+              <span>Anotações de progresso por sessão</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item checked">
+            <input type="checkbox" value="calendario" checked>
+            <div class="section-icon">📆</div>
+            <div class="section-text">
+              <strong>Calendário Mensal</strong>
+              <span>12 meses com espaço para anotações</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item">
+            <input type="checkbox" value="avaliacao">
+            <div class="section-icon">🔍</div>
+            <div class="section-text">
+              <strong>Ficha de Avaliação</strong>
+              <span>Protocolo de avaliação fonoaudiológica inicial</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item">
+            <input type="checkbox" value="plano">
+            <div class="section-icon">🎯</div>
+            <div class="section-text">
+              <strong>Plano Terapêutico</strong>
+              <span>Metas e objetivos por paciente e bimestre</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item">
+            <input type="checkbox" value="atividades">
+            <div class="section-icon">🧩</div>
+            <div class="section-text">
+              <strong>Banco de Atividades</strong>
+              <span>Organização de atividades por área e objetivo</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item">
+            <input type="checkbox" value="devolutiva">
+            <div class="section-icon">📝</div>
+            <div class="section-text">
+              <strong>Registro de Devolutivas</strong>
+              <span>Controle de orientações dadas à família</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item">
+            <input type="checkbox" value="checklist">
+            <div class="section-icon">☑️</div>
+            <div class="section-text">
+              <strong>Checklist Diário</strong>
+              <span>Rotina e preparação das sessões</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+          <label class="section-item">
+            <input type="checkbox" value="relatorio">
+            <div class="section-icon">📊</div>
+            <div class="section-text">
+              <strong>Modelo de Relatório</strong>
+              <span>Estrutura para relatório fonoaudiológico</span>
+            </div>
+            <div class="checkmark">✓</div>
+          </label>
+
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goStep(1)">← Voltar</button>
+          <button class="btn-primary" onclick="goStep(3)">Próximo →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: Estilo -->
+    <section class="step-content" id="step-3">
+      <div class="card">
+        <h2>🎨 Escolha o Estilo</h2>
+        <p class="card-desc">Selecione a paleta de cores do seu planner.</p>
+
+        <div class="themes-grid">
+
+          <label class="theme-card selected" id="theme-teal">
+            <input type="radio" name="theme" value="teal" checked>
+            <div class="theme-preview teal">
+              <div class="preview-header"></div>
+              <div class="preview-lines">
+                <div></div><div></div><div></div>
+              </div>
+            </div>
+            <strong>Teal Profissional</strong>
+            <span>Moderno e acolhedor</span>
+            <div class="selected-badge">✓ Selecionado</div>
+          </label>
+
+          <label class="theme-card" id="theme-azul">
+            <input type="radio" name="theme" value="azul">
+            <div class="theme-preview azul">
+              <div class="preview-header"></div>
+              <div class="preview-lines">
+                <div></div><div></div><div></div>
+              </div>
+            </div>
+            <strong>Azul Clássico</strong>
+            <span>Elegante e confiável</span>
+            <div class="selected-badge">✓ Selecionado</div>
+          </label>
+
+          <label class="theme-card" id="theme-rosa">
+            <input type="radio" name="theme" value="rosa">
+            <div class="theme-preview rosa">
+              <div class="preview-header"></div>
+              <div class="preview-lines">
+                <div></div><div></div><div></div>
+              </div>
+            </div>
+            <strong>Rosa Delicado</strong>
+            <span>Elegante e feminino</span>
+            <div class="selected-badge">✓ Selecionado</div>
+          </label>
+
+          <label class="theme-card" id="theme-neutro">
+            <input type="radio" name="theme" value="neutro">
+            <div class="theme-preview neutro">
+              <div class="preview-header"></div>
+              <div class="preview-lines">
+                <div></div><div></div><div></div>
+              </div>
+            </div>
+            <strong>Neutro Claro</strong>
+            <span>Minimalista e limpo</span>
+            <div class="selected-badge">✓ Selecionado</div>
+          </label>
+
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goStep(2)">← Voltar</button>
+          <button class="btn-primary" onclick="goStep(4)">Próximo →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 4: Gerar -->
+    <section class="step-content" id="step-4">
+      <div class="card">
+        <h2>🎉 Tudo pronto!</h2>
+        <p class="card-desc">Revise seu planner e clique para gerar o PDF.</p>
+
+        <div class="summary-box" id="summary-box">
+          <!-- preenchido por JS -->
+        </div>
+
+        <div class="generate-area">
+          <div class="generate-icon">📄</div>
+          <h3>Seu Planner Fonoaudiológico</h3>
+          <p>O PDF será gerado diretamente no seu dispositivo e estará pronto para imprimir ou salvar.</p>
+
+          <button class="btn-generate" id="btn-gerar" onclick="gerarPDF()">
+            <span id="btn-text">📥 Gerar meu Planner em PDF</span>
+          </button>
+
+          <p class="generate-note">✅ Gratuito · Sem anúncios · Sem envio de dados</p>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goStep(3)">← Voltar</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- jsPDF via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
