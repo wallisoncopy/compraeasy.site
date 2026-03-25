@@ -566,7 +566,7 @@
           <div class="bg-teal-50 rounded-xl p-3">
             <p class="font-semibold text-teal-800 mb-1">Fichas disponíveis:</p>
             <ul class="text-teal-700 text-xs space-y-1">
-              <li>• Anamnese Fonoaudiológica — histórico completo do paciente</li>
+              <li>• <strong>Anamnese Fonoaudiológica</strong> — 48+ campos em 8 seções (Identificação, Histórico Gestacional, Alimentação e Hábitos Orais, Audição, Voz e Fluência, Saúde Geral, Aspectos Educacionais, Histórico Terapêutico)</li>
               <li>• Avaliação de Linguagem — checklist de habilidades por faixa</li>
               <li>• Avaliação de Voz — parâmetros vocais e achados clínicos</li>
               <li>• Avaliação de Deglutição — protocolo de avaliação clínica</li>
@@ -612,6 +612,22 @@
 
       <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
         <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
+          <span class="font-semibold text-sm text-gray-800">💾 Como salvar resultados de testes no prontuário</span>
+          <span class="help-icon text-teal-600 font-bold text-xl">+</span>
+        </button>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <p>Após finalizar qualquer teste, aparece uma caixa verde abaixo do resultado com a opção de salvar no prontuário do paciente.</p>
+          <div class="bg-teal-50 rounded-xl p-3 space-y-2">
+            <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">1</span><p>Finalize o teste e veja o score</p></div>
+            <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">2</span><p>Na caixa <em>"Salvar no prontuário"</em>, selecione o paciente</p></div>
+            <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">3</span><p>Toque em <strong>"💾 Salvar no prontuário"</strong></p></div>
+          </div>
+          <p>O histórico de avaliações salvas aparece automaticamente na aba <strong>Relatórios</strong> ao selecionar o paciente — e é incluído no PDF gerado.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
+        <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
           <span class="font-semibold text-sm text-gray-800">🗑️ Como excluir um paciente</span>
           <span class="help-icon text-teal-600 font-bold text-xl">+</span>
         </button>
@@ -641,9 +657,9 @@
           <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">2</span><p>Selecione o <strong>paciente</strong> no menu</p></div>
           <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">3</span><p>Escolha o <strong>tipo de relatório</strong> (avaliação, evolução, alta, encaminhamento)</p></div>
           <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">4</span><p>Escreva as <strong>observações clínicas</strong> no campo de texto</p></div>
-          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">5</span><p>Informe seu nome e CRFa</p></div>
+          <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">5</span><p>Confirme o nome e CRFa (preenchido automaticamente se configurado em <strong>⚙️ Config</strong>)</p></div>
           <div class="flex items-start gap-2"><span class="bg-teal-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">6</span><p>Toque em <strong>"Gerar Relatório em PDF"</strong></p></div>
-          <p class="text-xs text-gray-400 pt-1">O PDF é baixado automaticamente para o seu dispositivo.</p>
+          <p class="text-xs text-gray-400 pt-1">O PDF é baixado automaticamente para o seu dispositivo. Se o paciente tiver avaliações salvas, elas aparecem automaticamente no PDF.</p>
         </div>
       </div>
 
@@ -671,10 +687,12 @@
         <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
           <div class="bg-teal-50 rounded-xl p-3">
             <ul class="text-teal-700 text-xs space-y-1">
-              <li>✓ Cabeçalho com nome da fonoaudióloga e CRFa</li>
+              <li>✓ Cabeçalho teal com nome da clínica e logo (se configurado em ⚙️ Config)</li>
+              <li>✓ Nome da fonoaudióloga, CRFa e cidade</li>
               <li>✓ Dados do paciente (nome, data de nascimento, idade)</li>
               <li>✓ Tipo de relatório e data de emissão</li>
               <li>✓ Observações e achados clínicos preenchidos</li>
+              <li>✓ Histórico de avaliações salvas do paciente (automático)</li>
               <li>✓ Rodapé com assinatura profissional</li>
             </ul>
           </div>
@@ -718,8 +736,15 @@
           <span class="font-semibold text-sm text-gray-800">❓ O PDF sai com o nome do meu consultório?</span>
           <span class="help-icon text-teal-600 font-bold text-xl">+</span>
         </button>
-        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600">
-          <p>O relatório inclui o nome e CRFa que você preencher no campo <em>"Nome da Fonoaudióloga"</em>. Escreva como preferir, incluindo o nome do consultório se quiser — ex: <em>"Dra. Maria Silva — CRFa 12345 — Clínica Falar Bem"</em>.</p>
+        <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-2">
+          <p>Sim! Acesse a aba <strong>⚙️ Config</strong> e preencha a seção <em>"Minha Clínica"</em>:</p>
+          <ul class="text-xs space-y-1 pl-2">
+            <li>• <strong>Logo</strong> — aparece no canto superior do PDF</li>
+            <li>• <strong>Nome da clínica</strong> — exibido como título no cabeçalho</li>
+            <li>• <strong>Nome + CRFa</strong> — assinatura profissional</li>
+            <li>• <strong>Cidade</strong> — exibida no cabeçalho</li>
+          </ul>
+          <p class="text-xs text-gray-400">Salve uma vez e todos os PDFs gerados sairão automaticamente com a identidade da sua clínica.</p>
         </div>
       </div>
 
@@ -746,7 +771,7 @@
 
     <!-- Versão -->
     <div class="text-center py-4 text-xs text-gray-300">
-      App Kit Fonoaudióloga Pro &nbsp;·&nbsp; v1.0
+      App Kit Fonoaudióloga Pro &nbsp;·&nbsp; v2.0
     </div>
 
   </div>
