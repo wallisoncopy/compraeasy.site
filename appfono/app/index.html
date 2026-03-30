@@ -78,7 +78,7 @@
         <div class="text-xs text-gray-500 mt-1">Pacientes</div>
       </div>
       <div class="bg-white rounded-2xl p-4 text-center border border-gray-100 shadow-sm">
-        <div class="text-3xl font-black text-teal-600" id="stat-testes">11</div>
+        <div class="text-3xl font-black text-teal-600" id="stat-testes">12</div>
         <div class="text-xs text-gray-500 mt-1">Testes disponíveis</div>
       </div>
     </div>
@@ -195,6 +195,17 @@
           <div class="flex-1">
             <p class="font-semibold text-gray-800">Triagem Processamento Auditivo</p>
             <p class="text-xs text-gray-500">Escolares · risco de TPAC</p>
+          </div>
+          <span class="text-gray-300 text-xl">›</span>
+        </div>
+        <div onclick="iniciarTeste('abfw')" class="test-card bg-white rounded-2xl p-4 flex items-center gap-4 border border-gray-100 shadow-sm cursor-pointer hover:border-teal-300">
+          <div class="bg-teal-50 rounded-xl p-3 text-2xl">📖</div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              <p class="font-semibold text-gray-800">ABFW — Linguagem Infantil</p>
+              <span class="text-xs bg-teal-100 text-teal-700 font-bold px-2 py-0.5 rounded-full">4 subtestes</span>
+            </div>
+            <p class="text-xs text-gray-500">2–7 anos · Fonologia, Vocabulário, Fluência, Pragmática</p>
           </div>
           <span class="text-gray-300 text-xl">›</span>
         </div>
@@ -475,7 +486,7 @@
 
       <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-3">
         <button onclick="toggleHelp(this)" class="w-full flex items-center justify-between px-4 py-4 text-left">
-          <span class="font-semibold text-sm text-gray-800">📋 Os 11 testes disponíveis</span>
+          <span class="font-semibold text-sm text-gray-800">📋 Os 12 testes disponíveis</span>
           <span class="help-icon text-teal-600 font-bold text-xl">+</span>
         </button>
         <div class="help-body hidden px-4 pb-4 text-sm text-gray-600 space-y-3">
@@ -522,6 +533,10 @@
           <div class="border-l-4 border-blue-400 pl-3">
             <p class="font-semibold text-gray-800">👂 Processamento Auditivo</p>
             <p class="text-xs text-gray-500">Rastreio de Transtorno do Processamento Auditivo Central. Indicado para crianças com dificuldade de atenção auditiva e queixa de "não entende o que ouve".</p>
+          </div>
+          <div class="border-l-4 border-teal-600 pl-3">
+            <p class="font-semibold text-gray-800">📖 ABFW — Linguagem Infantil</p>
+            <p class="text-xs text-gray-500">Protocolo ABFW (Befi-Lopes et al., Pró-Fono). Avalia Fonologia, Vocabulário, Fluência e Pragmática em crianças de 2 a 7 anos. Aplicado com os materiais originais (pranchas); o app registra as respostas e gera o relatório com escore por subteste.</p>
           </div>
         </div>
       </div>
@@ -1137,11 +1152,61 @@ const testes = {
       if (total <= 9)  return { classe: 'score-risco', texto: 'Risco moderado para TPAC', rec: 'Encaminhar para avaliação audiológica completa (incluindo testes comportamentais de PAC).' };
       return { classe: 'score-altera', texto: 'Alto risco para TPAC', rec: 'Avaliação audiológica e fonoaudiológica urgente. Encaminhar para audiologista especializado em PAC.' };
     }
+  },
+  abfw: {
+    titulo: 'ABFW — Linguagem Infantil',
+    instrucao: 'Protocolo ABFW (Befi-Lopes et al., Pró-Fono). Use os materiais originais para estimulação. Registre aqui as respostas observadas. 4 subtestes: Fonologia (A), Vocabulário (B), Fluência (C) e Pragmática (D).',
+    itens: [
+      // ── SUBTEST A — FONOLOGIA (itens 0-7) ──
+      // Score: 0 = sem processo, 1 = processo esporádico, 2 = processo sistemático
+      { secao: 'A — Fonologia', q: 'A1 · Omissão de sílaba átona (ex: "tomate" → "mate")', opts: ['0 — Não ocorre', '1 — Esporádico', '2 — Sistemático'] },
+      { secao: 'A — Fonologia', q: 'A2 · Omissão de segmento em encontro consonantal (ex: "prato" → "pato")', opts: ['0 — Não ocorre', '1 — Esporádico', '2 — Sistemático'] },
+      { secao: 'A — Fonologia', q: 'A3 · Substituição de plosiva por fricativa (ex: "bola" → "vola")', opts: ['0 — Não ocorre', '1 — Esporádico', '2 — Sistemático'] },
+      { secao: 'A — Fonologia', q: 'A4 · Anteriorização de velar (ex: "gato" → "dato")', opts: ['0 — Não ocorre', '1 — Esporádico', '2 — Sistemático'] },
+      { secao: 'A — Fonologia', q: 'A5 · Posteriorização de alveolar (ex: "dado" → "gado")', opts: ['0 — Não ocorre', '1 — Esporádico', '2 — Sistemático'] },
+      { secao: 'A — Fonologia', q: 'A6 · Ensurdecimento de sonora (ex: "dedo" → "teto")', opts: ['0 — Não ocorre', '1 — Esporádico', '2 — Sistemático'] },
+      { secao: 'A — Fonologia', q: 'A7 · Sonorização de surda (ex: "pato" → "bato")', opts: ['0 — Não ocorre', '1 — Esporádico', '2 — Sistemático'] },
+      { secao: 'A — Fonologia', q: 'A8 · Metátese / transposição de sílabas (ex: "borboleta" → "borboelta")', opts: ['0 — Não ocorre', '1 — Esporádico', '2 — Sistemático'] },
+      // ── SUBTEST B — VOCABULÁRIO (itens 8-15) ──
+      // Score: 0 = resposta correta em todas as pranchas, 1 = 1 erro, 2 = 2 erros, 3 = 3+ erros
+      { secao: 'B — Vocabulário', q: 'B1 · Vestuário — nomeação das pranchas de roupas e acessórios', opts: ['0 — Sem erros', '1 — 1 erro', '2 — 2 erros', '3 — 3+ erros'] },
+      { secao: 'B — Vocabulário', q: 'B2 · Animais — nomeação das pranchas de animais', opts: ['0 — Sem erros', '1 — 1 erro', '2 — 2 erros', '3 — 3+ erros'] },
+      { secao: 'B — Vocabulário', q: 'B3 · Alimentos — nomeação das pranchas de alimentos', opts: ['0 — Sem erros', '1 — 1 erro', '2 — 2 erros', '3 — 3+ erros'] },
+      { secao: 'B — Vocabulário', q: 'B4 · Meios de transporte — nomeação das pranchas', opts: ['0 — Sem erros', '1 — 1 erro', '2 — 2 erros', '3 — 3+ erros'] },
+      { secao: 'B — Vocabulário', q: 'B5 · Móveis e utensílios — nomeação das pranchas', opts: ['0 — Sem erros', '1 — 1 erro', '2 — 2 erros', '3 — 3+ erros'] },
+      { secao: 'B — Vocabulário', q: 'B6 · Brinquedos e instrumentos musicais — nomeação', opts: ['0 — Sem erros', '1 — 1 erro', '2 — 2 erros', '3 — 3+ erros'] },
+      { secao: 'B — Vocabulário', q: 'B7 · Profissões — nomeação das pranchas de profissões', opts: ['0 — Sem erros', '1 — 1 erro', '2 — 2 erros', '3 — 3+ erros'] },
+      { secao: 'B — Vocabulário', q: 'B8 · Formas e cores — nomeação / identificação', opts: ['0 — Sem erros', '1 — 1 erro', '2 — 2 erros', '3 — 3+ erros'] },
+      // ── SUBTEST C — FLUÊNCIA (itens 16-21) ──
+      // Score: 0 = ausente, 1 = leve, 2 = moderado, 3 = severo
+      { secao: 'C — Fluência', q: 'C1 · Repetição de sílabas (ex: "eu-eu-eu quero")', opts: ['0 — Ausente', '1 — Leve (1-3%)', '2 — Moderado (4-9%)', '3 — Severo (≥10%)'] },
+      { secao: 'C — Fluência', q: 'C2 · Repetição de palavras (ex: "quero quero quero ir")', opts: ['0 — Ausente', '1 — Leve', '2 — Moderado', '3 — Severo'] },
+      { secao: 'C — Fluência', q: 'C3 · Repetição de segmentos (ex: "eu-eu quero ir")', opts: ['0 — Ausente', '1 — Leve', '2 — Moderado', '3 — Severo'] },
+      { secao: 'C — Fluência', q: 'C4 · Prolongamentos (ex: "euuu quero ir")', opts: ['0 — Ausente', '1 — Leve', '2 — Moderado', '3 — Severo'] },
+      { secao: 'C — Fluência', q: 'C5 · Bloqueios / travamentos na fala', opts: ['0 — Ausente', '1 — Leve', '2 — Moderado', '3 — Severo'] },
+      { secao: 'C — Fluência', q: 'C6 · Intrusões / comportamentos secundários (tensão, esquiva, eye contact)', opts: ['0 — Ausente', '1 — Leve', '2 — Moderado', '3 — Severo'] },
+      // ── SUBTEST D — PRAGMÁTICA (itens 22-28) ──
+      // Score: 0 = adequado, 1 = dificuldade leve, 2 = dificuldade moderada, 3 = ausente/comprometido
+      { secao: 'D — Pragmática', q: 'D1 · Função de instrumento (uso de objetos para obter fins)', opts: ['0 — Adequado', '1 — Leve', '2 — Moderado', '3 — Ausente'] },
+      { secao: 'D — Pragmática', q: 'D2 · Função regulatória (controla comportamento do outro)', opts: ['0 — Adequado', '1 — Leve', '2 — Moderado', '3 — Ausente'] },
+      { secao: 'D — Pragmática', q: 'D3 · Função interacional (mantém interação e contato)', opts: ['0 — Adequado', '1 — Leve', '2 — Moderado', '3 — Ausente'] },
+      { secao: 'D — Pragmática', q: 'D4 · Função pessoal (expressa sentimentos e identidade)', opts: ['0 — Adequado', '1 — Leve', '2 — Moderado', '3 — Ausente'] },
+      { secao: 'D — Pragmática', q: 'D5 · Função heurística (explora e questiona o ambiente)', opts: ['0 — Adequado', '1 — Leve', '2 — Moderado', '3 — Ausente'] },
+      { secao: 'D — Pragmática', q: 'D6 · Função imaginativa (brincar simbólico, faz-de-conta)', opts: ['0 — Adequado', '1 — Leve', '2 — Moderado', '3 — Ausente'] },
+      { secao: 'D — Pragmática', q: 'D7 · Função informativa (transmite informações novas ao interlocutor)', opts: ['0 — Adequado', '1 — Leve', '2 — Moderado', '3 — Ausente'] },
+    ],
+    scores: { 0: 0, 1: 1, 2: 2, 3: 3 },
+    interpretar(total) {
+      // Fallback genérico — ABFW usa mostrarResultadoABFW() diretamente
+      if (total <= 18) return { classe: 'score-normal', texto: 'Desenvolvimento normal', rec: 'Perfil de linguagem dentro dos padrões esperados para a faixa etária.' };
+      if (total <= 45) return { classe: 'score-risco', texto: 'Atenção — algumas áreas', rec: 'Algumas áreas da linguagem merecem acompanhamento. Avaliar indicação terapêutica.' };
+      return { classe: 'score-altera', texto: 'Atraso significativo', rec: 'Atraso de linguagem identificado em múltiplas áreas. Indicado encaminhamento para terapia fonoaudiológica.' };
+    }
   }
 };
 
 function iniciarTeste(id) {
-  testeAtual = { id, dados: testes[id], respostas: [], step: 0 };
+  testeAtual = { id, dados: testes[id], respostas: [], step: 0, secaoAtual: null };
   document.getElementById('lista-testes').classList.add('hidden');
   document.getElementById('area-teste').classList.remove('hidden');
   renderStep();
@@ -1154,18 +1219,31 @@ function voltarListaTestes() {
 }
 
 function renderStep() {
-  const { dados, step, respostas } = testeAtual;
+  const { dados, step } = testeAtual;
   const total = dados.itens.length;
   const progresso = Math.round((step / total) * 100);
 
   if (step >= total) { mostrarResultadoTeste(); return; }
 
   const item = dados.itens[step];
+
+  // Detectar troca de seção (ABFW e outros testes com propriedade secao)
+  if (item.secao && item.secao !== testeAtual.secaoAtual) {
+    const isFirst = testeAtual.secaoAtual === null;
+    testeAtual.secaoAtual = item.secao;
+    if (!isFirst) {
+      renderSectionTransition(item.secao);
+      return;
+    }
+    // Na primeira seção, só registra e continua
+  }
+
+  const tituloHeader = item.secao ? item.secao : dados.titulo;
   const container = document.getElementById('teste-container');
   container.innerHTML = `
     <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
       <div class="flex justify-between text-xs text-gray-400 mb-2">
-        <span>${dados.titulo}</span>
+        <span class="font-semibold text-teal-600">${tituloHeader}</span>
         <span>${step + 1}/${total}</span>
       </div>
       <div class="progress-bar mb-4"><div class="progress-fill" style="width:${progresso}%"></div></div>
@@ -1190,7 +1268,179 @@ function responderItem(val) {
   setTimeout(() => renderStep(), 200);
 }
 
+function renderSectionTransition(proximaSecao) {
+  const secoes = ['A — Fonologia', 'B — Vocabulário', 'C — Fluência', 'D — Pragmática'];
+  const idx = secoes.indexOf(proximaSecao);
+  const secaoAnterior = idx > 0 ? secoes[idx - 1] : '';
+  const emojis = ['🔤','📚','⏱️','💬'];
+  const container = document.getElementById('teste-container');
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm text-center">
+      <div class="text-5xl mb-3">${emojis[Math.max(0, idx - 1)]}✅</div>
+      <p class="text-sm text-gray-500 mb-1">Subtest concluído</p>
+      <h3 class="font-bold text-gray-700 text-lg mb-5">${secaoAnterior}</h3>
+      <div class="bg-teal-50 rounded-2xl p-4 mb-5">
+        <div class="text-3xl mb-2">${emojis[idx]}</div>
+        <p class="text-xs text-teal-600 font-semibold uppercase tracking-wide mb-1">Próximo subtest</p>
+        <p class="font-bold text-teal-800 text-lg">${proximaSecao}</p>
+      </div>
+      <button onclick="renderStep()" class="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 rounded-xl text-sm transition-all">
+        Iniciar ${proximaSecao} →
+      </button>
+    </div>
+  `;
+}
+
+function abfwComputar(respostas) {
+  // A — Fonologia: itens 0-7, score 0-2 cada → max 16
+  // B — Vocabulário: itens 8-15, score 0-3 cada → max 24
+  // C — Fluência: itens 16-21, score 0-3 cada → max 18
+  // D — Pragmática: itens 22-28, score 0-3 cada → max 21
+  const sA = respostas.slice(0, 8).reduce((s, r) => s + Math.min(r, 2), 0);
+  const sB = respostas.slice(8, 16).reduce((s, r) => s + r, 0);
+  const sC = respostas.slice(16, 22).reduce((s, r) => s + r, 0);
+  const sD = respostas.slice(22, 29).reduce((s, r) => s + r, 0);
+  const subtestes = [
+    { id: 'A', nome: 'Fonologia', score: sA, max: 16,
+      classe: sA <= 3 ? 'score-normal' : sA <= 8 ? 'score-risco' : 'score-altera',
+      texto: sA <= 3 ? 'Normal' : sA <= 8 ? 'Processos presentes' : 'Múltiplos processos',
+      rec: sA <= 3 ? 'Sistema fonológico adequado para a faixa etária.' : sA <= 8 ? 'Presença de processos fonológicos. Avaliar padrão e idade esperada de eliminação.' : 'Múltiplos processos fonológicos ativos. Indicado encaminhamento terapêutico.' },
+    { id: 'B', nome: 'Vocabulário', score: sB, max: 24,
+      classe: sB <= 6 ? 'score-normal' : sB <= 14 ? 'score-risco' : 'score-altera',
+      texto: sB <= 6 ? 'Adequado' : sB <= 14 ? 'Reduzido' : 'Muito reduzido',
+      rec: sB <= 6 ? 'Vocabulário expressivo e receptivo adequado para a faixa etária.' : sB <= 14 ? 'Vocabulário reduzido em algumas categorias semânticas. Monitorar desenvolvimento.' : 'Vocabulário muito reduzido. Indicada intervenção focada em semântica.' },
+    { id: 'C', nome: 'Fluência', score: sC, max: 18,
+      classe: sC <= 4 ? 'score-normal' : sC <= 11 ? 'score-risco' : 'score-altera',
+      texto: sC <= 4 ? 'Normal' : sC <= 11 ? 'Gagueira leve-moderada' : 'Gagueira moderada-severa',
+      rec: sC <= 4 ? 'Fluência verbal dentro dos padrões esperados.' : sC <= 11 ? 'Disfluências presentes. Avaliar impacto comunicativo e indicar acompanhamento.' : 'Gagueira moderada a severa. Encaminhar para terapia de fluência.' },
+    { id: 'D', nome: 'Pragmática', score: sD, max: 21,
+      classe: sD <= 5 ? 'score-normal' : sD <= 12 ? 'score-risco' : 'score-altera',
+      texto: sD <= 5 ? 'Adequada' : sD <= 12 ? 'Dificuldades leves' : 'Comprometida',
+      rec: sD <= 5 ? 'Habilidades pragmáticas e comunicativas preservadas.' : sD <= 12 ? 'Dificuldades em algumas funções comunicativas. Observar contextos de uso.' : 'Comprometimento pragmático significativo. Indicada intervenção em linguagem funcional.' }
+  ];
+  return { sA, sB, sC, sD, subtestes, total: sA + sB + sC + sD, maxTotal: 79 };
+}
+
+function mostrarResultadoABFW() {
+  const { respostas } = testeAtual;
+  const { subtestes, total, maxTotal } = abfwComputar(respostas);
+  const percent = Math.round((total / maxTotal) * 100);
+  const globalClasse = total <= 18 ? 'score-normal' : total <= 45 ? 'score-risco' : 'score-altera';
+  const globalTexto = total <= 18 ? 'Desenvolvimento normal' : total <= 45 ? 'Atenção — algumas áreas' : 'Atraso significativo';
+
+  const container = document.getElementById('teste-container');
+  container.innerHTML = `
+    <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+      <div class="text-center mb-5">
+        <div class="text-5xl mb-2">✅</div>
+        <h3 class="font-bold text-gray-800">ABFW — Linguagem Infantil</h3>
+        <p class="text-gray-500 text-sm">${new Date().toLocaleDateString('pt-BR')}</p>
+      </div>
+      <div class="bg-gray-50 rounded-2xl p-4 mb-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm text-gray-600">Score total</span>
+          <span class="font-black text-lg text-gray-800">${total} / ${maxTotal}</span>
+        </div>
+        <div class="progress-bar mb-2"><div class="progress-fill" style="width:${percent}%"></div></div>
+        <div class="text-center"><span class="score-badge ${globalClasse}">${globalTexto}</span></div>
+      </div>
+      <div class="space-y-3 mb-4">
+        ${subtestes.map(s => `
+          <div class="bg-gray-50 rounded-xl p-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-sm font-semibold text-gray-700">Subtest ${s.id} — ${s.nome}</span>
+              <span class="font-bold text-gray-800 text-sm">${s.score}/${s.max}</span>
+            </div>
+            <div class="progress-bar mb-2" style="height:6px"><div class="progress-fill" style="width:${Math.round((s.score/s.max)*100)}%"></div></div>
+            <span class="score-badge ${s.classe}" style="font-size:0.7rem;padding:2px 10px">${s.texto}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="bg-teal-50 rounded-xl p-4 text-sm text-teal-800 mb-4">
+        <strong class="block mb-2">Recomendações por área:</strong>
+        ${subtestes.map(s => `<p class="mb-1"><strong>${s.id}:</strong> ${s.rec}</p>`).join('')}
+      </div>
+      <button onclick="gerarPDFTesteABFW()"
+        class="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2 mb-3">
+        📄 Gerar Relatório PDF
+      </button>
+      ${pacientes.length > 0 ? `
+      <div class="bg-teal-50 rounded-xl p-3 border border-teal-100">
+        <p class="text-xs font-semibold text-teal-700 mb-2">💾 Salvar no prontuário do paciente</p>
+        <select id="sel-salvar-pac" class="w-full border border-teal-200 rounded-xl px-3 py-2 text-sm focus:border-teal-500 outline-none bg-white mb-2">
+          <option value="">Selecionar paciente...</option>
+          ${pacientes.map(p => `<option value="${p.id}">${p.nome}</option>`).join('')}
+        </select>
+        <button id="btn-salvar-pac" onclick="salvarResultadoPaciente()" class="w-full bg-teal-100 hover:bg-teal-200 text-teal-800 font-bold py-2 rounded-xl text-sm transition-all">
+          💾 Salvar no prontuário
+        </button>
+      </div>` : ''}
+    </div>
+  `;
+}
+
+function gerarPDFTesteABFW() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+  const { respostas } = testeAtual;
+  const { subtestes, total, maxTotal } = abfwComputar(respostas);
+  const globalTexto = total <= 18 ? 'Desenvolvimento normal' : total <= 45 ? 'Atenção — algumas áreas' : 'Atraso significativo';
+
+  const cfg = JSON.parse(localStorage.getItem('fono_config') || '{}');
+  const clinica = cfg.clinica || 'Clínica Fonoaudiológica';
+  const fono = cfg.fono || '';
+  const crfa = cfg.crfa || '';
+  const data = new Date().toLocaleDateString('pt-BR');
+
+  // Cabeçalho
+  doc.setFillColor(15, 118, 110);
+  doc.rect(0, 0, 210, 28, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16); doc.setFont('helvetica', 'bold');
+  doc.text('ABFW — Linguagem Infantil', 105, 11, { align: 'center' });
+  doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+  doc.text(clinica, 105, 18, { align: 'center' });
+  doc.text(`${fono}${crfa ? ' · CRFa: ' + crfa : ''}`, 105, 24, { align: 'center' });
+
+  // Data e Score global
+  doc.setTextColor(60, 60, 60);
+  doc.setFontSize(10);
+  doc.text(`Data: ${data}`, 14, 36);
+  doc.setFontSize(11); doc.setFont('helvetica', 'bold');
+  doc.text(`Score Total: ${total} / ${maxTotal} — ${globalTexto}`, 14, 44);
+  doc.setDrawColor(15, 118, 110); doc.setLineWidth(0.5);
+  doc.line(14, 47, 196, 47);
+
+  // Subtestes
+  let y = 54;
+  const cores = { 'score-normal': [22, 163, 74], 'score-risco': [217, 119, 6], 'score-altera': [220, 38, 38] };
+  subtestes.forEach(s => {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(15, 118, 110);
+    doc.text(`Subtest ${s.id} — ${s.nome}`, 14, y);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(60, 60, 60);
+    doc.text(`Score: ${s.score} / ${s.max}`, 14, y + 6);
+    const cor = cores[s.classe] || [60, 60, 60];
+    doc.setTextColor(cor[0], cor[1], cor[2]);
+    doc.setFont('helvetica', 'bold');
+    doc.text(s.texto, 60, y + 6);
+    doc.setTextColor(60, 60, 60); doc.setFont('helvetica', 'normal');
+    const linhas = doc.splitTextToSize(s.rec, 180);
+    doc.text(linhas, 14, y + 12);
+    y += 12 + linhas.length * 5 + 4;
+    doc.setDrawColor(220, 220, 220); doc.setLineWidth(0.3);
+    doc.line(14, y, 196, y);
+    y += 5;
+  });
+
+  // Rodapé
+  doc.setFontSize(8); doc.setTextColor(150, 150, 150);
+  doc.text('Documento gerado pelo App Kit Fonoaudióloga Pro · Uso exclusivo do profissional', 105, 287, { align: 'center' });
+
+  doc.save(`ABFW-${data.replace(/\//g, '-')}.pdf`);
+}
+
 function mostrarResultadoTeste() {
+  if (testeAtual.id === 'abfw') { mostrarResultadoABFW(); return; }
   const { dados, respostas } = testeAtual;
   let total = 0;
   respostas.forEach(r => { total += dados.scores[r] || 0; });
@@ -1242,22 +1492,42 @@ function salvarResultadoPaciente() {
   if (!sel || !sel.value) { showToast('⚠️ Selecione um paciente'); return; }
   const pacId = sel.value;
   const { dados, respostas } = testeAtual;
-  let total = 0;
-  respostas.forEach(r => { total += dados.scores[r] || 0; });
-  const maxScore = Object.values(dados.scores).reduce((a,b) => a > b ? a : b, 0) * dados.itens.length;
-  const result = dados.interpretar(total);
   const key = `fono_resultados_${pacId}`;
   const hist = JSON.parse(localStorage.getItem(key) || '[]');
-  hist.push({
-    testeId: testeAtual.id,
-    titulo: dados.titulo,
-    data: new Date().toLocaleDateString('pt-BR'),
-    score: total,
-    maxScore,
-    texto: result.texto,
-    rec: result.rec,
-    classe: result.classe
-  });
+
+  let entrada;
+  if (testeAtual.id === 'abfw') {
+    const { subtestes, total, maxTotal } = abfwComputar(respostas);
+    const globalTexto = total <= 18 ? 'Desenvolvimento normal' : total <= 45 ? 'Atenção — algumas áreas' : 'Atraso significativo';
+    const globalClasse = total <= 18 ? 'score-normal' : total <= 45 ? 'score-risco' : 'score-altera';
+    entrada = {
+      testeId: 'abfw',
+      titulo: 'ABFW — Linguagem Infantil',
+      data: new Date().toLocaleDateString('pt-BR'),
+      score: total,
+      maxScore: maxTotal,
+      texto: globalTexto,
+      rec: subtestes.map(s => `${s.id}: ${s.rec}`).join(' '),
+      classe: globalClasse,
+      subtestes: subtestes.map(s => ({ id: s.id, nome: s.nome, score: s.score, max: s.max, texto: s.texto }))
+    };
+  } else {
+    let total = 0;
+    respostas.forEach(r => { total += dados.scores[r] || 0; });
+    const maxScore = Object.values(dados.scores).reduce((a,b) => a > b ? a : b, 0) * dados.itens.length;
+    const result = dados.interpretar(total);
+    entrada = {
+      testeId: testeAtual.id,
+      titulo: dados.titulo,
+      data: new Date().toLocaleDateString('pt-BR'),
+      score: total,
+      maxScore,
+      texto: result.texto,
+      rec: result.rec,
+      classe: result.classe
+    };
+  }
+  hist.push(entrada);
   localStorage.setItem(key, JSON.stringify(hist));
   showToast('✅ Resultado salvo no prontuário!');
   const btn = document.getElementById('btn-salvar-pac');
