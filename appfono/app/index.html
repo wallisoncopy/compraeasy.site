@@ -784,6 +784,20 @@
       </div>
     </div>
 
+    <!-- Backup -->
+    <div class="bg-white rounded-2xl p-5 mb-4 border-2 border-teal-400">
+      <div class="font-bold text-gray-800 mb-1">📦 Backup dos Dados</div>
+      <p class="text-xs text-gray-500 mb-4 leading-relaxed">Use o backup para <strong>transferir seus dados para outro dispositivo</strong> ou navegador. Baixe o arquivo e importe no novo aparelho.</p>
+      <div class="flex gap-3 flex-wrap">
+        <button onclick="exportarBackupFono()" class="flex-1 py-3 rounded-xl font-bold text-sm text-white" style="background:#0e7490">⬇️ Baixar Backup</button>
+        <label class="flex-1 py-3 rounded-xl font-bold text-sm text-center cursor-pointer" style="border:2px solid #0e7490;color:#0e7490">
+          ⬆️ Restaurar Backup
+          <input type="file" accept=".json" class="hidden" onchange="importarBackupFono(this)">
+        </label>
+      </div>
+      <p class="text-xs text-gray-400 mt-3">⚠️ Ao restaurar, os dados atuais serão substituídos pelo backup.</p>
+    </div>
+
     <!-- Suporte -->
     <div class="rounded-2xl p-5 mb-4 text-center text-white" style="background:linear-gradient(135deg,#0e7490,#0284c7)">
       <div class="text-2xl mb-2">💬</div>
@@ -2048,6 +2062,42 @@ function gerarRelatorioPDF() {
 
   doc.save(`${tiposLabels[tipo]?.replace(/\s/g,'-') || 'Relatorio'}-${new Date().toISOString().slice(0,10)}.pdf`);
   showToast('📄 Relatório gerado!');
+}
+
+// ============================
+// BACKUP / RESTORE
+// ============================
+function exportarBackupFono(){
+  const backup = {};
+  for(let i=0;i<localStorage.length;i++){
+    const k=localStorage.key(i);
+    if(k.startsWith('fono_')) backup[k]=localStorage.getItem(k);
+  }
+  const blob=new Blob([JSON.stringify(backup)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`backup-app-fono-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+function importarBackupFono(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const backup=JSON.parse(e.target.result);
+      const keys=Object.keys(backup);
+      if(!keys.some(k=>k.startsWith('fono_'))) throw new Error();
+      keys.filter(k=>k.startsWith('fono_')).forEach(k=>localStorage.removeItem(k));
+      keys.forEach(k=>{ if(k.startsWith('fono_')) localStorage.setItem(k,backup[k]); });
+      alert('Backup restaurado com sucesso! O app sera recarregado.');
+      location.reload();
+    } catch{
+      alert('Arquivo invalido. Use apenas arquivos de backup gerados por este app.');
+    }
+  };
+  reader.readAsText(file);
 }
 
 // ============================
