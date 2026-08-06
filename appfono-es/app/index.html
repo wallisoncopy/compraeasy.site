@@ -2065,7 +2065,7 @@ function gerarPDFFicha() {
       doc.setFillColor(240, 253, 250);
       doc.rect(margin, y, W - margin * 2, 7, 'F');
       doc.setFontSize(7.5); doc.setFont('helvetica', 'bold'); doc.setTextColor(13, 148, 136);
-      doc.text(c.label.replace(/[^\w\s\-\/]/g, '').trim().toUpperCase(), margin + 3, y + 5);
+      doc.text(c.label.replace(/[^\p{L}\p{N}\s\-\/]/gu, '').trim().toUpperCase(), margin + 3, y + 5);
       y += 11;
       return;
     }
