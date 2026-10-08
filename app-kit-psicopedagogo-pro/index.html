@@ -90,16 +90,24 @@
       transform: translateY(-2px);
     }
 
+    @keyframes pulse-cta {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(249,115,22,0.5); }
+      50% { box-shadow: 0 0 0 14px rgba(249,115,22,0); }
+    }
+    .pulse-btn { animation: pulse-cta 2s infinite; }
+
     .hero-sub {
       margin-top: 16px;
       font-size: 13px;
       color: #A8A29E;
     }
 
-    /* ───── NUMEROS ───── */
+    /* ───── NUMEROS (branco futurista) ───── */
     .numeros {
-      background: var(--laranja);
-      padding: 32px 20px;
+      background: #ffffff;
+      padding: 36px 20px;
+      border-top: 1px solid #F5F5F4;
+      border-bottom: 1px solid #F5F5F4;
     }
 
     .numeros-grid {
@@ -113,7 +121,6 @@
 
     .numero-item {
       text-align: center;
-      color: white;
     }
 
     .numero-item strong {
@@ -121,13 +128,18 @@
       font-size: 36px;
       font-weight: 900;
       line-height: 1;
+      background: linear-gradient(135deg, var(--laranja), var(--laranja-escuro));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .numero-item span {
       font-size: 13px;
-      opacity: 0.9;
-      margin-top: 4px;
+      color: var(--cinza);
+      margin-top: 6px;
       display: block;
+      font-weight: 600;
     }
 
     /* ───── DOR ───── */
@@ -167,6 +179,43 @@
     }
 
     .dor-item .icone { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .dor-item .texto { display: flex; flex-direction: column; gap: 4px; }
+    .dor-item .titulo { font-weight: 700; color: var(--texto); }
+    .dor-item .sub { font-size: 13px; color: var(--cinza); line-height: 1.5; font-weight: 400; }
+
+    /* ───── CTA MEIO DE PAGINA (branco futurista) ───── */
+    .cta-meio {
+      padding: 56px 20px;
+      background: #ffffff;
+      text-align: center;
+    }
+    .cta-meio-card {
+      max-width: 560px;
+      margin: 0 auto;
+      background: linear-gradient(145deg, #ffffff, #FFF7ED);
+      border: 1px solid #FFE4CC;
+      border-radius: 24px;
+      padding: 36px 32px;
+      box-shadow: 0 10px 40px rgba(249,115,22,0.08), 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .cta-meio-card p {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--texto);
+      margin-bottom: 20px;
+      letter-spacing: -0.2px;
+    }
+    .btn-cta-meio {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--laranja), var(--laranja-escuro));
+      color: white;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 16px 36px;
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(249,115,22,0.35);
+    }
 
     /* ───── SOLUCAO ───── */
     .solucao {
@@ -202,13 +251,34 @@
 
     .recurso-card {
       background: white;
-      border-radius: 14px;
+      border-radius: 18px;
       padding: 24px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      border-top: 3px solid var(--laranja);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      border: 1px solid #F3E8DD;
+      position: relative;
+      overflow: hidden;
     }
 
-    .recurso-card .emoji { font-size: 28px; margin-bottom: 10px; }
+    .recurso-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 16px; right: 16px;
+      height: 3px;
+      border-radius: 0 0 4px 4px;
+      background: linear-gradient(90deg, var(--laranja), #FDBA74);
+    }
+
+    .recurso-card .emoji {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #FFF7ED, #FFE4CC);
+    }
     .recurso-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
     .recurso-card p { font-size: 14px; color: var(--cinza); line-height: 1.5; }
 
@@ -732,12 +802,12 @@
     <h1>Pare de Criar Materiais do Zero.<br><span>500+ Fichas e Protocolos Prontos</span><br>Para Usar Agora.</h1>
     <p>O app completo para psicopedagogos que querem atender com mais qualidade e parar de perder horas toda semana montando material.</p>
 
-    <!-- VIDEO DENTRO DO HERO -->
-    <div class="video-wrap" style="margin-bottom:36px;">
-      <iframe src="https://player.vimeo.com/video/1153737685?autoplay=0&muted=0&loop=0" allowfullscreen allow="autoplay; fullscreen"></iframe>
+    <!-- MOCKUP DENTRO DO HERO -->
+    <div style="margin-bottom:36px;">
+      <img src="https://i.ibb.co/fY2y11hj/Chat-GPT-Image-17-de-mar-de-2026-19-12-17.png" alt="App Kit Psicopedagogo Pro" style="width:100%;max-width:340px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.45);" loading="eager" />
     </div>
 
-    <a href="#preco" class="btn-principal">Quero Acesso Agora &rarr;</a>
+    <a href="#preco" class="btn-principal pulse-btn">Quero Acesso Agora &rarr;</a>
     <div class="hero-sub">Acesso vitalicio &bull; Atualizacoes semanais &bull; Sem mensalidade</div>
   </section>
 
@@ -757,19 +827,31 @@
     <div class="dor-lista">
       <div class="dor-item">
         <span class="icone">😩</span>
-        <span>Passa horas toda semana criando fichas e atividades do zero antes das sessoes</span>
+        <div class="texto">
+          <span class="titulo">Passa horas toda semana criando fichas do zero</span>
+          <span class="sub">Antes de cada sessao, o mesmo ciclo: buscar modelo, adaptar, formatar, imprimir.</span>
+        </div>
       </div>
       <div class="dor-item">
         <span class="icone">📂</span>
-        <span>Tem arquivos espalhados em dezenas de pastas e nunca encontra o que precisa rapido</span>
+        <div class="texto">
+          <span class="titulo">Arquivos espalhados em dezenas de pastas</span>
+          <span class="sub">Na hora do atendimento, perde tempo procurando o protocolo certo.</span>
+        </div>
       </div>
       <div class="dor-item">
         <span class="icone">😰</span>
-        <span>Sente inseguranca na hora de escolher o protocolo certo para cada caso</span>
+        <div class="texto">
+          <span class="titulo">Inseguranca ao escolher o protocolo certo para cada caso</span>
+          <span class="sub">Sem um guia claro, cada avaliacao vira uma pesquisa demorada.</span>
+        </div>
       </div>
       <div class="dor-item">
         <span class="icone">🔄</span>
-        <span>Usa sempre os mesmos materiais porque nao tem tempo de criar novidades para os pacientes</span>
+        <div class="texto">
+          <span class="titulo">Usa sempre os mesmos materiais com os pacientes</span>
+          <span class="sub">Falta tempo pra criar novidade, e a sessao acaba ficando repetitiva.</span>
+        </div>
       </div>
     </div>
   </section>
@@ -811,6 +893,14 @@
       </div>
     </div>
   </section>
+
+  <!-- CTA MEIO 1 -->
+  <div class="cta-meio">
+    <div class="cta-meio-card">
+      <p>Mais de 500 psicopedagogas ja usam esse arsenal no celular.</p>
+      <a href="#preco" class="btn-cta-meio pulse-btn">Quero Meu Acesso Agora &rarr;</a>
+    </div>
+  </div>
 
   <!-- MOCKUPS CAROUSEL -->
   <section class="mockups">
@@ -893,6 +983,14 @@
 
     <div class="car-dots" id="carDots"></div>
   </section>
+
+  <!-- CTA MEIO 2 -->
+  <div class="cta-meio">
+    <div class="cta-meio-card">
+      <p>Chega de perder tempo montando material. Comece a usar hoje.</p>
+      <a href="#preco" class="btn-cta-meio pulse-btn">Garantir Meu Acesso &rarr;</a>
+    </div>
+  </div>
 
   <script>
     (function(){
@@ -1001,7 +1099,7 @@
           <li><span class="check">&#10003;</span> Comunidade Fechada</li>
           <li><span class="check">&#10003;</span> Suporte VIP WhatsApp</li>
         </ul>
-        <a href="https://pay.hotmart.com/Q104360693V?checkoutMode=10" class="btn-comprar">Assinar Profissional Agora &rarr;</a>
+        <a href="https://pay.hotmart.com/Q104360693V?checkoutMode=10" class="btn-comprar pulse-btn">Assinar Profissional Agora &rarr;</a>
         <div class="garantia">&#128274; Garantia de 7 dias</div>
       </div>
 
@@ -1066,7 +1164,7 @@
   <div class="footer-cta">
     <h2>Comece a usar ainda hoje.</h2>
     <p>500+ materiais prontos. Acesso imediato. Sem mensalidade.</p>
-    <a href="#preco" class="btn-footer">Garantir Meu Acesso &rarr;</a>
+    <a href="#preco" class="btn-footer pulse-btn">Garantir Meu Acesso &rarr;</a>
   </div>
 
   <footer>
