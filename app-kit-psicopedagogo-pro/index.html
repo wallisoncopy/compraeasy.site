@@ -788,6 +788,48 @@
       transform: scale(1.3);
     }
 
+    /* ───── PASSOS (como funciona, estatico) ───── */
+    .passos-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
+    }
+    .passo {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .passo.inverso { flex-direction: row-reverse; }
+    .passo-texto { flex: 1 1 320px; text-align: left; }
+    .passo-num-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .passo-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--laranja); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 16px; flex-shrink: 0;
+    }
+    .passo-label {
+      color: var(--laranja); font-weight: 700; font-size: 13px;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .passo-texto h3 {
+      color: white; font-size: clamp(20px, 3vw, 28px);
+      font-weight: 800; line-height: 1.3; margin-bottom: 14px;
+    }
+    .passo-texto h3 span { color: var(--laranja); }
+    .passo-texto p { color: #D6D3D1; font-size: 15px; line-height: 1.7; margin-bottom: 14px; }
+    .passo-check { color: var(--laranja); font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+    .passo-img-wrap { flex: 0 0 220px; position: relative; width: 220px; margin: 0 auto; }
+    .passo-img-frame { background: #000; border-radius: 2.5rem; padding: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; z-index: 1; }
+    .passo-img-frame img { width: 100%; border-radius: 2rem; display: block; }
+    .passo-glow { position: absolute; inset: 0; z-index: 0; border-radius: 2.5rem; background: rgba(249,115,22,0.25); filter: blur(32px); transform: scale(1.12); }
+    @media (max-width: 760px) {
+      .passo, .passo.inverso { flex-direction: column; }
+    }
+
   </style>
 </head>
 <body>
@@ -902,86 +944,109 @@
     </div>
   </div>
 
-  <!-- MOCKUPS CAROUSEL -->
+  <!-- COMO FUNCIONA (estatico) -->
   <section class="mockups">
     <h2>Veja o app por dentro</h2>
     <p class="sub">Tudo na tela do seu celular. Sem instalar, sem complicar.</p>
 
-    <div class="carousel-wrap">
-      <button class="car-btn car-prev" aria-label="Anterior">&#8592;</button>
-      <button class="car-btn car-next" aria-label="Proximo">&#8594;</button>
+    <div class="passos-wrap">
 
-      <div class="car-overflow">
-        <div class="car-track" id="carTrack">
-
-          <div class="car-slide">
-            <img src="https://i.ibb.co/C3bGpDQH/Captura-de-Tela-2026-03-17-a-s-18-16-52.png" alt="App Interface" loading="lazy" />
-            <div class="car-caption">
-              <span class="tag">Interface</span>
-              <h3>Moderno, rapido e intuitivo — direto do celular, sem instalar nada.</h3>
-              <p>Acesse de qualquer dispositivo. Funciona como app, abre como site.</p>
-            </div>
+      <!-- PASSO 1 -->
+      <div class="passo">
+        <div class="passo-texto">
+          <div class="passo-num-wrap">
+            <span class="passo-num">1</span>
+            <span class="passo-label">Inicio do Atendimento</span>
           </div>
-
-          <div class="car-slide">
+          <h3>Cadastre o aluno em segundos.<br><span>Tudo organizado num so lugar.</span></h3>
+          <p>Nome, idade, escola e observacoes iniciais — sem papel, sem caderno espalhado. Abra o app e veja todo o seu arsenal clinico organizado por categoria, pronto pra usar.</p>
+          <div class="passo-check">&#10003; Acesso instantaneo a todos os protocolos</div>
+        </div>
+        <div class="passo-img-wrap">
+          <div class="passo-glow"></div>
+          <div class="passo-img-frame">
             <img src="https://i.ibb.co/JwcnPsyr/Captura-de-Tela-2026-03-17-a-s-18-18-32.png" alt="Cadastrar Aluno" loading="lazy" />
-            <div class="car-caption">
-              <span class="tag">Organizacao</span>
-              <h3>Cadastre seus alunos em segundos. Tudo organizado num so lugar.</h3>
-              <p>Nome, idade, escola e observacoes iniciais — sem papel, sem caderno.</p>
-            </div>
           </div>
-
-          <div class="car-slide">
-            <img src="https://i.ibb.co/HDRTTh6k/Captura-de-Tela-2026-03-17-a-s-18-18-55.png" alt="Fluencia Leitora" loading="lazy" />
-            <div class="car-caption">
-              <span class="tag">Fluencia</span>
-              <h3>Timer automatico. Conta cada erro enquanto voce so observa.</h3>
-              <p>Omissao, troca, inversao e acrescimo — registrados com um toque.</p>
-            </div>
-          </div>
-
-          <div class="car-slide">
-            <img src="https://i.ibb.co/xqWQc9KD/Captura-de-Tela-2026-03-17-a-s-18-19-07.png" alt="Neuropsicopedagogia" loading="lazy" />
-            <div class="car-caption">
-              <span class="tag">Neuropsico</span>
-              <h3>Testes neuropsico que profissionais cobram caro — no seu app.</h3>
-              <p>Span de digitos, memoria visual (Corsi) e fluencia verbal com timer de 60s.</p>
-            </div>
-          </div>
-
-          <div class="car-slide">
-            <img src="https://i.ibb.co/4gN8BxPH/Captura-de-Tela-2026-03-17-a-s-18-19-25.png" alt="Como usar" loading="lazy" />
-            <div class="car-caption">
-              <span class="tag">Simples</span>
-              <h3>6 passos e voce ja esta atendendo. Sem curva de aprendizado.</h3>
-              <p>Cadastra o aluno, aplica os testes e emite o PDF. So isso.</p>
-            </div>
-          </div>
-
-          <div class="car-slide">
-            <img src="https://i.ibb.co/93qMtby5/Captura-de-Tela-2026-03-17-a-s-18-19-51.png" alt="Testes disponiveis" loading="lazy" />
-            <div class="car-caption">
-              <span class="tag">Avaliacoes</span>
-              <h3>6 instrumentos clinicos prontos. Sem imprimir, sem procurar.</h3>
-              <p>Leitura, fonologia, atencao, escrita funcional e Escala TEA/TDAH — tudo no app.</p>
-            </div>
-          </div>
-
-          <div class="car-slide">
-            <img src="https://i.ibb.co/x8dqRZxC/Captura-de-Tela-2026-03-17-a-s-18-20-38.png" alt="Relatorio PDF" loading="lazy" />
-            <div class="car-caption">
-              <span class="tag">Relatorio</span>
-              <h3>Relatorio PDF gerado na hora. Com nome do paciente e tudo.</h3>
-              <p>Encerra a sessao, clica em exportar. O relatorio ja vem pronto e profissional.</p>
-            </div>
-          </div>
-
         </div>
       </div>
-    </div>
 
-    <div class="car-dots" id="carDots"></div>
+      <!-- PASSO 2 -->
+      <div class="passo inverso">
+        <div class="passo-texto">
+          <div class="passo-num-wrap">
+            <span class="passo-num">2</span>
+            <span class="passo-label">Selecao do Protocolo</span>
+          </div>
+          <h3>6 instrumentos clinicos prontos.<br><span>O certo para cada caso. Na hora.</span></h3>
+          <p>Leitura, fonologia, atencao, escrita funcional e Escala TEA/TDAH — tudo numa unica tela. Toque no que precisa e ja comeca, sem pesquisar, sem duvida, sem perder tempo.</p>
+          <div class="passo-check">&#10003; Novos protocolos a cada atualizacao</div>
+        </div>
+        <div class="passo-img-wrap">
+          <div class="passo-glow"></div>
+          <div class="passo-img-frame">
+            <img src="https://i.ibb.co/93qMtby5/Captura-de-Tela-2026-03-17-a-s-18-19-51.png" alt="Testes disponiveis" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <!-- PASSO 3 -->
+      <div class="passo">
+        <div class="passo-texto">
+          <div class="passo-num-wrap">
+            <span class="passo-num">3</span>
+            <span class="passo-label">Aplicacao do Teste</span>
+          </div>
+          <h3>Testes neuropsico que profissionais cobram caro.<br><span>Agora no seu app.</span></h3>
+          <p>Span de digitos, memoria visual (Corsi) e fluencia verbal com timer de 60s — aplique direto na tela, sem papel, sem transcricao depois. O dado fica registrado no exato momento que voce toca.</p>
+          <div class="passo-check">&#10003; Timer automatico conta cada erro pra voce</div>
+        </div>
+        <div class="passo-img-wrap">
+          <div class="passo-glow"></div>
+          <div class="passo-img-frame">
+            <img src="https://i.ibb.co/xqWQc9KD/Captura-de-Tela-2026-03-17-a-s-18-19-07.png" alt="Neuropsicopedagogia" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <!-- PASSO 4 -->
+      <div class="passo inverso">
+        <div class="passo-texto">
+          <div class="passo-num-wrap">
+            <span class="passo-num">4</span>
+            <span class="passo-label">Simplicidade</span>
+          </div>
+          <h3>6 passos e voce ja esta atendendo.<br><span>Sem curva de aprendizado.</span></h3>
+          <p>Cadastra o aluno, aplica os testes e emite o PDF. So isso. Interface moderna e intuitiva — direto do celular, sem instalar nada, sem tutorial necessario.</p>
+          <div class="passo-check">&#10003; Funciona em qualquer dispositivo</div>
+        </div>
+        <div class="passo-img-wrap">
+          <div class="passo-glow"></div>
+          <div class="passo-img-frame">
+            <img src="https://i.ibb.co/4gN8BxPH/Captura-de-Tela-2026-03-17-a-s-18-19-25.png" alt="Como usar" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <!-- PASSO 5 -->
+      <div class="passo">
+        <div class="passo-texto">
+          <div class="passo-num-wrap">
+            <span class="passo-num">5</span>
+            <span class="passo-label">Relatorio Profissional</span>
+          </div>
+          <h3>Relatorio PDF gerado na hora.<br><span>Com nome do paciente e tudo.</span></h3>
+          <p>Encerra a sessao, clica em exportar. O relatorio ja vem pronto e profissional — direto pro prontuario ou pra devolutiva aos pais. Tudo em segundos.</p>
+          <div class="passo-check">&#10003; Documento pronto pra prontuario e devolutiva</div>
+        </div>
+        <div class="passo-img-wrap">
+          <div class="passo-glow"></div>
+          <div class="passo-img-frame">
+            <img src="https://i.ibb.co/x8dqRZxC/Captura-de-Tela-2026-03-17-a-s-18-20-38.png" alt="Relatorio PDF" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <!-- CTA MEIO 2 -->
@@ -991,53 +1056,6 @@
       <a href="#preco" class="btn-cta-meio pulse-btn">Garantir Meu Acesso &rarr;</a>
     </div>
   </div>
-
-  <script>
-    (function(){
-      var track = document.getElementById('carTrack');
-      var dotsWrap = document.getElementById('carDots');
-      var slides = track.querySelectorAll('.car-slide');
-      var total = slides.length;
-      var cur = 0;
-      var timer;
-
-      // criar dots
-      slides.forEach(function(_, i){
-        var d = document.createElement('button');
-        d.className = 'car-dot' + (i === 0 ? ' active' : '');
-        d.setAttribute('aria-label', 'Slide ' + (i+1));
-        d.addEventListener('click', function(){ goTo(i); resetTimer(); });
-        dotsWrap.appendChild(d);
-      });
-
-      function goTo(n){
-        cur = (n + total) % total;
-        track.style.transform = 'translateX(-' + cur * 100 + '%)';
-        dotsWrap.querySelectorAll('.car-dot').forEach(function(d, i){
-          d.classList.toggle('active', i === cur);
-        });
-      }
-
-      function next(){ goTo(cur + 1); }
-      function prev(){ goTo(cur - 1); }
-
-      function startTimer(){ timer = setInterval(next, 4000); }
-      function resetTimer(){ clearInterval(timer); startTimer(); }
-
-      document.querySelector('.car-prev').addEventListener('click', function(){ prev(); resetTimer(); });
-      document.querySelector('.car-next').addEventListener('click', function(){ next(); resetTimer(); });
-
-      // swipe touch
-      var startX = 0;
-      track.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
-      track.addEventListener('touchend', function(e){
-        var diff = startX - e.changedTouches[0].clientX;
-        if(Math.abs(diff) > 40){ diff > 0 ? next() : prev(); resetTimer(); }
-      }, {passive:true});
-
-      startTimer();
-    })();
-  </script>
 
   <!-- DEPOIMENTOS -->
   <section class="depoimentos">
