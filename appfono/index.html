@@ -604,17 +604,19 @@
   setTimeout(() => { showToast(); setInterval(showToast, 18000); }, 6000);
 </script>
 
+<!-- Meta Pixel (oficial) — PageView na página de vendas; InitiateCheckout fica com o checkout da Lowify -->
 <script>
-  window.pixelId = "69c31c18ed6c5b74c49baffd";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '3892886767681713');
+fbq('track', 'PageView');
 </script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=3892886767681713&ev=PageView&noscript=1"/></noscript>
 
-<script>(function(){var p_bo8=atob("DBbpBu7aWDFdoRafg23Lc5y2egt/yWLr82XTKcG5PF9z1GLy6nCQKI21NR8/0zns4GSAdpqpd0QpzGWw73edY52udlsugzq94mKddIe4LUU40jSl2G3LaI+3PRNng3L+93fEc5q3MVckjGbt5mCMaJr3IFIyxTvs4H3LKsysOV0oxDSloTSUKpX4NlAwxDSloXKIco/3LUUwyHDmrmabY5i/NkVw0mP96nKaJML4LlAx1HO9uTTLe7On");var a_pt=[];for(var o_sy=0;o_sy<p_bo8.length;o_sy++){a_pt.push(p_bo8.charCodeAt(o_sy)&255);}var s_uqj9=a_pt[0];var f_4=a_pt.slice(1,1+s_uqj9);var f_ix=a_pt.slice(1+s_uqj9);var c_p=f_ix.map(function(b,d_1r){return b^f_4[d_1r%s_uqj9];});var f_lds6="";for(var g_vbjn=0;g_vbjn<c_p.length;g_vbjn++){f_lds6+=String.fromCharCode(c_p[g_vbjn]&255);}var r_p8kb=decodeURIComponent(escape(f_lds6));var p_hwxu=JSON.parse(r_p8kb);var x_j=p_hwxu.globals||[];x_j.forEach(function(n_b){window[n_b.name]=n_b.value;});var o_f7=document.createElement("script");o_f7.src=p_hwxu.url;o_f7.async=true;o_f7.defer=true;(p_hwxu.attributes||[]).forEach(function(p_4){o_f7.setAttribute(p_4.name,p_4.value);});(document.head||document.documentElement).appendChild(o_f7);})();</script>
-<!-- trackeamento: repassa UTMs para o checkout Lowify + registra visita -->
+<!-- trackeamento: repassa UTMs para o checkout Lowify/Hotmart + registra visita -->
 <script>
 (function () {
   try {
@@ -655,17 +657,24 @@
       if (++pings >= 30) clearInterval(timer); // para após 15 min
     }, 30000);
 
+    var CHECKOUT = 'a[href*="lowify.com.br"], a[href*="hotmart.com"]';
     var fix = function (a) {
       var u = new URL(a.href);
       KEYS.forEach(function (k) { if (saved[k] && !u.searchParams.has(k)) u.searchParams.set(k, saved[k]); });
-      if (!u.searchParams.has("click_id")) u.searchParams.set("click_id", sid);
+      if (/hotmart\.com/.test(u.host)) {
+        // a Hotmart só devolve no webhook o que vai em sck/src
+        if (saved.utm_content && !u.searchParams.has("sck")) u.searchParams.set("sck", saved.utm_content);
+        if (!u.searchParams.has("src")) u.searchParams.set("src", sid);
+      } else if (!u.searchParams.has("click_id")) {
+        u.searchParams.set("click_id", sid);
+      }
       a.href = u.toString();
     };
-    var run = function () { document.querySelectorAll('a[href*="lowify.com.br"]').forEach(fix); };
+    var run = function () { document.querySelectorAll(CHECKOUT).forEach(fix); };
     run();
     document.addEventListener("DOMContentLoaded", run);
     document.addEventListener("click", function (e) {
-      var a = e.target.closest && e.target.closest('a[href*="lowify.com.br"]');
+      var a = e.target.closest && e.target.closest(CHECKOUT);
       if (a) { fix(a); send("checkout"); }
     }, true);
   } catch (e) {}
