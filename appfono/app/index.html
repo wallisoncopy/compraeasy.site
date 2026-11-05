@@ -102,6 +102,20 @@
         <span class="text-sm font-semibold text-gray-700">Relatório PDF</span>
       </button>
     </div>
+
+    <!-- BANNER 100 FICHAS (oferta para clientes do app) -->
+    <div id="banner-fichas" class="hidden relative mt-5 rounded-2xl overflow-hidden shadow-md border border-teal-200 bg-gradient-to-br from-teal-50 to-white">
+      <button onclick="fecharBannerFichas()" aria-label="Fechar" class="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/80 text-gray-400 text-lg leading-none flex items-center justify-center shadow-sm z-10">×</button>
+      <a href="https://compraeasy.site/fichasfono/?utm_source=appfono&utm_medium=banner&utm_content=banner-home" target="_blank" rel="noopener" onclick="cliqueBannerFichas()" class="flex items-center gap-3 p-3 pr-4">
+        <img src="https://compraeasy.site/fichasfono/img/hero.webp" alt="100 Fichas Visuais de Fonoaudiologia" loading="lazy" onerror="this.style.display='none'" class="w-28 h-auto flex-shrink-0 -my-1"/>
+        <div class="flex-1 min-w-0">
+          <span class="inline-block bg-amber-300 text-teal-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full mb-1">COMPLEMENTO DO SEU APP</span>
+          <p class="font-extrabold text-gray-800 text-[15px] leading-tight">100 Fichas Visuais de Fonoaudiologia</p>
+          <p class="text-xs text-gray-500 mt-1 leading-snug">Diagnóstico por sintoma, avaliação e conduta. Em PDF, prontas para imprimir.</p>
+          <span class="inline-block mt-2 bg-teal-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg">Ver as fichas →</span>
+        </div>
+      </a>
+    </div>
   </div>
 
   <!-- ===== TESTES ===== -->
@@ -838,6 +852,16 @@
 </main>
 
 <!-- TOAST -->
+<!-- CHAMADA PÓS-PDF: 100 FICHAS -->
+<div id="nudge-fichas" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-sm bg-white border border-teal-200 rounded-2xl shadow-xl z-50 p-3 flex items-center gap-3">
+  <img src="https://compraeasy.site/fichasfono/img/hero.webp" alt="" loading="lazy" onerror="this.style.display='none'" class="w-14 h-auto flex-shrink-0"/>
+  <div class="flex-1 min-w-0">
+    <p class="text-sm font-bold text-gray-800 leading-tight">PDF pronto! ✅</p>
+    <p class="text-xs text-gray-500 leading-snug">Conheça também as <b class="text-teal-700">100 Fichas Visuais</b> para imprimir.</p>
+  </div>
+  <a href="https://compraeasy.site/fichasfono/?utm_source=appfono&utm_medium=banner&utm_content=pos-pdf" target="_blank" rel="noopener" onclick="cliqueBannerFichas()" class="bg-teal-600 text-white text-xs font-bold px-3 py-2 rounded-lg whitespace-nowrap">Ver</a>
+  <button onclick="fecharNudgeFichas()" aria-label="Fechar" class="text-gray-400 text-lg leading-none px-1">×</button>
+</div>
 <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-sm px-5 py-3 rounded-2xl shadow-xl z-50 hidden transition-all">
   Mensagem
 </div>
@@ -1480,7 +1504,7 @@ function gerarPDFTesteABFW() {
   doc.setFontSize(8); doc.setTextColor(150, 150, 150);
   doc.text('Documento gerado pelo App Kit Fonoaudióloga Pro · Uso exclusivo do profissional', 105, 287, { align: 'center' });
 
-  doc.save(`ABFW-${data.replace(/\//g, '-')}.pdf`);
+  doc.save(`ABFW-${data.replace(/\//g, '-')}.pdf`); try { sugerirFichas(); } catch (e) {}
 }
 
 function mostrarResultadoTeste() {
@@ -2029,7 +2053,7 @@ function gerarPDFTeste(id, score, maxScore, resultado, rec, classe) {
     doc.text(`App Kit Fonoaudióloga Pro — ${new Date().toLocaleDateString('pt-BR')} — Página ${i}/${pages}`, W/2, 290, { align: 'center' });
   }
 
-  doc.save(`Avaliacao-Fono-${dados.titulo.replace(/\s/g,'-')}-${new Date().toISOString().slice(0,10)}.pdf`);
+  doc.save(`Avaliacao-Fono-${dados.titulo.replace(/\s/g,'-')}-${new Date().toISOString().slice(0,10)}.pdf`); try { sugerirFichas(); } catch (e) {}
   showToast('📄 PDF gerado com sucesso!');
 }
 
@@ -2073,7 +2097,7 @@ function gerarPDFFicha() {
     doc.text(`App Kit Fonoaudióloga Pro — ${new Date().toLocaleDateString('pt-BR')} — Pág ${i}/${pages}`, W/2, 290, { align: 'center' });
   }
 
-  doc.save(`${dados.titulo.replace(/\s/g,'-')}-${new Date().toISOString().slice(0,10)}.pdf`);
+  doc.save(`${dados.titulo.replace(/\s/g,'-')}-${new Date().toISOString().slice(0,10)}.pdf`); try { sugerirFichas(); } catch (e) {}
   showToast('📄 PDF gerado com sucesso!');
 }
 
@@ -2178,7 +2202,7 @@ function gerarRelatorioPDF() {
     doc.text(`App Kit Fonoaudióloga Pro — ${new Date().toLocaleDateString('pt-BR')} — Pág ${i}/${pages}`, W/2, 290, { align: 'center' });
   }
 
-  doc.save(`${tiposLabels[tipo]?.replace(/\s/g,'-') || 'Relatorio'}-${new Date().toISOString().slice(0,10)}.pdf`);
+  doc.save(`${tiposLabels[tipo]?.replace(/\s/g,'-') || 'Relatorio'}-${new Date().toISOString().slice(0,10)}.pdf`); try { sugerirFichas(); } catch (e) {}
   showToast('📄 Relatório gerado!');
 }
 
@@ -2231,6 +2255,38 @@ window.onload = () => {
   const listFichas = document.querySelector('#screen-fichas > .space-y-3');
   if (listFichas) listFichas.id = 'lista-fichas-block';
 };
+
+// ============================
+// OFERTA 100 FICHAS VISUAIS (banner para clientes do app)
+// chaves sem prefixo "fono_" para não entrarem no backup/restauração do app
+// ============================
+const BF_KEY = 'oferta_fichas_v1';
+function bfLer() { try { return JSON.parse(localStorage.getItem(BF_KEY) || '{}'); } catch (e) { return {}; } }
+function bfSalvar(o) { try { localStorage.setItem(BF_KEY, JSON.stringify(Object.assign(bfLer(), o))); } catch (e) {} }
+function bfDias(t) { return t ? (Date.now() - t) / 864e5 : Infinity; }
+function mostrarBannerFichas() {
+  const st = bfLer(), el = document.getElementById('banner-fichas');
+  if (!el) return;
+  // some 7 dias depois de fechado e 30 dias depois do clique
+  el.classList.toggle('hidden', bfDias(st.fechado) < 7 || bfDias(st.clicou) < 30);
+}
+function fecharBannerFichas() { bfSalvar({ fechado: Date.now() }); mostrarBannerFichas(); }
+function cliqueBannerFichas() { bfSalvar({ clicou: Date.now() }); setTimeout(() => { mostrarBannerFichas(); fecharNudgeFichas(true); }, 500); }
+function fecharNudgeFichas(semRegistro) {
+  const n = document.getElementById('nudge-fichas'); if (n) n.classList.add('hidden');
+  if (!semRegistro) bfSalvar({ nudgeFechado: Date.now() });
+}
+function sugerirFichas() {
+  const st = bfLer();
+  // no máximo 1 vez a cada 3 dias, nunca depois de clicar
+  if (bfDias(st.clicou) < 30 || bfDias(st.nudge) < 3) return;
+  setTimeout(() => {
+    const n = document.getElementById('nudge-fichas'); if (!n) return;
+    n.classList.remove('hidden'); bfSalvar({ nudge: Date.now() });
+    setTimeout(() => n.classList.add('hidden'), 12000);
+  }, 2800);
+}
+mostrarBannerFichas();
 </script>
 </body>
 </html>
