@@ -5,18 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>App Kit Fonoaudióloga Pro (ES)</title>
 <meta name="robots" content="noindex">
-<!-- atalho curto para a DM do Instagram em espanhol (automação QUIERO): leva à página de vendas com a UTM do YouTube -->
-<meta http-equiv="refresh" content="0; url=/appfono-es/?utm_source=instagram&amp;utm_medium=organico&amp;utm_content=dm-fono-es">
+<!-- atalho curto para a DM Instagram+Facebook em espanhol (automação QUIERO; rede definida pelo navegador do app): leva à página de vendas com a UTM do YouTube -->
+<meta http-equiv="refresh" content="0; url=/appfono-es/?utm_source=dm&amp;utm_medium=organico&amp;utm_content=dm-fono-es">
 <script>
   (function () {
     var p = new URLSearchParams(location.search);
-    var dest = new URLSearchParams({ utm_source: "instagram", utm_medium: "organico", utm_content: "dm-fono-es" });
+    var dest = new URLSearchParams({ utm_source: "dm", utm_medium: "organico", utm_content: "dm-fono-es" });
     p.forEach(function (v, k) { dest.set(k, v); }); // ?utm_content=... no atalho sobrepõe o padrão
     location.replace("/appfono-es/?" + dest.toString());
   })();
 </script>
 </head>
 <body style="font-family:-apple-system,sans-serif;text-align:center;padding:40px 16px">
-<a href="/appfono-es/?utm_source=instagram&amp;utm_medium=organico&amp;utm_content=dm-fono-es">Abrir o App Kit Fonoaudióloga Pro (ES)</a>
+<a href="/appfono-es/?utm_source=dm&amp;utm_medium=organico&amp;utm_content=dm-fono-es">Abrir o App Kit Fonoaudióloga Pro (ES)</a>
 </body>
 </html>
