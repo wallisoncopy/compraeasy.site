@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App Kit Fonoaudióloga Pro</title>
+<meta name="robots" content="noindex">
+<!-- atalho curto para a Página do Facebook (legenda dos Reels): leva à página de vendas com a UTM do YouTube -->
+<meta http-equiv="refresh" content="0; url=/appfono/?utm_source=facebook&amp;utm_medium=organico&amp;utm_content=pagina-fono">
+<script>
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var dest = new URLSearchParams({ utm_source: "facebook", utm_medium: "organico", utm_content: "pagina-fono" });
+    p.forEach(function (v, k) { dest.set(k, v); }); // ?utm_content=... no atalho sobrepõe o padrão
+    location.replace("/appfono/?" + dest.toString());
+  })();
+</script>
+</head>
+<body style="font-family:-apple-system,sans-serif;text-align:center;padding:40px 16px">
+<a href="/appfono/?utm_source=facebook&amp;utm_medium=organico&amp;utm_content=pagina-fono">Abrir o App Kit Fonoaudióloga Pro</a>
+</body>
+</html>
