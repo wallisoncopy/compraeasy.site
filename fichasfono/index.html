@@ -418,11 +418,12 @@ footer p+p{margin-top:6px}
  var V=[["GO","2026-11-07T06:31:21"],["SP","2026-11-07T05:32:36"],["RJ","2026-11-06T17:36:13"],["AM","2026-11-06T14:56:24"],
         ["RS","2026-11-06T09:28:26"],["PR","2026-11-05T17:45:25"],["RJ","2026-11-05T08:41:06"],["RN","2026-11-05T05:48:07"]];
  var P={AM:"do",RJ:"do",RS:"do",PR:"do",RN:"do",SP:"de",GO:"de",MG:"de",PE:"de"};
- function ha(t){var m=(Date.now()-new Date(t+"-03:00"))/6e4;if(m<0)return"";if(m<60)return"há "+Math.max(1,Math.round(m))+" min";
-  var h=m/60;if(h<24)return"há "+Math.round(h)+(Math.round(h)==1?" hora":" horas");var d=Math.floor(h/24);return d==1?"ontem":"há "+d+" dias";}
+ function ha(t){var d=new Date(t+"-03:00"),n=new Date();if(d>n)return"hoje";
+  var dia=function(x){return new Date(x.getFullYear(),x.getMonth(),x.getDate())},k=Math.round((dia(n)-dia(d))/864e5);
+  return k<=0?"hoje":k==1?"ontem":k<=7?"esta semana":"recentemente";}
  var el=document.getElementById("cv-toast"),i=0,L=V.slice().sort(function(){return Math.random()-.5});
  function show(){if(i>=L.length)return;var v=L[i++];
-  document.getElementById("cv-t1").textContent="Alguém "+(P[v[0]]||"de")+" "+v[0]+" comprou as 100 Fichas";
+  document.getElementById("cv-t1").textContent="Uma fono "+(P[v[0]]||"de")+" "+v[0]+" comprou as 100 Fichas";
   document.getElementById("cv-t2").textContent="plano completo · "+ha(v[1]);
   el.classList.add("on");setTimeout(function(){el.classList.remove("on");setTimeout(show,14000)},5000);}
  setTimeout(show,7000);
