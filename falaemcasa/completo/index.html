@@ -148,6 +148,8 @@ nav.hide{display:none}
 <body>
 
 <!-- ============ QUIZ ============ -->
+<section id="s-acesso" class="screen"><div class="wrap gap" id="acessobox"></div></section>
+
 <section id="s-quiz" class="screen">
   <div class="wrap">
     <div class="logo"><b>🗣️</b>Fala em Casa</div>
@@ -570,15 +572,17 @@ const GUIAS = [
 
 </script>
 <script>
-const TIER = "completo";              // "basico" ou "completo"
-const UPGRADE_URL = "#";    // checkout do upgrade (só no básico)
-const COMPLETO = TIER === "completo";
+const TIER = "auto";              // "auto" = decide pelo e-mail da compra; "completo" só em teste local
+const UPGRADE_URL = "https://pay.lowify.com.br/go.php?offer=7c36fc0a";    // checkout do upgrade R$10,90
+const ACESSO_API = "https://trackeamento.wallisoncopy.workers.dev/acesso?p=falaemcasa&email=";
+let COMPLETO = false;
 const KEY = "falaemcasa_v1";
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 // ---------- estado ----------
 let S = load();
+COMPLETO = TIER === "completo" || S.acesso?.tier === "completo";
 function load() {
   try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
 }
@@ -601,7 +605,7 @@ function go(id, push = true) {
   document.querySelectorAll(".screen").forEach((s) => s.classList.remove("on"));
   const el = $("#s-" + id); el.classList.add("on");
   const render = R[id]; if (render) render();
-  $("#nav").classList.toggle("hide", id === "quiz" || id === "res");
+  $("#nav").classList.toggle("hide", id === "quiz" || id === "res" || id === "acesso");
   document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("on", b.dataset.go === id));
   window.scrollTo(0, 0);
 }
@@ -618,7 +622,8 @@ function lockScreen(titulo, emoji, desc) {
 function upgBox() {
   return `<div class="upg gap"><h3>⭐ Desbloqueie o Plano Completo</h3>
   <ul class="small"><li>📒 Diário de palavras com gráfico de evolução</li><li>📄 Relatório em PDF para levar ao fono ou pediatra</li><li>✅ Marcos da fala por idade + sinais de alerta</li><li>📚 Guias: hábitos que atrapalham, telas, chupeta</li><li>🖨️ Cartões para imprimir</li></ul>
-  <a class="btn" href="${UPGRADE_URL}" target="_blank" rel="noopener">Quero o Plano Completo</a></div>`;
+  <a class="btn" href="${UPGRADE_URL}" target="_blank" rel="noopener">Quero o Plano Completo · R$10,90</a>
+  <button class="btn sec" style="margin-top:10px;background:transparent;color:#fff;border-color:rgba(255,255,255,.35)" onclick="liberar(this)">Já comprei: liberar o Completo</button></div>`;
 }
 
 // ---------- QUIZ ----------
@@ -966,6 +971,7 @@ R.mais = () => {
   <button class="listm" onclick="go('guias')"><span class="d" style="background:var(--teal-l);font-size:22px">📚</span><div style="flex:1"><b>Guias para pais</b></div>${COMPLETO ? "›" : "🔒"}</button>
   <button class="listm" onclick="go('rel')"><span class="d" style="background:var(--teal-l);font-size:22px">📄</span><div style="flex:1"><b>Relatório em PDF</b></div>${COMPLETO ? "›" : "🔒"}</button>
   <button class="listm" onclick="go('imp')"><span class="d" style="background:var(--teal-l);font-size:22px">🖨️</span><div style="flex:1"><b>Cartões para imprimir</b></div>${COMPLETO ? "›" : "🔒"}</button>
+  <div class="card gap"><h3>🔑 Seu acesso</h3><p class="small">${COMPLETO ? "<b>Plano Completo</b>" : "<b>Plano Básico</b>"}${S.acesso?.email ? " · " + esc(S.acesso.email) : ""}</p></div>
   <div class="card gap"><h3>📲 Deixe o app na tela do celular</h3><p class="small"><b>iPhone:</b> no Safari, toque em Compartilhar e depois em “Adicionar à Tela de Início”.<br><b>Android:</b> no Chrome, toque nos 3 pontinhos e em “Adicionar à tela inicial”.</p>
     <p class="small muted">Seus dados ficam salvos neste aparelho. Use sempre o mesmo celular e navegador.</p></div>
   ${COMPLETO ? "" : upgBox()}
@@ -973,10 +979,54 @@ R.mais = () => {
   <p class="disc">Fala em Casa é um apoio para a família estimular a fala em casa. Não faz diagnóstico e não substitui avaliação ou terapia com fonoaudiólogo.</p>`;
 };
 function refazer() { if (!confirm("Refazer a avaliação? As palavras do diário e os marcos continuam salvos.")) return; S.resp = {}; stack = []; go("quiz"); }
-function apagar() { if (!confirm("Apagar TODOS os dados deste aparelho? Isso não pode ser desfeito.")) return; localStorage.removeItem(KEY); S = {}; stack = []; go("quiz"); }
+function apagar() { if (!confirm("Apagar TODOS os dados deste aparelho? Isso não pode ser desfeito.")) return; const a = S.acesso; localStorage.removeItem(KEY); S = a ? { acesso: a } : {}; save(); stack = []; go(a ? "quiz" : "acesso"); }
+
+// ---------- acesso pelo e-mail da compra ----------
+async function consultaAcesso(email) {
+  const r = await fetch(ACESSO_API + encodeURIComponent(email), { cache: "no-store" });
+  return (await r.json()).tier || null;
+}
+function aplicaAcesso(email, tier) {
+  S.acesso = { email, tier, em: hoje() }; COMPLETO = TIER === "completo" || tier === "completo"; save();
+}
+R.acesso = () => {
+  $("#acessobox").innerHTML = `<div class="logo"><b>🗣️</b>Fala em Casa</div>
+  <div class="card gap" style="text-align:center"><div style="font-size:54px">👋</div><h1>Bem-vinda!</h1>
+    <p>Para liberar o seu app, digite o <b>e-mail ou o telefone (com DDD)</b> que você usou na compra.</p>
+    <input class="field" id="em" type="text" autocomplete="email" autocapitalize="none" placeholder="e-mail ou telefone com DDD" value="${esc(S.acesso?.email || "")}">
+    <button class="btn" id="emok">Liberar meu acesso</button>
+    <p class="small muted" id="emmsg"></p></div>
+  <p class="disc">Pagou por PIX agora? A liberação pode levar até 2 minutos depois do pagamento.</p>`;
+  const go_ = async () => {
+    const email = $("#em").value.trim().toLowerCase(), msg = $("#emmsg");
+    const ok = email.includes("@") ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) : email.replace(/\D/g, "").length >= 10;
+    if (!ok) { msg.textContent = "Digite o e-mail ou o telefone com DDD (ex.: 11 98765-4321)."; return; }
+    $("#emok").disabled = true; msg.textContent = "Verificando sua compra…";
+    try {
+      const tier = await consultaAcesso(email);
+      if (!tier) { msg.innerHTML = "Não encontramos uma compra aprovada com esse dado. Confira se é o mesmo e-mail ou telefone do pagamento, ou tente pelo outro."; $("#emok").disabled = false; return; }
+      aplicaAcesso(email, tier); toast(tier === "completo" ? "Plano Completo liberado! 🎉" : "Acesso liberado! 🎉");
+      stack = []; if (S.fase && S.perfil?.nome) go("home", false); else go("quiz", false);
+    } catch (e) { msg.textContent = "Sem conexão. Verifique a internet e tente de novo."; $("#emok").disabled = false; }
+  };
+  $("#emok").onclick = go_; $("#em").onkeydown = (e) => e.key === "Enter" && go_();
+};
+async function liberar(btn) {
+  const email = S.acesso?.email; if (!email) { go("acesso"); return; }
+  btn.disabled = true; btn.textContent = "Verificando…";
+  try {
+    const tier = await consultaAcesso(email);
+    if (tier === "completo") { aplicaAcesso(email, tier); toast("Plano Completo liberado! 🎉"); const cur = document.querySelector(".screen.on").id.slice(2); go(cur, false); return; }
+    toast("Ainda não encontramos o upgrade. Se acabou de pagar, aguarde 1 minuto.");
+  } catch (e) { toast("Sem conexão. Tente de novo."); }
+  btn.disabled = false; btn.textContent = "Já comprei: liberar o Completo";
+}
 
 // ---------- início ----------
-if (S.fase && S.perfil?.nome) go("home", false); else go("quiz", false);
+if (TIER !== "completo" && !S.acesso?.tier) go("acesso", false);
+else if (S.fase && S.perfil?.nome) go("home", false); else go("quiz", false);
+// quem está no básico: confere em silêncio se já fez o upgrade
+if (TIER !== "completo" && S.acesso?.tier === "basico") consultaAcesso(S.acesso.email).then((t) => { if (t === "completo") { aplicaAcesso(S.acesso.email, t); toast("Plano Completo liberado! 🎉"); const cur = document.querySelector(".screen.on").id.slice(2); go(cur, false); } }).catch(() => {});
 </script>
 </body>
 </html>
