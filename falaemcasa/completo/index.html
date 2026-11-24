@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Fala em Casa">
+<meta name="theme-color" content="#fff7ef">
+<title>Fala em Casa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --bg:#fff7ef; --card:#ffffff; --ink:#2d2118; --muted:#7c6a5b; --line:#f1e4d6;
+  --pri:#f26b3a; --pri-d:#d9541f; --pri-l:#ffe6d9; --teal:#0f9d8a; --teal-l:#d7f5ef;
+  --yel:#ffd34d; --lock:#b9a99a; --r:20px; --shadow:0 6px 20px rgba(120,70,30,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg)}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);font-size:16px;line-height:1.45;min-height:100vh;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,textarea,select{font-family:inherit;font-size:16px;color:var(--ink)}
+.wrap{max-width:520px;margin:0 auto;padding:16px}
+.screen{display:none;animation:fade .25s ease}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font-size:26px;font-weight:900;line-height:1.15}
+h2{font-size:21px;font-weight:900;line-height:1.2}
+h3{font-size:17px;font-weight:800}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.card{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.gap>*+*{margin-top:14px}
+.btn{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px 18px;border-radius:16px;font-weight:800;font-size:17px;background:var(--pri);color:#fff;box-shadow:0 6px 0 var(--pri-d);transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 3px 0 var(--pri-d)}
+.btn.sec{background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.btn.teal{background:var(--teal);box-shadow:0 6px 0 #0a7a6b}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-weight:800;font-size:13px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.back{width:40px;height:40px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:20px;display:grid;place-items:center;flex:none}
+.logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:18px}
+.logo b{background:var(--pri);color:#fff;border-radius:10px;width:32px;height:32px;display:grid;place-items:center;font-size:18px}
+
+/* quiz */
+.qbar{height:8px;background:#f3e3d3;border-radius:9px;overflow:hidden;margin:6px 0 22px}
+.qbar i{display:block;height:100%;background:var(--pri);border-radius:9px;transition:width .3s}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:16px;border-radius:16px;background:#fff;border:2px solid var(--line);font-weight:700;font-size:16px;margin-top:10px}
+.opt .e{font-size:24px;flex:none}
+.opt.sel{border-color:var(--pri);background:var(--pri-l)}
+.field{width:100%;padding:15px 16px;border-radius:14px;border:2px solid var(--line);background:#fff;outline:none}
+.field:focus{border-color:var(--pri)}
+.row{display:flex;gap:10px}
+.row>*{flex:1}
+
+/* home */
+.hello{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.today{background:linear-gradient(145deg,var(--pri),#ff9152);color:#fff;border-radius:24px;padding:20px;box-shadow:0 10px 26px rgba(242,107,58,.35);position:relative;overflow:hidden}
+.today:after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.12)}
+.today .lbl{font-weight:800;font-size:13px;opacity:.9;text-transform:uppercase;letter-spacing:.5px}
+.today h2{color:#fff;margin:6px 0 4px;font-size:24px}
+.today .btn{background:#fff;color:var(--pri-d);box-shadow:0 5px 0 rgba(0,0,0,.12);margin-top:14px}
+.days{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin-top:10px}
+.days span{aspect-ratio:1;border-radius:7px;background:#f3e3d3;display:grid;place-items:center;font-size:10px;font-weight:800;color:#b49a85}
+.days span.ok{background:var(--teal);color:#fff}
+.days span.cur{background:var(--pri);color:#fff;box-shadow:0 0 0 3px var(--pri-l)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;text-align:left;box-shadow:var(--shadow);position:relative}
+.tile .e{font-size:30px;display:block;margin-bottom:6px}
+.tile b{display:block;font-weight:900;font-size:16px}
+.tile small{color:var(--muted);font-size:13px;font-weight:600}
+.tile .lk{position:absolute;top:10px;right:12px;font-size:14px}
+
+/* missão */
+.step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line)}
+.step:last-child{border:0}
+.step .n{width:28px;height:28px;border-radius:50%;background:var(--pri-l);color:var(--pri-d);font-weight:900;display:grid;place-items:center;flex:none;font-size:14px}
+.say{background:var(--teal-l);border-radius:18px 18px 18px 4px;padding:12px 14px;font-weight:700;margin-top:8px;color:#0b5c50}
+.tip{background:#fff6d6;border:1px solid #ffe591;border-radius:16px;padding:14px}
+.win{background:#e9f9ee;border:1px solid #bfeccc;border-radius:16px;padding:14px}
+.rep{background:#f4ecff;border:1px solid #e1d1ff;border-radius:16px;padding:12px 14px;font-weight:700;color:#5b2fb0;font-size:15px}
+.listm{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:16px;margin-top:10px;width:100%;text-align:left}
+.listm .d{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-weight:900;flex:none;color:#fff}
+
+/* cartões */
+.cats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.cat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 12px;text-align:center;box-shadow:var(--shadow)}
+.cat .e{font-size:40px;display:block}
+.cat b{display:block;margin-top:6px;font-weight:900}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.fc{background:#fff;border:3px solid var(--line);border-radius:22px;padding:14px 8px 12px;text-align:center;box-shadow:var(--shadow);transition:transform .12s}
+.fc .e{font-size:64px;line-height:1.1;display:block}
+.fc b{display:block;font-size:20px;font-weight:900;margin-top:6px;text-transform:uppercase;letter-spacing:.5px}
+.fc small{color:var(--muted);font-weight:700}
+.fc.play{transform:scale(1.06);border-color:var(--pri)}
+.toggle{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px;font-weight:700}
+.sw{width:50px;height:30px;border-radius:99px;background:#e6d7c8;position:relative;transition:.2s;flex:none}
+.sw:after{content:"";position:absolute;left:3px;top:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.sw.on{background:var(--teal)}
+.sw.on:after{left:23px}
+
+/* diário */
+.big{font-size:44px;font-weight:900;color:var(--pri);line-height:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 12px;font-weight:800;font-size:15px;display:flex;align-items:center;gap:6px}
+.chip small{color:var(--muted);font-weight:700;font-size:11px}
+.chip button{color:#c9a58a;font-size:16px;line-height:1}
+canvas{max-width:100%}
+
+/* marcos */
+.acc{background:#fff;border:1px solid var(--line);border-radius:18px;margin-top:10px;overflow:hidden}
+.acc>button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:16px;font-weight:900;font-size:16px;text-align:left}
+.acc .body{display:none;padding:0 16px 12px}
+.acc.open .body{display:block}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px dashed var(--line);font-weight:600}
+.chk input{width:22px;height:22px;accent-color:var(--teal);flex:none;margin-top:1px}
+.alert{background:#fff1ee;border:1px solid #ffd0c4;border-radius:16px;padding:14px}
+.alert li{margin:6px 0 0 18px}
+
+/* lock */
+.lockbox{text-align:center;padding:26px 18px}
+.lockbox .e{font-size:44px}
+.upg{background:linear-gradient(145deg,#2d2118,#4b3526);color:#fff;border-radius:22px;padding:20px}
+.upg .btn{background:var(--yel);color:#2d2118;box-shadow:0 5px 0 #d9ac1c;margin-top:12px}
+.upg li{margin:6px 0 0 4px;list-style:none}
+
+/* nav */
+nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px 6px calc(8px + env(safe-area-inset-bottom));z-index:20}
+nav .in{display:flex;max-width:520px;width:100%}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:800;color:#a8968a;padding:4px 0}
+nav button .e{font-size:22px;filter:grayscale(1);opacity:.7}
+nav button.on{color:var(--pri)}
+nav button.on .e{filter:none;opacity:1}
+nav.hide{display:none}
+
+/* celebração */
+.cele{position:fixed;inset:0;background:rgba(45,33,24,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:24px}
+.cele.on{display:flex}
+.cele .box{background:#fff;border-radius:26px;padding:26px 22px;text-align:center;max-width:380px;width:100%;animation:pop .35s ease}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}
+.cele .e{font-size:64px}
+.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;font-weight:700;z-index:60;opacity:0;transition:.25s;pointer-events:none;max-width:90%}
+.toast.on{opacity:1}
+.disc{font-size:12.5px;color:var(--muted);text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+
+<!-- ============ QUIZ ============ -->
+<section id="s-quiz" class="screen">
+  <div class="wrap">
+    <div class="logo"><b>🗣️</b>Fala em Casa</div>
+    <div class="qbar"><i id="qfill" style="width:0"></i></div>
+    <div id="qbox"></div>
+  </div>
+</section>
+
+<!-- ============ RESULTADO ============ -->
+<section id="s-res" class="screen"><div class="wrap gap" id="resbox"></div></section>
+
+<!-- ============ INÍCIO ============ -->
+<section id="s-home" class="screen"><div class="wrap gap" id="homebox"></div></section>
+
+<!-- ============ MISSÃO ============ -->
+<section id="s-mis" class="screen"><div class="wrap gap" id="misbox"></div></section>
+
+<!-- ============ BRINCADEIRAS ============ -->
+<section id="s-lista" class="screen"><div class="wrap" id="listabox"></div></section>
+
+<!-- ============ CARTÕES ============ -->
+<section id="s-cart" class="screen"><div class="wrap" id="cartbox"></div></section>
+
+<!-- ============ DIÁRIO ============ -->
+<section id="s-diario" class="screen"><div class="wrap gap" id="diariobox"></div></section>
+
+<!-- ============ MARCOS ============ -->
+<section id="s-marcos" class="screen"><div class="wrap" id="marcosbox"></div></section>
+
+<!-- ============ GUIAS ============ -->
+<section id="s-guias" class="screen"><div class="wrap" id="guiasbox"></div></section>
+
+<!-- ============ RELATÓRIO ============ -->
+<section id="s-rel" class="screen"><div class="wrap gap" id="relbox"></div></section>
+
+<!-- ============ IMPRIMIR ============ -->
+<section id="s-imp" class="screen"><div class="wrap gap" id="impbox"></div></section>
+
+<!-- ============ MAIS ============ -->
+<section id="s-mais" class="screen"><div class="wrap gap" id="maisbox"></div></section>
+
+<nav id="nav" class="hide"><div class="in">
+  <button data-go="home"><span class="e">🏠</span>Início</button>
+  <button data-go="lista"><span class="e">🎲</span>Brincadeiras</button>
+  <button data-go="cart"><span class="e">🃏</span>Cartões</button>
+  <button data-go="diario"><span class="e">📒</span>Diário</button>
+  <button data-go="mais"><span class="e">☰</span>Mais</button>
+</div></nav>
+
+<div class="cele" id="cele"><div class="box gap" id="celebox"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// Conteúdo do app Fala em Casa — fases, brincadeiras (com roteiro do que falar), cartões, marcos, guias.
+// Linguagem: simples, para mães e pais. Nada de promessa de resultado nem diagnóstico.
+
+const FASES = [
+  { id: 1, nome: "Primeiros Sons", cor: "#f97316", emoji: "🍼",
+    resumo: "Seu filho ainda não usa palavras. Agora o foco é atenção, imitação e sons — a base de toda fala.",
+    objetivo: "Olhar junto, imitar gestos e sons, e entender que a comunicação traz coisas boas." },
+  { id: 2, nome: "Primeiras Palavras", cor: "#eab308", emoji: "🌱",
+    resumo: "Seu filho já fala algumas palavras. Agora o foco é criar vontade e oportunidade de falar mais.",
+    objetivo: "Usar palavras para pedir, chamar e mostrar — em vez de chorar ou puxar pela mão." },
+  { id: 3, nome: "Mais Palavras", cor: "#22c55e", emoji: "🌿",
+    resumo: "Seu filho já fala várias palavras soltas. Agora o foco é aumentar o vocabulário: coisas, ações e pessoas.",
+    objetivo: "Aprender palavras novas toda semana, incluindo ações (come, pula) e lugares (em cima, embaixo)." },
+  { id: 4, nome: "Juntando Palavras", cor: "#0ea5e9", emoji: "🧩",
+    resumo: "Seu filho já junta duas palavras. Agora o foco é transformar isso em frases curtas.",
+    objetivo: "Combinar palavras: “mais suco”, “carro azul”, “papai dormiu”, “cadê bola?”." },
+  { id: 5, nome: "Frases e Conversas", cor: "#8b5cf6", emoji: "💬",
+    resumo: "Seu filho já fala frases. Agora o foco é conversar, contar o que aconteceu e falar cada vez mais claro.",
+    objetivo: "Contar acontecimentos, explicar o porquê, seguir uma história e brincar com os sons." },
+];
+
+// Cada brincadeira: t=título, min=minutos, mat=materiais, passos, falar=roteiro (frases prontas), dica, comemore
+const MISSOES = {
+1: [
+ { t: "Cadê? Achou!", min: 10, mat: "Um paninho ou fralda",
+   passos: ["Sente de frente para a criança, na altura dos olhos dela.", "Cubra o seu rosto com o pano e espere 2 segundos.", "Tire o pano com animação e sorria.", "Depois, cubra um brinquedo e deixe ela descobrir."],
+   falar: ["“Cadê a mamãe? … ACHOU!”", "“Cadê o urso? Sumiu! … Achou o urso!”", "“De novo? Vamos de novo!”"],
+   dica: "Antes de tirar o pano, faça uma pausa curta. A expectativa faz a criança olhar para você e tentar participar.",
+   comemore: "Se ela puxar o pano, sorrir ou fizer qualquer som pedindo “de novo”." },
+ { t: "Espelho das caretas", min: 8, mat: "Um espelho (ou a câmera frontal do celular)",
+   passos: ["Fiquem os dois de frente para o espelho.", "Faça uma careta simples: boca aberta, beijo, língua para fora.", "Espere e veja se ela tenta copiar.", "Copie você também qualquer careta ou som que ela fizer."],
+   falar: ["“Olha a boca da mamãe: AAAA!”", "“Beijo! Muá!”", "“Cadê a língua? Olha a língua!”"],
+   dica: "Imitar a criança é tão importante quanto ela imitar você: quando você copia, ela percebe que o que faz tem efeito.",
+   comemore: "Qualquer tentativa de copiar um movimento da boca já é uma vitória." },
+ { t: "Bichos que falam", min: 10, mat: "Bichinhos de brinquedo ou figuras (ou os cartões do app)",
+   passos: ["Mostre um bichinho de cada vez, perto do seu rosto.", "Faça o som do bicho de forma bem exagerada.", "Faça o bicho “andar” até a criança.", "Repita o mesmo bicho várias vezes antes de trocar."],
+   falar: ["“O cachorro faz… AU AU!”", "“O gato faz… MIAU!”", "“A vaca faz… MUUU!”"],
+   dica: "Sons de bichos são mais fáceis que palavras. Muitas crianças falam “au au” antes de “cachorro” — e isso conta!",
+   comemore: "Se ela tentar qualquer som de bicho, mesmo diferente do certo." },
+ { t: "Bolhas de sabão", min: 8, mat: "Bolhas de sabão (água + detergente + canudo serve)",
+   passos: ["Faça algumas bolhas e deixe a criança se divertir.", "Pare, feche o pote e espere olhando para ela.", "Quando ela olhar, apontar ou fizer um som, faça mais bolhas na hora.", "Repita a pausa várias vezes."],
+   falar: ["“Mais? Quer MAIS?”", "“Pou! Estourou!”", "“Acabou… quer mais?”"],
+   dica: "A pausa é o segredo. Conte até 5 em silêncio, com cara de expectativa. Não entregue antes de ela tentar se comunicar.",
+   comemore: "Um olhar, um gesto, um som ou “mais” — tudo isso é pedir, e pedir é comunicar." },
+ { t: "Música com pausa", min: 8, mat: "Só a sua voz",
+   passos: ["Escolha uma música que a criança conhece.", "Cante algumas vezes inteira, com gestos.", "Depois cante e PARE antes da última palavra.", "Espere ela completar com som, palavra ou gesto."],
+   falar: ["“Atirei o pau no ga… (pausa)”", "“O sapo não lava o … (pausa)”", "“Parabéns pra … (pausa)”"],
+   dica: "Use sempre as mesmas 2 ou 3 músicas. A repetição é o que permite a criança completar.",
+   comemore: "Se ela fizer qualquer som na hora da pausa ou o gesto da música." },
+ { t: "Tchau, palma e jóinha", min: 6, mat: "Nenhum",
+   passos: ["Use gestos sempre nas mesmas situações do dia.", "Tchau quando alguém sai, palma quando algo dá certo.", "Pegue a mãozinha dela com carinho e ajude a fazer o gesto.", "Aos poucos, ajude cada vez menos."],
+   falar: ["“Tchau, papai! Tchau!”", "“Eeee! Bate palma!”", "“Deu certo? Jóinha!”"],
+   dica: "Gestos são a ponte para as palavras. Criança que usa gestos costuma ter mais facilidade para falar depois.",
+   comemore: "Quando ela fizer o gesto sozinha, sem ajuda." },
+ { t: "Narrador do banho", min: 10, mat: "A hora do banho",
+   passos: ["Durante o banho, conte em voz alta o que está acontecendo.", "Use frases bem curtas, de 2 ou 3 palavras.", "Fale o que ELA está fazendo ou olhando.", "Repita as mesmas palavras todo dia."],
+   falar: ["“Água! Molha o pé.”", "“Lava a barriga. Esfrega, esfrega!”", "“Splash! Água caiu!”"],
+   dica: "Fale pouco e devagar, sobre o que ela está prestando atenção. Frases longas ela ainda não consegue acompanhar.",
+   comemore: "Se ela olhar para você quando você fala ou fizer sons durante o banho." },
+ { t: "Carrinho vrum vrum", min: 8, mat: "Carrinho, bola ou qualquer brinquedo que role",
+   passos: ["Empurre o carrinho para ela fazendo o som.", "Deixe ela empurrar de volta para você.", "Toda vez, faça o mesmo som.", "Antes de empurrar, faça “pronto… e…” e espere."],
+   falar: ["“Vrum vruuum!”", "“Pronto… e… JÁ!”", "“Bum! Bateu!”"],
+   dica: "Brincadeira de vai e volta ensina a “vez de cada um” — que é a base de uma conversa.",
+   comemore: "Se ela devolver o carrinho ou fizer o som junto." },
+ { t: "Assopra, assopra", min: 6, mat: "Algodão, papel picado ou canudinho com água",
+   passos: ["Coloque um pedacinho de algodão na mesa.", "Assopre mostrando como faz, com bochecha cheia.", "Convide a criança a assoprar também.", "No copo, assopre pelo canudo para fazer bolhas."],
+   falar: ["“Fuuu! Voou!”", "“Agora você: fuuuu!”", "“Olha as bolhas: blub blub!”"],
+   dica: "Brincadeiras de sopro trabalham os músculos e o controle do ar que a fala usa.",
+   comemore: "Qualquer sopro, mesmo fraquinho." },
+ { t: "Me dá / toma", min: 8, mat: "Bola ou brinquedo preferido",
+   passos: ["Segure o brinquedo e estenda a mão pedindo.", "Quando ela der, agradeça com alegria.", "Devolva dizendo “toma”.", "Troquem várias vezes."],
+   falar: ["“Me dá? Obrigada!”", "“Toma! É seu!”", "“Minha vez… sua vez!”"],
+   dica: "Essa troca simples ensina a ideia de “eu e você” na comunicação.",
+   comemore: "Quando ela estender o brinquedo ou a mão sozinha." },
+],
+2: [
+ { t: "Pote das surpresas", min: 10, mat: "Um pote ou caixa + 5 objetos da casa (colher, meia, bola, carrinho, copo)",
+   passos: ["Coloque os objetos dentro do pote, sem ela ver.", "Tire um de cada vez, com suspense.", "Diga o nome do objeto 3 vezes, de forma divertida.", "Deixe ela tirar o próximo."],
+   falar: ["“O que tem aqui dentro? … BOLA!”", "“Bola! A bola rola. Bola!”", "“Agora você tira!”"],
+   dica: "Repetir o nome 3 vezes de jeitos diferentes ajuda a palavra a “grudar”.",
+   comemore: "Se ela tentar dizer o nome de qualquer objeto, mesmo pela metade (“bo” para bola)." },
+ { t: "Escolha difícil", min: 5, mat: "Duas opções que ela goste (dois lanches, dois brinquedos)",
+   passos: ["Mostre as duas opções, uma em cada mão.", "Diga o nome de cada uma.", "Espere ela escolher.", "Se ela só apontar, diga o nome e espere mais um pouco antes de entregar."],
+   falar: ["“Quer BANANA ou BISCOITO?”", "“Ah, BISCOITO! Biscoito.”", "“Qual? Suco ou água?”"],
+   dica: "Pergunta de escolha é melhor que pergunta de sim/não. Ela já ouve a palavra que precisa dizer.",
+   comemore: "Quando ela disser o nome (ou parte do nome) da opção escolhida." },
+ { t: "Tudo tem nome na cozinha", min: 10, mat: "A cozinha, na hora de preparar uma refeição",
+   passos: ["Coloque a criança num lugar seguro onde ela veja você.", "Mostre cada coisa que for usar.", "Diga o nome e deixe ela tocar.", "Pergunte “cadê?” e veja se ela aponta."],
+   falar: ["“Olha: OVO. Ovo!”", "“Cadê a colher? Aqui, colher!”", "“Água! Glub glub.”"],
+   dica: "Rotina é a melhor terapia de casa: as mesmas palavras, todo dia, no mesmo lugar.",
+   comemore: "Se ela apontar o objeto certo quando você perguntar “cadê?”." },
+ { t: "Mais, acabou, abre", min: 8, mat: "Lanche em pedacinhos, pote com tampa",
+   passos: ["Dê o lanche em pedaços pequenos, um de cada vez.", "Espere ela pedir mais (com som ou palavra).", "Quando acabar, mostre as mãos vazias: “acabou”.", "Coloque algo num pote fechado e espere ela pedir “abre”."],
+   falar: ["“Mais? MAIS biscoito.”", "“Acabou! Não tem mais.”", "“Abre? ABRE!”"],
+   dica: "Palavras como “mais”, “acabou” e “abre” servem para muitas situações. Por isso valem ouro.",
+   comemore: "A primeira vez que ela usar “mais”, “abre” ou “acabou” no momento certo." },
+ { t: "Livro: cadê o…?", min: 10, mat: "Um livro com figuras grandes (ou os cartões do app)",
+   passos: ["Sente com a criança no colo.", "Não leia o texto: aponte e nomeie as figuras.", "Pergunte “cadê o…?” e espere ela apontar.", "Depois aponte e pergunte “o que é isso?”."],
+   falar: ["“Olha: o PATO! Quá quá.”", "“Cadê o cachorro? Isso! Cachorro!”", "“O que é isso? … É a bola!”"],
+   dica: "Deixe ela virar as páginas e escolher onde parar. Siga o interesse dela.",
+   comemore: "Quando ela apontar certo — e mais ainda se ela disser o nome." },
+ { t: "Boneca com fome", min: 10, mat: "Boneca ou bichinho de pelúcia, colher, prato",
+   passos: ["Diga que a boneca está com fome.", "Dê comida para a boneca com a colher.", "Passe a colher para a criança fazer.", "Depois a boneca vai dormir: coloque para nanar."],
+   falar: ["“A boneca quer PAPÁ. Come, boneca!”", "“Hum, gostoso!”", "“Agora nana. Shhh… dormiu.”"],
+   dica: "Faz de conta ajuda a criança a entender que palavras representam coisas e ações.",
+   comemore: "Se ela der comida para a boneca ou disser “papá”, “nana”." },
+ { t: "Alô, quem é?", min: 6, mat: "Telefone de brinquedo ou um celular desligado",
+   passos: ["Finja que o telefone está tocando: “trim trim!”.", "Atenda animada e passe para a criança.", "Diga quem está ligando (vovó, papai).", "Ajude a dizer “alô” e “tchau”."],
+   falar: ["“Trim trim! Alô? É a vovó!”", "“Fala alô!”", "“Tchau, vovó! Beijo!”"],
+   dica: "“Alô” e “tchau” são palavras fáceis e muito motivadoras.",
+   comemore: "Quando ela colocar o telefone no ouvido ou disser “alô”." },
+ { t: "Caixa fechada", min: 6, mat: "Brinquedo favorito dentro de um pote transparente bem fechado",
+   passos: ["Coloque o brinquedo no pote e feche bem.", "Entregue para a criança.", "Quando ela pedir ajuda (mesmo com gesto), espere um pouco.", "Diga a palavra e abra."],
+   falar: ["“Hum… está fechado! Quer ABRIR?”", "“Abre! Abriu!”", "“Ajuda? A mamãe ajuda.”"],
+   dica: "Situações em que ela PRECISA de você criam vontade de se comunicar. Não resolva antes de ela tentar.",
+   comemore: "Quando ela usar uma palavra ou som para pedir ajuda." },
+ { t: "Cabeça, ombro, joelho e pé", min: 6, mat: "Só vocês dois",
+   passos: ["Cante a música tocando nas partes do corpo.", "Cante devagar.", "Depois pergunte “cadê o pé?” e espere.", "Toque nas partes do corpo dela com carinho, nomeando."],
+   falar: ["“Cadê o NARIZ? Aqui o nariz!”", "“Cadê o pé do bebê?”", "“Barriga! Que barriguinha!”"],
+   dica: "Partes do corpo estão entre as primeiras palavras que as crianças entendem.",
+   comemore: "Quando ela apontar no próprio corpo a parte que você pediu." },
+ { t: "Passeio narrado", min: 10, mat: "Um passeio na rua, no quintal ou na janela",
+   passos: ["Mostre o que aparece no caminho.", "Diga o nome com animação.", "Pare quando ela olhar para algo e diga o nome daquilo.", "Repita as palavras na volta para casa."],
+   falar: ["“Olha o CARRO! Vrum.”", "“Au au! Cachorro!”", "“Árvore. Que árvore grande!”"],
+   dica: "Fale sobre o que ELA está olhando, não sobre o que você quer mostrar.",
+   comemore: "Quando ela apontar algo e olhar para você, querendo que você veja também." },
+],
+3: [
+ { t: "Separando as coisas", min: 10, mat: "Brinquedos e objetos misturados, 2 caixas",
+   passos: ["Misture bichinhos e comidinhas (ou meias e talheres).", "Uma caixa é dos bichos, outra das comidas.", "Pegue um item, diga o nome e onde vai.", "Deixe a criança separar e nomear."],
+   falar: ["“Cachorro é bicho. Vai na caixa dos bichos!”", "“E isso? Banana! Banana é comida.”", "“Onde vai o gato?”"],
+   dica: "Organizar por grupos ajuda a criança a guardar as palavras e a entender o que cada uma significa.",
+   comemore: "Quando ela disser o nome e colocar na caixa certa." },
+ { t: "Ações em movimento", min: 8, mat: "Espaço para se mexer",
+   passos: ["Faça uma ação e diga o nome dela.", "Peça para a criança fazer junto.", "Depois ela escolhe a ação e você faz.", "Inclua: pula, corre, senta, deita, gira, para."],
+   falar: ["“PULA! Pula, pula, pula!”", "“Agora SENTA. Sentou!”", "“O que a mamãe faz agora?”"],
+   dica: "Muitas crianças só falam nomes de coisas. Ações (verbos) são o que permite juntar palavras depois.",
+   comemore: "Quando ela disser o nome de uma ação." },
+ { t: "Esconde em cima, embaixo", min: 8, mat: "Um brinquedo pequeno, mesa, cadeira, almofada",
+   passos: ["Esconda o brinquedo enquanto ela olha.", "Diga onde ele está.", "Depois esconda sem ela ver e procurem juntos.", "Quando acharem, diga onde estava."],
+   falar: ["“O urso está EMBAIXO da mesa!”", "“Será que está EM CIMA da cadeira?”", "“DENTRO da caixa! Achou!”"],
+   dica: "Palavras de lugar (em cima, embaixo, dentro) são difíceis — por isso precisam de brincadeira e repetição.",
+   comemore: "Quando ela procurar no lugar certo ou disser “embaixo”, “dentro”." },
+ { t: "Mercadinho", min: 12, mat: "Embalagens vazias, sacola, notas de papel",
+   passos: ["Monte uma “lojinha” com embalagens.", "Você é a vendedora, ela é a cliente (e depois troca).", "Ela precisa pedir o que quer comprar.", "Entregue, receba o “dinheiro” e agradeça."],
+   falar: ["“Bom dia! O que você quer comprar?”", "“Ah, ARROZ! Mais alguma coisa?”", "“Obrigada! Volte sempre!”"],
+   dica: "No faz de conta, a criança fala sem pressão. Deixe ela ser a vendedora também.",
+   comemore: "Quando ela pedir um item pelo nome." },
+ { t: "Álbum da família", min: 8, mat: "Fotos no celular ou impressas",
+   passos: ["Mostre fotos de pessoas da família.", "Diga o nome de cada uma.", "Pergunte “quem é?” e espere.", "Conte uma coisa sobre a foto: “vovó na praia”."],
+   falar: ["“Quem é essa? É a VOVÓ!”", "“E esse? O titio!”", "“Olha a vovó na praia. Água!”"],
+   dica: "Nomes de pessoas queridas costumam motivar muito a criança a falar.",
+   comemore: "Quando ela disser o nome (ou apelido) de alguém da família." },
+ { t: "Lavar a louça de brinquedo", min: 10, mat: "Bacia com água, copos e pratos de plástico, esponja",
+   passos: ["Coloque a bacia no chão com uma toalha embaixo.", "Lavem juntos os copos e pratos.", "Nomeie cada objeto e cada ação.", "Depois enxuguem e guardem."],
+   falar: ["“Lava o COPO. Esfrega!”", "“Molhou! Agora SECA.”", "“Guarda o prato.”"],
+   dica: "Brincadeiras de rotina de casa ensinam palavras que ela vai usar todo dia.",
+   comemore: "Quando ela disser um objeto ou uma ação durante a brincadeira." },
+ { t: "Caça às cores", min: 8, mat: "Objetos coloridos da casa",
+   passos: ["Escolha UMA cor do dia (ex.: vermelho).", "Procurem juntos coisas dessa cor pela casa.", "Diga o nome do objeto e a cor.", "No dia seguinte, outra cor."],
+   falar: ["“Vamos achar coisas VERMELHAS!”", "“Maçã vermelha! Carro vermelho!”", "“Achou mais uma!”"],
+   dica: "Não se preocupe se ela ainda erra as cores. O importante aqui é nomear objetos e brincar junto.",
+   comemore: "Quando ela trouxer um objeto e disser o nome." },
+ { t: "Grande e pequeno", min: 8, mat: "Pares de objetos de tamanhos diferentes (colher grande e pequena, bola grande e pequena)",
+   passos: ["Mostre os dois objetos lado a lado.", "Fale com voz grossa para o grande e fininha para o pequeno.", "Peça um deles: “me dá o grande”.", "Troque os pares."],
+   falar: ["“Essa bola é GRANDE!” (voz grossa)", "“E essa é pequenininha!” (voz fina)", "“Me dá a colher grande.”"],
+   dica: "Palavras que descrevem (grande, quente, molhado) dão “cor” à fala e preparam as frases.",
+   comemore: "Quando ela escolher certo ou disser “grande”/“pequeno”." },
+ { t: "Lanche com pedido", min: 10, mat: "Lanche dividido em várias partes (frutas, biscoito, suco)",
+   passos: ["Deixe o lanche à vista, mas fora do alcance.", "Ela precisa pedir cada parte.", "Ofereça escolhas: “maçã ou uva?”.", "Repita o pedido dela de forma completa."],
+   falar: ["“O que você quer?”", "“Uva! Quer UVA. Toma a uva.”", "“Mais suco? Pede: mais suco!”"],
+   dica: "Não precisa fazer isso em toda refeição — escolha um lanche por dia para praticar.",
+   comemore: "Quando ela pedir pelo nome, sem apontar." },
+ { t: "O que o bicho faz?", min: 8, mat: "Bichinhos ou os cartões do app",
+   passos: ["Mostre um bicho e pergunte o que ele faz.", "Responda com uma ação: o peixe nada, o passarinho voa.", "Imitem a ação juntos.", "Depois ela escolhe o bicho e você imita."],
+   falar: ["“O passarinho… VOA! Voa, voa!”", "“O peixe nada.”", "“E o cachorro? Corre e late!”"],
+   dica: "Juntar o nome com uma ação prepara a criança para dizer duas palavras juntas.",
+   comemore: "Quando ela disser o que o bicho faz." },
+],
+4: [
+ { t: "Palavra + 1", min: 10, mat: "Qualquer brincadeira que ela goste",
+   passos: ["Brinque com a criança do jeito que ela quiser.", "Quando ela disser uma palavra, repita e acrescente outra.", "Não peça para ela repetir — só mostre o modelo.", "Faça isso o máximo de vezes que conseguir."],
+   falar: ["Ela: “Carro.” Você: “Carro AZUL!”", "Ela: “Água.” Você: “Quer água!”", "Ela: “Bola.” Você: “Chuta bola!”"],
+   dica: "Essa técnica (chamada expansão) é uma das mais usadas por fonoaudiólogos. A criança ouve exatamente o próximo passo.",
+   comemore: "Quando ela repetir as duas palavras juntas por conta própria." },
+ { t: "Quem faz o quê?", min: 10, mat: "Bonecos, bichinhos ou pessoas da casa",
+   passos: ["Faça um boneco realizar uma ação.", "Diga quem fez e o que fez.", "Pergunte: “o que o urso está fazendo?”.", "Troquem: ela mexe o boneco e conta."],
+   falar: ["“O urso COME.”", "“O papai dorme. Shh!”", "“O que o cachorro faz? … Cachorro pula!”"],
+   dica: "Quem + ação (“nenê dorme”) é uma das primeiras frases que as crianças montam.",
+   comemore: "Quando ela disser quem + o que faz." },
+ { t: "Mais + coisa", min: 8, mat: "Lanche, bolinhas, peças de montar",
+   passos: ["Dê poucos itens de cada vez.", "Quando ela disser “mais”, espere um pouco.", "Dê o modelo: “mais bolinha”.", "Entregue quando ela tentar falar as duas palavras."],
+   falar: ["“Mais o quê? Mais BISCOITO?”", "“Mais peça! Toma.”", "“Mais suco ou mais água?”"],
+   dica: "Ela já fala “mais”. Agora é só acrescentar o nome da coisa.",
+   comemore: "Quando ela disser “mais” + o nome de alguma coisa." },
+ { t: "Cadê o…?", min: 8, mat: "Brinquedos escondidos pela sala",
+   passos: ["Esconda 3 brinquedos (pode deixar um pedacinho aparecendo).", "Pergunte: “cadê o carro?”.", "Quando acharem, comemore.", "Depois ela esconde e pergunta para você."],
+   falar: ["“Cadê a bola? … Achou a bola!”", "“Agora você pergunta: cadê…?”", "“Hum, cadê o urso?”"],
+   dica: "Deixar a criança fazer a pergunta é tão importante quanto responder.",
+   comemore: "Quando ela perguntar “cadê + coisa?”." },
+ { t: "Meu e seu", min: 8, mat: "Objetos de pessoas da casa (sapato do papai, copo da mamãe)",
+   passos: ["Pegue objetos de pessoas diferentes.", "Diga de quem é cada um.", "Pergunte: “de quem é esse?”.", "Troque de dono de brincadeira para ela corrigir."],
+   falar: ["“Esse é o sapato do PAPAI.”", "“E esse? Copo da mamãe!”", "“Hum, é meu? … Não? É SEU!”"],
+   dica: "Errar de propósito (“esse sapato é do cachorro?”) deixa a criança com vontade de corrigir — e falar.",
+   comemore: "Quando ela disser “meu”, “do papai” ou corrigir você." },
+ { t: "Cozinha de faz de conta", min: 12, mat: "Panelinha, colher, “ingredientes” (massinha, papel, blocos)",
+   passos: ["Façam juntos um bolo ou uma sopa de mentirinha.", "Nomeie cada ação com duas palavras.", "Peça para ela te dar os ingredientes.", "No fim, sirvam para os bonecos."],
+   falar: ["“Mexe o bolo! Mexe, mexe.”", "“Põe açúcar.”", "“Bolo quente! Assopra!”"],
+   dica: "Ação + coisa (“mexe bolo”, “põe água”) é o tipo de frase que essa fase pede.",
+   comemore: "Quando ela disser uma ação + uma coisa." },
+ { t: "O que está acontecendo?", min: 10, mat: "Livro com cenas (ou fotos no celular)",
+   passos: ["Escolha uma figura com alguém fazendo algo.", "Pergunte: “o que está acontecendo?”.", "Se ela disser uma palavra, expanda para duas ou três.", "Deixe ela escolher a próxima página."],
+   falar: ["“O menino está… COMENDO!”", "“Menino come. Come o quê? Bolo!”", "“E aqui? O cachorro dorme.”"],
+   dica: "Dê tempo para ela pensar. Contar até 5 antes de ajudar faz diferença.",
+   comemore: "Quando ela descrever a figura com duas palavras ou mais." },
+ { t: "Vai e para", min: 8, mat: "Carrinho ou a própria criança andando",
+   passos: ["Brinquem de “estátua”: quando você diz “vai”, anda; “para”, para.", "Depois ela dá o comando para você.", "Use o carrinho também: “carro vai!”, “carro parou!”.", "Acelere e desacelere para ficar divertido."],
+   falar: ["“Carro VAI! … Carro PAROU!”", "“Mamãe vai! Mamãe para!”", "“Agora você manda!”"],
+   dica: "Dar ordens para o adulto é muito motivador para a criança falar.",
+   comemore: "Quando ela mandar você ir ou parar usando palavras." },
+ { t: "Descreva o brinquedo", min: 8, mat: "Saco ou fronha + brinquedos variados",
+   passos: ["Tire um brinquedo do saco.", "Diga o nome + uma característica.", "Peça para ela fazer o mesmo.", "Vale cor, tamanho, barulho e textura."],
+   falar: ["“Bola GRANDE!”", "“Carro vermelho.”", "“Urso macio! Que fofo.”"],
+   dica: "Nome + característica (“bola grande”) amplia a frase sem ficar difícil.",
+   comemore: "Quando ela disser nome + característica." },
+ { t: "Ligação para a vovó", min: 8, mat: "Uma chamada de vídeo de verdade (ou de brincadeira)",
+   passos: ["Antes de ligar, combinem o que vão contar.", "Escolham 1 ou 2 coisas que aconteceram no dia.", "Durante a ligação, ajude com o começo da frase.", "Deixe ela terminar."],
+   falar: ["“Conta pra vovó: hoje a gente foi no…”", "“O que você comeu? Fala pra vovó!”", "“Tchau, vovó! Beijo!”"],
+   dica: "Ensaiar antes deixa a criança mais segura para falar na hora.",
+   comemore: "Quando ela contar qualquer coisa para outra pessoa." },
+],
+5: [
+ { t: "Como foi o seu dia?", min: 10, mat: "Hora do jantar ou do banho",
+   passos: ["Troque “como foi a escola?” por perguntas específicas.", "Comece contando o SEU dia em frases curtas.", "Faça uma pergunta de cada vez.", "Ajude a organizar: primeiro, depois, no fim."],
+   falar: ["“Eu almocei arroz e feijão. E você, o que comeu?”", "“Com quem você brincou hoje?”", "“E depois, o que aconteceu?”"],
+   dica: "Perguntas abertas demais (“como foi?”) recebem respostas curtas (“foi bom”). Seja específica.",
+   comemore: "Quando ela contar algo com começo e fim." },
+ { t: "Sequência da história", min: 10, mat: "3 desenhos simples (pode desenhar: acorda, toma café, vai à escola)",
+   passos: ["Desenhe 3 cenas de uma rotina.", "Misture e peça para ela colocar na ordem.", "Conte a história junto usando “primeiro, depois, no fim”.", "Peça para ela contar sozinha."],
+   falar: ["“PRIMEIRO o menino acorda.”", "“DEPOIS ele toma café.”", "“NO FIM ele vai para a escola!”"],
+   dica: "Organizar uma história em ordem é uma habilidade importante para a escola.",
+   comemore: "Quando ela contar as 3 partes na ordem." },
+ { t: "Por quê? Porque…", min: 8, mat: "Situações do dia a dia",
+   passos: ["Faça perguntas de “por quê” sobre coisas concretas.", "Dê exemplos de resposta com “porque”.", "Aceite qualquer resposta e expanda.", "Deixe ela fazer perguntas para você também."],
+   falar: ["“Por que a gente põe casaco? Porque está FRIO!”", "“Por que o nenê chora?”", "“Por que você acha que…?”"],
+   dica: "Explicar causas exige frases mais longas. Comece com situações que ela vive.",
+   comemore: "Quando ela usar “porque” numa resposta." },
+ { t: "Adivinha o que é", min: 8, mat: "Objetos escondidos ou os cartões do app",
+   passos: ["Esconda um objeto e dê pistas.", "Ela tenta adivinhar.", "Depois é a vez dela dar as pistas.", "Ajude com perguntas: é de comer? é de brincar?"],
+   falar: ["“É redondo, pula e a gente chuta. O que é?”", "“É um bicho que faz miau…”", "“Agora você me dá uma pista!”"],
+   dica: "Descrever sem dizer o nome é um ótimo exercício de vocabulário.",
+   comemore: "Quando ela conseguir dar uma pista que faça você adivinhar." },
+ { t: "Receita juntos", min: 15, mat: "Uma receita simples (vitamina, sanduíche, gelatina)",
+   passos: ["Mostre os ingredientes e diga o nome de cada um.", "Façam passo a passo.", "Em cada passo, pergunte “e agora?”.", "No fim, peça para ela contar como fizeram."],
+   falar: ["“Primeiro a gente pega o pão.”", "“E agora? Passa o requeijão!”", "“Conta pro papai como você fez!”"],
+   dica: "Contar algo que ela mesma fez é muito mais fácil que inventar.",
+   comemore: "Quando ela recontar a receita para alguém." },
+ { t: "Teatro de fantoche", min: 12, mat: "Meias viram fantoches (desenhe olhos com caneta)",
+   passos: ["Cada um com um fantoche.", "Os fantoches conversam: se apresentam, contam do dia.", "Crie um probleminha (o fantoche perdeu o sapato).", "Deixe ela resolver a história."],
+   falar: ["“Oi! Eu sou o Seu Meia. Qual é o seu nome?”", "“Ai, perdi meu sapato! E agora?”", "“Obrigado por me ajudar!”"],
+   dica: "Muitas crianças falam mais através de um personagem do que diretamente.",
+   comemore: "Quando os fantoches tiverem uma conversa com várias falas." },
+ { t: "Eu vejo, eu vejo", min: 8, mat: "Qualquer ambiente (casa, carro, praça)",
+   passos: ["Diga: “eu vejo uma coisa que é…” e dê uma pista.", "Ela tenta adivinhar.", "Troquem de vez.", "Aumente as pistas aos poucos (cor + tamanho + para que serve)."],
+   falar: ["“Eu vejo uma coisa AMARELA e redonda…”", "“É de comer? Não!”", "“Sua vez: eu vejo…”"],
+   dica: "Bom para o carro e para filas: não precisa de material nenhum.",
+   comemore: "Quando ela der duas pistas diferentes." },
+ { t: "Rimas e sílabas", min: 8, mat: "Só a voz",
+   passos: ["Diga duas palavras que rimam e mostre que terminam igual.", "Peça para ela achar uma rima (vale palavra inventada).", "Batam palmas para cada pedaço da palavra: ca-mi-sa.", "Brinquem com o nome dela."],
+   falar: ["“GATO rima com PATO!”", "“Bola rima com… cola!”", "“Ca-mi-sa: três palmas!”"],
+   dica: "Brincar com os sons das palavras prepara a criança para ler e escrever.",
+   comemore: "Quando ela achar uma rima ou separar as palmas certinho." },
+ { t: "Desenha e conta", min: 10, mat: "Papel e lápis de cor",
+   passos: ["Peça para ela desenhar algo que fez ou gostaria de fazer.", "Depois pergunte sobre o desenho.", "Escreva embaixo o que ela disser, do jeito que ela disse.", "Leia em voz alta a “história” dela."],
+   falar: ["“Me conta: o que é isso aqui?”", "“E quem está aqui?”", "“Vou escrever o que você falou: …”"],
+   dica: "Ver a própria fala escrita valoriza a criança e incentiva a falar mais.",
+   comemore: "Quando ela explicar o desenho com várias frases." },
+ { t: "Repetir bonito (sem corrigir)", min: 0, mat: "Use o dia todo, em qualquer conversa",
+   passos: ["Quando ela falar uma palavra errada, NÃO diga “está errado”.", "Repita a frase dela do jeito certo, com naturalidade.", "Dê um pouco mais de ênfase no som certo.", "Siga a conversa normalmente."],
+   falar: ["Ela: “Olha o tachorro!” Você: “É mesmo, o CAchorro! Que cachorro grande!”", "Ela: “Eu fazi.” Você: “Você FEZ! Que legal que você fez.”", "Ela: “Lato!” Você: “Um RATO? Onde?”"],
+   dica: "Corrigir toda hora deixa a criança insegura e com vontade de falar menos. O modelo certo, repetido com carinho, funciona melhor.",
+   comemore: "Quando ela, sozinha, começar a falar o som certo em algumas palavras." },
+],
+};
+
+const DICAS_REPETICAO = [
+  "1ª vez: apresente a brincadeira e divirta-se. Não cobre nada.",
+  "2ª vez: agora espere mais. Conte até 5 em silêncio antes de ajudar.",
+  "3ª vez: deixe a criança liderar. Siga o que ela fizer e expanda o que ela disser.",
+];
+
+// Cartões que falam (emoji + palavra + som opcional)
+const CARTOES = [
+  { cat: "Bichos", emoji: "🐾", itens: [["🐶","cachorro","au au"],["🐱","gato","miau"],["🐮","vaca","muuu"],["🐷","porco","óinc óinc"],["🐔","galinha","có có có"],["🦆","pato","quá quá"],["🐸","sapo","croac"],["🐴","cavalo","pocotó"],["🐑","ovelha","béééé"],["🦁","leão","rooaar"],["🐵","macaco","uh uh ah ah"],["🐟","peixe","blub blub"],["🐦","passarinho","piu piu"],["🐝","abelha","zzzzz"]] },
+  { cat: "Comidas", emoji: "🍎", itens: [["🍎","maçã"],["🍌","banana"],["🍇","uva"],["🍓","morango"],["🍉","melancia"],["🍞","pão"],["🧀","queijo"],["🥚","ovo"],["🍪","biscoito"],["🍚","arroz"],["🥛","leite"],["💧","água"],["🧃","suco"],["🍰","bolo"]] },
+  { cat: "Casa", emoji: "🏠", itens: [["🛏️","cama"],["🪑","cadeira"],["🚪","porta"],["🪟","janela"],["🛁","banheira"],["🚽","privada"],["📺","televisão"],["📱","celular"],["🥄","colher"],["🥤","copo"],["🍽️","prato"],["🧸","urso"],["⚽","bola"],["📚","livro"]] },
+  { cat: "Corpo", emoji: "👃", itens: [["👀","olhos"],["👃","nariz"],["👄","boca"],["👂","orelha"],["🦷","dente"],["✋","mão"],["🦶","pé"],["💪","braço"],["🦵","perna"],["💇","cabelo"]] },
+  { cat: "Roupas", emoji: "👕", itens: [["👕","camiseta"],["👖","calça"],["🩳","bermuda"],["👗","vestido"],["🧦","meia"],["👟","tênis"],["🧢","boné"],["🧥","casaco"],["🩲","cueca"],["👶","fralda"]] },
+  { cat: "Ações", emoji: "🏃", itens: [["🍽️","comer"],["🥤","beber"],["😴","dormir"],["🏃","correr"],["🦘","pular"],["🛁","tomar banho"],["🎨","pintar"],["📖","ler"],["🎵","cantar"],["💃","dançar"],["🤗","abraçar"],["👋","tchau"],["😘","beijo"],["👏","bater palma"]] },
+  { cat: "Transportes", emoji: "🚗", itens: [["🚗","carro","vrum vrum"],["🚌","ônibus","bi bi"],["🚲","bicicleta","trim trim"],["🏍️","moto","vrum"],["🚂","trem","piuí"],["✈️","avião","zuuum"],["🚁","helicóptero","tum tum tum"],["🚒","bombeiro","ii-óo ii-óo"],["🚑","ambulância","ii-óo"],["⛵","barco"]] },
+  { cat: "Pessoas", emoji: "👨‍👩‍👧", itens: [["👩","mamãe"],["👨","papai"],["👵","vovó"],["👴","vovô"],["👶","nenê"],["👧","menina"],["👦","menino"],["👩‍🏫","professora"],["👩‍⚕️","médica"],["🧑‍🤝‍🧑","amigo"]] },
+  { cat: "Sentimentos", emoji: "😊", itens: [["😊","feliz"],["😢","triste"],["😠","bravo"],["😨","com medo"],["😴","com sono"],["🤒","dodói"],["😋","com fome"],["😂","rindo"]] },
+  { cat: "Palavras mágicas", emoji: "✨", itens: [["➕","mais"],["🛑","acabou"],["📦","abre"],["🙋","quero"],["🆘","ajuda"],["🙅","não"],["👍","sim"],["🙏","por favor"],["💛","obrigado"],["👀","olha"]] },
+];
+
+// Marcos por idade (referência geral; cada criança tem seu ritmo)
+const MARCOS = [
+  { idade: "12 meses", meses: 12, itens: ["Balbucia sílabas repetidas (mamama, dadada)", "Olha quando é chamado pelo nome", "Usa gestos como tchau e apontar", "Entende o “não”", "Fala ou tenta falar 1 a 3 palavras"] },
+  { idade: "18 meses", meses: 18, itens: ["Aponta para mostrar algo que achou interessante", "Fala pelo menos 6 a 10 palavras", "Segue pedidos simples (“pega a bola”)", "Imita sons e ações dos adultos", "Aponta partes do corpo quando pedido"] },
+  { idade: "2 anos", meses: 24, itens: ["Fala cerca de 50 palavras ou mais", "Junta duas palavras (“mais água”, “papai foi”)", "Aponta figuras num livro quando você pergunta", "Entende perguntas simples (“cadê o sapato?”)", "Brinca de faz de conta simples (dar comida à boneca)"] },
+  { idade: "3 anos", meses: 36, itens: ["Fala frases de 3 palavras ou mais", "Pessoas de fora da família entendem boa parte do que fala", "Responde perguntas com “o que” e “onde”", "Diz o próprio nome", "Conversa com trocas de vez (fala, espera, responde)"] },
+  { idade: "4 anos", meses: 48, itens: ["Conta o que aconteceu no dia", "Quase todas as pessoas entendem o que fala", "Faz perguntas com “por quê”", "Usa frases com 4 a 6 palavras", "Entende histórias curtas"] },
+  { idade: "5 anos", meses: 60, itens: ["Conta histórias com começo, meio e fim", "Fala de forma clara a maioria dos sons (o R pode estar em ajuste)", "Usa palavras de tempo (ontem, amanhã, depois)", "Brinca com rimas", "Segue instruções com 2 ou 3 passos"] },
+];
+
+const ALERTAS_TEXTO = {
+  regressao: "Perdeu palavras ou habilidades que já tinha. Isso merece avaliação o quanto antes, com pediatra e fonoaudiólogo.",
+  nome: "Raramente olha quando é chamado pelo nome. Vale conversar com o pediatra e procurar avaliação.",
+  aponta: "Ainda não aponta para pedir ou mostrar (a partir de 1 ano e meio). Vale procurar avaliação.",
+  semPalavras: "Ainda não fala nenhuma palavra perto de 1 ano e meio ou mais. Vale procurar avaliação fonoaudiológica.",
+  semJuntar: "Aos 2 anos e meio ou mais ainda não junta duas palavras. Vale procurar avaliação fonoaudiológica.",
+  compreensao: "Tem dificuldade para entender pedidos simples sem gestos (a partir dos 2 anos). Vale procurar avaliação.",
+  inteligivel: "Aos 3 anos ou mais, quase ninguém entende o que fala. Vale procurar avaliação fonoaudiológica.",
+  imitacao: "Raramente imita sons ou gestos. Vale observar de perto e comentar com o pediatra.",
+};
+
+const GUIAS = [
+  { id: "erros", emoji: "⚠️", t: "8 hábitos que atrapalham a fala (sem a gente perceber)", corpo: [
+    ["Corrigir toda hora", "“Fala direito!”, “repete!”. A criança fica insegura e prefere ficar quieta. Em vez disso, repita a palavra certa com naturalidade e siga a conversa."],
+    ["Adivinhar tudo antes dela pedir", "Se tudo chega antes de ela tentar se comunicar, ela não precisa falar. Espere alguns segundos, com cara de expectativa."],
+    ["Falar como bebê", "“Vem tomar o tetê, vamos ver o auau.” Use palavras de verdade, em frases curtas: “Vamos tomar leite. Olha o cachorro!”."],
+    ["Fazer perguntas de sim ou não", "“Quer água?” só pede um aceno. Prefira escolhas: “quer água ou suco?”."],
+    ["Falar rápido e muito", "Frases longas e rápidas são difíceis de acompanhar. Fale devagar e curto, um pouco acima do nível dela."],
+    ["O irmão falar por ela", "Combine em casa que cada um responde por si. O irmão pode ser modelo, não intérprete."],
+    ["Tela como companhia o dia todo", "Vídeo não conversa de volta. A fala se desenvolve na troca com pessoas."],
+    ["Comparar com outras crianças na frente dela", "Cada criança tem seu ritmo. A comparação gera pressão, não fala."],
+  ]},
+  { id: "conversar", emoji: "💬", t: "5 jeitos de conversar que estimulam a fala", corpo: [
+    ["Fale sobre o que ela está olhando", "Siga o interesse da criança e nomeie aquilo que chamou a atenção dela."],
+    ["Narre a rotina", "“Vou abrir a porta. Abri! Vamos sair.” Você vira a legenda do dia."],
+    ["Espere (conte até 5)", "Depois de perguntar ou pausar, espere em silêncio. Muitas crianças precisam de mais tempo para responder."],
+    ["Expanda o que ela disser", "Ela diz “carro”, você responde “carro azul!”. Uma palavra a mais do que ela usou."],
+    ["Fique na altura dos olhos", "Sente no chão, olhe de frente. Ela vê sua boca e seu rosto, e se sente ouvida."],
+  ]},
+  { id: "tela", emoji: "📵", t: "Menos tela, mais conversa (sem guerra)", corpo: [
+    ["Combine horários", "Tela em horários previsíveis é mais fácil de aceitar do que proibir de repente."],
+    ["Assista junto", "Quando assistir, comente: “olha o cachorro! ele pulou!”. Assim a tela vira conversa."],
+    ["Evite tela nas refeições e antes de dormir", "São momentos ótimos de conversa e de rotina."],
+    ["Tenha uma alternativa pronta", "Uma caixa com brinquedos simples (pote, panelinha, bola) facilita trocar a tela por brincadeira."],
+    ["Dê o exemplo", "Criança imita. Celular guardado durante a brincadeira faz diferença."],
+  ]},
+  { id: "chupeta", emoji: "🍼", t: "Chupeta e mamadeira: o que elas mudam na fala", corpo: [
+    ["Por que importam", "O uso prolongado pode deixar a língua mais baixa e para frente, favorecer a respiração pela boca e diminuir as oportunidades de falar."],
+    ["Chupeta só para dormir", "Primeiro passo: tirar a chupeta durante o dia, quando a criança está brincando e conversando."],
+    ["Copo no lugar da mamadeira", "Copo aberto ou com canudo ajuda a desenvolver os músculos da boca."],
+    ["Retirada com carinho", "Combinados, histórias e substituição funcionam melhor do que tirar à força."],
+    ["Quando procurar ajuda", "Se houver boca sempre aberta, língua entre os dentes ou ronco, converse com o pediatra, o dentista e o fonoaudiólogo."],
+  ]},
+  { id: "quando", emoji: "🩺", t: "Quando procurar um fonoaudiólogo", corpo: [
+    ["Avaliar não é exagero", "A avaliação serve para entender o desenvolvimento da criança. Na dúvida, avaliar é sempre melhor do que esperar."],
+    ["Sinais que merecem atenção", "Não balbucia perto de 1 ano; não aponta nem dá tchau perto de 1 ano e meio; não fala nenhuma palavra perto de 1 ano e meio; não junta duas palavras perto dos 2 anos e meio; quase ninguém entende a fala aos 3 anos."],
+    ["Sinal de urgência", "Perder palavras ou habilidades que já tinha, em qualquer idade. Procure o pediatra o quanto antes."],
+    ["Como o app ajuda", "Leve o relatório do app para a consulta: ele mostra as palavras registradas, os marcos e suas observações."],
+    ["Lembre-se", "Este app é um apoio para a família estimular a fala em casa. Ele não substitui a avaliação nem a terapia com profissionais."],
+  ]},
+];
+
+</script>
+<script>
+const TIER = "completo";              // "basico" ou "completo"
+const UPGRADE_URL = "#";    // checkout do upgrade (só no básico)
+const COMPLETO = TIER === "completo";
+const KEY = "falaemcasa_v1";
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// ---------- estado ----------
+let S = load();
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+const hoje = () => new Date().toISOString().slice(0, 10);
+const fmt = (iso) => iso ? iso.split("-").reverse().slice(0, 2).join("/") : "";
+const idadeMeses = () => (S.perfil?.anos || 0) * 12 + (S.perfil?.meses || 0);
+const idadeTxt = () => {
+  const a = S.perfil?.anos || 0, m = S.perfil?.meses || 0;
+  return [a ? `${a} ano${a > 1 ? "s" : ""}` : "", m ? `${m} ${m > 1 ? "meses" : "mês"}` : ""].filter(Boolean).join(" e ") || "—";
+};
+const nome = () => S.perfil?.nome || "seu filho";
+const fase = () => FASES.find((f) => f.id === S.fase) || FASES[0];
+
+// ---------- navegação ----------
+const PREMIUM = ["diario", "marcos", "guias", "rel", "imp"];
+let stack = [];
+function go(id, push = true) {
+  if (push) { const cur = document.querySelector(".screen.on")?.id?.slice(2); if (cur && cur !== id) stack.push(cur); }
+  document.querySelectorAll(".screen").forEach((s) => s.classList.remove("on"));
+  const el = $("#s-" + id); el.classList.add("on");
+  const render = R[id]; if (render) render();
+  $("#nav").classList.toggle("hide", id === "quiz" || id === "res");
+  document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("on", b.dataset.go === id));
+  window.scrollTo(0, 0);
+}
+function back() { const p = stack.pop() || "home"; go(p, false); }
+document.querySelectorAll("nav button").forEach((b) => b.onclick = () => { stack = []; go(b.dataset.go); });
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2200); }
+const topbar = (titulo) => `<div class="top"><button class="back" onclick="back()">‹</button><h2>${titulo}</h2></div>`;
+
+function lockScreen(titulo, emoji, desc) {
+  return `${topbar(titulo)}
+  <div class="card lockbox gap"><div class="e">${emoji}🔒</div><h2>Exclusivo do Plano Completo</h2><p class="muted">${desc}</p></div>
+  ${upgBox()}`;
+}
+function upgBox() {
+  return `<div class="upg gap"><h3>⭐ Desbloqueie o Plano Completo</h3>
+  <ul class="small"><li>📒 Diário de palavras com gráfico de evolução</li><li>📄 Relatório em PDF para levar ao fono ou pediatra</li><li>✅ Marcos da fala por idade + sinais de alerta</li><li>📚 Guias: hábitos que atrapalham, telas, chupeta</li><li>🖨️ Cartões para imprimir</li></ul>
+  <a class="btn" href="${UPGRADE_URL}" target="_blank" rel="noopener">Quero o Plano Completo</a></div>`;
+}
+
+// ---------- QUIZ ----------
+const Q = [
+  { id: "nome", tipo: "texto", p: "Qual é o nome da criança?", sub: "Usamos só para personalizar o plano." },
+  { id: "idade", tipo: "idade", p: () => `Qual a idade de ${nome()}?` },
+  { id: "com", p: () => `Hoje, como ${nome()} se comunica?`, ops: [
+    ["🤫", "Ainda não fala palavras (sons, choro, gritos)", 1], ["🌱", "Fala de 1 a 10 palavras", 2], ["🌿", "Fala mais de 10 palavras, mas soltas", 3],
+    ["🧩", "Já junta 2 palavras (“mais água”, “papai foi”)", 4], ["💬", "Já fala frases, quero que fale melhor", 5]] },
+  { id: "nomeR", p: () => `Quando você chama ${nome()} pelo nome, ele(a) olha?`, ops: [["😀", "Sim, quase sempre", "sim"], ["🤔", "Às vezes", "as"], ["😕", "Raramente", "rar"]] },
+  { id: "aponta", p: "Aponta para pedir ou mostrar alguma coisa?", ops: [["👉", "Sim", "sim"], ["✋", "Ainda não", "nao"]] },
+  { id: "comp", p: "Entende pedidos simples sem você fazer gesto? (ex.: “pega o sapato”)", ops: [["👍", "Sim", "sim"], ["🤔", "Às vezes", "as"], ["😕", "Ainda não", "nao"]] },
+  { id: "imita", p: "Imita sons, gestos ou palavras que você faz?", ops: [["😀", "Sim, bastante", "sim"], ["🤔", "Às vezes", "as"], ["😕", "Raramente", "rar"]] },
+  { id: "regr", p: "Ele(a) parou de falar palavras ou de fazer coisas que já fazia antes?", ops: [["🙂", "Não", "nao"], ["😟", "Sim", "sim"]] },
+  { id: "intel", cond: () => (S.resp?.com || 1) >= 3, p: "Quem entende o que ele(a) fala?", ops: [["😀", "Quase todo mundo", "todos"], ["🏠", "Só a família", "familia"], ["😕", "Quase ninguém", "ninguem"]] },
+  { id: "tela", p: "Quanto tempo de tela (TV, celular, tablet) por dia?", ops: [["🌤️", "Menos de 1 hora", "pouco"], ["⏱️", "De 1 a 2 horas", "medio"], ["📱", "Mais de 2 horas", "muito"]] },
+];
+let qi = 0;
+function qVisiveis() { return Q.filter((q) => !q.cond || q.cond()); }
+function renderQuiz() {
+  const lista = qVisiveis(); const q = lista[qi];
+  $("#qfill").style.width = Math.round((qi / lista.length) * 100) + "%";
+  const p = typeof q.p === "function" ? q.p() : q.p;
+  let h = `<h1>${esc(p)}</h1>${q.sub ? `<p class="muted" style="margin-top:6px">${q.sub}</p>` : ""}<div style="margin-top:18px">`;
+  if (q.tipo === "texto") {
+    h += `<input class="field" id="qin" placeholder="Nome ou apelido" maxlength="30" value="${esc(S.perfil?.nome || "")}"><div style="margin-top:16px"><button class="btn" id="qnext">Continuar</button></div>`;
+  } else if (q.tipo === "idade") {
+    const a = S.perfil?.anos ?? "", m = S.perfil?.meses ?? 0;
+    h += `<div class="row"><div><label class="small muted">Anos</label><select class="field" id="qa">${[0,1,2,3,4,5,6].map((x) => `<option value="${x}" ${x === a ? "selected" : ""}>${x} ano${x === 1 ? "" : "s"}</option>`).join("")}</select></div>
+      <div><label class="small muted">Meses</label><select class="field" id="qm">${[...Array(12).keys()].map((x) => `<option value="${x}" ${x === m ? "selected" : ""}>${x} ${x === 1 ? "mês" : "meses"}</option>`).join("")}</select></div></div>
+      <p class="small muted" style="margin-top:10px">O app é pensado para crianças de 1 a 5 anos.</p>
+      <div style="margin-top:16px"><button class="btn" id="qnext">Continuar</button></div>`;
+  } else {
+    h += q.ops.map((o) => `<button class="opt" data-v="${o[2]}"><span class="e">${o[0]}</span>${o[1]}</button>`).join("");
+  }
+  h += `</div>${qi > 0 ? `<button class="btn sec" style="margin-top:14px" onclick="qi--;renderQuiz()">Voltar</button>` : ""}`;
+  $("#qbox").innerHTML = h;
+  S.perfil = S.perfil || {}; S.resp = S.resp || {};
+  if (q.tipo === "texto") {
+    const inp = $("#qin"); inp.focus();
+    const next = () => { const v = inp.value.trim(); if (!v) return toast("Digite o nome 🙂"); S.perfil.nome = v; avanca(); };
+    $("#qnext").onclick = next; inp.onkeydown = (e) => e.key === "Enter" && next();
+  } else if (q.tipo === "idade") {
+    $("#qnext").onclick = () => { S.perfil.anos = +$("#qa").value; S.perfil.meses = +$("#qm").value; if (idadeMeses() < 6) return toast("Selecione a idade da criança"); avanca(); };
+  } else {
+    document.querySelectorAll(".opt").forEach((b) => b.onclick = () => {
+      b.classList.add("sel"); const v = b.dataset.v; S.resp[q.id] = isNaN(+v) ? v : +v; setTimeout(avanca, 180);
+    });
+  }
+}
+function avanca() {
+  const lista = qVisiveis();
+  if (qi < lista.length - 1) { qi++; renderQuiz(); return; }
+  calcular(); save(); go("res");
+}
+function calcular() {
+  const r = S.resp, m = idadeMeses();
+  S.fase = r.com || 1;
+  const al = [];
+  if (r.regr === "sim") al.push("regressao");
+  if (r.nomeR === "rar") al.push("nome");
+  if (r.aponta === "nao" && m >= 18) al.push("aponta");
+  if (S.fase === 1 && m >= 18) al.push("semPalavras");
+  if (S.fase <= 3 && m >= 30) al.push("semJuntar");
+  if (r.comp === "nao" && m >= 24) al.push("compreensao");
+  if (r.intel === "ninguem" && m >= 36) al.push("inteligivel");
+  if (r.imita === "rar") al.push("imitacao");
+  S.alertas = al;
+  if (!S.dia || S.faseIniciada !== S.fase) { S.dia = 1; S.feitas = {}; S.faseIniciada = S.fase; S.inicio = hoje(); }
+  S.avaliadoEm = hoje();
+}
+
+const R = {};
+R.quiz = () => { qi = 0; renderQuiz(); };
+
+// ---------- RESULTADO ----------
+R.res = () => {
+  const f = fase(); const tela = S.resp?.tela;
+  let h = `<div class="logo"><b>🗣️</b>Fala em Casa</div>
+  <div class="card gap" style="text-align:center;border-top:6px solid ${f.cor}">
+    <div style="font-size:54px">${f.emoji}</div>
+    <p class="muted small" style="font-weight:800">FASE ${f.id} DE 5</p>
+    <h1>${esc(nome())} está na fase<br><span style="color:${f.cor}">${f.nome}</span></h1>
+    <p>${f.resumo}</p>
+    <div class="days" style="grid-template-columns:repeat(5,1fr)">${FASES.map((x) => `<span class="${x.id < f.id ? "ok" : x.id === f.id ? "cur" : ""}" style="aspect-ratio:auto;padding:6px 0;font-size:11px">${x.emoji}</span>`).join("")}</div>
+  </div>
+  <div class="card gap"><h3>🎯 Objetivo do seu plano de 30 dias</h3><p>${f.objetivo}</p>
+    <p class="small muted">Uma brincadeira por dia, de 5 a 15 minutos, com o roteiro exato do que falar.</p></div>`;
+  if (S.alertas?.length) {
+    h += `<div class="alert"><h3>🩺 Pontos para conversar com um profissional</h3><p class="small" style="margin-top:4px">Pelas suas respostas, vale procurar uma avaliação com fonoaudiólogo ou pediatra. As brincadeiras do app ajudam em casa, mas não substituem essa avaliação.</p><ul class="small">${S.alertas.map((a) => `<li>${ALERTAS_TEXTO[a]}</li>`).join("")}</ul></div>`;
+  }
+  if (tela === "muito") h += `<div class="tip small">📵 <b>Dica:</b> mais de 2 horas de tela por dia reduz o tempo de conversa. O guia “Menos tela, mais conversa” mostra como diminuir sem briga.</div>`;
+  h += `<button class="btn" onclick="stack=[];go('home')">Começar o plano de ${esc(nome())} →</button>
+  <p class="disc">O Fala em Casa é um apoio para a família estimular a fala em casa. Não faz diagnóstico e não substitui avaliação ou terapia com profissionais.</p>`;
+  $("#resbox").innerHTML = h;
+};
+
+// ---------- INÍCIO ----------
+function missaoDoDia(d = S.dia) {
+  const lista = MISSOES[S.fase] || MISSOES[1];
+  const idx = (d - 1) % lista.length, rep = Math.floor((d - 1) / lista.length);
+  return { m: lista[idx], idx, rep: Math.min(rep, 2) };
+}
+R.home = () => {
+  const f = fase(); const feitas = Object.keys(S.feitas || {}).length;
+  const fim = S.dia > 30;
+  const { m } = fim ? {} : missaoDoDia();
+  let h = `<div class="hello"><div><p class="muted small" style="font-weight:800">Olá! 👋</p><h2>Plano de ${esc(nome())}</h2></div>
+    <span class="pill" style="background:${f.cor}22;color:${f.cor}">${f.emoji} Fase ${f.id}</span></div>`;
+  if (!fim) {
+    h += `<div class="today"><div class="lbl">Missão de hoje · Dia ${S.dia} de 30</div><h2>${m.t}</h2>
+      <p style="opacity:.95;font-weight:600">⏱️ ${m.min ? m.min + " minutos" : "o dia todo"} · ${esc(m.mat)}</p>
+      <button class="btn" onclick="abrirMissao(${S.dia})">▶ Começar a missão</button></div>`;
+  } else {
+    h += `<div class="today"><div class="lbl">Plano concluído 🎉</div><h2>Parabéns! 30 dias de estímulo!</h2>
+      <p style="opacity:.95;font-weight:600">Refaça a avaliação para ver se ${esc(nome())} já está pronto(a) para a próxima fase.</p>
+      <button class="btn" onclick="refazer()">Refazer avaliação</button></div>`;
+  }
+  h += `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Seus 30 dias</h3><span class="small muted" style="font-weight:800">${feitas}/30 feitas</span></div>
+    <div class="days">${[...Array(30)].map((_, i) => { const d = i + 1; return `<span class="${S.feitas?.[d] ? "ok" : d === S.dia ? "cur" : ""}">${S.feitas?.[d] ? "✓" : d}</span>`; }).join("")}</div></div>
+  <div class="tiles">
+    <button class="tile" onclick="go('cart')"><span class="e">🃏</span><b>Cartões que falam</b><small>Toque e ouça a palavra</small></button>
+    <button class="tile" onclick="go('diario')"><span class="e">📒</span><b>Diário de palavras</b><small>${(S.palavras || []).length} palavras</small>${COMPLETO ? "" : '<span class="lk">🔒</span>'}</button>
+    <button class="tile" onclick="go('marcos')"><span class="e">✅</span><b>Marcos da fala</b><small>O esperado por idade</small>${COMPLETO ? "" : '<span class="lk">🔒</span>'}</button>
+    <button class="tile" onclick="go('rel')"><span class="e">📄</span><b>Relatório PDF</b><small>Para o fono ou pediatra</small>${COMPLETO ? "" : '<span class="lk">🔒</span>'}</button>
+    <button class="tile" onclick="go('guias')"><span class="e">📚</span><b>Guias para pais</b><small>Hábitos, telas, chupeta</small>${COMPLETO ? "" : '<span class="lk">🔒</span>'}</button>
+    <button class="tile" onclick="go('lista')"><span class="e">🎲</span><b>Todas as brincadeiras</b><small>Da fase ${f.id}</small></button>
+  </div>`;
+  if (!COMPLETO) h += upgBox();
+  h += `<p class="disc">Este app é um apoio para a família. Não substitui avaliação nem terapia com profissionais.</p>`;
+  $("#homebox").innerHTML = h;
+};
+
+// ---------- MISSÃO ----------
+let misDia = 1;
+function abrirMissao(d) { misDia = d; go("mis"); }
+R.mis = () => {
+  const { m, rep } = missaoDoDia(misDia); const feita = S.feitas?.[misDia];
+  $("#misbox").innerHTML = `${topbar("Dia " + misDia)}
+  <div class="card gap"><span class="pill" style="background:var(--pri-l);color:var(--pri-d)">🎲 Brincadeira</span><h1>${m.t}</h1>
+    <p class="muted" style="font-weight:700">⏱️ ${m.min ? m.min + " minutos" : "Use o dia todo"}<br>🧺 ${esc(m.mat)}</p></div>
+  <div class="rep">🔁 ${DICAS_REPETICAO[rep]}</div>
+  <div class="card"><h3>👣 Passo a passo</h3>${m.passos.map((p, i) => `<div class="step"><span class="n">${i + 1}</span><div>${p}</div></div>`).join("")}</div>
+  <div class="card"><h3>🗣️ O que falar</h3><p class="small muted">Fale devagar, com animação, e espere a criança tentar.</p>${m.falar.map((f) => `<div class="say">${f}</div>`).join("")}</div>
+  <div class="tip"><h3>💡 Dica de ouro</h3><p style="margin-top:4px">${m.dica}</p></div>
+  <div class="win"><h3>🎉 Comemore quando…</h3><p style="margin-top:4px">${m.comemore}</p></div>
+  ${feita ? `<button class="btn sec" disabled>✓ Missão feita em ${fmt(feita)}</button>` : `<button class="btn teal" onclick="concluir(${misDia})">✓ Concluí a missão</button>`}`;
+};
+function concluir(d) {
+  S.feitas = S.feitas || {}; S.feitas[d] = hoje();
+  if (d === S.dia) S.dia = Math.min(31, S.dia + 1);
+  save();
+  $("#celebox").innerHTML = `<div class="e">🎉</div><h2>Missão concluída!</h2><p>Cada brincadeira conta. ${S.dia <= 30 ? `Amanhã tem a missão do dia ${S.dia}.` : "Você completou os 30 dias!"}</p>
+    ${COMPLETO ? `<p class="small muted">${esc(nome())} falou alguma palavra nova? Registre no diário!</p><button class="btn teal" onclick="fechaCele();go('diario')">📒 Registrar palavra</button>` : ""}
+    <button class="btn sec" onclick="fechaCele();stack=[];go('home')">Voltar ao início</button>`;
+  $("#cele").classList.add("on");
+}
+function fechaCele() { $("#cele").classList.remove("on"); }
+
+// ---------- LISTA DE BRINCADEIRAS ----------
+R.lista = () => {
+  const f = fase(); const lista = MISSOES[S.fase] || [];
+  $("#listabox").innerHTML = `<h2>Brincadeiras da fase ${f.id}</h2><p class="muted small" style="margin-top:4px">${f.nome} · cada brincadeira aparece 3 vezes no plano, com uma dica nova a cada vez.</p>
+  ${lista.map((m, i) => { const dias = [i + 1, i + 11, i + 21]; const n = dias.filter((d) => S.feitas?.[d]).length;
+    return `<button class="listm" onclick="abrirMissao(${dias.find((d) => !S.feitas?.[d]) || dias[0]})"><span class="d" style="background:${f.cor}">${i + 1}</span><div style="flex:1"><b>${m.t}</b><div class="small muted">⏱️ ${m.min ? m.min + " min" : "o dia todo"} · feita ${n}/3</div></div><span>›</span></button>`; }).join("")}
+  <div class="card" style="margin-top:16px"><h3>Outras fases</h3><p class="small muted" style="margin:4px 0 10px">Quer ver as brincadeiras de outra fase? Toque para trocar (o progresso da fase atual é guardado ao refazer a avaliação).</p>
+  <div class="chips">${FASES.map((x) => `<button class="chip" style="${x.id === f.id ? `border-color:${x.cor};color:${x.cor}` : ""}" onclick="verFase(${x.id})">${x.emoji} ${x.nome}</button>`).join("")}</div></div>`;
+};
+function verFase(id) {
+  if (id === S.fase) return;
+  if (!confirm(`Mudar o plano para a fase “${FASES[id - 1].nome}”? O plano de 30 dias recomeça do dia 1.`)) return;
+  S.fase = id; S.faseIniciada = id; S.dia = 1; S.feitas = {}; S.inicio = hoje(); save(); toast("Plano atualizado!"); R.lista();
+}
+
+// ---------- CARTÕES ----------
+let catAtual = null;
+R.cart = () => {
+  const somOn = S.somBicho !== false;
+  if (catAtual === null) {
+    $("#cartbox").innerHTML = `<h2>Cartões que falam</h2><p class="muted small" style="margin:4px 0 14px">Toque no cartão e o celular fala a palavra. Repita junto com ${esc(nome())}!</p>
+    <div class="cats">${CARTOES.map((c, i) => `<button class="cat" onclick="catAtual=${i};R.cart()"><span class="e">${c.emoji}</span><b>${c.cat}</b><small class="muted">${c.itens.length} cartões</small></button>`).join("")}</div>
+    ${COMPLETO ? `<button class="btn sec" style="margin-top:16px" onclick="go('imp')">🖨️ Imprimir cartões</button>` : `<button class="btn sec" style="margin-top:16px" onclick="go('imp')">🖨️ Imprimir cartões 🔒</button>`}`;
+    return;
+  }
+  const c = CARTOES[catAtual];
+  $("#cartbox").innerHTML = `<div class="top"><button class="back" onclick="catAtual=null;R.cart()">‹</button><h2>${c.emoji} ${c.cat}</h2></div>
+  ${c.itens.some((x) => x[2]) ? `<div class="toggle">Falar o som também (au au, vrum…)<button class="sw ${somOn ? "on" : ""}" onclick="S.somBicho=!(S.somBicho!==false);save();R.cart()"></button></div>` : ""}
+  <div class="cards">${c.itens.map((x, i) => `<button class="fc" data-i="${i}"><span class="e">${x[0]}</span><b>${x[1]}</b>${x[2] && somOn ? `<small>${x[2]}</small>` : ""}</button>`).join("")}</div>`;
+  document.querySelectorAll(".fc").forEach((b) => b.onclick = () => {
+    const x = c.itens[+b.dataset.i]; b.classList.add("play"); setTimeout(() => b.classList.remove("play"), 600);
+    falar(x[2] && somOn ? `${x[1]}. ${x[2]}!` : x[1]);
+  });
+};
+let vozPt = null;
+function carregaVoz() { const v = speechSynthesis.getVoices(); vozPt = v.find((x) => /pt[-_]BR/i.test(x.lang) && /female|luciana|francisca|vitória|vitoria|google/i.test(x.name)) || v.find((x) => /pt[-_]BR/i.test(x.lang)) || v.find((x) => /^pt/i.test(x.lang)) || null; }
+if ("speechSynthesis" in window) { carregaVoz(); speechSynthesis.onvoiceschanged = carregaVoz; }
+function falar(t) {
+  if (!("speechSynthesis" in window)) return toast("Seu celular não tem leitura em voz. Leia a palavra em voz alta 🙂");
+  speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t);
+  u.lang = "pt-BR"; if (vozPt) u.voice = vozPt; u.rate = 0.8; u.pitch = 1.1; speechSynthesis.speak(u);
+}
+
+// ---------- DIÁRIO ----------
+R.diario = () => {
+  if (!COMPLETO) { $("#diariobox").innerHTML = lockScreen("Diário de palavras", "📒", `Registre cada palavra nova que ${esc(nome())} falar e acompanhe a evolução num gráfico.`); return; }
+  const P = S.palavras || [];
+  $("#diariobox").innerHTML = `<h2>Diário de palavras</h2>
+  <div class="card" style="display:flex;align-items:center;gap:16px"><div class="big">${P.length}</div><div><b>palavras registradas</b><div class="small muted">${P.length ? "Última: “" + esc(P[P.length - 1].p) + "” em " + fmt(P[P.length - 1].d) : "Registre a primeira palavra!"}</div></div></div>
+  <div class="card gap"><h3>➕ Nova palavra</h3><p class="small muted">Vale palavra incompleta (“bo” para bola) e som com significado (“au au” para cachorro).</p>
+    <div class="row"><input class="field" id="np" placeholder="Ex.: água" maxlength="30"><button class="btn" style="flex:0 0 auto;width:auto;padding:0 20px" id="addp">Salvar</button></div></div>
+  <div class="card gap"><h3>📈 Evolução</h3><canvas id="graf" width="900" height="420"></canvas></div>
+  <div class="card gap"><h3>Palavras de ${esc(nome())}</h3>${P.length ? `<div class="chips">${P.map((x, i) => `<span class="chip">${esc(x.p)} <small>${fmt(x.d)}</small><button onclick="delP(${i})">×</button></span>`).reverse().join("")}</div>` : `<p class="small muted">Nenhuma palavra ainda.</p>`}</div>`;
+  const add = () => { const v = $("#np").value.trim(); if (!v) return; S.palavras = [...P, { p: v, d: hoje() }]; save(); toast("Palavra registrada! 🎉"); R.diario(); };
+  $("#addp").onclick = add; $("#np").onkeydown = (e) => e.key === "Enter" && add();
+  grafico($("#graf"), P);
+};
+function delP(i) { if (!confirm("Apagar esta palavra?")) return; S.palavras.splice(i, 1); save(); R.diario(); }
+function grafico(cv, P) {
+  const ctx = cv.getContext("2d"), W = cv.width, H = cv.height, pad = 60;
+  ctx.clearRect(0, 0, W, H); ctx.font = "bold 24px Nunito, sans-serif";
+  if (!P.length) { ctx.fillStyle = "#b49a85"; ctx.textAlign = "center"; ctx.fillText("O gráfico aparece quando você registrar palavras", W / 2, H / 2); return; }
+  const porDia = {}; P.forEach((x) => porDia[x.d] = (porDia[x.d] || 0) + 1);
+  const dias = Object.keys(porDia).sort(); let acc = 0; const pts = dias.map((d) => ({ d, v: (acc += porDia[d]) }));
+  if (pts.length === 1) pts.unshift({ d: "", v: 0 });
+  const max = Math.max(4, Math.ceil(acc / 4) * 4), n = pts.length;
+  ctx.strokeStyle = "#f1e4d6"; ctx.lineWidth = 2; ctx.fillStyle = "#b49a85"; ctx.textAlign = "right";
+  for (let i = 0; i <= 4; i++) { const y = H - pad - (i / 4) * (H - pad * 1.6); ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - 20, y); ctx.stroke(); ctx.fillText(Math.round((i / 4) * max), pad - 10, y + 8); }
+  const X = (i) => pad + (n === 1 ? 0 : (i / (n - 1)) * (W - pad - 40)), Y = (v) => H - pad - (v / max) * (H - pad * 1.6);
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "rgba(242,107,58,.35)"); g.addColorStop(1, "rgba(242,107,58,0)");
+  ctx.beginPath(); ctx.moveTo(X(0), H - pad); pts.forEach((p, i) => ctx.lineTo(X(i), Y(p.v))); ctx.lineTo(X(n - 1), H - pad); ctx.fillStyle = g; ctx.fill();
+  ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(X(i), Y(p.v)) : ctx.moveTo(X(i), Y(p.v))); ctx.strokeStyle = "#f26b3a"; ctx.lineWidth = 6; ctx.lineJoin = "round"; ctx.stroke();
+  pts.forEach((p, i) => { ctx.beginPath(); ctx.arc(X(i), Y(p.v), 8, 0, 7); ctx.fillStyle = "#fff"; ctx.fill(); ctx.lineWidth = 5; ctx.stroke(); });
+  ctx.fillStyle = "#7c6a5b"; ctx.textAlign = "center"; const step = Math.ceil(n / 6);
+  pts.forEach((p, i) => { if (p.d && (i % step === 0 || i === n - 1)) ctx.fillText(fmt(p.d), X(i), H - 18); });
+}
+
+// ---------- MARCOS ----------
+R.marcos = () => {
+  if (!COMPLETO) { $("#marcosbox").innerHTML = lockScreen("Marcos da fala", "✅", "Veja o que é esperado em cada idade, marque o que seu filho já faz e saiba quando procurar ajuda."); return; }
+  const m = idadeMeses(); S.marcos = S.marcos || {};
+  const alvo = MARCOS.reduce((a, x) => (x.meses <= Math.max(12, m) ? x : a), MARCOS[0]);
+  $("#marcosbox").innerHTML = `<h2>Marcos da fala</h2><p class="muted small" style="margin:4px 0 6px">Marque o que ${esc(nome())} já faz. Cada criança tem seu ritmo — os marcos são uma referência, não uma prova.</p>
+  ${MARCOS.map((g) => `<div class="acc ${g === alvo ? "open" : ""}"><button onclick="this.parentNode.classList.toggle('open')">${g.idade}${g === alvo ? ' <span class="pill" style="background:var(--pri-l);color:var(--pri-d)">idade atual</span>' : ""}<span>⌄</span></button>
+    <div class="body">${g.itens.map((t, i) => { const k = g.meses + "_" + i; return `<label class="chk"><input type="checkbox" ${S.marcos[k] ? "checked" : ""} onchange="S.marcos['${k}']=this.checked?'${hoje()}':0;save()"><span>${t}</span></label>`; }).join("")}</div></div>`).join("")}
+  <div class="alert" style="margin-top:14px"><h3>🩺 Quando procurar ajuda</h3><p class="small" style="margin-top:4px">Se ${esc(nome())} ainda não faz a maior parte do que é esperado para a idade, ou se perdeu habilidades que já tinha, converse com o pediatra e procure uma avaliação fonoaudiológica. Na dúvida, avaliar é sempre melhor do que esperar.</p></div>`;
+};
+
+// ---------- GUIAS ----------
+let guiaAtual = null;
+R.guias = () => {
+  if (!COMPLETO) { $("#guiasbox").innerHTML = lockScreen("Guias para pais", "📚", "Hábitos que atrapalham a fala, como conversar para estimular, telas, chupeta e quando procurar um fonoaudiólogo."); return; }
+  if (guiaAtual === null) {
+    $("#guiasbox").innerHTML = `<h2>Guias para pais</h2><p class="muted small" style="margin:4px 0 6px">Leituras rápidas, de 2 minutos.</p>
+    ${GUIAS.map((g, i) => `<button class="listm" onclick="guiaAtual=${i};R.guias()"><span class="d" style="background:var(--pri-l);font-size:22px">${g.emoji}</span><div style="flex:1"><b>${g.t}</b></div><span>›</span></button>`).join("")}`;
+    return;
+  }
+  const g = GUIAS[guiaAtual];
+  $("#guiasbox").innerHTML = `<div class="top"><button class="back" onclick="guiaAtual=null;R.guias()">‹</button><h2 style="font-size:18px">${g.emoji} ${g.t}</h2></div>
+  ${g.corpo.map((c, i) => `<div class="card" style="margin-top:10px"><h3>${i + 1}. ${c[0]}</h3><p style="margin-top:4px">${c[1]}</p></div>`).join("")}`;
+};
+
+// ---------- RELATÓRIO ----------
+R.rel = () => {
+  if (!COMPLETO) { $("#relbox").innerHTML = lockScreen("Relatório em PDF", "📄", "Um relatório organizado para levar à consulta: palavras registradas, marcos, brincadeiras feitas e suas observações."); return; }
+  $("#relbox").innerHTML = `${topbar("Relatório em PDF")}
+  <div class="card gap"><p>Leve este relatório para a consulta com o <b>fonoaudiólogo ou pediatra</b>. Ele reúne tudo o que você registrou no app.</p>
+    <ul class="small" style="margin-left:18px"><li>Dados de ${esc(nome())} e fase atual</li><li>${(S.palavras || []).length} palavras registradas, com datas</li><li>Marcos da fala marcados</li><li>${Object.keys(S.feitas || {}).length} brincadeira(s) feita(s)</li><li>Pontos de atenção da avaliação inicial</li></ul></div>
+  <div class="card gap"><h3>📝 Suas observações</h3><p class="small muted">O que você percebe no dia a dia? Dúvidas para o profissional?</p>
+    <textarea class="field" id="obs" rows="5" placeholder="Ex.: entende tudo, mas fica frustrado quando não consegue pedir…">${esc(S.obs || "")}</textarea></div>
+  <button class="btn" onclick="S.obs=$('#obs').value;save();gerarPDF()">📄 Gerar relatório em PDF</button>`;
+};
+function semEmoji(s) { return String(s).replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, "").replace(/[“”]/g, '"').trim(); }
+function gerarPDF() {
+  const { jsPDF } = window.jspdf; const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const W = 210, M = 16; let y = 0;
+  const nova = () => { doc.addPage(); y = 18; };
+  const garante = (h) => { if (y + h > 282) nova(); };
+  const txt = (t, size = 10.5, style = "normal", cor = [45, 33, 24]) => { doc.setFont("helvetica", style); doc.setFontSize(size); doc.setTextColor(...cor); const l = doc.splitTextToSize(semEmoji(t), W - M * 2); garante(l.length * size * 0.42 + 1); doc.text(l, M, y); y += l.length * size * 0.42 + 1.5; };
+  const titulo = (t) => { y += 4; garante(12); doc.setFillColor(255, 230, 217); doc.roundedRect(M, y - 5, W - M * 2, 9, 2, 2, "F"); txt(t, 12, "bold", [217, 84, 31]); y += 1.5; };
+  doc.setFillColor(242, 107, 58); doc.rect(0, 0, W, 30, "F");
+  doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold"); doc.setFontSize(18); doc.text("Relatório de acompanhamento da fala", M, 14);
+  doc.setFont("helvetica", "normal"); doc.setFontSize(10.5); doc.text(`Fala em Casa  ·  gerado em ${new Date().toLocaleDateString("pt-BR")}`, M, 22);
+  y = 40; const f = fase();
+  titulo("Dados da criança");
+  txt(`Nome: ${nome()}`); txt(`Idade: ${idadeTxt()} (na avaliação de ${new Date((S.avaliadoEm || hoje()) + "T12:00").toLocaleDateString("pt-BR")})`);
+  txt(`Fase atual no app: ${f.id} de 5 - ${f.nome}`); txt(f.resumo, 10, "normal", [124, 106, 91]);
+  const r = S.resp || {}; const map = { sim: "sim", as: "às vezes", rar: "raramente", nao: "não", todos: "quase todo mundo", familia: "só a família", ninguem: "quase ninguém", pouco: "menos de 1h", medio: "1 a 2h", muito: "mais de 2h" };
+  titulo("Respostas da avaliação inicial (relatadas pela família)");
+  const comTxt = ["", "ainda não fala palavras", "fala de 1 a 10 palavras", "fala mais de 10 palavras soltas", "junta 2 palavras", "fala frases"][r.com || 1];
+  [["Comunicação", comTxt], ["Olha quando chamado pelo nome", map[r.nomeR]], ["Aponta para pedir/mostrar", map[r.aponta]], ["Entende pedidos simples sem gestos", map[r.comp]], ["Imita sons e gestos", map[r.imita]], ["Perdeu habilidades que já tinha", map[r.regr]], r.intel ? ["Quem entende a fala", map[r.intel]] : null, ["Tempo de tela por dia", map[r.tela]]].filter(Boolean).forEach(([a, b]) => txt(`- ${a}: ${b || "-"}`));
+  if (S.alertas?.length) { titulo("Pontos de atenção"); S.alertas.forEach((a) => txt("- " + ALERTAS_TEXTO[a], 10.5, "normal", [180, 50, 30])); }
+  const P = S.palavras || [];
+  titulo(`Palavras registradas (${P.length})`);
+  if (P.length) { txt(P.map((x) => `${x.p} (${fmt(x.d)})`).join(",  ")); } else txt("Nenhuma palavra registrada no diário.", 10.5, "italic", [124, 106, 91]);
+  titulo("Marcos da fala");
+  const mk = S.marcos || {}; let algum = false;
+  MARCOS.filter((g) => g.meses <= Math.max(12, idadeMeses()) + 12).forEach((g) => { txt(g.idade, 11, "bold"); g.itens.forEach((t, i) => { const k = g.meses + "_" + i; algum = true; txt(`${mk[k] ? "[x]" : "[  ]"} ${t}`, 10); }); y += 1; });
+  if (!algum) txt("Nenhum marco marcado.", 10.5, "italic");
+  const F = S.feitas || {}; const dias = Object.keys(F).map(Number).sort((a, b) => a - b);
+  titulo(`Brincadeiras realizadas (${dias.length} de 30)`);
+  if (dias.length) { const lista = MISSOES[S.fase] || []; txt(dias.map((d) => `Dia ${d}: ${lista[(d - 1) % lista.length].t} (${fmt(F[d])})`).join("   ·   "), 10); } else txt("Nenhuma brincadeira marcada como feita.", 10.5, "italic");
+  titulo("Observações da família"); txt(S.obs?.trim() || "-");
+  y += 6; txt("Este relatório foi preenchido pela família no app Fala em Casa e serve como apoio para a conversa com o profissional. Não é um laudo nem um diagnóstico.", 9, "italic", [124, 106, 91]);
+  doc.save(`relatorio-fala-${(nome() || "crianca").toLowerCase().replace(/[^a-z0-9]+/gi, "-")}.pdf`);
+  toast("PDF gerado! 📄");
+}
+
+// ---------- IMPRIMIR CARTÕES ----------
+R.imp = () => {
+  if (!COMPLETO) { $("#impbox").innerHTML = lockScreen("Cartões para imprimir", "🖨️", "Imprima os cartões de figuras para brincar longe da tela: jogo da memória, caça aos cartões e muito mais."); return; }
+  $("#impbox").innerHTML = `${topbar("Cartões para imprimir")}
+  <div class="card gap"><p>Escolha as categorias. Cada folha A4 traz 6 cartões grandes para recortar.</p>
+  <div class="chips">${CARTOES.map((c, i) => `<label class="chip"><input type="checkbox" class="impc" value="${i}" checked style="accent-color:var(--pri)"> ${c.emoji} ${c.cat}</label>`).join("")}</div></div>
+  <div class="tip small">💡 <b>Ideias:</b> imprima 2 vezes e faça um jogo da memória; espalhe pela casa para uma caça aos cartões; coloque na geladeira as palavras da semana.</div>
+  <button class="btn" id="gerimp">🖨️ Gerar PDF dos cartões</button>`;
+  $("#gerimp").onclick = () => {
+    const sel = [...document.querySelectorAll(".impc:checked")].map((x) => +x.value); if (!sel.length) return toast("Escolha pelo menos uma categoria");
+    toast("Gerando… aguarde"); setTimeout(() => gerarCartoes(sel), 50);
+  };
+};
+function gerarCartoes(sel) {
+  const { jsPDF } = window.jspdf; const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const itens = sel.flatMap((i) => CARTOES[i].itens.map((x) => ({ x, cat: CARTOES[i].cat })));
+  const cw = 85, ch = 85, gx = 12, gy = 8, mx = (210 - cw * 2 - gx) / 2, my = 14;
+  const cv = document.createElement("canvas"); cv.width = 600; cv.height = 600; const ctx = cv.getContext("2d");
+  itens.forEach((it, k) => {
+    if (k && k % 6 === 0) doc.addPage();
+    const pos = k % 6, col = pos % 2, row = Math.floor(pos / 2);
+    ctx.clearRect(0, 0, 600, 600); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, 600, 600);
+    ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.font = "300px 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif"; ctx.fillText(it.x[0], 300, 250);
+    ctx.font = "900 64px Nunito, sans-serif"; ctx.fillStyle = "#2d2118"; ctx.fillText(it.x[1].toUpperCase(), 300, 500);
+    const x = mx + col * (cw + gx), y = my + row * (ch + gy);
+    doc.setDrawColor(242, 107, 58); doc.setLineWidth(0.8); doc.setLineDashPattern([2, 2], 0); doc.roundedRect(x, y, cw, ch, 6, 6);
+    doc.addImage(cv.toDataURL("image/jpeg", 0.85), "JPEG", x + 4, y + 4, cw - 8, ch - 8);
+  });
+  doc.save("cartoes-fala-em-casa.pdf"); toast("PDF dos cartões pronto! 🖨️");
+}
+
+// ---------- MAIS ----------
+R.mais = () => {
+  $("#maisbox").innerHTML = `<h2>Mais</h2>
+  <div class="card gap"><h3>👶 ${esc(nome())}</h3><p class="small muted">${idadeTxt()} · Fase ${fase().id}: ${fase().nome}</p>
+    <button class="btn sec" onclick="refazer()">🔄 Refazer a avaliação</button></div>
+  <button class="listm" onclick="go('marcos')"><span class="d" style="background:var(--teal-l);font-size:22px">✅</span><div style="flex:1"><b>Marcos da fala</b></div>${COMPLETO ? "›" : "🔒"}</button>
+  <button class="listm" onclick="go('guias')"><span class="d" style="background:var(--teal-l);font-size:22px">📚</span><div style="flex:1"><b>Guias para pais</b></div>${COMPLETO ? "›" : "🔒"}</button>
+  <button class="listm" onclick="go('rel')"><span class="d" style="background:var(--teal-l);font-size:22px">📄</span><div style="flex:1"><b>Relatório em PDF</b></div>${COMPLETO ? "›" : "🔒"}</button>
+  <button class="listm" onclick="go('imp')"><span class="d" style="background:var(--teal-l);font-size:22px">🖨️</span><div style="flex:1"><b>Cartões para imprimir</b></div>${COMPLETO ? "›" : "🔒"}</button>
+  <div class="card gap"><h3>📲 Deixe o app na tela do celular</h3><p class="small"><b>iPhone:</b> no Safari, toque em Compartilhar e depois em “Adicionar à Tela de Início”.<br><b>Android:</b> no Chrome, toque nos 3 pontinhos e em “Adicionar à tela inicial”.</p>
+    <p class="small muted">Seus dados ficam salvos neste aparelho. Use sempre o mesmo celular e navegador.</p></div>
+  ${COMPLETO ? "" : upgBox()}
+  <button class="btn sec" onclick="apagar()" style="color:#c0392b">Apagar todos os dados</button>
+  <p class="disc">Fala em Casa é um apoio para a família estimular a fala em casa. Não faz diagnóstico e não substitui avaliação ou terapia com fonoaudiólogo.</p>`;
+};
+function refazer() { if (!confirm("Refazer a avaliação? As palavras do diário e os marcos continuam salvos.")) return; S.resp = {}; stack = []; go("quiz"); }
+function apagar() { if (!confirm("Apagar TODOS os dados deste aparelho? Isso não pode ser desfeito.")) return; localStorage.removeItem(KEY); S = {}; stack = []; go("quiz"); }
+
+// ---------- início ----------
+if (S.fase && S.perfil?.nome) go("home", false); else go("quiz", false);
+</script>
+</body>
+</html>
